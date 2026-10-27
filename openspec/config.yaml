@@ -1,0 +1,39 @@
+schema: spec-driven
+
+context: |
+  Language: pl
+  All artifacts must be written in pl.
+  Keep OpenSpec structural headings and SHALL/MUST keywords in English.
+
+  Project: RE:JOLTANCE — web lane-battler card game (6-person student team, Scrum in Jira).
+  Stack: C# .NET 10 (ASP.NET Core + SignalR), React + TypeScript + Vite, Aspire, SQLite (PostgreSQL later).
+  Before writing any artifact read: .agents/rules/00-konstytucja.md (constitution, has priority over everything),
+  AGENTS.md, docs/03-architecture/MAP.md. Game rules: docs/02-rules/ (R-nn ids), canonical source prototype/revibance.
+  Change names start with the Jira key in lowercase, e.g. rej-123-mulligan.
+
+githubCopilot:
+  cloudAgent: false
+
+rules:
+  proposal:
+    - Start with the Jira key (REJ-123) and link to the issue.
+    - State explicitly what is out of scope.
+    - Name the affected rule ids (R-nn) and contracts (Intent, LegalAction, PendingInteraction, MatchView, DomainEvent).
+    - A contract change requires an ADR reference (constitution, article IV).
+  specs:
+    - Every requirement has at least one Scenario written as GIVEN / WHEN / THEN.
+    - Game-rule requirements carry the rule id in the title, e.g. "R-04 Fatigue damage".
+  design:
+    - Respect module boundaries Contracts <- Content <- Kernel <- Server; the Kernel stays pure and deterministic.
+  tasks:
+    - One task is at most 4 hours of work and maps to one Jira sub-task.
+    - Each task names the test that proves it (test name starting with R-nn for rules).
+
+operations:
+  apply:
+    guidance:
+      - Run `dotnet test` (and `npm test` in src/web when touched) before reporting done; report real results.
+      - Never push to main/develop and never merge; open a PR for human review.
+  archive:
+    guidance:
+      - Update docs/02-rules/RULES-INDEX.md when a rule requirement changes.

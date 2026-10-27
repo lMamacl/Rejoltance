@@ -1,0 +1,16 @@
+{
+  "mcpServers": {
+    "atlassian-pb": {
+      "description": "Jira + Confluence PB (Server/DC) via mcp-atlassian, read-only. Tokens come from your local environment (.env is git-ignored). See docs/00-start/jira-confluence-mcp.md",
+      "command": "uvx",
+      "args": ["--python", "3.13", "mcp-atlassian"],
+      "env": {
+        "JIRA_URL": "https://devtools.wi.pb.edu.pl/jira",
+        "JIRA_PERSONAL_TOKEN": "${JIRA_PERSONAL_TOKEN}",
+        "CONFLUENCE_URL": "https://devtools.wi.pb.edu.pl/confluence",
+        "CONFLUENCE_PERSONAL_TOKEN": "${CONFLUENCE_PERSONAL_TOKEN}",
+        "READ_ONLY_MODE": "true"
+      }
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "allow": [
+      "Bash(dotnet build:*)",
+      "Bash(dotnet test:*)",
+      "Bash(npm test:*)",
+      "Bash(npm run:*)",
+      "Bash(npx openspec:*)",
+      "Bash(python tools/:*)",
+      "Bash(git status:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)"
+    ],
+    "deny": [
+      "Read(./.env)",
+      "Read(./.env.*)",
+      "Bash(git push origin main:*)",
+      "Bash(git push origin develop:*)",
+      "Bash(git push --force:*)"
+    ]
+  },
+  "env": {
+    "OPENSPEC_TELEMETRY": "0"
+  }
+}

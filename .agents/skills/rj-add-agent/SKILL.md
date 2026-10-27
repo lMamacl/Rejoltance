@@ -1,0 +1,41 @@
+---
+name: rj-add-agent
+description: Creates a new agent role in .agents/agents (Antigravity format) and regenerates the Claude Code and Copilot variants. Use when the team needs a new specialist role with its own mission, tools and limits.
+---
+
+# Nowa rola agenta
+
+## Najpierw
+
+Czy wystarczy skill? Rola = osobna odpowiedzialność i inne uprawnienia (np. tylko odczyt). Procedura = skill.
+
+## Kroki
+
+1. Plik `.agents/agents/rj-<rola>.md`:
+
+   ```markdown
+   ---
+   name: rj-<rola>
+   description: "<Grupa: Organizacja | Specjalizacja | Realizacja | Weryfikacja>: co robi i kiedy go wołać."
+   tools:            # najmniejszy potrzebny zestaw (Antigravity)
+     - view_file
+     - grep_search
+   mainAgent: false
+   subagent: true
+   model: inherit
+   commandExecutionPolicy: sandbox
+   ---
+
+   # Misja
+   ## Procedura
+   ## Nie wolno
+   ## Wyjście
+   ```
+
+2. Narzędzia Antigravity → Claude Code (mapowanie robi skrypt): `view_file`→Read, `list_dir`/`find_by_name`→Glob, `grep_search`→Grep, `run_command`→Bash, `write_to_file`/`replace_file_content`/`multi_replace_file_content`→Write/Edit, `search_web`→WebSearch, `read_url_content`→WebFetch, `invoke_subagent`→Task.
+   Recenzenci bez `write_*` i `replace_*` = tylko odczyt.
+3. Dopisz rolę do `agents:` w `rj-orchestrator.md`, jeśli orkiestrator ma ją wołać.
+4. `python tools/agents/sync_agents.py` → `.claude/agents/`, `.github/agents/`.
+5. `python tools/agents/sync_agents.py --check`; dopisz rolę do tabeli w `AGENTS.md`.
+
+Instrukcja dla ludzi: `docs/00-start/jak-dodac-agenta.md`.

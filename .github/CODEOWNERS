@@ -1,0 +1,17 @@
+# Recenzenci przypisywani automatycznie. Uzupełnijcie loginy GitHub po podziale epików (pytanie otwarte #9).
+# Format: <ścieżka> @login1 @login2 — ostatnie dopasowanie wygrywa.
+
+*                                   @lMamacl
+
+# Konstytucja, kontrakty i CI wymagają recenzji z obu stron granicy backend/frontend.
+/.agents/rules/00-konstytucja.md    @lMamacl
+/src/Rejoltance.Contracts/          @lMamacl
+/src/web/src/contracts/             @lMamacl
+/.github/workflows/                 @lMamacl
+
+# Moduły (do uzupełnienia):
+# /src/Rejoltance.Kernel/           @wlasciciel-E1
+# /src/Rejoltance.Content/          @wlasciciel-E2
+# /src/Rejoltance.Server/           @wlasciciel-E3
+# /src/web/                         @wlasciciel-E4
+# /tools/                           @wlasciciel-E6

@@ -1,0 +1,46 @@
+name: Mirror to Bitbucket PB
+
+# Pushes main and develop (and sprint tags) to the university Bitbucket so the course has the code there too.
+# One-time setup by a repo admin (see docs/00-start/jak-pracujemy.md#mirror-bitbucket):
+#   Settings → Secrets and variables → Actions:
+#     secret   BITBUCKET_TOKEN  = Bitbucket DC HTTP access token with "Repository write"
+#     variable BITBUCKET_REPO_URL = https://devtools.wi.pb.edu.pl/bitbucket/scm/<PROJECT>/<repo>.git
+#     variable BITBUCKET_USER     = account name the token belongs to (e.g. wi00000)
+# Until both are set, the job is skipped (not failed).
+
+on:
+  push:
+    branches: [main, develop]
+    tags: ["sprint-*"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: mirror-bitbucket
+  cancel-in-progress: false
+
+jobs:
+  mirror:
+    if: ${{ vars.BITBUCKET_REPO_URL != '' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Push branches and tags
+        env:
+          TOKEN: ${{ secrets.BITBUCKET_TOKEN }}
+          REPO_URL: ${{ vars.BITBUCKET_REPO_URL }}
+          USER_NAME: ${{ vars.BITBUCKET_USER }}
+        run: |
+          if [ -z "$TOKEN" ]; then echo "::warning::BITBUCKET_TOKEN not set - skipping"; exit 0; fi
+          AUTH_URL="$(echo "$REPO_URL" | sed "s#https://#https://${USER_NAME}:${TOKEN}@#")"
+          git remote add bitbucket "$AUTH_URL"
+          for b in main develop; do
+            if git show-ref --quiet "refs/remotes/origin/$b"; then
+              git push bitbucket "refs/remotes/origin/$b:refs/heads/$b"
+            fi
+          done
+          git push bitbucket --tags

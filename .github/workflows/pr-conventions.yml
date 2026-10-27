@@ -1,0 +1,43 @@
+name: PR conventions
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize, reopened]
+
+permissions:
+  contents: read
+
+jobs:
+  naming:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Branch name has a Jira key
+        env:
+          HEAD: ${{ github.head_ref }}
+          BASE: ${{ github.base_ref }}
+        run: |
+          # Sprint-closing PR develop -> main is allowed without a key.
+          if [ "$HEAD" = "develop" ] && [ "$BASE" = "main" ]; then exit 0; fi
+          if ! echo "$HEAD" | grep -Eq '^(feature|fix|docs|chore|spike)/REJ-[0-9]+-[a-z0-9-]+$'; then
+            echo "::error::Branch '$HEAD' must match (feature|fix|docs|chore|spike)/REJ-123-short-description (see .agents/rules/50-git-i-jira.md)"
+            exit 1
+          fi
+      - name: Target branch is develop (or main for sprint close)
+        env:
+          HEAD: ${{ github.head_ref }}
+          BASE: ${{ github.base_ref }}
+        run: |
+          if [ "$BASE" = "develop" ]; then exit 0; fi
+          if [ "$BASE" = "main" ] && [ "$HEAD" = "develop" ]; then exit 0; fi
+          echo "::error::PRs go to 'develop'. Only 'develop' may be merged into 'main' (end of sprint)."
+          exit 1
+      - name: Title starts with the Jira key
+        env:
+          TITLE: ${{ github.event.pull_request.title }}
+          HEAD: ${{ github.head_ref }}
+        run: |
+          if [ "$HEAD" = "develop" ]; then exit 0; fi
+          if ! echo "$TITLE" | grep -Eq '^REJ-[0-9]+: .+'; then
+            echo "::error::PR title must look like 'REJ-123: add fatigue damage'"
+            exit 1
+          fi

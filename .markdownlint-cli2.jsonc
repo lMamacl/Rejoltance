@@ -1,0 +1,27 @@
+{
+  // Docs are written by people and agents; keep rules that catch real problems, not style nits.
+  "config": {
+    "default": true,
+    "MD013": false,
+    "MD024": { "siblings_only": true },
+    "MD033": false,
+    "MD041": false,
+    "MD060": false
+  },
+  "globs": ["**/*.md"],
+  "ignores": [
+    "**/node_modules/**",
+    "prototype/**",
+    "docs/99-sources/**",
+    ".claude/**",
+    ".gemini/**",
+    ".github/skills/**",
+    ".github/agents/**",
+    ".github/instructions/**",
+    ".agents/skills/openspec-*/**",
+    ".agents/workflows/opsx-*.md",
+    ".github/prompts/**",
+    "**/bin/**",
+    "**/obj/**"
+  ]
+}

@@ -1,0 +1,5 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Shared DTOs only. Zero logic. Changing a public type here requires an ADR (constitution, article IV). -->
+
+</Project>

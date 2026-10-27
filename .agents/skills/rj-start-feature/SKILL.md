@@ -1,0 +1,26 @@
+---
+name: rj-start-feature
+description: Starts work on a Jira issue - checks the key, creates the branch typ/REJ-123-opis from develop, and for stories of 3+ SP opens an OpenSpec change. Use at the beginning of every task.
+---
+
+# Start pracy nad zadaniem Jira
+
+## Wejście
+
+Klucz Jira (`REJ-123`), krótki opis po angielsku, typ: `feature` | `fix` | `docs` | `chore` | `spike`, szacunek SP.
+
+## Kroki
+
+1. `git status` — drzewo musi być czyste. Jeśli nie: zatrzymaj się i zapytaj.
+2. `git switch develop` → `git pull --ff-only` (jeśli jest remote).
+3. `git switch -c <typ>/REJ-123-<krotki-opis>` — tylko małe litery, cyfry, myślniki (regex w `.agents/rules/50-git-i-jira.md`).
+4. Zadanie ≥ 3 SP, reguła gry albo kontrakt → zmiana OpenSpec:
+   - Claude/Gemini: `/opsx:propose "REJ-123 <opis>"`; Antigravity/Copilot: `/opsx-propose …`; Codex: `$openspec-propose …`;
+   - nazwa zmiany: `rej-123-<opis>`;
+   - przed implementacją **człowiek akceptuje** `proposal.md` + `tasks.md`.
+5. Mniejsze zadanie → plan w 5 punktach (`.agents/rules/20-plan-i-zakres.md`) w opisie przyszłego PR.
+6. Przypomnij człowiekowi: zmień status w Jirze na *In Progress* i loguj czas (*Log Work*).
+
+## Wyjście
+
+Nazwa gałęzi, ścieżka zmiany OpenSpec (jeśli jest), plan, komendy weryfikacji.

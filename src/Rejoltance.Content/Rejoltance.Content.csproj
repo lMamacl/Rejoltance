@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <!-- Generated from prototype/revibance/cards.js by tools/content/extract_cards.py -->
+    <EmbeddedResource Include="Data\cards.json" LogicalName="Rejoltance.Content.cards.json" />
+    <EmbeddedResource Include="Data\decks.json" LogicalName="Rejoltance.Content.decks.json" />
+  </ItemGroup>
+
+</Project>

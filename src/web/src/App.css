@@ -1,0 +1,20 @@
+.app {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 24px 16px;
+  font-family: system-ui, sans-serif;
+}
+
+.muted { opacity: 0.7; }
+.error { color: #c0392b; }
+
+.board { display: grid; gap: 12px; margin: 16px 0; }
+.hero { padding: 8px 12px; border-radius: 8px; background: rgba(127, 127, 127, 0.12); }
+.lanes { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.slot { min-height: 64px; border: 1px dashed rgba(127, 127, 127, 0.5); border-radius: 8px; display: grid; place-items: center; }
+.hand { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; padding: 0; }
+.card { padding: 8px 12px; border: 1px solid rgba(127, 127, 127, 0.6); border-radius: 8px; }
+.cost { display: inline-block; min-width: 1.4em; text-align: center; border-radius: 50%; background: #8e1b1b; color: #fff; }
+.actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
+button { padding: 8px 16px; border-radius: 8px; cursor: pointer; }

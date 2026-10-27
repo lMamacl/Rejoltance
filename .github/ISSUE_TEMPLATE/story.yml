@@ -1,0 +1,31 @@
+name: Story (szkic do Jiry)
+description: Szkic historyjki do przeniesienia do Jiry / backlog.yaml. Docelowo story żyje w Jirze.
+labels: [story]
+body:
+  - type: input
+    id: epic
+    attributes:
+      label: Epik
+      placeholder: E1 Kernel reguł
+  - type: textarea
+    id: story
+    attributes:
+      label: Historyjka
+      value: "Jako <rola> chcę <cel>, aby <korzyść>."
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Kryteria akceptacji (GIVEN / WHEN / THEN)
+      value: |
+        GIVEN ...
+        WHEN ...
+        THEN ...
+    validations:
+      required: true
+  - type: input
+    id: estimate
+    attributes:
+      label: Szacunek (SP) i reguły R‑nn
+      placeholder: 3 SP · R-04

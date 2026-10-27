@@ -1,0 +1,24 @@
+name: Propozycja decyzji (ADR)
+description: Decyzja architektoniczna lub procesowa, którą ktoś mógłby później zakwestionować.
+labels: [adr]
+body:
+  - type: textarea
+    id: context
+    attributes:
+      label: Kontekst i problem
+    validations:
+      required: true
+  - type: textarea
+    id: options
+    attributes:
+      label: Rozważane opcje (zalety / wady / koszt)
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proponowana decyzja (zdanie Y)
+      value: "W kontekście <X>, mierząc się z <Y>, wybieramy <Z> zamiast <A>, aby <B>, akceptując <C>."
+  - type: markdown
+    attributes:
+      value: "Po dyskusji: plik `docs/04-adr/NNNN-tytul.md` (skill `rj-write-adr`), akceptacja 2 osób."

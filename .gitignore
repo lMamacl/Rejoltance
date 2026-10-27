@@ -1,0 +1,35 @@
+# .NET
+bin/
+obj/
+*.user
+*.suo
+.vs/
+TestResults/
+*.trx
+coverage*/
+
+# Node
+node_modules/
+dist/
+*.tsbuildinfo
+.vite/
+
+# Local data / secrets
+.env
+.env.*
+!.env.example
+*.db
+*.db-shm
+*.db-wal
+appsettings.*.local.json
+
+# Editors / OS
+.idea/
+.DS_Store
+Thumbs.db
+
+# Agent tools (machine-local state)
+.claude/settings.local.json
+
+# Local SQLite data created by the AppHost
+.data/
