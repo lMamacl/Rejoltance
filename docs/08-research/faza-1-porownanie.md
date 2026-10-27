@@ -122,8 +122,8 @@ Pełnego przebiegu „propose → apply → archive” (OpenSpec) ani „specify
 | SDD — alternatywa | Spec Kit 1.2.4 (`claude`+`codex`+`gemini` czysto, `agy`/`copilot` z `--force`) | jeśli zespół woli formalne bramki i gotową konstytucję |
 | **Struktura repo** | monorepo: `docs/` (PL, strefa projektowa) ⟂ `src/`+`tests/` (EN, kod) ⟂ `openspec/` (specyfikacje) ⟂ `prototype/` (referencja JS) | jeden PR zmienia kontrakt C# i TS naraz |
 | **Gałęzie** | `main` (demo po sprincie, tag `sprint-N`) ← `develop` (integracja) ← `feature/REJ-123-krotki-opis` (także `fix/`, `docs/`, `chore/`, `spike/`); commit `REJ-123: …`; PR z ≥1 recenzentem | model pi‑wo + klucz Jira (wymóg handbooka PO); bez `release/hotfix` |
-| **Aspire** | szablon `aspire-ts-cs-starter` jako baza; SQLite plikowo; Postgres w kontenerze za parametrem AppHost od S3 | zweryfikowany build; zero Dockera na start |
-| **Wymagania na laptopie** | .NET 10 SDK, Node 24 LTS, Git (`core.longpaths`), uv (Python 3.13 dla narzędzi), opcjonalnie Aspire CLI; Docker dopiero od S3 | wynik testów |
+| **Aspire** | szablon `aspire-ts-cs-starter` jako baza; SQLite plikowo; Postgres w kontenerze za parametrem AppHost od S4 | zweryfikowany build; zero Dockera na start |
+| **Wymagania na laptopie** | .NET 10 SDK, Node 24 LTS, Git (`core.longpaths`), uv (Python 3.13 dla narzędzi), opcjonalnie Aspire CLI; Docker dopiero od S4 | wynik testów |
 | **Ryzyka do komunikatu dla zespołu** | Smart App Control, długie ścieżki/OneDrive, zaufanie certyfikatu dev | wszystkie trzy wystąpiły w teście |
 
 ---

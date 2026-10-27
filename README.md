@@ -5,7 +5,7 @@ Backend **C# .NET 10** (ASP.NET Core + SignalR), frontend **React + TypeScript +
 
 ## Start w 5 minut
 
-Wymagane: [.NET SDK 10](https://dot.net), [Node.js 24 LTS](https://nodejs.org), Git, Python 3.10+. Docker **nie** jest potrzebny.
+Wymagane: [.NET SDK 10](https://dot.net), [Node.js 24 LTS](https://nodejs.org), Git, Python 3.11+. Docker **nie** jest potrzebny.
 
 ```powershell
 git clone https://github.com/lMamacl/Rejoltance.git C:\dev\Rejoltance   # krótka ścieżka, poza OneDrive

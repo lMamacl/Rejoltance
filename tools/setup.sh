@@ -8,7 +8,7 @@ need() { command -v "$1" >/dev/null 2>&1 || { echo "[FAIL] $1 not found: $2"; ex
 need dotnet "install .NET SDK 10 (https://dot.net)"
 need node "install Node.js 24 LTS (https://nodejs.org)"
 need git "install git"
-need python3 "install Python 3.10+"
+need python3 "install Python 3.11+"
 
 dotnet --list-sdks | grep -q '^10\.' || { echo "[FAIL] .NET SDK 10 required"; exit 1; }
 

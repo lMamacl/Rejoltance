@@ -54,4 +54,4 @@ Numery #1–#10 są przywoływane w innych dokumentach (np. „pytanie otwarte #
 
 - **#8** Hosting demo (Azure for Students / Railway / serwer uczelni).
 - **#9** Kto jest właścicielem którego epiku (E1–E6).
-- **#10** Czy wszyscy mogą zainstalować Docker/Podman przed S3 (PostgreSQL).
+- **#10** Czy wszyscy mogą zainstalować Docker/Podman przed S4 (PostgreSQL).

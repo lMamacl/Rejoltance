@@ -5,7 +5,7 @@ namespace Rejoltance.Kernel.Tests;
 public sealed class DeterminismTests
 {
     [Fact]
-    public void Same_seed_gives_identical_match()
+    public void R83_same_seed_gives_identical_match()
     {
         var a = TestMatches.Start(seed: 7).State;
         var b = TestMatches.Start(seed: 7).State;

@@ -8,7 +8,7 @@ public sealed class ProjectionTests
     private static readonly Projection Projection = new(TestMatches.Catalog, TestMatches.Engine());
 
     [Fact]
-    public void R06_opponent_hand_is_only_a_count()
+    public void R80_opponent_hand_is_only_a_count()
     {
         var start = TestMatches.Start();
 
@@ -24,7 +24,7 @@ public sealed class ProjectionTests
     }
 
     [Fact]
-    public void R06_opponent_draw_events_are_redacted()
+    public void R80_opponent_draw_events_are_redacted()
     {
         var start = TestMatches.Start();
 
@@ -35,7 +35,7 @@ public sealed class ProjectionTests
     }
 
     [Fact]
-    public void Mulligan_is_offered_as_legal_action_and_pending_interaction()
+    public void R84_mulligan_is_offered_as_legal_action_and_pending_interaction()
     {
         var view = Projection.ToView(TestMatches.Start().State, seat: 1);
 

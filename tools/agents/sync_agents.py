@@ -17,7 +17,7 @@ Generated (never edit by hand; every file carries a GENERATED marker):
     .github/instructions/*.instructions.md     Copilot instructions from rules
 
 OpenSpec skills (openspec-*) are managed by `openspec init/update` and only validated here.
-Standard library only, so it runs anywhere Python 3.10+ is installed.
+Standard library only, so it runs anywhere Python 3.11+ is installed.
 """
 
 from __future__ import annotations

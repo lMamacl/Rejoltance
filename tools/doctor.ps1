@@ -33,7 +33,7 @@ $git = Get-ToolVersion 'git' @('--version')
 if ($git) { Ok $git } else { Fail "git not found -> winget install Git.Git" }
 
 $py = Get-ToolVersion 'python' @('--version')
-if ($py) { Ok "$py (repo tools: tools/*.py)" } else { Fail "Python 3.10+ not found -> winget install Python.Python.3.13" }
+if ($py) { Ok "$py (repo tools: tools/*.py)" } else { Fail "Python 3.11+ not found -> winget install Python.Python.3.13" }
 
 Write-Host "`nOptional tools"
 $uv = Get-ToolVersion 'uv' @('--version')
@@ -41,7 +41,7 @@ if ($uv) { Ok "$uv (Jira/Confluence MCP server via uvx)" } else { Warn "uv not f
 $aspire = Get-ToolVersion 'aspire' @('--version')
 if ($aspire) { Ok "Aspire CLI $aspire" } else { Warn "Aspire CLI not installed - fine, use: dotnet run --project src/Rejoltance.AppHost (or install: https://aspire.dev/get-started/install-cli/)" }
 $docker = Get-ToolVersion 'docker' @('--version')
-if ($docker) { Ok $docker } else { Warn "Docker/Podman not found - not needed until PostgreSQL (Sprint 3)" }
+if ($docker) { Ok $docker } else { Warn "Docker/Podman not found - not needed until PostgreSQL (Sprint 4)" }
 
 Write-Host "`nWindows pitfalls"
 if ($root.Length -gt 60) { Warn "Repo path is long ($($root.Length) chars). Aspire tools can hit the 260-char limit. Prefer e.g. C:\dev\Rejoltance" } else { Ok "Repo path length $($root.Length)" }

@@ -14,11 +14,11 @@ public sealed class ContentTests
     }
 
     [Fact]
-    public void Starter_decks_are_legal() =>
+    public void R01_starter_decks_are_legal() =>
         Assert.All(TestMatches.Catalog.StarterDecks, d => Assert.Empty(ContentValidator.ValidateDeck(d, TestMatches.Catalog)));
 
     [Fact]
-    public void Unknown_dsl_words_fail_loud()
+    public void R68_unknown_dsl_words_fail_loud()
     {
         var card = new CardDefinition
         {
@@ -35,7 +35,7 @@ public sealed class ContentTests
     }
 
     [Fact]
-    public void Deck_rules_reject_tokens_and_extra_copies()
+    public void R01_deck_rules_reject_tokens_and_extra_copies()
     {
         var deck = new DeckDefinition("bad", [.. Enumerable.Repeat(1, 4), 900, .. Enumerable.Repeat(2, 25)]);
 

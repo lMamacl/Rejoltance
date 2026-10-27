@@ -1,0 +1,29 @@
+Issue Id,Issue Type,Summary,Epic Name,Description,Labels,Component/s
+E0,Epic,E0 Fundamenty i proces,E0 Fundamenty i proces,"Środowisko, DIP, ceremonie Scrum, kontakt z użytkownikiem końcowym. Wspólna odpowiedzialność zespołu.
+
+Właściciel: PO sprintu (rotacyjnie)
+Źródło: docs/05-backlog/backlog.toml",rejoltance,Process
+E1,Epic,E1 Silnik reguł (Kernel),E1 Silnik reguł (Kernel),"Deterministyczne reguły gry: runda, kroki, walka, słowa kluczowe, śmierć. src/Rejoltance.Kernel, reguły R-0x…R-5x, R-7x.
+
+Właściciel: do przydzielenia (#9)
+Źródło: docs/05-backlog/backlog.toml",rejoltance,Kernel
+E2,Epic,E2 Interpreter efektów kart (DSL),E2 Interpreter efektów kart (DSL),"Karty jako dane: rejestr akcji, wyzwalacze, warunki, cele, koszt. src/Rejoltance.Content + handlery w Kernelu, reguły R-2x, R-6x.
+
+Właściciel: do przydzielenia (#9)
+Źródło: docs/05-backlog/backlog.toml",rejoltance,Content
+E3,Epic,E3 Serwer i sieć czasu rzeczywistego,E3 Serwer i sieć czasu rzeczywistego,"Pokoje PvP, SignalR, walidacja i autoryzacja, zdarzenia per gracz, reconnect, timer. src/Rejoltance.Server, reguły R-7x, R-8x.
+
+Właściciel: do przydzielenia (#9)
+Źródło: docs/05-backlog/backlog.toml",rejoltance,Server
+E4,Epic,E4 Klient web,E4 Klient web,"React + TypeScript: plansza, ręka, prompty, lobby, animacje, dźwięk. src/web — renderuje MatchView, wysyła Intent.
+
+Właściciel: do przydzielenia (#9)
+Źródło: docs/05-backlog/backlog.toml",rejoltance,Web
+E5,Epic,E5 Bot AI i symulator,E5 Bot AI i symulator,"Wyrocznia z prototypu, testy różnicowe, boty jako Policy na LegalActions, symulator headless, balans.
+
+Właściciel: do przydzielenia (#9)
+Źródło: docs/05-backlog/backlog.toml",rejoltance,AI
+E6,Epic,"E6 Platforma: konta, talie, dane, wdrożenie","E6 Platforma: konta, talie, dane, wdrożenie","CI/CD, testy E2E, konta, talie i deckbuilder, PostgreSQL, wdrożenie demo, dokumentacja (EU5/EU6), historia i replay.
+
+Właściciel: do przydzielenia (#9)
+Źródło: docs/05-backlog/backlog.toml",rejoltance,Platform

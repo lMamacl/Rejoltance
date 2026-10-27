@@ -1,5 +1,5 @@
 name: Story (szkic do Jiry)
-description: Szkic historyjki do przeniesienia do Jiry / backlog.yaml. Docelowo story żyje w Jirze.
+description: Szkic historyjki do przeniesienia do Jiry / backlog.toml. Docelowo story żyje w Jirze.
 labels: [story]
 body:
   - type: input

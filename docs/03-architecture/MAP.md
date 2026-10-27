@@ -61,7 +61,7 @@ klik w UI → store.send(Intent) → SignalR SendIntent(matchId, intent)
 
 | Element | Stan |
 |---|---|
-| Start meczu, dobieranie, mulligan, fatigue, pełna ręka, poddanie | [V] zaimplementowane + testy R‑01…R‑06 |
+| Start meczu, dobieranie, mulligan, fatigue, pełna ręka, poddanie, fog of war | [V] zaimplementowane + testy (R-02, R-03, R-13, R-14, R-70, R-72, R-80, R-83) |
 | Fazy rundy, zagrywanie kart, walka, efekty kart | **nie** — `NotImplementedException` (backlog E1/E2) |
 | Sandbox w przeglądarce przez SignalR | [V] start meczu + mulligan |
 | PvP (dwa miejsca), bot, konta, talie | backlog E3/E5/E6 |

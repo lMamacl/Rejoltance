@@ -12,7 +12,7 @@ public static class GameRules
     public const int OpeningHand = 4;
     public const int LaneCount = 4;
 
-    /// <summary>R-03: max Blood equals the round number, capped at 10.</summary>
+    /// <summary>R-10: max Blood equals the round number, capped at 10.</summary>
     public static int MaxBloodForRound(int round) => Math.Clamp(round, 0, MaxBlood);
 }
 

@@ -1,0 +1,1071 @@
+# Backlog Rejoltance — JEDYNE źródło prawdy dla Jiry.
+# Edytuj tutaj, potem: python tools/backlog/gen_jira_csv.py   (walidacja: --check)
+# Format: TOML (parser w bibliotece standardowej Pythona 3.11+). Instrukcja: docs/05-backlog/README.md
+#
+# Fale (linia cięcia): W0 fundament · W1 MVP gry (semestr 1) · W2 pełna gra (semestr 2) · W3 dodatki (jeśli starczy czasu)
+# Story bez [[...task]] ma pole estimate_h (szacunek do refinementu); taski max 4 h.
+# Po imporcie wpisz klucz Jira w polu jira = "REJ-123", żeby kolejny import nie zdublował zgłoszeń.
+
+[meta]
+project_key = "REJ"
+team_size = 6
+hours_per_person_week = 5
+buffer = 0.10
+estimate_format = "seconds"   # seconds | jira ("4h") — ustal po testowym imporcie (docs/05-backlog/test-import)
+
+[[sprint]]
+id = "S0"
+start = "2026-10-27"
+end = "2026-11-02"
+weeks = 1
+goal = "Zespół pracuje w jednym repo i Jirze; DIP gotowy; spór o reguły rozstrzygnięty."
+
+[[sprint]]
+id = "S1"
+start = "2026-11-03"
+end = "2026-11-16"
+weeks = 2
+goal = "Dwie przeglądarki wchodzą do jednego pokoju i rozgrywają mulligan, wybór kolejności i start rundy."
+
+[[sprint]]
+id = "S2"
+start = "2026-11-17"
+end = "2026-11-30"
+weeks = 2
+goal = "Gracze zagrywają jednostki w krokach rundy, serwer odrzuca nielegalne ruchy."
+
+[[sprint]]
+id = "S3"
+start = "2026-12-01"
+end = "2026-12-14"
+weeks = 2
+goal = "Walka 4 linii rozstrzyga się do końca meczu; można zagrać z prostym botem."
+
+[[sprint]]
+id = "S4"
+start = "2026-12-15"
+end = "2027-01-11"
+weeks = 2           # 4 tygodnie kalendarzowe, ale przerwa świąteczna — liczymy 2 tygodnie pracy
+goal = "Słowa kluczowe walki działają; lobby z pokojami; baza PostgreSQL w Aspire."
+
+[[sprint]]
+id = "S5"
+start = "2027-01-12"
+end = "2027-01-25"
+weeks = 2
+goal = "Grywalne MVP z 12 kartami online i z botem, wdrożone pod publicznym adresem."
+
+# Semestr 2 — sprinty bez dat (planowane po semestrze 1). Story tutaj leżą poniżej linii cięcia semestru 1.
+[[sprint]]
+id = "S6"
+weeks = 2
+semester = 2
+goal = "Semestr 2 — pierwszy sprint (pełna pula kart, mocniejszy bot, replay)."
+
+[[sprint]]
+id = "S7"
+weeks = 2
+semester = 2
+goal = "Semestr 2 — dodatki (obserwator, ranking, balans)."
+
+# =====================================================================================
+[[epic]]
+id = "E0"
+name = "Fundamenty i proces"
+component = "Process"
+owner = "PO sprintu (rotacyjnie)"
+description = "Środowisko, DIP, ceremonie Scrum, kontakt z użytkownikiem końcowym. Wspólna odpowiedzialność zespołu."
+
+[[epic.story]]
+id = "E0-S01"
+title = "Konfiguracja narzędzi zespołu"
+as_a = "członek zespołu"
+i_want = "mieć działające repo, CI, Jirę i Confluence"
+so_that = "od pierwszego dnia pracować według jednych zasad"
+acceptance = [
+  "GIVEN czysty klon repo WHEN uruchamiam tools/setup.ps1 THEN testy przechodzą, a dotnet run --project src/Rejoltance.AppHost uruchamia grę",
+  "GIVEN PR do develop WHEN CI się zakończy THEN wszystkie joby są zielone, a gałąź main/develop jest chroniona",
+  "GIVEN backlog zaimportowany do Jiry WHEN otwieram tablicę THEN widzę epiki E0–E6 ze story i szacunkami",
+]
+sp = 3
+sprint = "S0"
+wave = "W0"
+[[epic.story.task]]
+title = "Każdy członek uruchamia środowisko i zgłasza problemy (doctor.ps1)"
+h = 3
+[[epic.story.task]]
+title = "Ochrona gałęzi main/develop, sekret BITBUCKET_TOKEN, GitHub Pages"
+h = 1
+[[epic.story.task]]
+title = "Testowy import CSV do Jiry i import pełnego backlogu"
+h = 2
+[[epic.story.task]]
+title = "Struktura przestrzeni Confluence (DIP, moduły, Scrum, protokoły)"
+h = 1
+
+[[epic.story]]
+id = "E0-S02"
+title = "Dokument Inicjujący Projekt (DIP)"
+as_a = "zespół"
+i_want = "zatwierdzony DIP z epikiem każdego studenta"
+so_that = "spełnić warunek zaliczenia i mieć wspólny zakres (EU1)"
+acceptance = [
+  "GIVEN szablon docs/01-dip/DIP.md WHEN każdy uzupełni swój epik THEN każdy epik ma autora, zakres i min. 3 historyjki z kryteriami GIVEN/WHEN/THEN",
+  "GIVEN gotowy DIP WHEN zespół go zatwierdzi THEN wersja v1.0 jest w Confluence z datą i podpisami",
+]
+sp = 5
+sprint = "S0"
+wave = "W0"
+[[epic.story.task]]
+title = "Epik E1 w DIP (autor: właściciel E1)"
+h = 2
+[[epic.story.task]]
+title = "Epik E2 w DIP (autor: właściciel E2)"
+h = 2
+[[epic.story.task]]
+title = "Epik E3 w DIP (autor: właściciel E3)"
+h = 2
+[[epic.story.task]]
+title = "Epik E4 w DIP (autor: właściciel E4)"
+h = 2
+[[epic.story.task]]
+title = "Epik E5 w DIP (autor: właściciel E5)"
+h = 2
+[[epic.story.task]]
+title = "Epik E6 w DIP (autor: właściciel E6)"
+h = 2
+[[epic.story.task]]
+title = "Przegląd DIP, publikacja w Confluence"
+h = 1
+
+[[epic.story]]
+id = "E0-S03"
+title = "Rada graczy testowych"
+as_a = "Product Owner"
+i_want = "stałą grupę 3 użytkowników końcowych"
+so_that = "każdy sprint kończył się odbiorem z udziałem użytkownika (EU1/EU2)"
+acceptance = [
+  "GIVEN lista 3 osób spoza zespołu WHEN kończy się sprint THEN co najmniej 2 z nich testują przyrost, a protokół trafia do Confluence",
+]
+sp = 2
+sprint = "S0"
+wave = "W0"
+[[epic.story.task]]
+title = "Zrekrutować 3 graczy testowych (koło naukowe / rok)"
+h = 2
+[[epic.story.task]]
+title = "Szablon protokołu odbioru w Confluence"
+h = 1
+
+[[epic.story]]
+id = "E0-S04"
+title = "Rozstrzygnięcie rozbieżności reguł D-01…D-20"
+as_a = "zespół"
+i_want = "decyzję w każdej spornej regule"
+so_that = "Kernel implementował jedną, uzgodnioną grę"
+acceptance = [
+  "GIVEN tabela docs/02-rules/ROZBIEZNOSCI.md WHEN odbędzie się spotkanie decyzyjne THEN każda pozycja ma wpisaną decyzję",
+  "GIVEN decyzja inna niż zachowanie prototypu WHEN jest zapisana THEN odpowiednie wymaganie w openspec/specs zostało zaktualizowane",
+]
+sp = 2
+sprint = "S0"
+wave = "W0"
+rules = ["R-03", "R-33", "R-45", "R-71"]
+[[epic.story.task]]
+title = "Spotkanie decyzyjne: przegląd D-01…D-20 na prototypie"
+h = 2
+[[epic.story.task]]
+title = "Aktualizacja openspec/specs i ROZBIEZNOSCI po decyzjach"
+h = 2
+
+[[epic.story]]
+id = "E0-S11"
+title = "Ceremonie Scrum — Sprint 1"
+as_a = "Product Owner Sprintu 1"
+i_want = "przeprowadzić planning, daily, review i retro"
+so_that = "sprint był ocenialny (EU3–EU5) i miał wykres spalania"
+acceptance = [
+  "GIVEN koniec sprintu WHEN PO zamyka sprint THEN w Confluence są: plan, notatki z daily, protokół review z użytkownikiem, retro z tabelą estymata vs czas i zrzut Burndown",
+]
+sp = 2
+sprint = "S1"
+wave = "W0"
+[[epic.story.task]]
+title = "Sprint Planning + cel sprintu"
+h = 1
+[[epic.story.task]]
+title = "Raporty z daily (skill rj-daily-report)"
+h = 1
+[[epic.story.task]]
+title = "Sprint Review z graczami testowymi + protokół"
+h = 1
+[[epic.story.task]]
+title = "Retrospektywa, estymata vs rzeczywistość, Burndown (skill rj-sprint-report)"
+h = 1
+
+[[epic.story]]
+id = "E0-S12"
+title = "Ceremonie Scrum — Sprint 2"
+as_a = "Product Owner Sprintu 2"
+i_want = "przeprowadzić planning, daily, review i retro"
+so_that = "sprint był ocenialny (EU3–EU5)"
+acceptance = ["GIVEN koniec sprintu WHEN PO zamyka sprint THEN dokumentacja ceremonii i Burndown są w Confluence"]
+sp = 2
+sprint = "S2"
+wave = "W0"
+estimate_h = 4
+
+[[epic.story]]
+id = "E0-S13"
+title = "Ceremonie Scrum — Sprint 3"
+as_a = "Product Owner Sprintu 3"
+i_want = "przeprowadzić planning, daily, review i retro"
+so_that = "sprint był ocenialny (EU3–EU5)"
+acceptance = ["GIVEN koniec sprintu WHEN PO zamyka sprint THEN dokumentacja ceremonii i Burndown są w Confluence"]
+sp = 2
+sprint = "S3"
+wave = "W0"
+estimate_h = 4
+
+[[epic.story]]
+id = "E0-S14"
+title = "Ceremonie Scrum — Sprint 4"
+as_a = "Product Owner Sprintu 4"
+i_want = "przeprowadzić planning, daily, review i retro"
+so_that = "sprint był ocenialny (EU3–EU5)"
+acceptance = ["GIVEN koniec sprintu WHEN PO zamyka sprint THEN dokumentacja ceremonii i Burndown są w Confluence"]
+sp = 2
+sprint = "S4"
+wave = "W0"
+estimate_h = 4
+
+[[epic.story]]
+id = "E0-S15"
+title = "Ceremonie Scrum — Sprint 5 i podsumowanie semestru"
+as_a = "Product Owner Sprintu 5"
+i_want = "przeprowadzić ceremonie i podsumować semestr"
+so_that = "sprint był ocenialny, a zespół miał plan na semestr 2"
+acceptance = ["GIVEN koniec semestru WHEN PO zamyka sprint THEN jest raport semestru z metrykami velocity i planem semestru 2"]
+sp = 3
+sprint = "S5"
+wave = "W0"
+estimate_h = 5
+
+# =====================================================================================
+[[epic]]
+id = "E1"
+name = "Silnik reguł (Kernel)"
+component = "Kernel"
+owner = "do przydzielenia (#9)"
+description = "Deterministyczne reguły gry: runda, kroki, walka, słowa kluczowe, śmierć. src/Rejoltance.Kernel, reguły R-0x…R-5x, R-7x."
+
+[[epic.story]]
+id = "E1-S01"
+title = "Wybór kolejności i start rundy"
+as_a = "gracz"
+i_want = "po mulliganie zdecydować, czy zaczynam, i rozpocząć rundę 1"
+so_that = "mecz przechodzi z przygotowania do gry"
+acceptance = [
+  "GIVEN obaj zrobili mulligan WHEN gracz 0 wybiera 'pierwszy', a gracz 1 'drugi' THEN rundę 1 zaczyna gracz 0, obaj mają 1/1 Blood",
+  "GIVEN obaj wybrali to samo WHEN odpowiedzi dotrą THEN rozpoczynający jest losowany z seeda (powtarzalnie)",
+  "GIVEN koniec rundy 1 WHEN zaczyna się runda 2 THEN rozpoczyna drugi gracz, obaj mają 2/2 Blood i dobrali po karcie",
+]
+sp = 3
+sprint = "S1"
+wave = "W1"
+rules = ["R-04", "R-10", "R-11"]
+[[epic.story.task]]
+title = "ChooseOrderIntent + PendingInteraction 'chooseOrder' + losowanie z SeededRng"
+h = 3
+[[epic.story.task]]
+title = "StartRound: numer rundy, Blood, dobranie od rundy 2, naprzemienny rozpoczynający"
+h = 3
+[[epic.story.task]]
+title = "Testy R04_*, R10_*, R11_*"
+h = 2
+
+[[epic.story]]
+id = "E1-S02"
+title = "Kroki rundy i zagrywanie jednostek"
+as_a = "gracz"
+i_want = "w swoim kroku zagrywać jednostki na wolne linie i kończyć krok"
+so_that = "budować planszę zgodnie z zasadami"
+acceptance = [
+  "GIVEN krok jednostek gracza A WHEN A zagrywa jednostkę za 1 Blood na linię 2 THEN jednostka stoi na linii 2, A ma 0 Blood",
+  "GIVEN krok jednostek WHEN A próbuje zagrać akcję THEN intencja jest odrzucona, a LegalActions nie zawiera tej karty",
+  "GIVEN krok mieszany WHEN B kończy krok THEN aktywny jest A w kroku akcji",
+]
+sp = 5
+sprint = "S2"
+wave = "W1"
+rules = ["R-12", "R-20", "R-21"]
+[[epic.story.task]]
+title = "Maszyna kroków: EndStepIntent, ActiveSeat, przejście do walki"
+h = 3
+[[epic.story.task]]
+title = "LegalActions dla kroku: grywalne karty i wolne linie"
+h = 3
+[[epic.story.task]]
+title = "PlayCardIntent dla jednostek: koszt, slot, buff globalny, OnPlayed (zdarzenie)"
+h = 4
+[[epic.story.task]]
+title = "Testy R12_*, R20_*, R21_*"
+h = 2
+
+[[epic.story]]
+id = "E1-S03"
+title = "Walka 4 linii i koniec meczu"
+as_a = "gracz"
+i_want = "żeby po kroku akcji linie rozstrzygnęły się same"
+so_that = "jednostki walczyły, a mecz mógł się zakończyć"
+acceptance = [
+  "GIVEN jednostki 3/2 i 2/3 naprzeciw WHEN linia się rozstrzyga THEN obie giną (uderzenia jednoczesne)",
+  "GIVEN latający atakujący i naziemny obrońca WHEN linia się rozstrzyga THEN trafiony jest bohater",
+  "GIVEN bohater przeciwnika ma 2 HP WHEN jednostka 3/3 trafia go w walce THEN mecz kończy się wygraną, kolejne linie się nie rozstrzygają",
+]
+sp = 5
+sprint = "S3"
+wave = "W1"
+rules = ["R-30", "R-32", "R-33", "R-50", "R-70", "R-71"]
+estimate_h = 9
+
+[[epic.story]]
+id = "E1-S07"
+title = "Kolejka wyzwalaczy z obrażeń i Bonus Attack"
+as_a = "gracz"
+i_want = "żeby efekty 'gdy zada obrażenia' i 'gdy zabije' działały w walce w poprawnej kolejności"
+so_that = "jednostki z takimi zdolnościami były grywalne"
+acceptance = [
+  "GIVEN jednostka z OnDamagedEnemyUnit, która zginie w starciu WHEN zada obrażenia THEN jej wyzwalacz wykona się po obu uderzeniach",
+  "GIVEN jednostka 4/4 bez przeciwnika WHEN dostaje Bonus Attack THEN wrogi bohater traci 4 HP",
+]
+sp = 3
+sprint = "S3"
+wave = "W1"
+rules = ["R-34", "R-35"]
+estimate_h = 6
+
+[[epic.story]]
+id = "E1-S04"
+title = "Słowa kluczowe walki"
+as_a = "gracz"
+i_want = "żeby Armored, Marked, Stunned, Burning, SplashDamage i Breakthrough działały jak w prototypie"
+so_that = "karty miały swoją tożsamość"
+acceptance = [
+  "GIVEN jednostka z Armored(1) i Marked WHEN dostaje trafienie za 3 THEN traci 4 HP",
+  "GIVEN jednostka ze Stunned WHEN przychodzi jej uderzenie THEN nie uderza, a status znika",
+  "GIVEN płonąca jednostka 2/2 WHEN kończy się runda THEN ma 1 HP",
+]
+sp = 8
+sprint = "S4"
+wave = "W1"
+rules = ["R-15", "R-40", "R-41", "R-42", "R-43", "R-44", "R-45"]
+estimate_h = 14
+
+[[epic.story]]
+id = "E1-S05"
+title = "SoulGuard, Unkillable, Sacrifice"
+as_a = "gracz"
+i_want = "żeby ochrony przed śmiercią i poświęcenie działały w poprawnej kolejności"
+so_that = "karty oparte na śmierci były grywalne"
+acceptance = [
+  "GIVEN jednostka z SoulGuard WHEN zostaje zniszczona THEN ma 1 HP i traci SoulGuard",
+  "GIVEN jednostka z SoulGuard WHEN zostaje poświęcona THEN ginie",
+  "GIVEN jednostka z Unkillable WHEN ginie THEN po efektach pośmiertnych wraca do ręki",
+]
+sp = 5
+sprint = "S5"
+wave = "W1"
+rules = ["R-46", "R-47", "R-51", "R-54"]
+estimate_h = 9
+
+[[epic.story]]
+id = "E1-S06"
+title = "Silence i powrót do ręki"
+as_a = "gracz"
+i_want = "wyciszać jednostki i zawracać je do ręki"
+so_that = "mieć odpowiedź na silne jednostki przeciwnika"
+acceptance = ["GIVEN wyciszona jednostka z OnDeath WHEN ginie THEN efekt pośmiertny się nie wykonuje"]
+sp = 3
+sprint = "S6"
+wave = "W2"
+rules = ["R-52", "R-53"]
+estimate_h = 6
+
+[[epic.story]]
+id = "E1-S08"
+title = "Efekty przed i po walce z wyborem celu"
+as_a = "gracz"
+i_want = "wybierać cel efektów 'przed walką'"
+so_that = "decydować zamiast losowania"
+acceptance = ["GIVEN jednostka z efektem przed walką i 2 wrogie cele WHEN walka dochodzi do linii THEN właściciel dostaje PendingInteraction z 2 opcjami"]
+sp = 3
+sprint = "S6"
+wave = "W2"
+rules = ["R-31", "R-84"]
+estimate_h = 8
+
+# =====================================================================================
+[[epic]]
+id = "E2"
+name = "Interpreter efektów kart (DSL)"
+component = "Content"
+owner = "do przydzielenia (#9)"
+description = "Karty jako dane: rejestr akcji, wyzwalacze, warunki, cele, koszt. src/Rejoltance.Content + handlery w Kernelu, reguły R-2x, R-6x."
+
+[[epic.story]]
+id = "E2-S01"
+title = "Rejestr akcji, wyzwalaczy i warunków"
+as_a = "twórca kart"
+i_want = "żeby efekt karty był wykonywany z danych przez rejestr handlerów"
+so_that = "nowa karta nie wymagała zmiany silnika"
+acceptance = [
+  "GIVEN karta z wyzwalaczem i warunkiem IsSubtype WHEN zachodzi zdarzenie dla innego podtypu THEN efekt się nie wykonuje",
+  "GIVEN akcja bez zarejestrowanego handlera WHEN efekt się uruchamia THEN rzucany jest wyjątek z nazwą akcji",
+]
+sp = 5
+sprint = "S1"
+wave = "W1"
+rules = ["R-60", "R-66", "R-68"]
+[[epic.story.task]]
+title = "Projekt IActionHandler + rejestr (szkic ADR jeśli zmienia kontrakt)"
+h = 3
+[[epic.story.task]]
+title = "Dyspozytor wyzwalaczy (strefy Board/Hand, Choice)"
+h = 2
+[[epic.story.task]]
+title = "Ewaluator warunków And/Or/Not/IsSelf/IsSubtype/IsStatus/IsEnemy/IsFriendly/HasSubtypeOnBoard"
+h = 2
+[[epic.story.task]]
+title = "Testy R60_*, R66_*, R68_*"
+h = 2
+
+[[epic.story]]
+id = "E2-S02"
+title = "Wybór i walidacja celów"
+as_a = "gracz online"
+i_want = "żeby serwer przyjmował tylko legalne cele"
+so_that = "nikt nie mógł poświęcić mojej jednostki ani oszukać wyborem"
+acceptance = [
+  "GIVEN karta wymagająca poświęcenia przyjaznej jednostki WHEN wskazuję jednostkę wroga THEN intencja jest odrzucona, Blood bez zmian",
+  "GIVEN karta z 2 opcjami WHEN wybieram opcję 5 THEN intencja jest odrzucona przed zapłatą",
+  "GIVEN akcja bez dostępnych celów WHEN pytam o LegalActions THEN karty nie ma na liście",
+]
+sp = 5
+sprint = "S2"
+wave = "W1"
+rules = ["R-22", "R-25"]
+[[epic.story.task]]
+title = "Rodzaje celów z danych karty (port picks/apicks bez UI)"
+h = 3
+[[epic.story.task]]
+title = "Walidacja TargetRef przed zmianą stanu"
+h = 3
+[[epic.story.task]]
+title = "Testy negatywne R25_* (scenariusze oszustw z prototypu)"
+h = 3
+
+[[epic.story]]
+id = "E2-S03"
+title = "Akcje obrażeń, leczenia i statystyk"
+as_a = "gracz"
+i_want = "żeby karty zadające obrażenia, leczące i wzmacniające działały"
+so_that = "grać pierwszymi kartami z efektami"
+acceptance = [
+  "GIVEN bohater ma 18 HP WHEN karta leczy o 5 THEN ma 20 HP",
+  "GIVEN jednostka z atakiem 1 WHEN dostaje -3 ataku THEN ma atak 0",
+]
+sp = 3
+sprint = "S3"
+wave = "W1"
+rules = ["R-48", "R-61", "R-62"]
+estimate_h = 8
+
+[[epic.story]]
+id = "E2-S04"
+title = "Akcje kart, stref i zasobu"
+as_a = "gracz"
+i_want = "dobierać, szukać w talii, dodawać karty i Blood efektami"
+so_that = "karty pomocnicze działały"
+acceptance = [
+  "GIVEN talia z kartami 1, 4, 2 bez wyboru gracza WHEN TutorCard THEN do ręki trafia karta za 4",
+  "GIVEN 9 Blood WHEN AddResource +2 THEN 10 Blood",
+]
+sp = 3
+sprint = "S4"
+wave = "W1"
+rules = ["R-13", "R-63", "R-65"]
+estimate_h = 8
+
+[[epic.story]]
+id = "E2-S05"
+title = "Talia MVP: 12 kart grywalnych end-to-end"
+as_a = "gracz testowy"
+i_want = "zagrać pełny mecz talią 12 różnych kart"
+so_that = "ocenić grę na Sprint Review"
+acceptance = [
+  "GIVEN talia MVP (12 kart × 2-3 kopie) WHEN rozgrywam mecz z botem THEN każda z 12 kart działa zgodnie z opisem",
+  "GIVEN dowolna karta MVP WHEN ją zagram THEN istnieje test R-nn pokrywający jej efekt",
+]
+sp = 3
+sprint = "S5"
+wave = "W1"
+rules = ["R-01"]
+estimate_h = 8
+
+[[epic.story]]
+id = "E2-S06"
+title = "Koszt i efekty działające z ręki"
+as_a = "gracz"
+i_want = "żeby karty tańsze z ręki i przywoływane z ręki działały"
+so_that = "zagrywać kombinacje"
+acceptance = ["GIVEN 2 Tea Maid na planszy WHEN liczę koszt akcji za 3 THEN wynosi 1"]
+sp = 3
+sprint = "S6"
+wave = "W2"
+rules = ["R-23", "R-24"]
+estimate_h = 8
+
+[[epic.story]]
+id = "E2-S07"
+title = "Efekty pasywne w danych (bez hardcodu id)"
+as_a = "twórca kart"
+i_want = "opisać Tea Maid, Wyvern i Survivalist w DSL"
+so_that = "silnik nie znał numerów kart"
+acceptance = ["GIVEN dane kart WHEN szukam w Kernelu identyfikatorów 46, 60, 14 THEN ich nie ma, a testy R-23/R-46/R-67 przechodzą"]
+sp = 3
+sprint = "S6"
+wave = "W2"
+rules = ["R-67"]
+estimate_h = 6
+
+[[epic.story]]
+id = "E2-S08"
+title = "Akcje planszy: MakeAUnit, MoveRight, DestroyUnit, Transform"
+as_a = "gracz"
+i_want = "żeby karty przywołujące i przemieniające jednostki działały"
+so_that = "grać pełną pulą kart"
+acceptance = ["GIVEN karty 61 i 62 na planszy WHEN Transform z Partner THEN stają się 907 i 908"]
+sp = 3
+sprint = "S6"
+wave = "W2"
+rules = ["R-64", "R-69"]
+estimate_h = 8
+
+[[epic.story]]
+id = "E2-S09"
+title = "Wszystkie 69 kart"
+as_a = "gracz"
+i_want = "grać każdą kartą z prototypu"
+so_that = "gra miała pełną głębię"
+acceptance = ["GIVEN każda z 69 kart WHEN ją zagram THEN zachowanie zgadza się z wyrocznią prototypu (E5-S02)"]
+sp = 8
+sprint = "S7"
+wave = "W2"
+estimate_h = 20
+
+# =====================================================================================
+[[epic]]
+id = "E3"
+name = "Serwer i sieć czasu rzeczywistego"
+component = "Server"
+owner = "do przydzielenia (#9)"
+description = "Pokoje PvP, SignalR, walidacja i autoryzacja, zdarzenia per gracz, reconnect, timer. src/Rejoltance.Server, reguły R-7x, R-8x."
+
+[[epic.story]]
+id = "E3-S01"
+title = "Pokój PvP na kod / link"
+as_a = "gracz"
+i_want = "utworzyć pokój i wysłać koledze kod"
+so_that = "zagrać z nim w dwóch przeglądarkach"
+acceptance = [
+  "GIVEN gracz utworzył pokój WHEN drugi gracz wpisze kod THEN obaj dostają MatchView ze swoim miejscem",
+  "GIVEN pełny pokój WHEN trzecia osoba wpisze kod THEN dostaje komunikat 'pokój pełny'",
+  "GIVEN gracz 0 wykona ruch WHEN serwer go przetworzy THEN obaj gracze dostają MatchUpdated ze swoją projekcją",
+]
+sp = 5
+sprint = "S1"
+wave = "W1"
+rules = ["R-80", "R-82"]
+[[epic.story.task]]
+title = "Model pokoju: kod 5 znaków, dwa miejsca, przypisanie połączeń"
+h = 3
+[[epic.story.task]]
+title = "Hub: CreateRoom/JoinRoom, wysyłka MatchUpdated per miejsce (grupy SignalR)"
+h = 3
+[[epic.story.task]]
+title = "Testy z dwoma klientami SignalR (ServerFactory)"
+h = 3
+
+[[epic.story]]
+id = "E3-S02"
+title = "Autoryzacja miejsca i walidacja intencji"
+as_a = "gracz online"
+i_want = "żeby nikt nie mógł grać za mnie ani w moim meczu"
+so_that = "mecz był uczciwy"
+acceptance = [
+  "GIVEN połączenie spoza meczu WHEN wysyła intencję THEN dostaje błąd, stan bez zmian",
+  "GIVEN gracz 1 WHEN wysyła intencję w kroku gracza 0 THEN intencja jest odrzucona",
+]
+sp = 3
+sprint = "S2"
+wave = "W1"
+rules = ["R-81", "R-82"]
+[[epic.story.task]]
+title = "Mapowanie połączenie → miejsce; odrzucanie cudzych intencji"
+h = 3
+[[epic.story.task]]
+title = "Testy negatywne hubu (cudzy mecz, cudza tura, zły matchId)"
+h = 3
+
+[[epic.story]]
+id = "E3-S03"
+title = "Zdarzenia dla animacji per gracz"
+as_a = "frontend"
+i_want = "dostawać listę zdarzeń z rozstrzygnięcia (atak, obrażenia, śmierć) bez ukrytych danych"
+so_that = "animować to, co się stało, zamiast porównywać stany"
+acceptance = ["GIVEN walka w linii WHEN serwer wysyła MatchUpdated THEN zdarzenia są w kolejności rozstrzygnięcia, a karty przeciwnika z ręki są zanonimizowane"]
+sp = 3
+sprint = "S3"
+wave = "W1"
+rules = ["R-80"]
+estimate_h = 6
+
+[[epic.story]]
+id = "E3-S04"
+title = "Limit czasu tury"
+as_a = "gracz"
+i_want = "żeby przeciwnik nie mógł grać w nieskończoność"
+so_that = "mecz miał tempo"
+acceptance = ["GIVEN aktywny gracz nie robi nic przez 90 s WHEN czas minie THEN krok jest automatycznie zakończony, a odpowiedź na PendingInteraction to pierwsza legalna opcja"]
+sp = 3
+sprint = "S4"
+wave = "W1"
+rules = ["R-31"]
+estimate_h = 6
+
+[[epic.story]]
+id = "E3-S05"
+title = "Reconnect w 60 sekund"
+as_a = "gracz z niestabilnym Wi-Fi"
+i_want = "wrócić do trwającego meczu"
+so_that = "nie przegrywać przez sieć"
+acceptance = [
+  "GIVEN gracz stracił połączenie WHEN wróci po 20 s THEN dostaje bieżący MatchView i gra dalej",
+  "GIVEN gracz nie wraca przez 60 s WHEN czas minie THEN przegrywa walkowerem",
+]
+sp = 5
+sprint = "S6"
+wave = "W2"
+rules = ["R-73"]
+estimate_h = 10
+
+[[epic.story]]
+id = "E3-S06"
+title = "Ochrona hubu: rate limiting i logi bezpieczeństwa"
+as_a = "administrator"
+i_want = "ograniczyć zalewanie serwera intencjami"
+so_that = "jeden klient nie zablokował innych"
+acceptance = ["GIVEN klient wysyła > 20 intencji/s WHEN limit zostanie przekroczony THEN kolejne są odrzucane i logowane"]
+sp = 2
+sprint = "S5"
+wave = "W1"
+estimate_h = 5
+
+[[epic.story]]
+id = "E3-S07"
+title = "Tryb obserwatora"
+as_a = "obserwator"
+i_want = "oglądać mecz na żywo z opóźnieniem"
+so_that = "organizować turniej na Sprint Review"
+acceptance = ["GIVEN obserwator w pokoju WHEN trwa mecz THEN widzi planszę bez rąk graczy, z opóźnieniem 1 rundy"]
+sp = 5
+sprint = "S7"
+wave = "W3"
+estimate_h = 10
+
+# =====================================================================================
+[[epic]]
+id = "E4"
+name = "Klient web"
+component = "Web"
+owner = "do przydzielenia (#9)"
+description = "React + TypeScript: plansza, ręka, prompty, lobby, animacje, dźwięk. src/web — renderuje MatchView, wysyła Intent."
+
+[[epic.story]]
+id = "E4-S01"
+title = "Plansza 4 linie i wachlarz ręki"
+as_a = "gracz"
+i_want = "widzieć planszę, rękę, HP i Blood jak w prototypie"
+so_that = "rozumieć stan gry na pierwszy rzut oka"
+acceptance = [
+  "GIVEN MatchView z próbki WHEN ekran się renderuje THEN widzę 4 linie po 2 sloty, wachlarz ręki, HP i Blood obu graczy",
+  "GIVEN ręka przeciwnika WHEN patrzę na jego stronę THEN widzę tylko rewersy w liczbie handCount",
+]
+sp = 5
+sprint = "S1"
+wave = "W1"
+rules = ["R-80"]
+[[epic.story.task]]
+title = "Komponenty Board / Lane / Slot (CSS grid, referencja: prototype/revibance/style.css)"
+h = 3
+[[epic.story.task]]
+title = "Komponent Card + wachlarz ręki + rewersy przeciwnika"
+h = 3
+[[epic.story.task]]
+title = "HeroBar: HP, kropelki Blood, faza i runda"
+h = 1
+[[epic.story.task]]
+title = "Testy komponentów na match-view.sample.json"
+h = 2
+
+[[epic.story]]
+id = "E4-S02"
+title = "Zagrywanie kart z podświetleniem legalnych ruchów"
+as_a = "gracz"
+i_want = "kliknąć lub przeciągnąć kartę na podświetloną linię"
+so_that = "grać intuicyjnie"
+acceptance = [
+  "GIVEN karta grywalna według legalActions WHEN ją zaznaczę THEN podświetlają się tylko wolne linie z legalActions",
+  "GIVEN karta niegrywalna WHEN próbuję ją przeciągnąć THEN nie da się jej upuścić, a UI nie wysyła intencji",
+]
+sp = 5
+sprint = "S2"
+wave = "W1"
+rules = ["R-20"]
+[[epic.story.task]]
+title = "Zaznaczanie karty i podświetlenie z legalActions"
+h = 3
+[[epic.story.task]]
+title = "Drag & drop na linię (@dnd-kit lub natywnie) + klawiatura"
+h = 3
+[[epic.story.task]]
+title = "Wysyłka PlayCardIntent / EndStepIntent przez store; obsługa błędów"
+h = 2
+[[epic.story.task]]
+title = "Testy interakcji (Testing Library)"
+h = 2
+
+[[epic.story]]
+id = "E4-S03"
+title = "Prompty: mulligan, kolejność, wybór celu"
+as_a = "gracz"
+i_want = "odpowiadać na pytania gry w czytelnych oknach"
+so_that = "przejść cały mecz bez konsoli"
+acceptance = [
+  "GIVEN pending typu mulligan WHEN zaznaczę 2 karty i zatwierdzę THEN wysyłany jest MulliganIntent z ich id",
+  "GIVEN pending wyboru celu WHEN kliknę podświetloną jednostkę THEN wysyłany jest AnswerPendingIntent",
+]
+sp = 3
+sprint = "S3"
+wave = "W1"
+rules = ["R-03", "R-04", "R-84"]
+estimate_h = 6
+
+[[epic.story]]
+id = "E4-S07"
+title = "Lobby: utwórz pokój, dołącz kodem, wybierz talię"
+as_a = "gracz"
+i_want = "utworzyć pokój albo dołączyć kodem z linku"
+so_that = "zagrać z kolegą bez pomocy zespołu"
+acceptance = [
+  "GIVEN lobby WHEN wpiszę kod pokoju THEN dołączam do meczu z wybraną talią startową",
+  "GIVEN link z kodem pokoju WHEN go otworzę THEN kod jest wpisany automatycznie",
+]
+sp = 3
+sprint = "S4"
+wave = "W1"
+estimate_h = 6
+
+[[epic.story]]
+id = "E4-S04"
+title = "Grafiki kart, glosariusz słów kluczowych, powiększenie"
+as_a = "gracz"
+i_want = "widzieć grafiki kart i opis słów kluczowych po najechaniu"
+so_that = "rozumieć karty bez instrukcji"
+acceptance = ["GIVEN karta ze słowem Armored WHEN najadę na nią THEN widzę powiększenie i opis Armored"]
+sp = 3
+sprint = "S6"
+wave = "W2"
+estimate_h = 8
+
+[[epic.story]]
+id = "E4-S05"
+title = "Animacje zdarzeń i dźwięki"
+as_a = "gracz"
+i_want = "widzieć ataki, obrażenia i śmierć jednostek oraz słyszeć efekty"
+so_that = "gra była czytelna i przyjemna"
+acceptance = ["GIVEN zdarzenia walki WHEN przychodzi MatchUpdated THEN odtwarzam je po kolei (atak, liczby obrażeń, śmierć) z dźwiękami z prototypu, bez blokowania wejścia na stałe"]
+sp = 5
+sprint = "S5"
+wave = "W1"
+estimate_h = 8
+
+[[epic.story]]
+id = "E4-S06"
+title = "Ekran końca meczu, poddanie, rewanż"
+as_a = "gracz"
+i_want = "poddać się, zobaczyć wynik i zagrać rewanż"
+so_that = "zamknąć mecz"
+acceptance = ["GIVEN koniec meczu WHEN pojawia się ekran wyniku THEN widzę zwycięzcę, powód i przycisk rewanżu"]
+sp = 2
+sprint = "S6"
+wave = "W2"
+estimate_h = 4
+
+# =====================================================================================
+[[epic]]
+id = "E5"
+name = "Bot AI i symulator"
+component = "AI"
+owner = "do przydzielenia (#9)"
+description = "Wyrocznia z prototypu, testy różnicowe, boty jako Policy na LegalActions, symulator headless, balans."
+
+[[epic.story]]
+id = "E5-S01"
+title = "Wyrocznia: prototyp JS uruchamiany headless z seedem"
+as_a = "inżynier reguł"
+i_want = "uruchomić engine.js prototypu w Node z ustalonym seedem"
+so_that = "mieć wzorcowe wyniki do porównań z Kernelem"
+acceptance = [
+  "GIVEN seed i lista ruchów WHEN uruchamiam tools/oracle THEN dostaję JSON ze stanem po każdym ruchu",
+  "GIVEN ten sam seed WHEN uruchamiam dwa razy THEN wyniki są identyczne",
+]
+sp = 3
+sprint = "S1"
+wave = "W1"
+rules = ["R-83"]
+[[epic.story.task]]
+title = "Harness Node: załadowanie cards.js + engine.js bez DOM"
+h = 3
+[[epic.story.task]]
+title = "Podmiana Math.random na seedowany generator, zapis stanu do JSON"
+h = 3
+[[epic.story.task]]
+title = "Skrypt npm + README w tools/oracle"
+h = 2
+
+[[epic.story]]
+id = "E5-S02"
+title = "Testy różnicowe Kernel vs wyrocznia"
+as_a = "inżynier reguł"
+i_want = "porównywać Kernel z prototypem na tych samych scenariuszach"
+so_that = "wyłapywać odstępstwa od kanonu"
+acceptance = ["GIVEN fixtury z wyroczni (start, mulligan, dobieranie) WHEN uruchamiam testy C# THEN stan Kernela zgadza się z fixturą lub różnica jest na liście ROZBIEZNOSCI"]
+sp = 3
+sprint = "S2"
+wave = "W1"
+rules = ["R-83"]
+[[epic.story.task]]
+title = "Format fixtury (seed, intencje, oczekiwany stan) w tests/fixtures/oracle"
+h = 2
+[[epic.story.task]]
+title = "Generator fixtur ze scenariuszy R-0x/R-1x"
+h = 3
+[[epic.story.task]]
+title = "Test xUnit czytający fixtury (z listą znanych rozbieżności)"
+h = 3
+
+[[epic.story]]
+id = "E5-S03"
+title = "Bot losowy (Policy na LegalActions)"
+as_a = "gracz"
+i_want = "zagrać z botem, który wykonuje legalne ruchy"
+so_that = "testować grę bez drugiego człowieka"
+acceptance = ["GIVEN mecz z botem WHEN bot jest aktywny THEN wykonuje tylko ruchy z LegalActions i kończy krok"]
+sp = 3
+sprint = "S3"
+wave = "W1"
+estimate_h = 6
+
+[[epic.story]]
+id = "E5-S04"
+title = "Symulator headless: N partii bot vs bot"
+as_a = "projektant balansu"
+i_want = "rozegrać 300 partii bez UI"
+so_that = "wykrywać zawieszenia i wyjątki (fuzzing) oraz sprawdzić determinizm"
+acceptance = ["GIVEN 300 partii z seedami 1..300 WHEN uruchamiam symulator THEN wszystkie się kończą, a powtórka seeda daje ten sam wynik"]
+sp = 3
+sprint = "S4"
+wave = "W1"
+rules = ["R-54", "R-83"]
+estimate_h = 6
+
+[[epic.story]]
+id = "E5-S05"
+title = "Tryb gry z botem w lobby"
+as_a = "gracz"
+i_want = "wybrać w lobby 'graj z botem'"
+so_that = "zagrać od razu bez szukania przeciwnika"
+acceptance = ["GIVEN lobby WHEN wybieram grę z botem THEN mecz startuje, bot gra przez ten sam kontrakt co człowiek (widzi tylko swój MatchView)"]
+sp = 3
+sprint = "S5"
+wave = "W1"
+estimate_h = 8
+
+[[epic.story]]
+id = "E5-S06"
+title = "Bot heurystyczny (port beam search z prototypu)"
+as_a = "gracz"
+i_want = "mocniejszego bota"
+so_that = "gra z botem była wyzwaniem"
+acceptance = ["GIVEN 100 partii bot heurystyczny vs losowy WHEN symulator się kończy THEN heurystyczny wygrywa > 80%, budżet liczony w węzłach, nie w ms"]
+sp = 5
+sprint = "S6"
+wave = "W2"
+estimate_h = 12
+
+[[epic.story]]
+id = "E5-S07"
+title = "Raport balansu kart"
+as_a = "projektant balansu"
+i_want = "win-rate każdej karty z symulacji"
+so_that = "poprawiać statystyki kart na danych"
+acceptance = ["GIVEN 1000 partii WHEN generuję raport THEN mam tabelę karta → win-rate → liczba zagrań"]
+sp = 3
+sprint = "S7"
+wave = "W3"
+estimate_h = 6
+
+# =====================================================================================
+[[epic]]
+id = "E6"
+name = "Platforma: konta, talie, dane, wdrożenie"
+component = "Platform"
+owner = "do przydzielenia (#9)"
+description = "CI/CD, testy E2E, konta, talie i deckbuilder, PostgreSQL, wdrożenie demo, dokumentacja (EU5/EU6), historia i replay."
+
+[[epic.story]]
+id = "E6-S01"
+title = "CI na GitHubie i smoke test E2E"
+as_a = "zespół"
+i_want = "zielone CI z testem E2E uruchamiającym grę w przeglądarce"
+so_that = "każdy PR był automatycznie sprawdzony (EU6)"
+acceptance = [
+  "GIVEN PR WHEN CI się uruchamia THEN przechodzą joby dotnet, web, repo oraz smoke AppHost",
+  "GIVEN uruchomiony AppHost WHEN Playwright otwiera klienta THEN startuje sandbox i wykonuje mulligan",
+]
+sp = 3
+sprint = "S1"
+wave = "W0"
+[[epic.story.task]]
+title = "Pierwsze uruchomienie CI na GitHubie i poprawki"
+h = 2
+[[epic.story.task]]
+title = "Playwright: projekt testów E2E i scenariusz sandbox + mulligan"
+h = 3
+[[epic.story.task]]
+title = "Job E2E w CI z artefaktem (trace)"
+h = 2
+
+[[epic.story]]
+id = "E6-S02"
+title = "Konta graczy — backend"
+as_a = "gracz"
+i_want = "założyć konto i się zalogować"
+so_that = "mieć swoje talie i historię"
+acceptance = [
+  "GIVEN żądanie rejestracji WHEN podam nick i hasło (min. 8 znaków) THEN konto powstaje, hasło jest zahashowane",
+  "GIVEN 5 błędnych logowań w minutę WHEN próbuję szósty raz THEN dostaję odmowę (rate limit)",
+]
+sp = 3
+sprint = "S2"
+wave = "W1"
+[[epic.story.task]]
+title = "ASP.NET Core Identity na SQLite + migracja EF"
+h = 3
+[[epic.story.task]]
+title = "Endpointy rejestracji/logowania (cookie HttpOnly) + rate limiting"
+h = 3
+[[epic.story.task]]
+title = "Testy integracyjne auth (pozytywne i negatywne)"
+h = 2
+
+[[epic.story]]
+id = "E6-S03"
+title = "PostgreSQL w Aspire"
+as_a = "deweloper"
+i_want = "uruchamiać bazę PostgreSQL jednym poleceniem"
+so_that = "środowisko odpowiadało produkcji"
+acceptance = ["GIVEN parametr usePostgres w AppHost WHEN uruchamiam aspire run THEN serwer korzysta z kontenera PostgreSQL, migracje przechodzą na obu dostawcach"]
+sp = 3
+sprint = "S4"
+wave = "W1"
+estimate_h = 6
+
+[[epic.story]]
+id = "E6-S09"
+title = "Ekran logowania i rejestracji"
+as_a = "gracz"
+i_want = "zalogować się w przeglądarce"
+so_that = "grać na swoim koncie"
+acceptance = ["GIVEN ekran logowania WHEN podam poprawne dane THEN trafiam do lobby jako zalogowany, a błędne dane pokazują komunikat"]
+sp = 2
+sprint = "S3"
+wave = "W1"
+estimate_h = 4
+
+[[epic.story]]
+id = "E6-S04"
+title = "Własne talie i deckbuilder"
+as_a = "gracz"
+i_want = "budować i zapisywać własne talie"
+so_that = "grać swoim stylem"
+acceptance = [
+  "GIVEN deckbuilder WHEN dodam 4. kopię karty THEN UI blokuje, a serwer odrzuca zapis",
+  "GIVEN zapisana legalna talia WHEN dołączam do pokoju THEN mogę ją wybrać",
+]
+sp = 5
+sprint = "S6"
+wave = "W2"
+rules = ["R-01"]
+estimate_h = 10
+
+[[epic.story]]
+id = "E6-S05"
+title = "Wdrożenie demo pod publicznym adresem"
+as_a = "gracz testowy"
+i_want = "wejść na adres i zagrać bez instalacji"
+so_that = "testować grę między zajęciami"
+acceptance = ["GIVEN obraz kontenera z CI WHEN wdrażam na hosting (#8) THEN gra działa pod adresem HTTPS, a /health zwraca Healthy"]
+sp = 3
+sprint = "S5"
+wave = "W1"
+estimate_h = 6
+
+[[epic.story]]
+id = "E6-S06"
+title = "Dokumentacja techniczna i użytkownika w Confluence"
+as_a = "prowadzący"
+i_want = "kompletną dokumentację modułów i instrukcję gracza"
+so_that = "ocenić EU5/EU6"
+acceptance = ["GIVEN koniec semestru WHEN otwieram Confluence THEN każdy moduł ma stronę (architektura, API, testy, wyniki pokrycia), a gracz ma instrukcję"]
+sp = 2
+sprint = "S5"
+wave = "W1"
+estimate_h = 5
+
+[[epic.story]]
+id = "E6-S07"
+title = "Historia meczów i odtwarzanie (replay)"
+as_a = "gracz"
+i_want = "obejrzeć powtórkę zakończonego meczu"
+so_that = "analizować swoje błędy"
+acceptance = ["GIVEN zakończony mecz zapisany jako seed + intencje WHEN otwieram replay THEN odtwarzanie daje ten sam przebieg i wynik"]
+sp = 5
+sprint = "S6"
+wave = "W2"
+rules = ["R-83"]
+estimate_h = 10
+
+[[epic.story]]
+id = "E6-S08"
+title = "Ranking i panel administratora"
+as_a = "administrator"
+i_want = "widzieć aktywne mecze, ranking i blokować oszustów"
+so_that = "prowadzić turniej"
+acceptance = ["GIVEN panel admina WHEN otwieram listę meczów THEN widzę aktywne mecze i mogę zablokować konto"]
+sp = 5
+sprint = "S7"
+wave = "W3"
+estimate_h = 12

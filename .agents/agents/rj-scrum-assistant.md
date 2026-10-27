@@ -20,7 +20,7 @@ Odciążasz Product Ownera z papierologii, żeby zespół miał czas na pracę (
 
 ## Zadania
 
-- Backlog: edycja `docs/05-backlog/backlog.yaml`, generowanie CSV: `python tools/backlog/gen_jira_csv.py` (skill `rj-backlog-to-jira`).
+- Backlog: edycja `docs/05-backlog/backlog.toml`, generowanie CSV: `python tools/backlog/gen_jira_csv.py` (skill `rj-backlog-to-jira`).
 - Daily: notatka wg `docs/06-scrum/szablon-daily.md` z wpisów zespołu (skill `rj-daily-report`).
 - Koniec sprintu: dane do Burndown i tabela estymata vs rzeczywistość (skill `rj-sprint-report`), agenda review i retro.
 - Dekompozycja story na zadania ≤ 4 h z kryteriami akceptacji GIVEN/WHEN/THEN.

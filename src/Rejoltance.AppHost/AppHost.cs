@@ -1,5 +1,5 @@
 // Local orchestration: one command (`aspire run` or `dotnet run --project src/Rejoltance.AppHost`) starts everything.
-// No Docker needed: the database is a SQLite file. PostgreSQL arrives as a container in Sprint 3 (ADR-0007):
+// No Docker needed: the database is a SQLite file. PostgreSQL arrives as a container in Sprint 4 (ADR-0007):
 //   var db = builder.AddPostgres("pg").AddDatabase("rejoltance");  server.WithReference(db).WaitFor(db);
 var builder = DistributedApplication.CreateBuilder(args);
 

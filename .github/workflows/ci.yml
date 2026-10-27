@@ -90,6 +90,5 @@ jobs:
         run: python tools/agents/sync_agents.py --check
       - name: Card data matches the prototype
         run: python tools/content/extract_cards.py --check
-      - name: Backlog is valid
-        run: |
-          if [ -f tools/backlog/gen_jira_csv.py ]; then python tools/backlog/gen_jira_csv.py --check; fi
+      - name: Backlog is valid and Jira CSV up to date
+        run: python tools/backlog/gen_jira_csv.py --check

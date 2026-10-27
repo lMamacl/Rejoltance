@@ -5,7 +5,7 @@
 **Zasoby:** `server` (Rejoltance.Server, health `/health`), `web` (Vite, proxy `/api` → server). SQLite w `.data/` (git‑ignored).
 W publikacji frontend trafia do `wwwroot` serwera (`PublishWithContainerFiles`).
 
-**Niezmienniki:** działa bez Dockera. PostgreSQL dojdzie jako kontener (`AddPostgres`) od Sprintu 3 — ADR-0007.
+**Niezmienniki:** działa bez Dockera. PostgreSQL dojdzie jako kontener (`AddPostgres`) od Sprintu 4 — ADR-0007.
 
 **Czego tu NIE ma:** logiki aplikacji.
 

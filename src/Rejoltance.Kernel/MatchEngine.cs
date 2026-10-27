@@ -34,7 +34,7 @@ public sealed class MatchEngine(ICardCatalog catalog)
         };
         var events = new List<DomainEvent> { new MatchStarted(setup.MatchId) };
 
-        // R-01: both players start at 20 HP and draw 4 cards before the mulligan.
+        // R-02: both players start at 20 HP and draw 4 cards before the mulligan.
         for (var seat = 0; seat < 2; seat++)
         {
             for (var i = 0; i < GameRules.OpeningHand; i++)
@@ -88,7 +88,7 @@ public sealed class MatchEngine(ICardCatalog catalog)
     }
 
     /// <summary>
-    /// R-02 (prototype v11, engine.js mulligan): draw replacements first, then put the returned cards back and shuffle the deck.
+    /// R-03 (prototype v11, engine.js mulligan): draw replacements first, then put the returned cards back and shuffle the deck.
     /// Note: RE_JOLTANCE.md says "bottom of deck, no shuffle" — tracked in docs/02-rules/ROZBIEZNOSCI.md.
     /// </summary>
     private MatchState Mulligan(MatchState state, int seat, MulliganIntent intent, List<DomainEvent> events)
@@ -125,7 +125,7 @@ public sealed class MatchEngine(ICardCatalog catalog)
     }
 
     /// <summary>
-    /// R-04: empty deck → fatigue damage 1, 2, 3… (no reshuffle). R-05: full hand (8) → drawn card goes to discard.
+    /// R-14: empty deck → fatigue damage 1, 2, 3… (no reshuffle). R-13: full hand (8) → drawn card goes to discard.
     /// </summary>
     internal static MatchState Draw(MatchState state, int seat, List<DomainEvent> events)
     {
@@ -159,7 +159,7 @@ public sealed class MatchEngine(ICardCatalog catalog)
         return dead.Count switch
         {
             0 => state,
-            // Both heroes dead at once: the prototype lets seat 1 win (bug, see ROZBIEZNOSCI.md); we record a draw until the team decides.
+            // R-71: both heroes dead at once = draw (prototype outcome depends on check order, see ROZBIEZNOSCI.md D-01).
             2 => Finish(state, winnerSeat: null, reason: "draw", events),
             _ => Finish(state, winnerSeat: 1 - dead[0], reason: "hp", events),
         };

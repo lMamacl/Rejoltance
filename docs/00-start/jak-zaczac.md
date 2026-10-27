@@ -9,7 +9,7 @@
 | Git | `winget install Git.Git` | repo |
 | Python 3.13 | `winget install Python.Python.3.13` | skrypty w `tools/` |
 | uv (opcjonalnie) | `winget install astral-sh.uv` | integracja z Jirą/Confluence (MCP) |
-| Docker / Podman (od Sprintu 3) | `winget install Docker.DockerDesktop` | PostgreSQL w kontenerze |
+| Docker / Podman (od Sprintu 4) | `winget install Docker.DockerDesktop` | PostgreSQL w kontenerze |
 
 Aspire CLI jest **opcjonalne** — AppHost uruchamia się też przez `dotnet run`.
 

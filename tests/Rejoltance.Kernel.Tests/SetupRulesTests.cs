@@ -6,7 +6,7 @@ namespace Rejoltance.Kernel.Tests;
 public sealed class SetupRulesTests
 {
     [Fact]
-    public void R01_players_start_with_20_hp_and_4_cards()
+    public void R02_players_start_with_20_hp_and_4_cards()
     {
         var state = TestMatches.Start().State;
 
@@ -20,7 +20,7 @@ public sealed class SetupRulesTests
     }
 
     [Fact]
-    public void R02_mulligan_replaces_cards_and_keeps_deck_size()
+    public void R03_mulligan_replaces_cards_and_keeps_deck_size()
     {
         var engine = TestMatches.Engine();
         var start = TestMatches.Start().State;
@@ -36,7 +36,7 @@ public sealed class SetupRulesTests
     }
 
     [Fact]
-    public void R02_mulligan_twice_is_illegal()
+    public void R03_mulligan_twice_is_illegal()
     {
         var engine = TestMatches.Engine();
         var once = engine.Reduce(TestMatches.Start().State, 0, new MulliganIntent([])).State;
@@ -45,7 +45,7 @@ public sealed class SetupRulesTests
     }
 
     [Fact]
-    public void R02_mulligan_of_a_card_not_in_hand_is_illegal()
+    public void R03_mulligan_of_a_card_not_in_hand_is_illegal()
     {
         var engine = TestMatches.Engine();
 
@@ -53,7 +53,7 @@ public sealed class SetupRulesTests
     }
 
     [Fact]
-    public void R02_both_mulligans_move_the_match_to_choose_order()
+    public void R03_both_mulligans_move_the_match_to_choose_order()
     {
         var engine = TestMatches.Engine();
         var state = TestMatches.Start().State;
@@ -69,11 +69,11 @@ public sealed class SetupRulesTests
     [InlineData(5, 5)]
     [InlineData(10, 10)]
     [InlineData(14, 10)]
-    public void R03_max_blood_equals_round_capped_at_10(int round, int expected) =>
+    public void R10_max_blood_equals_round_capped_at_10(int round, int expected) =>
         Assert.Equal(expected, GameRules.MaxBloodForRound(round));
 
     [Fact]
-    public void R04_drawing_from_empty_deck_deals_growing_fatigue_damage()
+    public void R14_drawing_from_empty_deck_deals_growing_fatigue_damage()
     {
         var state = TestMatches.Start().State;
         state = state.WithPlayer(0, state.Player(0) with { Deck = [] });
@@ -88,7 +88,7 @@ public sealed class SetupRulesTests
     }
 
     [Fact]
-    public void R04_fatigue_can_end_the_match()
+    public void R70_fatigue_can_end_the_match()
     {
         var state = TestMatches.Start().State;
         state = state.WithPlayer(0, state.Player(0) with { Deck = [], Hp = 1 });
@@ -101,7 +101,7 @@ public sealed class SetupRulesTests
     }
 
     [Fact]
-    public void R05_drawing_with_full_hand_sends_card_to_discard()
+    public void R13_drawing_with_full_hand_sends_card_to_discard()
     {
         var state = TestMatches.Start().State;
         var player = state.Player(0);
@@ -116,7 +116,7 @@ public sealed class SetupRulesTests
     }
 
     [Fact]
-    public void Surrender_ends_the_match_for_the_opponent()
+    public void R72_surrender_ends_the_match_for_the_opponent()
     {
         var result = TestMatches.Engine().Reduce(TestMatches.Start().State, 0, new SurrenderIntent());
 
@@ -124,7 +124,7 @@ public sealed class SetupRulesTests
     }
 
     [Fact]
-    public void Unimplemented_intents_fail_loud()
+    public void R68_unimplemented_intents_fail_loud()
     {
         var engine = TestMatches.Engine();
 
