@@ -35,21 +35,23 @@
 
 ## Pytania otwarte do zespołu
 
-**Proces / uczelnia**
+Numery #1–#10 są przywoływane w innych dokumentach (np. „pytanie otwarte #6”).
 
-1. Klucz projektu Jira i kto go zakłada (w repo placeholder `REJ`).
-2. Przydział PO do sprintów (6 osób, 5 sprintów — czy S0 się liczy?).
-3. Mapowanie workflow `Open/In Progress/Resolved/Closed` na tablicę.
-4. Czy prowadzący zakłada repo w Bitbucket (cel mirrora) i czy wystarczy review na GitHubie z linkiem w Jirze.
+### Proces / uczelnia
 
-**Produkt**
+- **#1** Klucz projektu Jira i kto go zakłada (w repo placeholder `REJ`).
+- **#2** Przydział PO do sprintów (6 osób, 5 sprintów — czy S0 się liczy?).
+- **#3** Mapowanie workflow `Open/In Progress/Resolved/Closed` na tablicę.
+- **#4** Czy prowadzący zakłada repo w Bitbucket (cel mirrora) i czy wystarczy review na GitHubie z linkiem w Jirze.
 
-1. Zakres MVP talii (12 kart vs 69).
-2. Które zachowania JS to błędy (remis, mulligan z tasowaniem, Breakthrough = pełne obrażenia, powrót do pełnej ręki usuwa kartę).
-3. Użytkownik końcowy / rada graczy testowych (EU1/EU2).
+### Produkt
 
-**Techniczne**
+- **#5** Zakres MVP talii (12 kart vs 69).
+- **#6** Które zachowania JS to błędy (remis, mulligan z tasowaniem, Breakthrough = pełne obrażenia, powrót do pełnej ręki usuwa kartę).
+- **#7** Użytkownik końcowy / rada graczy testowych (EU1/EU2).
 
-1. Hosting demo (Azure for Students / Railway / serwer uczelni).
-2. Kto jest właścicielem którego epiku (E1–E6).
-3. Czy wszyscy mogą zainstalować Docker/Podman przed S3 (PostgreSQL).
+### Techniczne
+
+- **#8** Hosting demo (Azure for Students / Railway / serwer uczelni).
+- **#9** Kto jest właścicielem którego epiku (E1–E6).
+- **#10** Czy wszyscy mogą zainstalować Docker/Podman przed S3 (PostgreSQL).
