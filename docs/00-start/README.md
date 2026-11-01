@@ -1,5 +1,7 @@
 # 00-start — od czego zacząć
 
+**Mapa całej dokumentacji (repo, Confluence, Jira):** [`mapa-dokumentacji.md`](mapa-dokumentacji.md) · pojęcia: [`slownik.md`](slownik.md).
+
 ## Pierwszy dzień (w tej kolejności)
 
 1. [`jak-zaczac.md`](jak-zaczac.md) — instalacja, pierwsze uruchomienie, problemy.

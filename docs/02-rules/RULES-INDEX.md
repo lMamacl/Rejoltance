@@ -3,6 +3,8 @@
 Każda reguła ma: numer, wymaganie ze scenariuszami w `openspec/specs/<obszar>/spec.md`, źródło w prototypie (kanon, ADR-0005),
 test o nazwie zaczynającej się od numeru (`R14_…`) i story w backlogu. Test jednej reguły: `dotnet test --filter "FullyQualifiedName~R14"`.
 
+Wymagania niefunkcjonalne NFR‑nn (ISO/IEC 25010): `openspec/specs/quality-attributes/spec.md` — testy `NFRnn_…`.
+
 Numeracja ma luki celowo: nowa reguła dostaje wolny numer w swoim obszarze (np. R-16), istniejących nie przenumerowujemy.
 
 Legenda statusu: ✅ zaimplementowane i przetestowane · 🟡 częściowo · ⏳ w backlogu · ❓ czeka na decyzję (`ROZBIEZNOSCI.md`).

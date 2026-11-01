@@ -15,3 +15,4 @@ ADR `accepted` się nie edytuje — nowy ADR go zastępuje. Akceptują 2 osoby z
 | [0008](0008-spine-first-pionowe-plastry.md) | Spine‑first, pionowe plastry | proposed |
 | [0009](0009-kanon-agentow-i-adaptery.md) | Kanon agentów w `.agents/` + adaptery | accepted |
 | [0010](0010-kontrakt-csharp-ts-przez-probke.md) | Kontrakt C#↔TS przez próbkę JSON | proposed |
+| [0011](0011-dokumentacja-hybryda-repo-confluence.md) | Dokumentacja hybrydowa: repo dla SDD, Confluence dla ludzi i procesu | accepted |
