@@ -7,7 +7,8 @@ są **generowane** (`python tools/agents/sync_agents.py`) — nie edytuj ich rę
 ## 1. Zanim cokolwiek zrobisz
 
 1. Przeczytaj **konstytucję**: [`.agents/rules/00-konstytucja.md`](.agents/rules/00-konstytucja.md) — ma pierwszeństwo przed wszystkim.
-2. Mapa projektu: [`docs/03-architecture/MAP.md`](docs/03-architecture/MAP.md) — moduły, granice, „gdzie co dodać”.
+2. Mapa projektu: [`docs/03-architecture/MAP.md`](docs/03-architecture/MAP.md) — moduły, granice, „gdzie co dodać”; pełna architektura: `docs/03-architecture/SAD.md`,
+   wymagania niefunkcjonalne: `openspec/specs/quality-attributes`, mapa dokumentacji: `docs/00-start/mapa-dokumentacji.md`.
 3. README modułu, w którym pracujesz (`src/<moduł>/README.md`).
 4. Klucz Jira zadania (`REJ-123`). Bez niego nie zaczynaj zmian w kodzie.
 

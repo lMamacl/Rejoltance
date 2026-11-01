@@ -1,6 +1,7 @@
 # MAP — mapa projektu
 
 Pierwszy plik do przeczytania (dla ludzi i dla czatu AI). Kolejność: **MAP → README modułu → AGENTS.md**.
+Pełny dokument architektury (arc42 + C4): [`SAD.md`](SAD.md) · stos: [`STOS.md`](STOS.md) · API: [`API.md`](API.md) · UX: [`UX.md`](UX.md).
 
 ## Warstwy i kierunek zależności
 
