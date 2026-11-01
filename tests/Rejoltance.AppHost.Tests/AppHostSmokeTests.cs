@@ -1,26 +1,59 @@
+using Aspire.Hosting;
+using Microsoft.Extensions.Logging;
+
 namespace Rejoltance.AppHost.Tests;
 
 /// <summary>
-/// Proves "one command starts everything": boots the real AppHost and checks the server is healthy.
+/// Starts the real AppHost once for all smoke tests. No dashboard and plain HTTP, so it also runs on CI runners
+/// without a trusted dev certificate. AppHost and resource logs go to the console (visible in the CI log).
+/// </summary>
+public sealed class AppHostFixture : IAsyncLifetime
+{
+    public static readonly TimeSpan Timeout = TimeSpan.FromMinutes(3);
+
+    public DistributedApplication App { get; private set; } = null!;
+
+    public async Task InitializeAsync()
+    {
+        using var cts = new CancellationTokenSource(Timeout);
+        var appHost = await DistributedApplicationTestingBuilder.CreateAsync<Projects.Rejoltance_AppHost>(
+            [],
+            (options, _) =>
+            {
+                options.DisableDashboard = true;
+                options.AllowUnsecuredTransport = true;
+            },
+            cts.Token);
+        appHost.Services.AddLogging(logging =>
+        {
+            logging.SetMinimumLevel(LogLevel.Information);
+            logging.AddFilter("Aspire.", LogLevel.Debug);
+            logging.AddSimpleConsole(o => o.SingleLine = true);
+        });
+
+        App = await appHost.BuildAsync(cts.Token).WaitAsync(Timeout, cts.Token);
+        await App.StartAsync(cts.Token).WaitAsync(Timeout, cts.Token);
+    }
+
+    public async Task DisposeAsync() => await App.DisposeAsync();
+}
+
+/// <summary>
+/// Proves "one command starts everything": the real AppHost starts the server and the web client.
 /// Local run needs Node.js (for the web resource) and no Docker. On Windows, Smart App Control may block it
 /// (docs/00-start/jak-zaczac.md#problemy).
 /// </summary>
 [Trait("Category", "Integration")]
-public sealed class AppHostSmokeTests
+public sealed class AppHostSmokeTests(AppHostFixture fixture) : IClassFixture<AppHostFixture>
 {
-    private static readonly TimeSpan Timeout = TimeSpan.FromMinutes(3);
-
     [Fact]
     public async Task Server_starts_and_reports_healthy()
     {
-        using var cts = new CancellationTokenSource(Timeout * 2);
+        using var cts = new CancellationTokenSource(AppHostFixture.Timeout);
         var ct = cts.Token;
-        var appHost = await DistributedApplicationTestingBuilder.CreateAsync<Projects.Rejoltance_AppHost>(ct);
-        await using var app = await appHost.BuildAsync(ct).WaitAsync(Timeout, ct);
-        await app.StartAsync(ct).WaitAsync(Timeout, ct);
 
-        await app.ResourceNotifications.WaitForResourceHealthyAsync("server", ct).WaitAsync(Timeout, ct);
-        using var http = app.CreateHttpClient("server");
+        await fixture.App.ResourceNotifications.WaitForResourceHealthyAsync("server", ct).WaitAsync(AppHostFixture.Timeout, ct);
+        using var http = fixture.App.CreateHttpClient("server");
         using var health = await http.GetAsync("/health", ct);
         using var cards = await http.GetAsync("/api/cards", ct);
 
@@ -31,14 +64,11 @@ public sealed class AppHostSmokeTests
     [Fact]
     public async Task Web_client_is_served_and_proxies_the_api()
     {
-        using var cts = new CancellationTokenSource(Timeout * 2);
+        using var cts = new CancellationTokenSource(AppHostFixture.Timeout);
         var ct = cts.Token;
-        var appHost = await DistributedApplicationTestingBuilder.CreateAsync<Projects.Rejoltance_AppHost>(ct);
-        await using var app = await appHost.BuildAsync(ct).WaitAsync(Timeout, ct);
-        await app.StartAsync(ct).WaitAsync(Timeout, ct);
 
-        await app.ResourceNotifications.WaitForResourceAsync("web", KnownResourceStates.Running, ct).WaitAsync(Timeout, ct);
-        using var http = app.CreateHttpClient("web");
+        await fixture.App.ResourceNotifications.WaitForResourceAsync("web", KnownResourceStates.Running, ct).WaitAsync(AppHostFixture.Timeout, ct);
+        using var http = fixture.App.CreateHttpClient("web");
         var index = await GetWithRetryAsync(http, "/", ct);
         var info = await GetWithRetryAsync(http, "/api/info", ct);
 

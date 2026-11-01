@@ -42,8 +42,11 @@ jobs:
         run: dotnet test Rejoltance.slnx --no-build -c Release --filter "Category!=Integration" --logger "trx" --results-directory TestResults
       - name: Install web deps (needed by the AppHost web resource)
         run: npm ci --prefix src/web
+      - name: Create HTTPS dev certificate (used by Aspire DCP)
+        run: dotnet dev-certs https
       - name: AppHost smoke test (whole app starts, /health OK)
-        run: dotnet test tests/Rejoltance.AppHost.Tests --no-build -c Release --logger "trx" --results-directory TestResults
+        timeout-minutes: 10
+        run: dotnet test tests/Rejoltance.AppHost.Tests --no-build -c Release --logger "trx" --logger "console;verbosity=normal" --results-directory TestResults
       - uses: actions/upload-artifact@v4
         if: always()
         with:
