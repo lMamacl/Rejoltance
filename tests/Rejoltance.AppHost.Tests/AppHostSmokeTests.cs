@@ -53,7 +53,7 @@ public sealed class AppHostSmokeTests(AppHostFixture fixture) : IClassFixture<Ap
         var ct = cts.Token;
 
         await fixture.App.ResourceNotifications.WaitForResourceHealthyAsync("server", ct).WaitAsync(AppHostFixture.Timeout, ct);
-        using var http = fixture.App.CreateHttpClient("server");
+        using var http = fixture.App.CreateHttpClient("server", "http");
         using var health = await http.GetAsync("/health", ct);
         using var cards = await http.GetAsync("/api/cards", ct);
 

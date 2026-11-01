@@ -8,7 +8,8 @@ Directory.CreateDirectory(dataDir);
 
 var server = builder.AddProject<Projects.Rejoltance_Server>("server")
     .WithEnvironment("ConnectionStrings__rejoltance", $"Data Source={Path.Combine(dataDir, "rejoltance.db")}")
-    .WithHttpHealthCheck("/health")
+    // Health check over plain HTTP: works on machines/CI runners where the dev HTTPS certificate is not trusted.
+    .WithHttpHealthCheck("/health", endpointName: "http")
     .WithExternalHttpEndpoints();
 
 var web = builder.AddViteApp("web", "../web")
