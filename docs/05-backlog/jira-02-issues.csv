@@ -1,0 +1,458 @@
+Issue Id,Parent Id,Issue Type,Summary,Epic Link,Description,Story Points,Original Estimate,Priority,Labels,Labels,Labels,Component/s
+E0-S01,,Story,E0-S01 Konfiguracja narzędzi zespołu,E0 Fundamenty i proces,"Jako członek zespołu chcę mieć działające repo, CI, Jirę i Confluence, aby od pierwszego dnia pracować według jednych zasad.
+
+Kryteria akceptacji:
+- GIVEN czysty klon repo WHEN uruchamiam tools/setup.ps1 THEN testy przechodzą, a dotnet run --project src/Rejoltance.AppHost uruchamia grę
+- GIVEN PR do develop WHEN CI się zakończy THEN wszystkie joby są zielone, a gałąź main/develop jest chroniona
+- GIVEN backlog zaimportowany do Jiry WHEN otwieram tablicę THEN widzę epiki E0–E6 ze story i szacunkami
+
+Fala: W0 (fundament) · Źródło: backlog.toml (E0-S01)",3,,Highest,rejoltance,w0,sprint-0,Process
+E0-S01-T1,E0-S01,Sub-task,E0-S01-T1 Każdy członek uruchamia środowisko i zgłasza problemy (doctor.ps1),,Część E0-S01 Konfiguracja narzędzi zespołu.,,10800,Highest,rejoltance,w0,sprint-0,Process
+E0-S01-T2,E0-S01,Sub-task,"E0-S01-T2 Ochrona gałęzi main/develop, sekret BITBUCKET_TOKEN, GitHub Pages",,Część E0-S01 Konfiguracja narzędzi zespołu.,,3600,Highest,rejoltance,w0,sprint-0,Process
+E0-S01-T3,E0-S01,Sub-task,E0-S01-T3 Testowy import CSV do Jiry i import pełnego backlogu,,Część E0-S01 Konfiguracja narzędzi zespołu.,,7200,Highest,rejoltance,w0,sprint-0,Process
+E0-S01-T4,E0-S01,Sub-task,"E0-S01-T4 Struktura przestrzeni Confluence (DIP, moduły, Scrum, protokoły)",,Część E0-S01 Konfiguracja narzędzi zespołu.,,3600,Highest,rejoltance,w0,sprint-0,Process
+E0-S02,,Story,E0-S02 Dokument Inicjujący Projekt (DIP),E0 Fundamenty i proces,"Jako zespół chcę zatwierdzony DIP z epikiem każdego studenta, aby spełnić warunek zaliczenia i mieć wspólny zakres (EU1).
+
+Kryteria akceptacji:
+- GIVEN szablon docs/01-dip/DIP.md WHEN każdy uzupełni swój epik THEN każdy epik ma autora, zakres i min. 3 historyjki z kryteriami GIVEN/WHEN/THEN
+- GIVEN gotowy DIP WHEN zespół go zatwierdzi THEN wersja v1.0 jest w Confluence z datą i podpisami
+
+Fala: W0 (fundament) · Źródło: backlog.toml (E0-S02)",5,,Highest,rejoltance,w0,sprint-0,Process
+E0-S02-T1,E0-S02,Sub-task,E0-S02-T1 Epik E1 w DIP (autor: właściciel E1),,Część E0-S02 Dokument Inicjujący Projekt (DIP).,,7200,Highest,rejoltance,w0,sprint-0,Process
+E0-S02-T2,E0-S02,Sub-task,E0-S02-T2 Epik E2 w DIP (autor: właściciel E2),,Część E0-S02 Dokument Inicjujący Projekt (DIP).,,7200,Highest,rejoltance,w0,sprint-0,Process
+E0-S02-T3,E0-S02,Sub-task,E0-S02-T3 Epik E3 w DIP (autor: właściciel E3),,Część E0-S02 Dokument Inicjujący Projekt (DIP).,,7200,Highest,rejoltance,w0,sprint-0,Process
+E0-S02-T4,E0-S02,Sub-task,E0-S02-T4 Epik E4 w DIP (autor: właściciel E4),,Część E0-S02 Dokument Inicjujący Projekt (DIP).,,7200,Highest,rejoltance,w0,sprint-0,Process
+E0-S02-T5,E0-S02,Sub-task,E0-S02-T5 Epik E5 w DIP (autor: właściciel E5),,Część E0-S02 Dokument Inicjujący Projekt (DIP).,,7200,Highest,rejoltance,w0,sprint-0,Process
+E0-S02-T6,E0-S02,Sub-task,E0-S02-T6 Epik E6 w DIP (autor: właściciel E6),,Część E0-S02 Dokument Inicjujący Projekt (DIP).,,7200,Highest,rejoltance,w0,sprint-0,Process
+E0-S02-T7,E0-S02,Sub-task,"E0-S02-T7 Przegląd DIP, publikacja w Confluence",,Część E0-S02 Dokument Inicjujący Projekt (DIP).,,3600,Highest,rejoltance,w0,sprint-0,Process
+E0-S03,,Story,E0-S03 Rada graczy testowych,E0 Fundamenty i proces,"Jako Product Owner chcę stałą grupę 3 użytkowników końcowych, aby każdy sprint kończył się odbiorem z udziałem użytkownika (EU1/EU2).
+
+Kryteria akceptacji:
+- GIVEN lista 3 osób spoza zespołu WHEN kończy się sprint THEN co najmniej 2 z nich testują przyrost, a protokół trafia do Confluence
+
+Fala: W0 (fundament) · Źródło: backlog.toml (E0-S03)",2,,Highest,rejoltance,w0,sprint-0,Process
+E0-S03-T1,E0-S03,Sub-task,E0-S03-T1 Zrekrutować 3 graczy testowych (koło naukowe / rok),,Część E0-S03 Rada graczy testowych.,,7200,Highest,rejoltance,w0,sprint-0,Process
+E0-S03-T2,E0-S03,Sub-task,E0-S03-T2 Szablon protokołu odbioru w Confluence,,Część E0-S03 Rada graczy testowych.,,3600,Highest,rejoltance,w0,sprint-0,Process
+E0-S04,,Story,E0-S04 Rozstrzygnięcie rozbieżności reguł D-01…D-20,E0 Fundamenty i proces,"Jako zespół chcę decyzję w każdej spornej regule, aby Kernel implementował jedną, uzgodnioną grę.
+
+Kryteria akceptacji:
+- GIVEN tabela docs/02-rules/ROZBIEZNOSCI.md WHEN odbędzie się spotkanie decyzyjne THEN każda pozycja ma wpisaną decyzję
+- GIVEN decyzja inna niż zachowanie prototypu WHEN jest zapisana THEN odpowiednie wymaganie w openspec/specs zostało zaktualizowane
+
+Reguły: R-03, R-33, R-45, R-71 (docs/02-rules/RULES-INDEX.md)
+Fala: W0 (fundament) · Źródło: backlog.toml (E0-S04)",2,,Highest,rejoltance,w0,sprint-0,Process
+E0-S04-T1,E0-S04,Sub-task,E0-S04-T1 Spotkanie decyzyjne: przegląd D-01…D-20 na prototypie,,Część E0-S04 Rozstrzygnięcie rozbieżności reguł D-01…D-20.,,7200,Highest,rejoltance,w0,sprint-0,Process
+E0-S04-T2,E0-S04,Sub-task,E0-S04-T2 Aktualizacja openspec/specs i ROZBIEZNOSCI po decyzjach,,Część E0-S04 Rozstrzygnięcie rozbieżności reguł D-01…D-20.,,7200,Highest,rejoltance,w0,sprint-0,Process
+E0-S11,,Story,E0-S11 Ceremonie Scrum — Sprint 1,E0 Fundamenty i proces,"Jako Product Owner Sprintu 1 chcę przeprowadzić planning, daily, review i retro, aby sprint był ocenialny (EU3–EU5) i miał wykres spalania.
+
+Kryteria akceptacji:
+- GIVEN koniec sprintu WHEN PO zamyka sprint THEN w Confluence są: plan, notatki z daily, protokół review z użytkownikiem, retro z tabelą estymata vs czas i zrzut Burndown
+
+Fala: W0 (fundament) · Źródło: backlog.toml (E0-S11)",2,,Highest,rejoltance,w0,sprint-1,Process
+E0-S11-T1,E0-S11,Sub-task,E0-S11-T1 Sprint Planning + cel sprintu,,Część E0-S11 Ceremonie Scrum — Sprint 1.,,3600,Highest,rejoltance,w0,sprint-1,Process
+E0-S11-T2,E0-S11,Sub-task,E0-S11-T2 Raporty z daily (skill rj-daily-report),,Część E0-S11 Ceremonie Scrum — Sprint 1.,,3600,Highest,rejoltance,w0,sprint-1,Process
+E0-S11-T3,E0-S11,Sub-task,E0-S11-T3 Sprint Review z graczami testowymi + protokół,,Część E0-S11 Ceremonie Scrum — Sprint 1.,,3600,Highest,rejoltance,w0,sprint-1,Process
+E0-S11-T4,E0-S11,Sub-task,"E0-S11-T4 Retrospektywa, estymata vs rzeczywistość, Burndown (skill rj-sprint-report)",,Część E0-S11 Ceremonie Scrum — Sprint 1.,,3600,Highest,rejoltance,w0,sprint-1,Process
+E0-S12,,Story,E0-S12 Ceremonie Scrum — Sprint 2,E0 Fundamenty i proces,"Jako Product Owner Sprintu 2 chcę przeprowadzić planning, daily, review i retro, aby sprint był ocenialny (EU3–EU5).
+
+Kryteria akceptacji:
+- GIVEN koniec sprintu WHEN PO zamyka sprint THEN dokumentacja ceremonii i Burndown są w Confluence
+
+Fala: W0 (fundament) · Źródło: backlog.toml (E0-S12)",2,14400,Highest,rejoltance,w0,sprint-2,Process
+E0-S13,,Story,E0-S13 Ceremonie Scrum — Sprint 3,E0 Fundamenty i proces,"Jako Product Owner Sprintu 3 chcę przeprowadzić planning, daily, review i retro, aby sprint był ocenialny (EU3–EU5).
+
+Kryteria akceptacji:
+- GIVEN koniec sprintu WHEN PO zamyka sprint THEN dokumentacja ceremonii i Burndown są w Confluence
+
+Fala: W0 (fundament) · Źródło: backlog.toml (E0-S13)",2,14400,Highest,rejoltance,w0,sprint-3,Process
+E0-S14,,Story,E0-S14 Ceremonie Scrum — Sprint 4,E0 Fundamenty i proces,"Jako Product Owner Sprintu 4 chcę przeprowadzić planning, daily, review i retro, aby sprint był ocenialny (EU3–EU5).
+
+Kryteria akceptacji:
+- GIVEN koniec sprintu WHEN PO zamyka sprint THEN dokumentacja ceremonii i Burndown są w Confluence
+
+Fala: W0 (fundament) · Źródło: backlog.toml (E0-S14)",2,14400,Highest,rejoltance,w0,sprint-4,Process
+E0-S15,,Story,E0-S15 Ceremonie Scrum — Sprint 5 i podsumowanie semestru,E0 Fundamenty i proces,"Jako Product Owner Sprintu 5 chcę przeprowadzić ceremonie i podsumować semestr, aby sprint był ocenialny, a zespół miał plan na semestr 2.
+
+Kryteria akceptacji:
+- GIVEN koniec semestru WHEN PO zamyka sprint THEN jest raport semestru z metrykami velocity i planem semestru 2
+
+Fala: W0 (fundament) · Źródło: backlog.toml (E0-S15)",3,18000,Highest,rejoltance,w0,sprint-5,Process
+E1-S01,,Story,E1-S01 Wybór kolejności i start rundy,E1 Silnik reguł (Kernel),"Jako gracz chcę po mulliganie zdecydować, czy zaczynam, i rozpocząć rundę 1, aby mecz przechodzi z przygotowania do gry.
+
+Kryteria akceptacji:
+- GIVEN obaj zrobili mulligan WHEN gracz 0 wybiera 'pierwszy', a gracz 1 'drugi' THEN rundę 1 zaczyna gracz 0, obaj mają 1/1 Blood
+- GIVEN obaj wybrali to samo WHEN odpowiedzi dotrą THEN rozpoczynający jest losowany z seeda (powtarzalnie)
+- GIVEN koniec rundy 1 WHEN zaczyna się runda 2 THEN rozpoczyna drugi gracz, obaj mają 2/2 Blood i dobrali po karcie
+
+Reguły: R-04, R-10, R-11 (docs/02-rules/RULES-INDEX.md)
+Fala: W1 (MVP (semestr 1)) · Źródło: backlog.toml (E1-S01)",3,,High,rejoltance,w1,sprint-1,Kernel
+E1-S01-T1,E1-S01,Sub-task,E1-S01-T1 ChooseOrderIntent + PendingInteraction 'chooseOrder' + losowanie z SeededRng,,Część E1-S01 Wybór kolejności i start rundy.,,10800,High,rejoltance,w1,sprint-1,Kernel
+E1-S01-T2,E1-S01,Sub-task,"E1-S01-T2 StartRound: numer rundy, Blood, dobranie od rundy 2, naprzemienny rozpoczynający",,Część E1-S01 Wybór kolejności i start rundy.,,10800,High,rejoltance,w1,sprint-1,Kernel
+E1-S01-T3,E1-S01,Sub-task,"E1-S01-T3 Testy R04_*, R10_*, R11_*",,Część E1-S01 Wybór kolejności i start rundy.,,7200,High,rejoltance,w1,sprint-1,Kernel
+E1-S02,,Story,E1-S02 Kroki rundy i zagrywanie jednostek,E1 Silnik reguł (Kernel),"Jako gracz chcę w swoim kroku zagrywać jednostki na wolne linie i kończyć krok, aby budować planszę zgodnie z zasadami.
+
+Kryteria akceptacji:
+- GIVEN krok jednostek gracza A WHEN A zagrywa jednostkę za 1 Blood na linię 2 THEN jednostka stoi na linii 2, A ma 0 Blood
+- GIVEN krok jednostek WHEN A próbuje zagrać akcję THEN intencja jest odrzucona, a LegalActions nie zawiera tej karty
+- GIVEN krok mieszany WHEN B kończy krok THEN aktywny jest A w kroku akcji
+
+Reguły: R-12, R-20, R-21 (docs/02-rules/RULES-INDEX.md)
+Fala: W1 (MVP (semestr 1)) · Źródło: backlog.toml (E1-S02)",5,,High,rejoltance,w1,sprint-2,Kernel
+E1-S02-T1,E1-S02,Sub-task,"E1-S02-T1 Maszyna kroków: EndStepIntent, ActiveSeat, przejście do walki",,Część E1-S02 Kroki rundy i zagrywanie jednostek.,,10800,High,rejoltance,w1,sprint-2,Kernel
+E1-S02-T2,E1-S02,Sub-task,E1-S02-T2 LegalActions dla kroku: grywalne karty i wolne linie,,Część E1-S02 Kroki rundy i zagrywanie jednostek.,,10800,High,rejoltance,w1,sprint-2,Kernel
+E1-S02-T3,E1-S02,Sub-task,"E1-S02-T3 PlayCardIntent dla jednostek: koszt, slot, buff globalny, OnPlayed (zdarzenie)",,Część E1-S02 Kroki rundy i zagrywanie jednostek.,,14400,High,rejoltance,w1,sprint-2,Kernel
+E1-S02-T4,E1-S02,Sub-task,"E1-S02-T4 Testy R12_*, R20_*, R21_*",,Część E1-S02 Kroki rundy i zagrywanie jednostek.,,7200,High,rejoltance,w1,sprint-2,Kernel
+E1-S03,,Story,E1-S03 Walka 4 linii i koniec meczu,E1 Silnik reguł (Kernel),"Jako gracz chcę żeby po kroku akcji linie rozstrzygnęły się same, aby jednostki walczyły, a mecz mógł się zakończyć.
+
+Kryteria akceptacji:
+- GIVEN jednostki 3/2 i 2/3 naprzeciw WHEN linia się rozstrzyga THEN obie giną (uderzenia jednoczesne)
+- GIVEN latający atakujący i naziemny obrońca WHEN linia się rozstrzyga THEN trafiony jest bohater
+- GIVEN bohater przeciwnika ma 2 HP WHEN jednostka 3/3 trafia go w walce THEN mecz kończy się wygraną, kolejne linie się nie rozstrzygają
+
+Reguły: R-30, R-32, R-33, R-50, R-70, R-71 (docs/02-rules/RULES-INDEX.md)
+Fala: W1 (MVP (semestr 1)) · Źródło: backlog.toml (E1-S03)",5,32400,High,rejoltance,w1,sprint-3,Kernel
+E1-S07,,Story,E1-S07 Kolejka wyzwalaczy z obrażeń i Bonus Attack,E1 Silnik reguł (Kernel),"Jako gracz chcę żeby efekty 'gdy zada obrażenia' i 'gdy zabije' działały w walce w poprawnej kolejności, aby jednostki z takimi zdolnościami były grywalne.
+
+Kryteria akceptacji:
+- GIVEN jednostka z OnDamagedEnemyUnit, która zginie w starciu WHEN zada obrażenia THEN jej wyzwalacz wykona się po obu uderzeniach
+- GIVEN jednostka 4/4 bez przeciwnika WHEN dostaje Bonus Attack THEN wrogi bohater traci 4 HP
+
+Reguły: R-34, R-35 (docs/02-rules/RULES-INDEX.md)
+Fala: W1 (MVP (semestr 1)) · Źródło: backlog.toml (E1-S07)",3,21600,High,rejoltance,w1,sprint-3,Kernel
+E1-S04,,Story,E1-S04 Słowa kluczowe walki,E1 Silnik reguł (Kernel),"Jako gracz chcę żeby Armored, Marked, Stunned, Burning, SplashDamage i Breakthrough działały jak w prototypie, aby karty miały swoją tożsamość.
+
+Kryteria akceptacji:
+- GIVEN jednostka z Armored(1) i Marked WHEN dostaje trafienie za 3 THEN traci 4 HP
+- GIVEN jednostka ze Stunned WHEN przychodzi jej uderzenie THEN nie uderza, a status znika
+- GIVEN płonąca jednostka 2/2 WHEN kończy się runda THEN ma 1 HP
+
+Reguły: R-15, R-40, R-41, R-42, R-43, R-44, R-45 (docs/02-rules/RULES-INDEX.md)
+Fala: W1 (MVP (semestr 1)) · Źródło: backlog.toml (E1-S04)",8,50400,High,rejoltance,w1,sprint-4,Kernel
+E1-S05,,Story,"E1-S05 SoulGuard, Unkillable, Sacrifice",E1 Silnik reguł (Kernel),"Jako gracz chcę żeby ochrony przed śmiercią i poświęcenie działały w poprawnej kolejności, aby karty oparte na śmierci były grywalne.
+
+Kryteria akceptacji:
+- GIVEN jednostka z SoulGuard WHEN zostaje zniszczona THEN ma 1 HP i traci SoulGuard
+- GIVEN jednostka z SoulGuard WHEN zostaje poświęcona THEN ginie
+- GIVEN jednostka z Unkillable WHEN ginie THEN po efektach pośmiertnych wraca do ręki
+
+Reguły: R-46, R-47, R-51, R-54 (docs/02-rules/RULES-INDEX.md)
+Fala: W1 (MVP (semestr 1)) · Źródło: backlog.toml (E1-S05)",5,32400,High,rejoltance,w1,sprint-5,Kernel
+E1-S06,,Story,E1-S06 Silence i powrót do ręki,E1 Silnik reguł (Kernel),"Jako gracz chcę wyciszać jednostki i zawracać je do ręki, aby mieć odpowiedź na silne jednostki przeciwnika.
+
+Kryteria akceptacji:
+- GIVEN wyciszona jednostka z OnDeath WHEN ginie THEN efekt pośmiertny się nie wykonuje
+
+Reguły: R-52, R-53 (docs/02-rules/RULES-INDEX.md)
+Fala: W2 (pełna gra (semestr 2)) · Źródło: backlog.toml (E1-S06)",3,21600,Medium,rejoltance,w2,semestr-2,Kernel
+E1-S08,,Story,E1-S08 Efekty przed i po walce z wyborem celu,E1 Silnik reguł (Kernel),"Jako gracz chcę wybierać cel efektów 'przed walką', aby decydować zamiast losowania.
+
+Kryteria akceptacji:
+- GIVEN jednostka z efektem przed walką i 2 wrogie cele WHEN walka dochodzi do linii THEN właściciel dostaje PendingInteraction z 2 opcjami
+
+Reguły: R-31, R-84 (docs/02-rules/RULES-INDEX.md)
+Fala: W2 (pełna gra (semestr 2)) · Źródło: backlog.toml (E1-S08)",3,28800,Medium,rejoltance,w2,semestr-2,Kernel
+E2-S01,,Story,"E2-S01 Rejestr akcji, wyzwalaczy i warunków",E2 Interpreter efektów kart (DSL),"Jako twórca kart chcę żeby efekt karty był wykonywany z danych przez rejestr handlerów, aby nowa karta nie wymagała zmiany silnika.
+
+Kryteria akceptacji:
+- GIVEN karta z wyzwalaczem i warunkiem IsSubtype WHEN zachodzi zdarzenie dla innego podtypu THEN efekt się nie wykonuje
+- GIVEN akcja bez zarejestrowanego handlera WHEN efekt się uruchamia THEN rzucany jest wyjątek z nazwą akcji
+
+Reguły: R-60, R-66, R-68 (docs/02-rules/RULES-INDEX.md)
+Fala: W1 (MVP (semestr 1)) · Źródło: backlog.toml (E2-S01)",5,,High,rejoltance,w1,sprint-1,Content
+E2-S01-T1,E2-S01,Sub-task,E2-S01-T1 Projekt IActionHandler + rejestr (szkic ADR jeśli zmienia kontrakt),,"Część E2-S01 Rejestr akcji, wyzwalaczy i warunków.",,10800,High,rejoltance,w1,sprint-1,Content
+E2-S01-T2,E2-S01,Sub-task,"E2-S01-T2 Dyspozytor wyzwalaczy (strefy Board/Hand, Choice)",,"Część E2-S01 Rejestr akcji, wyzwalaczy i warunków.",,7200,High,rejoltance,w1,sprint-1,Content
+E2-S01-T3,E2-S01,Sub-task,E2-S01-T3 Ewaluator warunków And/Or/Not/IsSelf/IsSubtype/IsStatus/IsEnemy/IsFriendly/HasSubtypeOnBoard,,"Część E2-S01 Rejestr akcji, wyzwalaczy i warunków.",,7200,High,rejoltance,w1,sprint-1,Content
+E2-S01-T4,E2-S01,Sub-task,"E2-S01-T4 Testy R60_*, R66_*, R68_*",,"Część E2-S01 Rejestr akcji, wyzwalaczy i warunków.",,7200,High,rejoltance,w1,sprint-1,Content
+E2-S02,,Story,E2-S02 Wybór i walidacja celów,E2 Interpreter efektów kart (DSL),"Jako gracz online chcę żeby serwer przyjmował tylko legalne cele, aby nikt nie mógł poświęcić mojej jednostki ani oszukać wyborem.
+
+Kryteria akceptacji:
+- GIVEN karta wymagająca poświęcenia przyjaznej jednostki WHEN wskazuję jednostkę wroga THEN intencja jest odrzucona, Blood bez zmian
+- GIVEN karta z 2 opcjami WHEN wybieram opcję 5 THEN intencja jest odrzucona przed zapłatą
+- GIVEN akcja bez dostępnych celów WHEN pytam o LegalActions THEN karty nie ma na liście
+
+Reguły: R-22, R-25 (docs/02-rules/RULES-INDEX.md)
+Fala: W1 (MVP (semestr 1)) · Źródło: backlog.toml (E2-S02)",5,,High,rejoltance,w1,sprint-2,Content
+E2-S02-T1,E2-S02,Sub-task,E2-S02-T1 Rodzaje celów z danych karty (port picks/apicks bez UI),,Część E2-S02 Wybór i walidacja celów.,,10800,High,rejoltance,w1,sprint-2,Content
+E2-S02-T2,E2-S02,Sub-task,E2-S02-T2 Walidacja TargetRef przed zmianą stanu,,Część E2-S02 Wybór i walidacja celów.,,10800,High,rejoltance,w1,sprint-2,Content
+E2-S02-T3,E2-S02,Sub-task,E2-S02-T3 Testy negatywne R25_* (scenariusze oszustw z prototypu),,Część E2-S02 Wybór i walidacja celów.,,10800,High,rejoltance,w1,sprint-2,Content
+E2-S03,,Story,"E2-S03 Akcje obrażeń, leczenia i statystyk",E2 Interpreter efektów kart (DSL),"Jako gracz chcę żeby karty zadające obrażenia, leczące i wzmacniające działały, aby grać pierwszymi kartami z efektami.
+
+Kryteria akceptacji:
+- GIVEN bohater ma 18 HP WHEN karta leczy o 5 THEN ma 20 HP
+- GIVEN jednostka z atakiem 1 WHEN dostaje -3 ataku THEN ma atak 0
+
+Reguły: R-48, R-61, R-62 (docs/02-rules/RULES-INDEX.md)
+Fala: W1 (MVP (semestr 1)) · Źródło: backlog.toml (E2-S03)",3,28800,High,rejoltance,w1,sprint-3,Content
+E2-S04,,Story,"E2-S04 Akcje kart, stref i zasobu",E2 Interpreter efektów kart (DSL),"Jako gracz chcę dobierać, szukać w talii, dodawać karty i Blood efektami, aby karty pomocnicze działały.
+
+Kryteria akceptacji:
+- GIVEN talia z kartami 1, 4, 2 bez wyboru gracza WHEN TutorCard THEN do ręki trafia karta za 4
+- GIVEN 9 Blood WHEN AddResource +2 THEN 10 Blood
+
+Reguły: R-13, R-63, R-65 (docs/02-rules/RULES-INDEX.md)
+Fala: W1 (MVP (semestr 1)) · Źródło: backlog.toml (E2-S04)",3,28800,High,rejoltance,w1,sprint-4,Content
+E2-S05,,Story,E2-S05 Talia MVP: 12 kart grywalnych end-to-end,E2 Interpreter efektów kart (DSL),"Jako gracz testowy chcę zagrać pełny mecz talią 12 różnych kart, aby ocenić grę na Sprint Review.
+
+Kryteria akceptacji:
+- GIVEN talia MVP (12 kart × 2-3 kopie) WHEN rozgrywam mecz z botem THEN każda z 12 kart działa zgodnie z opisem
+- GIVEN dowolna karta MVP WHEN ją zagram THEN istnieje test R-nn pokrywający jej efekt
+
+Reguły: R-01 (docs/02-rules/RULES-INDEX.md)
+Fala: W1 (MVP (semestr 1)) · Źródło: backlog.toml (E2-S05)",3,28800,High,rejoltance,w1,sprint-5,Content
+E2-S06,,Story,E2-S06 Koszt i efekty działające z ręki,E2 Interpreter efektów kart (DSL),"Jako gracz chcę żeby karty tańsze z ręki i przywoływane z ręki działały, aby zagrywać kombinacje.
+
+Kryteria akceptacji:
+- GIVEN 2 Tea Maid na planszy WHEN liczę koszt akcji za 3 THEN wynosi 1
+
+Reguły: R-23, R-24 (docs/02-rules/RULES-INDEX.md)
+Fala: W2 (pełna gra (semestr 2)) · Źródło: backlog.toml (E2-S06)",3,28800,Medium,rejoltance,w2,semestr-2,Content
+E2-S07,,Story,E2-S07 Efekty pasywne w danych (bez hardcodu id),E2 Interpreter efektów kart (DSL),"Jako twórca kart chcę opisać Tea Maid, Wyvern i Survivalist w DSL, aby silnik nie znał numerów kart.
+
+Kryteria akceptacji:
+- GIVEN dane kart WHEN szukam w Kernelu identyfikatorów 46, 60, 14 THEN ich nie ma, a testy R-23/R-46/R-67 przechodzą
+
+Reguły: R-67 (docs/02-rules/RULES-INDEX.md)
+Fala: W2 (pełna gra (semestr 2)) · Źródło: backlog.toml (E2-S07)",3,21600,Medium,rejoltance,w2,semestr-2,Content
+E2-S08,,Story,"E2-S08 Akcje planszy: MakeAUnit, MoveRight, DestroyUnit, Transform",E2 Interpreter efektów kart (DSL),"Jako gracz chcę żeby karty przywołujące i przemieniające jednostki działały, aby grać pełną pulą kart.
+
+Kryteria akceptacji:
+- GIVEN karty 61 i 62 na planszy WHEN Transform z Partner THEN stają się 907 i 908
+
+Reguły: R-64, R-69 (docs/02-rules/RULES-INDEX.md)
+Fala: W2 (pełna gra (semestr 2)) · Źródło: backlog.toml (E2-S08)",3,28800,Medium,rejoltance,w2,semestr-2,Content
+E2-S09,,Story,E2-S09 Wszystkie 69 kart,E2 Interpreter efektów kart (DSL),"Jako gracz chcę grać każdą kartą z prototypu, aby gra miała pełną głębię.
+
+Kryteria akceptacji:
+- GIVEN każda z 69 kart WHEN ją zagram THEN zachowanie zgadza się z wyrocznią prototypu (E5-S02)
+
+Fala: W2 (pełna gra (semestr 2)) · Źródło: backlog.toml (E2-S09)",8,72000,Medium,rejoltance,w2,semestr-2,Content
+E3-S01,,Story,E3-S01 Pokój PvP na kod / link,E3 Serwer i sieć czasu rzeczywistego,"Jako gracz chcę utworzyć pokój i wysłać koledze kod, aby zagrać z nim w dwóch przeglądarkach.
+
+Kryteria akceptacji:
+- GIVEN gracz utworzył pokój WHEN drugi gracz wpisze kod THEN obaj dostają MatchView ze swoim miejscem
+- GIVEN pełny pokój WHEN trzecia osoba wpisze kod THEN dostaje komunikat 'pokój pełny'
+- GIVEN gracz 0 wykona ruch WHEN serwer go przetworzy THEN obaj gracze dostają MatchUpdated ze swoją projekcją
+
+Reguły: R-80, R-82 (docs/02-rules/RULES-INDEX.md)
+Fala: W1 (MVP (semestr 1)) · Źródło: backlog.toml (E3-S01)",5,,High,rejoltance,w1,sprint-1,Server
+E3-S01-T1,E3-S01,Sub-task,"E3-S01-T1 Model pokoju: kod 5 znaków, dwa miejsca, przypisanie połączeń",,Część E3-S01 Pokój PvP na kod / link.,,10800,High,rejoltance,w1,sprint-1,Server
+E3-S01-T2,E3-S01,Sub-task,"E3-S01-T2 Hub: CreateRoom/JoinRoom, wysyłka MatchUpdated per miejsce (grupy SignalR)",,Część E3-S01 Pokój PvP na kod / link.,,10800,High,rejoltance,w1,sprint-1,Server
+E3-S01-T3,E3-S01,Sub-task,E3-S01-T3 Testy z dwoma klientami SignalR (ServerFactory),,Część E3-S01 Pokój PvP na kod / link.,,10800,High,rejoltance,w1,sprint-1,Server
+E3-S02,,Story,E3-S02 Autoryzacja miejsca i walidacja intencji,E3 Serwer i sieć czasu rzeczywistego,"Jako gracz online chcę żeby nikt nie mógł grać za mnie ani w moim meczu, aby mecz był uczciwy.
+
+Kryteria akceptacji:
+- GIVEN połączenie spoza meczu WHEN wysyła intencję THEN dostaje błąd, stan bez zmian
+- GIVEN gracz 1 WHEN wysyła intencję w kroku gracza 0 THEN intencja jest odrzucona
+
+Reguły: R-81, R-82 (docs/02-rules/RULES-INDEX.md)
+Fala: W1 (MVP (semestr 1)) · Źródło: backlog.toml (E3-S02)",3,,High,rejoltance,w1,sprint-2,Server
+E3-S02-T1,E3-S02,Sub-task,E3-S02-T1 Mapowanie połączenie → miejsce; odrzucanie cudzych intencji,,Część E3-S02 Autoryzacja miejsca i walidacja intencji.,,10800,High,rejoltance,w1,sprint-2,Server
+E3-S02-T2,E3-S02,Sub-task,"E3-S02-T2 Testy negatywne hubu (cudzy mecz, cudza tura, zły matchId)",,Część E3-S02 Autoryzacja miejsca i walidacja intencji.,,10800,High,rejoltance,w1,sprint-2,Server
+E3-S03,,Story,E3-S03 Zdarzenia dla animacji per gracz,E3 Serwer i sieć czasu rzeczywistego,"Jako frontend chcę dostawać listę zdarzeń z rozstrzygnięcia (atak, obrażenia, śmierć) bez ukrytych danych, aby animować to, co się stało, zamiast porównywać stany.
+
+Kryteria akceptacji:
+- GIVEN walka w linii WHEN serwer wysyła MatchUpdated THEN zdarzenia są w kolejności rozstrzygnięcia, a karty przeciwnika z ręki są zanonimizowane
+
+Reguły: R-80 (docs/02-rules/RULES-INDEX.md)
+Fala: W1 (MVP (semestr 1)) · Źródło: backlog.toml (E3-S03)",3,21600,High,rejoltance,w1,sprint-3,Server
+E3-S04,,Story,E3-S04 Limit czasu tury,E3 Serwer i sieć czasu rzeczywistego,"Jako gracz chcę żeby przeciwnik nie mógł grać w nieskończoność, aby mecz miał tempo.
+
+Kryteria akceptacji:
+- GIVEN aktywny gracz nie robi nic przez 90 s WHEN czas minie THEN krok jest automatycznie zakończony, a odpowiedź na PendingInteraction to pierwsza legalna opcja
+
+Reguły: R-31 (docs/02-rules/RULES-INDEX.md)
+Fala: W1 (MVP (semestr 1)) · Źródło: backlog.toml (E3-S04)",3,21600,High,rejoltance,w1,sprint-4,Server
+E3-S05,,Story,E3-S05 Reconnect w 60 sekund,E3 Serwer i sieć czasu rzeczywistego,"Jako gracz z niestabilnym Wi-Fi chcę wrócić do trwającego meczu, aby nie przegrywać przez sieć.
+
+Kryteria akceptacji:
+- GIVEN gracz stracił połączenie WHEN wróci po 20 s THEN dostaje bieżący MatchView i gra dalej
+- GIVEN gracz nie wraca przez 60 s WHEN czas minie THEN przegrywa walkowerem
+
+Reguły: R-73 (docs/02-rules/RULES-INDEX.md)
+Fala: W2 (pełna gra (semestr 2)) · Źródło: backlog.toml (E3-S05)",5,36000,Medium,rejoltance,w2,semestr-2,Server
+E3-S06,,Story,E3-S06 Ochrona hubu: rate limiting i logi bezpieczeństwa,E3 Serwer i sieć czasu rzeczywistego,"Jako administrator chcę ograniczyć zalewanie serwera intencjami, aby jeden klient nie zablokował innych.
+
+Kryteria akceptacji:
+- GIVEN klient wysyła > 20 intencji/s WHEN limit zostanie przekroczony THEN kolejne są odrzucane i logowane
+
+Fala: W1 (MVP (semestr 1)) · Źródło: backlog.toml (E3-S06)",2,18000,High,rejoltance,w1,sprint-5,Server
+E3-S07,,Story,E3-S07 Tryb obserwatora,E3 Serwer i sieć czasu rzeczywistego,"Jako obserwator chcę oglądać mecz na żywo z opóźnieniem, aby organizować turniej na Sprint Review.
+
+Kryteria akceptacji:
+- GIVEN obserwator w pokoju WHEN trwa mecz THEN widzi planszę bez rąk graczy, z opóźnieniem 1 rundy
+
+Fala: W3 (dodatki) · Źródło: backlog.toml (E3-S07)",5,36000,Low,rejoltance,w3,semestr-2,Server
+E4-S01,,Story,E4-S01 Plansza 4 linie i wachlarz ręki,E4 Klient web,"Jako gracz chcę widzieć planszę, rękę, HP i Blood jak w prototypie, aby rozumieć stan gry na pierwszy rzut oka.
+
+Kryteria akceptacji:
+- GIVEN MatchView z próbki WHEN ekran się renderuje THEN widzę 4 linie po 2 sloty, wachlarz ręki, HP i Blood obu graczy
+- GIVEN ręka przeciwnika WHEN patrzę na jego stronę THEN widzę tylko rewersy w liczbie handCount
+
+Reguły: R-80 (docs/02-rules/RULES-INDEX.md)
+Fala: W1 (MVP (semestr 1)) · Źródło: backlog.toml (E4-S01)",5,,High,rejoltance,w1,sprint-1,Web
+E4-S01-T1,E4-S01,Sub-task,"E4-S01-T1 Komponenty Board / Lane / Slot (CSS grid, referencja: prototype/revibance/style.css)",,Część E4-S01 Plansza 4 linie i wachlarz ręki.,,10800,High,rejoltance,w1,sprint-1,Web
+E4-S01-T2,E4-S01,Sub-task,E4-S01-T2 Komponent Card + wachlarz ręki + rewersy przeciwnika,,Część E4-S01 Plansza 4 linie i wachlarz ręki.,,10800,High,rejoltance,w1,sprint-1,Web
+E4-S01-T3,E4-S01,Sub-task,"E4-S01-T3 HeroBar: HP, kropelki Blood, faza i runda",,Część E4-S01 Plansza 4 linie i wachlarz ręki.,,3600,High,rejoltance,w1,sprint-1,Web
+E4-S01-T4,E4-S01,Sub-task,E4-S01-T4 Testy komponentów na match-view.sample.json,,Część E4-S01 Plansza 4 linie i wachlarz ręki.,,7200,High,rejoltance,w1,sprint-1,Web
+E4-S02,,Story,E4-S02 Zagrywanie kart z podświetleniem legalnych ruchów,E4 Klient web,"Jako gracz chcę kliknąć lub przeciągnąć kartę na podświetloną linię, aby grać intuicyjnie.
+
+Kryteria akceptacji:
+- GIVEN karta grywalna według legalActions WHEN ją zaznaczę THEN podświetlają się tylko wolne linie z legalActions
+- GIVEN karta niegrywalna WHEN próbuję ją przeciągnąć THEN nie da się jej upuścić, a UI nie wysyła intencji
+
+Reguły: R-20 (docs/02-rules/RULES-INDEX.md)
+Fala: W1 (MVP (semestr 1)) · Źródło: backlog.toml (E4-S02)",5,,High,rejoltance,w1,sprint-2,Web
+E4-S02-T1,E4-S02,Sub-task,E4-S02-T1 Zaznaczanie karty i podświetlenie z legalActions,,Część E4-S02 Zagrywanie kart z podświetleniem legalnych ruchów.,,10800,High,rejoltance,w1,sprint-2,Web
+E4-S02-T2,E4-S02,Sub-task,E4-S02-T2 Drag & drop na linię (@dnd-kit lub natywnie) + klawiatura,,Część E4-S02 Zagrywanie kart z podświetleniem legalnych ruchów.,,10800,High,rejoltance,w1,sprint-2,Web
+E4-S02-T3,E4-S02,Sub-task,E4-S02-T3 Wysyłka PlayCardIntent / EndStepIntent przez store; obsługa błędów,,Część E4-S02 Zagrywanie kart z podświetleniem legalnych ruchów.,,7200,High,rejoltance,w1,sprint-2,Web
+E4-S02-T4,E4-S02,Sub-task,E4-S02-T4 Testy interakcji (Testing Library),,Część E4-S02 Zagrywanie kart z podświetleniem legalnych ruchów.,,7200,High,rejoltance,w1,sprint-2,Web
+E4-S03,,Story,"E4-S03 Prompty: mulligan, kolejność, wybór celu",E4 Klient web,"Jako gracz chcę odpowiadać na pytania gry w czytelnych oknach, aby przejść cały mecz bez konsoli.
+
+Kryteria akceptacji:
+- GIVEN pending typu mulligan WHEN zaznaczę 2 karty i zatwierdzę THEN wysyłany jest MulliganIntent z ich id
+- GIVEN pending wyboru celu WHEN kliknę podświetloną jednostkę THEN wysyłany jest AnswerPendingIntent
+
+Reguły: R-03, R-04, R-84 (docs/02-rules/RULES-INDEX.md)
+Fala: W1 (MVP (semestr 1)) · Źródło: backlog.toml (E4-S03)",3,21600,High,rejoltance,w1,sprint-3,Web
+E4-S07,,Story,"E4-S07 Lobby: utwórz pokój, dołącz kodem, wybierz talię",E4 Klient web,"Jako gracz chcę utworzyć pokój albo dołączyć kodem z linku, aby zagrać z kolegą bez pomocy zespołu.
+
+Kryteria akceptacji:
+- GIVEN lobby WHEN wpiszę kod pokoju THEN dołączam do meczu z wybraną talią startową
+- GIVEN link z kodem pokoju WHEN go otworzę THEN kod jest wpisany automatycznie
+
+Fala: W1 (MVP (semestr 1)) · Źródło: backlog.toml (E4-S07)",3,21600,High,rejoltance,w1,sprint-4,Web
+E4-S04,,Story,"E4-S04 Grafiki kart, glosariusz słów kluczowych, powiększenie",E4 Klient web,"Jako gracz chcę widzieć grafiki kart i opis słów kluczowych po najechaniu, aby rozumieć karty bez instrukcji.
+
+Kryteria akceptacji:
+- GIVEN karta ze słowem Armored WHEN najadę na nią THEN widzę powiększenie i opis Armored
+
+Fala: W2 (pełna gra (semestr 2)) · Źródło: backlog.toml (E4-S04)",3,28800,Medium,rejoltance,w2,semestr-2,Web
+E4-S05,,Story,E4-S05 Animacje zdarzeń i dźwięki,E4 Klient web,"Jako gracz chcę widzieć ataki, obrażenia i śmierć jednostek oraz słyszeć efekty, aby gra była czytelna i przyjemna.
+
+Kryteria akceptacji:
+- GIVEN zdarzenia walki WHEN przychodzi MatchUpdated THEN odtwarzam je po kolei (atak, liczby obrażeń, śmierć) z dźwiękami z prototypu, bez blokowania wejścia na stałe
+
+Fala: W1 (MVP (semestr 1)) · Źródło: backlog.toml (E4-S05)",5,28800,High,rejoltance,w1,sprint-5,Web
+E4-S06,,Story,"E4-S06 Ekran końca meczu, poddanie, rewanż",E4 Klient web,"Jako gracz chcę poddać się, zobaczyć wynik i zagrać rewanż, aby zamknąć mecz.
+
+Kryteria akceptacji:
+- GIVEN koniec meczu WHEN pojawia się ekran wyniku THEN widzę zwycięzcę, powód i przycisk rewanżu
+
+Fala: W2 (pełna gra (semestr 2)) · Źródło: backlog.toml (E4-S06)",2,14400,Medium,rejoltance,w2,semestr-2,Web
+E5-S01,,Story,E5-S01 Wyrocznia: prototyp JS uruchamiany headless z seedem,E5 Bot AI i symulator,"Jako inżynier reguł chcę uruchomić engine.js prototypu w Node z ustalonym seedem, aby mieć wzorcowe wyniki do porównań z Kernelem.
+
+Kryteria akceptacji:
+- GIVEN seed i lista ruchów WHEN uruchamiam tools/oracle THEN dostaję JSON ze stanem po każdym ruchu
+- GIVEN ten sam seed WHEN uruchamiam dwa razy THEN wyniki są identyczne
+
+Reguły: R-83 (docs/02-rules/RULES-INDEX.md)
+Fala: W1 (MVP (semestr 1)) · Źródło: backlog.toml (E5-S01)",3,,High,rejoltance,w1,sprint-1,AI
+E5-S01-T1,E5-S01,Sub-task,E5-S01-T1 Harness Node: załadowanie cards.js + engine.js bez DOM,,Część E5-S01 Wyrocznia: prototyp JS uruchamiany headless z seedem.,,10800,High,rejoltance,w1,sprint-1,AI
+E5-S01-T2,E5-S01,Sub-task,"E5-S01-T2 Podmiana Math.random na seedowany generator, zapis stanu do JSON",,Część E5-S01 Wyrocznia: prototyp JS uruchamiany headless z seedem.,,10800,High,rejoltance,w1,sprint-1,AI
+E5-S01-T3,E5-S01,Sub-task,E5-S01-T3 Skrypt npm + README w tools/oracle,,Część E5-S01 Wyrocznia: prototyp JS uruchamiany headless z seedem.,,7200,High,rejoltance,w1,sprint-1,AI
+E5-S02,,Story,E5-S02 Testy różnicowe Kernel vs wyrocznia,E5 Bot AI i symulator,"Jako inżynier reguł chcę porównywać Kernel z prototypem na tych samych scenariuszach, aby wyłapywać odstępstwa od kanonu.
+
+Kryteria akceptacji:
+- GIVEN fixtury z wyroczni (start, mulligan, dobieranie) WHEN uruchamiam testy C# THEN stan Kernela zgadza się z fixturą lub różnica jest na liście ROZBIEZNOSCI
+
+Reguły: R-83 (docs/02-rules/RULES-INDEX.md)
+Fala: W1 (MVP (semestr 1)) · Źródło: backlog.toml (E5-S02)",3,,High,rejoltance,w1,sprint-2,AI
+E5-S02-T1,E5-S02,Sub-task,"E5-S02-T1 Format fixtury (seed, intencje, oczekiwany stan) w tests/fixtures/oracle",,Część E5-S02 Testy różnicowe Kernel vs wyrocznia.,,7200,High,rejoltance,w1,sprint-2,AI
+E5-S02-T2,E5-S02,Sub-task,E5-S02-T2 Generator fixtur ze scenariuszy R-0x/R-1x,,Część E5-S02 Testy różnicowe Kernel vs wyrocznia.,,10800,High,rejoltance,w1,sprint-2,AI
+E5-S02-T3,E5-S02,Sub-task,E5-S02-T3 Test xUnit czytający fixtury (z listą znanych rozbieżności),,Część E5-S02 Testy różnicowe Kernel vs wyrocznia.,,10800,High,rejoltance,w1,sprint-2,AI
+E5-S03,,Story,E5-S03 Bot losowy (Policy na LegalActions),E5 Bot AI i symulator,"Jako gracz chcę zagrać z botem, który wykonuje legalne ruchy, aby testować grę bez drugiego człowieka.
+
+Kryteria akceptacji:
+- GIVEN mecz z botem WHEN bot jest aktywny THEN wykonuje tylko ruchy z LegalActions i kończy krok
+
+Fala: W1 (MVP (semestr 1)) · Źródło: backlog.toml (E5-S03)",3,21600,High,rejoltance,w1,sprint-3,AI
+E5-S04,,Story,E5-S04 Symulator headless: N partii bot vs bot,E5 Bot AI i symulator,"Jako projektant balansu chcę rozegrać 300 partii bez UI, aby wykrywać zawieszenia i wyjątki (fuzzing) oraz sprawdzić determinizm.
+
+Kryteria akceptacji:
+- GIVEN 300 partii z seedami 1..300 WHEN uruchamiam symulator THEN wszystkie się kończą, a powtórka seeda daje ten sam wynik
+
+Reguły: R-54, R-83 (docs/02-rules/RULES-INDEX.md)
+Fala: W1 (MVP (semestr 1)) · Źródło: backlog.toml (E5-S04)",3,21600,High,rejoltance,w1,sprint-4,AI
+E5-S05,,Story,E5-S05 Tryb gry z botem w lobby,E5 Bot AI i symulator,"Jako gracz chcę wybrać w lobby 'graj z botem', aby zagrać od razu bez szukania przeciwnika.
+
+Kryteria akceptacji:
+- GIVEN lobby WHEN wybieram grę z botem THEN mecz startuje, bot gra przez ten sam kontrakt co człowiek (widzi tylko swój MatchView)
+
+Fala: W1 (MVP (semestr 1)) · Źródło: backlog.toml (E5-S05)",3,28800,High,rejoltance,w1,sprint-5,AI
+E5-S06,,Story,E5-S06 Bot heurystyczny (port beam search z prototypu),E5 Bot AI i symulator,"Jako gracz chcę mocniejszego bota, aby gra z botem była wyzwaniem.
+
+Kryteria akceptacji:
+- GIVEN 100 partii bot heurystyczny vs losowy WHEN symulator się kończy THEN heurystyczny wygrywa > 80%, budżet liczony w węzłach, nie w ms
+
+Fala: W2 (pełna gra (semestr 2)) · Źródło: backlog.toml (E5-S06)",5,43200,Medium,rejoltance,w2,semestr-2,AI
+E5-S07,,Story,E5-S07 Raport balansu kart,E5 Bot AI i symulator,"Jako projektant balansu chcę win-rate każdej karty z symulacji, aby poprawiać statystyki kart na danych.
+
+Kryteria akceptacji:
+- GIVEN 1000 partii WHEN generuję raport THEN mam tabelę karta → win-rate → liczba zagrań
+
+Fala: W3 (dodatki) · Źródło: backlog.toml (E5-S07)",3,21600,Low,rejoltance,w3,semestr-2,AI
+E6-S01,,Story,E6-S01 CI na GitHubie i smoke test E2E,"E6 Platforma: konta, talie, dane, wdrożenie","Jako zespół chcę zielone CI z testem E2E uruchamiającym grę w przeglądarce, aby każdy PR był automatycznie sprawdzony (EU6).
+
+Kryteria akceptacji:
+- GIVEN PR WHEN CI się uruchamia THEN przechodzą joby dotnet, web, repo oraz smoke AppHost
+- GIVEN uruchomiony AppHost WHEN Playwright otwiera klienta THEN startuje sandbox i wykonuje mulligan
+
+Fala: W0 (fundament) · Źródło: backlog.toml (E6-S01)",3,,Highest,rejoltance,w0,sprint-1,Platform
+E6-S01-T1,E6-S01,Sub-task,E6-S01-T1 Pierwsze uruchomienie CI na GitHubie i poprawki,,Część E6-S01 CI na GitHubie i smoke test E2E.,,7200,Highest,rejoltance,w0,sprint-1,Platform
+E6-S01-T2,E6-S01,Sub-task,E6-S01-T2 Playwright: projekt testów E2E i scenariusz sandbox + mulligan,,Część E6-S01 CI na GitHubie i smoke test E2E.,,10800,Highest,rejoltance,w0,sprint-1,Platform
+E6-S01-T3,E6-S01,Sub-task,E6-S01-T3 Job E2E w CI z artefaktem (trace),,Część E6-S01 CI na GitHubie i smoke test E2E.,,7200,Highest,rejoltance,w0,sprint-1,Platform
+E6-S02,,Story,E6-S02 Konta graczy — backend,"E6 Platforma: konta, talie, dane, wdrożenie","Jako gracz chcę założyć konto i się zalogować, aby mieć swoje talie i historię.
+
+Kryteria akceptacji:
+- GIVEN żądanie rejestracji WHEN podam nick i hasło (min. 8 znaków) THEN konto powstaje, hasło jest zahashowane
+- GIVEN 5 błędnych logowań w minutę WHEN próbuję szósty raz THEN dostaję odmowę (rate limit)
+
+Fala: W1 (MVP (semestr 1)) · Źródło: backlog.toml (E6-S02)",3,,High,rejoltance,w1,sprint-2,Platform
+E6-S02-T1,E6-S02,Sub-task,E6-S02-T1 ASP.NET Core Identity na SQLite + migracja EF,,Część E6-S02 Konta graczy — backend.,,10800,High,rejoltance,w1,sprint-2,Platform
+E6-S02-T2,E6-S02,Sub-task,E6-S02-T2 Endpointy rejestracji/logowania (cookie HttpOnly) + rate limiting,,Część E6-S02 Konta graczy — backend.,,10800,High,rejoltance,w1,sprint-2,Platform
+E6-S02-T3,E6-S02,Sub-task,E6-S02-T3 Testy integracyjne auth (pozytywne i negatywne),,Część E6-S02 Konta graczy — backend.,,7200,High,rejoltance,w1,sprint-2,Platform
+E6-S03,,Story,E6-S03 PostgreSQL w Aspire,"E6 Platforma: konta, talie, dane, wdrożenie","Jako deweloper chcę uruchamiać bazę PostgreSQL jednym poleceniem, aby środowisko odpowiadało produkcji.
+
+Kryteria akceptacji:
+- GIVEN parametr usePostgres w AppHost WHEN uruchamiam aspire run THEN serwer korzysta z kontenera PostgreSQL, migracje przechodzą na obu dostawcach
+
+Fala: W1 (MVP (semestr 1)) · Źródło: backlog.toml (E6-S03)",3,21600,High,rejoltance,w1,sprint-4,Platform
+E6-S09,,Story,E6-S09 Ekran logowania i rejestracji,"E6 Platforma: konta, talie, dane, wdrożenie","Jako gracz chcę zalogować się w przeglądarce, aby grać na swoim koncie.
+
+Kryteria akceptacji:
+- GIVEN ekran logowania WHEN podam poprawne dane THEN trafiam do lobby jako zalogowany, a błędne dane pokazują komunikat
+
+Fala: W1 (MVP (semestr 1)) · Źródło: backlog.toml (E6-S09)",2,14400,High,rejoltance,w1,sprint-3,Platform
+E6-S04,,Story,E6-S04 Własne talie i deckbuilder,"E6 Platforma: konta, talie, dane, wdrożenie","Jako gracz chcę budować i zapisywać własne talie, aby grać swoim stylem.
+
+Kryteria akceptacji:
+- GIVEN deckbuilder WHEN dodam 4. kopię karty THEN UI blokuje, a serwer odrzuca zapis
+- GIVEN zapisana legalna talia WHEN dołączam do pokoju THEN mogę ją wybrać
+
+Reguły: R-01 (docs/02-rules/RULES-INDEX.md)
+Fala: W2 (pełna gra (semestr 2)) · Źródło: backlog.toml (E6-S04)",5,36000,Medium,rejoltance,w2,semestr-2,Platform
+E6-S05,,Story,E6-S05 Wdrożenie demo pod publicznym adresem,"E6 Platforma: konta, talie, dane, wdrożenie","Jako gracz testowy chcę wejść na adres i zagrać bez instalacji, aby testować grę między zajęciami.
+
+Kryteria akceptacji:
+- GIVEN obraz kontenera z CI WHEN wdrażam na hosting (#8) THEN gra działa pod adresem HTTPS, a /health zwraca Healthy
+
+Fala: W1 (MVP (semestr 1)) · Źródło: backlog.toml (E6-S05)",3,21600,High,rejoltance,w1,sprint-5,Platform
+E6-S06,,Story,E6-S06 Dokumentacja techniczna i użytkownika w Confluence,"E6 Platforma: konta, talie, dane, wdrożenie","Jako prowadzący chcę kompletną dokumentację modułów i instrukcję gracza, aby ocenić EU5/EU6.
+
+Kryteria akceptacji:
+- GIVEN koniec semestru WHEN otwieram Confluence THEN każdy moduł ma stronę (architektura, API, testy, wyniki pokrycia), a gracz ma instrukcję
+
+Fala: W1 (MVP (semestr 1)) · Źródło: backlog.toml (E6-S06)",2,18000,High,rejoltance,w1,sprint-5,Platform
+E6-S07,,Story,E6-S07 Historia meczów i odtwarzanie (replay),"E6 Platforma: konta, talie, dane, wdrożenie","Jako gracz chcę obejrzeć powtórkę zakończonego meczu, aby analizować swoje błędy.
+
+Kryteria akceptacji:
+- GIVEN zakończony mecz zapisany jako seed + intencje WHEN otwieram replay THEN odtwarzanie daje ten sam przebieg i wynik
+
+Reguły: R-83 (docs/02-rules/RULES-INDEX.md)
+Fala: W2 (pełna gra (semestr 2)) · Źródło: backlog.toml (E6-S07)",5,36000,Medium,rejoltance,w2,semestr-2,Platform
+E6-S08,,Story,E6-S08 Ranking i panel administratora,"E6 Platforma: konta, talie, dane, wdrożenie","Jako administrator chcę widzieć aktywne mecze, ranking i blokować oszustów, aby prowadzić turniej.
+
+Kryteria akceptacji:
+- GIVEN panel admina WHEN otwieram listę meczów THEN widzę aktywne mecze i mogę zablokować konto
+
+Fala: W3 (dodatki) · Źródło: backlog.toml (E6-S08)",5,43200,Low,rejoltance,w3,semestr-2,Platform

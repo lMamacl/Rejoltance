@@ -1,0 +1,24 @@
+name: Spike (badanie ≤ 2 h)
+description: Krótkie badanie technologii lub pytania technicznego, zakończone notatką w docs/08-research.
+labels: [spike]
+body:
+  - type: textarea
+    id: question
+    attributes:
+      label: Pytanie, na które odpowiada spike
+    validations:
+      required: true
+  - type: textarea
+    id: options
+    attributes:
+      label: Opcje do porównania
+  - type: input
+    id: timebox
+    attributes:
+      label: Limit czasu
+      value: 2 h
+  - type: textarea
+    id: done
+    attributes:
+      label: Wynik (Definition of Done)
+      value: "Notatka docs/08-research/RRRR-MM-DD-<temat>.md z rekomendacją; ewentualnie szkic ADR."

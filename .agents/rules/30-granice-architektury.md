@@ -1,0 +1,26 @@
+---
+trigger: model_decision
+description: "Granice modułów C#/TS i zakazy w Kernelu. Stosuj przy każdej zmianie w src/ lub tests/."
+---
+
+# Granice architektury
+
+Strzałki zależności idą tylko w dół (pilnuje `tests/Rejoltance.Architecture.Tests`):
+
+```text
+web (React/TS) ──SignalR/REST──► Server ──► Kernel ──► Content ──► Contracts
+```
+
+| Moduł | Wolno | Nie wolno |
+|---|---|---|
+| `Rejoltance.Contracts` | rekordy, enumy, atrybuty JSON | logika, zależności od innych modułów |
+| `Rejoltance.Content` | dane kart (JSON), walidacja | reguły gry, Kernel, Server |
+| `Rejoltance.Kernel` | reguły, `SeededRng`, projekcja | ASP.NET, EF Core, `System.Net`, IO, zegar, `System.Random`, statyczny mutowalny stan |
+| `Rejoltance.Server` | hub, sesje, API, baza | reguły gry (deleguje do Kernela), wysyłanie `MatchState` |
+| `src/web` | renderowanie `MatchView`, wysyłanie `Intent` | liczenie legalności ruchów, własne reguły, `fetch` poza `net/` i `state/` |
+
+Zasady dodatkowe:
+
+- Nowa karta = zmiana danych w `prototype/revibance/cards.js` → `python tools/content/extract_cards.py` (nie edytuj `cards.json` ręcznie).
+- Nowa akcja/trigger DSL = wpis w `Vocabulary` + handler w Kernelu + test R‑nn — w jednym PR.
+- Nowe pole w widoku = `Contracts` (C#) + `src/web/src/contracts/index.ts` + `UPDATE_CONTRACT_SAMPLES=1 dotnet test` — w jednym PR.

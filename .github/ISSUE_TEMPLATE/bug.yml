@@ -1,0 +1,30 @@
+name: Błąd
+description: Coś działa inaczej niż w regułach (docs/02-rules) lub psuje build/CI.
+labels: [bug]
+body:
+  - type: input
+    id: jira
+    attributes:
+      label: Klucz Jira (jeśli jest)
+      placeholder: REJ-123
+  - type: textarea
+    id: steps
+    attributes:
+      label: Kroki do odtworzenia
+      description: Seed meczu i kolejne intencje, jeśli dotyczy gry (replay = seed + intents).
+      placeholder: |
+        1. seed 42, talie MachineAggro vs TeaMaidCombo
+        2. ...
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Oczekiwane (z numerem reguły R‑nn) vs faktyczne
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logi / zrzuty
+      render: text

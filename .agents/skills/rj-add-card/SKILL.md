@@ -1,0 +1,22 @@
+---
+name: rj-add-card
+description: Adds or changes a card - edits the canonical prototype data, regenerates cards.json, validates the DSL vocabulary and adds tests. Use when a task mentions a new card, card stats or card effects.
+---
+
+# Dodanie / zmiana karty
+
+Karty są danymi. Źródło: `prototype/revibance/cards.js` (kanon, ADR-0005) → generowany `src/Rejoltance.Content/Data/cards.json`.
+
+## Kroki
+
+1. Edytuj obiekt karty w `prototype/revibance/cards.js` (`CARDS=[…]`). Kolekcjonerskie id 1–899, tokeny ≥ 900.
+2. Wygeneruj: `python tools/content/extract_cards.py`.
+3. Każde słowo DSL (`Trigger`, `Actions[].Type`, `Target`, `Keywords`, `Condition`) musi być w `src/Rejoltance.Content/Vocabulary.cs`.
+   - Nowe słowo → **to już nie jest „tylko karta”**: potrzebny handler w Kernelu i test R‑nn (zadanie dla `rj-backend-engineer`, plan + akceptacja).
+4. `dotnet test tests/Rejoltance.Kernel.Tests` — `ContentTests` waliduje cały katalog i talie startowe (fail loud).
+5. Talia startowa zmieniona → `DECKS=[…]` w tym samym pliku; reguły: 30 kart, ≤ 3 kopie, bez tokenów.
+6. Opis karty (`Description`) zgodny z efektem — recenzent porównuje.
+
+## Nie wolno
+
+Edytować `cards.json` ręcznie (CI: `extract_cards.py --check`).
