@@ -35,6 +35,18 @@ macOS/Linux: `bash tools/setup.sh`.
 - Story ≥ 3 SP: najpierw zmiana OpenSpec (`/opsx:propose`), potem kod.
 - Zasady dla ludzi i agentów AI: [`AGENTS.md`](AGENTS.md) i [konstytucja](.agents/rules/00-konstytucja.md).
 
+Krok po kroku: [`docs/00-start/jak-pracujemy.md`](docs/00-start/jak-pracujemy.md) · komendy: [`sciaga.md`](docs/00-start/sciaga.md) ·
+instrukcje „jak dodać kartę / skill / agenta / ADR / specyfikację”: [`docs/00-start/`](docs/00-start/README.md).
+
+## Dla nowej osoby w zespole
+
+1. [Uruchom środowisko](docs/00-start/jak-zaczac.md) i zagraj w [prototyp](prototype/README.md).
+2. Przeczytaj [zasady gry](docs/02-rules/SPECYFIKACJA.md) i [mapę kodu](docs/03-architecture/MAP.md).
+3. Weź zadanie z Jiry i przejdź [cykl pracy](docs/00-start/jak-pracujemy.md) — pierwszy PR z pomocą kogoś z zespołu.
+
+Stan projektu: [backlog i pojemność sprintów](docs/05-backlog/BACKLOG.md) · [decyzje (ADR)](docs/04-adr/README.md) ·
+[pytania otwarte](docs/00-start/pytania-otwarte.md) · [DIP](docs/01-dip/DIP.md).
+
 ```bash
 dotnet test Rejoltance.slnx --filter "Category!=Integration"   # testy backendu
 npm --prefix src/web test                                       # testy klienta

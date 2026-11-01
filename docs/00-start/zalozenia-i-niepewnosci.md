@@ -21,7 +21,7 @@ Gdy coś się wyjaśni — przenieś wiersz do „Rozstrzygnięte” z datą i �
 |---|---|---|---|---|
 | Z-10 | `Original Estimate` w imporcie CSV Jiry DC jest w sekundach | [?] | testowy import (`docs/05-backlog/test-import`) | `estimate_format = "jira"` |
 | Z-11 | Pole Story Points jest na ekranach schematu „Pracownia projektowa” | [?] | testowy import | prośba do prowadzącego o pole |
-| Z-12 | `mcp-atlassian` działa z Jirą/Confluence PB przez Personal Access Token (Jira ≥ 8.14) i trybem `READ_ONLY_MODE` | [?] | jedna osoba konfiguruje wg `jira-confluence-mcp.md` | integracja agentów z Jirą tylko ręczna |
+| Z-12 | Na Jirze/Confluence PB można tworzyć Personal Access Tokens (nazwy zmiennych `mcp-atlassian` — `JIRA_PERSONAL_TOKEN`, `CONFLUENCE_PERSONAL_TOKEN`, `READ_ONLY_MODE` — sprawdzone w jego `.env.example`) | [?] | jedna osoba konfiguruje wg `jira-confluence-mcp.md` | integracja agentów z Jirą tylko ręczna |
 | Z-13 | AppHost sam instaluje zależności npm przy pierwszym starcie | [?] | czysty klon na innym laptopie | `setup.ps1` i tak robi `npm ci` — bez wpływu |
 | Z-14 | Workflowy GitHub Actions działają bez poprawek | [?] | pierwszy push (E6-S01) | poprawki w E6-S01 |
 | Z-15 | Smart App Control blokuje build tylko na części laptopów | [?] | `tools/doctor.ps1` u każdego (E0-S01) | uruchamianie serwera i web osobno, CI jako dowód |
