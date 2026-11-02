@@ -15,9 +15,12 @@ jobs:
         env:
           HEAD: ${{ github.head_ref }}
           BASE: ${{ github.base_ref }}
+          AUTHOR: ${{ github.event.pull_request.user.login }}
         run: |
           # Sprint-closing PR develop -> main is allowed without a key.
           if [ "$HEAD" = "develop" ] && [ "$BASE" = "main" ]; then exit 0; fi
+          # Dependabot names its own branches (dependabot/...); it has no Jira key.
+          if [ "$AUTHOR" = "dependabot[bot]" ]; then exit 0; fi
           if ! echo "$HEAD" | grep -Eq '^(feature|fix|docs|chore|spike)/REJ-[0-9]+-[a-z0-9-]+$'; then
             echo "::error::Branch '$HEAD' must match (feature|fix|docs|chore|spike)/REJ-123-short-description (see .agents/rules/50-git-i-jira.md)"
             exit 1
@@ -35,8 +38,10 @@ jobs:
         env:
           TITLE: ${{ github.event.pull_request.title }}
           HEAD: ${{ github.head_ref }}
+          AUTHOR: ${{ github.event.pull_request.user.login }}
         run: |
           if [ "$HEAD" = "develop" ]; then exit 0; fi
+          if [ "$AUTHOR" = "dependabot[bot]" ]; then exit 0; fi
           if ! echo "$TITLE" | grep -Eq '^REJ-[0-9]+: .+'; then
             echo "::error::PR title must look like 'REJ-123: add fatigue damage'"
             exit 1
