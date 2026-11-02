@@ -1,0 +1,38 @@
+---
+name: rj-start-feature
+description: "Rozpoczyna pracę nad zadaniem z Jiry (REJ-123) w cyklu SDD: weryfikuje wymagania i reguły R-nn, sprawdza otwarte rozbieżności D-nn, tworzy gałąź typ/REJ-123-opis od develop i inicjuje zmianę OpenSpec."
+---
+
+# Umiejętność: Rozpoczęcie pracy nad zadaniem (`rj-start-feature`)
+
+## Kiedy używać tej procedury?
+
+Uruchamiaj na samym początku pracy nad każdym zadaniem z Jiry (`REJ-123`), zanim zmienisz jakikolwiek plik kodu produkcyjnego.
+
+---
+
+## Kroki wykonawcze (Krok po kroku)
+
+1. **Ustal identyfikator zadania i kontekst z Backlogu:**
+   - Odszukaj zadanie w `docs/03-dokumentacja-procesowa/02-backlog/backlog.toml` po kluczu Story (`E1-S01` itp.) lub numerze Jira (`REJ-123`).
+   - Odczytaj przypisane reguły `rules = ["R-nn", ...]` oraz kryteria akceptacji `GIVEN / WHEN / THEN`.
+
+2. **Sprawdź status reguł i brak blokad (`Specify`):**
+   - Sprawdź każdą powiązaną regułę `R-nn` w `docs/01-dokumentacja-systemowa/03-indeks-regul-r-nn.md`.
+   - Jeśli reguła ma status `❓` lub odwołuje się do nierozstrzygniętej pozycji w `docs/01-dokumentacja-systemowa/04-rozbieznosci-prototypu.md`, **zatrzymaj się** i poproś zespół o decyzję.
+   - Przeczytaj odpowiednią specyfikację w `openspec/specs/<domena>/spec.md`.
+
+3. **Utwórz gałąź roboczą od aktualnego `develop`:**
+
+   ```bash
+   git checkout develop
+   git pull --ff-only
+   git checkout -b <typ>/REJ-<numer>-<krotki-opis-kebab-case>
+   ```
+
+   Dozwolone prefiksy `<typ>`: `feat`, `fix`, `docs`, `test`, `refactor`, `chore`, `ci`.
+
+4. **Sprawdź bramkę OpenSpec (`Plan`):**
+   - Jeśli zadanie ma szacunek **≥ 3 SP**, wprowadza nową regułę `R-nn` lub modyfikuje kontrakty w `Rejoltance.Contracts`:
+     utwórz propozycję zmiany w `openspec/changes/rej-<numer>-<opis>/` (`/opsx:propose`) i poczekaj na akceptację człowieka.
+   - Jeśli zadanie ma **< 3 SP** i jego specyfikacja już istnieje w `openspec/specs/`: wypisz krótki plan (dotknięte pliki + nazwy testów `Rnn_`) i przejdź do implementacji.

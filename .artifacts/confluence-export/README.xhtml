@@ -1,0 +1,66 @@
+<ac:structured-macro ac:name="info"><ac:rich-text-body><p><strong>Synchronizacja 1:1 z repozytorium Git:</strong> <code>docs/README.md</code> (commit <code>db8ebae</code>, data eksportu: <code>2026-11-02</code>)</p></ac:rich-text-body></ac:structured-macro>
+<p>Witaj w dokumentacji projektu <strong>RE:JOLTANCE</strong>. To sieciowa, taktyczna gra karciana. Tworzymy ją na przedmiocie <em>Projekt zespołowy</em> na Wydziale Informatyki Politechniki Białostockiej (PB).</p>
+<blockquote><p><strong>Repozytorium projektu:</strong> <a href="https://github.com/lMamacl/Rejoltance">github.com/lMamacl/Rejoltance</a> · to źródło prawdy dla kodu, specyfikacji i dokumentacji · bieżąca wersja jest na gałęzi <code>develop</code></p></blockquote>
+<p>Katalog <code>docs/</code> opiera się na dwóch założeniach:</p>
+<ol><li><strong>Klasyfikacja dokumentacji technicznej według AltexSoft.</strong> Dzielimy dokumenty na trzy grupy: - <em>dokumentacja produktowa — systemowa</em>: wymagania produktu (PRD, Product Requirements Document), architektura systemu (SAD, Software Architecture Document), stos technologiczny, decyzje architektoniczne (ADR, Architecture Decision Record), kontrakty API, projekt UX i strategia testów QA; - <em>dokumentacja produktowa — użytkownika</em>: podręcznik gracza oraz instrukcja wdrożenia i administracji; - <em>dokumentacja procesowa</em>: Dokument Inicjujący Projekt (DIP), rejestr produktu w Jirze, ceremonie Scrum, spotkania i badania.</li><li><strong>Spec-Driven Development (SDD) i praca z agentami AI.</strong> W SDD najpierw piszemy specyfikację, a dopiero potem kod. Każdy dokument ma określone źródło prawdy i etap SDD. Opisuje też, jak ludzie i agenci AI dzielą się pracą.</li></ol>
+<p>Katalogi w <code>docs/</code> odpowiadają 1:1 stronom w przestrzeni projektu w <strong>Confluence PB</strong>. Dzięki temu skrypt <code>python tools/confluence/sync_confluence.py</code> przenosi dokumentację z repozytorium do Confluence automatycznie.</p>
+<hr />
+<h2>Katalogi <code>docs/</code> i sekcje w Confluence</h2>
+<table><thead><tr>
+<th><p>Katalog w repozytorium</p></th>
+<th><p>Sekcja w Confluence</p></th>
+<th><p>Kategoria</p></th>
+<th><p>Zawartość</p></th>
+</tr></thead><tbody>
+<tr>
+<td><p><strong><code>00-przewodnik-i-setup/</code></strong> (<code>00-przewodnik-i-setup/README.md</code>)</p></td>
+<td><p>00. Przewodnik i konfiguracja środowiska</p></td>
+<td><p>Standardy i wprowadzenie</p></td>
+<td><p>Pierwsze uruchomienie, architektura dokumentacji SDD, cykl pracy (Jira → OpenSpec → kod → PR), ściąga komend, słownik pojęć, otwarte decyzje, plan wdrożenia i migracji.</p></td>
+</tr>
+<tr>
+<td><p><strong><code>01-dokumentacja-systemowa/</code></strong> (<code>01-dokumentacja-systemowa/README.md</code>)</p></td>
+<td><p>01. Dokumentacja produktowa — systemowa</p></td>
+<td><p>Dokumentacja systemowa produktu</p></td>
+<td><p>PRD, specyfikacja reguł gry i indeks <code>R‑nn</code>, SAD, stos technologiczny, decyzje ADR, mapa kodu, kontrakty API/SignalR, projekt UX, strategia testów QA.</p></td>
+</tr>
+<tr>
+<td><p><strong><code>02-dokumentacja-uzytkownika/</code></strong> (<code>02-dokumentacja-uzytkownika/README.md</code>)</p></td>
+<td><p>02. Dokumentacja produktowa — użytkownika</p></td>
+<td><p>Dokumentacja użytkownika i administratora</p></td>
+<td><p>Dla gracza: <em>Podręcznik gracza</em>, szybki start, FAQ. Dla administratora: <em>Instrukcja wdrożenia, konfiguracji i utrzymania</em>.</p></td>
+</tr>
+<tr>
+<td><p><strong><code>03-dokumentacja-procesowa/</code></strong> (<code>03-dokumentacja-procesowa/README.md</code>)</p></td>
+<td><p>03. Dokumentacja procesowa i Scrum</p></td>
+<td><p>Dokumentacja procesowa</p></td>
+<td><p>DIP, rejestr produktu (<em>backlog</em> w TOML i eksport CSV do Jiry), ceremonie Scrum, agendy spotkań, notatki badawcze.</p></td>
+</tr>
+<tr>
+<td><p><strong><code>04-system-agentow-ai/</code></strong> (<code>04-system-agentow-ai/README.md</code>)</p></td>
+<td><p>04. System agentów AI i SDD</p></td>
+<td><p>Podręcznik pracy z agentami</p></td>
+<td><p>Konfiguracja środowiska AI, działanie katalogu <code>.agents/</code>, umiejętności (skille) poszczególnych ról, budowanie własnych agentów, skilli i specyfikacji OpenSpec.</p></td>
+</tr>
+<tr>
+<td><p><strong><code>05-szablony/</code></strong> (<code>05-szablony/README.md</code>)</p></td>
+<td><p>05. Biblioteka szablonów dokumentacji</p></td>
+<td><p>Szablony</p></td>
+<td><p>Szablony wszystkich typów dokumentacji: PRD, SAD, projekt techniczny (TDD, Technical Design Document), persony UX, raporty użyteczności, karty modułów, plany i raporty testów QA, informacje o wydaniu, podręcznik gracza, instrukcja wdrożenia.</p></td>
+</tr>
+<tr>
+<td><p><strong><code>99-archiwum-zrodel/</code></strong> (<code>99-archiwum-zrodel/README.md</code>)</p></td>
+<td><p><em>(poza głównym drzewem — archiwum)</em></p></td>
+<td><p>Materiały historyczne</p></td>
+<td><p>Pierwsze notatki, audyty i pliki referencyjne z początku projektu. Tylko do odczytu.</p></td>
+</tr>
+</tbody></table>
+<hr />
+<h2>Od czego zacząć czytanie?</h2>
+<h3>Wdrażasz nową strukturę w repozytorium i Confluence</h3>
+<ol><li>Przeczytaj <strong>Plan wdrożenia i migracji: Co zmienić i co podmienić względem dotychczasowego podejścia</strong> (<code>00-przewodnik-i-setup/07-plan-wdrozenia-i-migracji.md</code>).</li><li>Zobacz <strong>Architekturę dokumentacji SDD i mapowanie na Confluence</strong> (<code>00-przewodnik-i-setup/02-architektura-dokumentacji-sdd.md</code>).</li></ol>
+<h3>Dołączasz do zespołu deweloperskiego</h3>
+<ol><li>Przeczytaj <strong>Szybki start i instalację środowiska</strong> (<code>00-przewodnik-i-setup/01-szybki-start-i-instalacja.md</code>). Uruchom projekt lokalnie jednym poleceniem.</li><li>Poznaj <strong>Wymagania produktu (PRD)</strong> (<code>01-dokumentacja-systemowa/01-prd-wymagania-produktu.md</code>) i <strong>Specyfikację reguł gry</strong> (<code>01-dokumentacja-systemowa/02-specyfikacja-regul-gry.md</code>).</li><li>Zobacz <strong>Mapę kodu i modułów</strong> (<code>01-dokumentacja-systemowa/08-mapa-kodu-i-modulow.md</code>) i <strong>Dokument architektury systemu (SAD)</strong> (<code>01-dokumentacja-systemowa/05-sad-architektura-systemu.md</code>).</li><li>Przeczytaj <strong>Proces pracy, Git i Scrum</strong> (<code>00-przewodnik-i-setup/03-proces-pracy-i-git-scrum.md</code>) oraz <strong>Podręcznik systemu agentów AI</strong> (<code>04-system-agentow-ai/README.md</code>).</li></ol>
+<h3>Prowadzisz zajęcia i sprawdzasz Zadanie 01 oraz efekty EU1–EU6</h3>
+<ol><li><strong>Architektura dokumentacji SDD i mapowanie na Confluence</strong> (<code>00-przewodnik-i-setup/02-architektura-dokumentacji-sdd.md</code>). Opisuje strukturę dokumentacji pod SDD, porównanie wariantów i synchronizację <code>repozytorium → Confluence</code>.</li><li><strong>Wymagania produktu — PRD</strong> (<code>01-dokumentacja-systemowa/01-prd-wymagania-produktu.md</code>). Zawiera wymagania funkcjonalne i niefunkcjonalne.</li><li><strong>Architektura systemu — SAD</strong> (<code>01-dokumentacja-systemowa/05-sad-architektura-systemu.md</code>) i <strong>Stos technologiczny</strong> (<code>01-dokumentacja-systemowa/06-stos-technologiczny.md</code>). Opisują architekturę i technologie.</li><li><strong>Biblioteka szablonów dokumentacji</strong> (<code>05-szablony/README.md</code>). Zawiera wzorce pozostałych typów dokumentacji z klasyfikacji AltexSoft.</li></ol>
+<h2>Podstrony w tej sekcji (Drzewo Confluence)</h2><ac:structured-macro ac:name="children"><ac:parameter ac:name="all">true</ac:parameter></ac:structured-macro>

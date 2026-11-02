@@ -1,0 +1,37 @@
+<ac:structured-macro ac:name="info"><ac:rich-text-body><p><strong>Synchronizacja 1:1 z repozytorium Git:</strong> <code>docs/01-dokumentacja-systemowa/07-decyzje-adr/0006-serwer-autorytatywny-fog-of-war.md</code> (commit <code>a2bf2a4</code>, data eksportu: <code>2026-11-02</code>)</p></ac:rich-text-body></ac:structured-macro>
+<ul><li><strong>Status:</strong> zatwierdzona (2026-10-27)</li><li><strong>Data:</strong> 2026-10-27</li><li><strong>Powiązane:</strong> reguły R-80…R-84, <code>Projection.cs</code>, <code>MatchHub.cs</code></li></ul>
+<h2>Kontekst i problem</h2>
+<p>Prototyp działa w modelu P2P (peer-to-peer, przez PeerJS). Host trzyma cały stan gry. Gość może poświęcić jednostkę hosta i zna jego rękę oraz kolejność talii (wyciek przez <code>uid</code>). Złośliwy host może też wykonać skrypt u gościa (XSS, cross-site scripting). [V] Gra online musi być uczciwa.</p>
+<h2>Rozważane opcje</h2>
+<table><thead><tr>
+<th><p>Opcja</p></th>
+<th><p>Zalety</p></th>
+<th><p>Wady</p></th>
+<th><p>Koszt / ryzyko</p></th>
+</tr></thead><tbody>
+<tr>
+<td><p>P2P jak w prototypie</p></td>
+<td><p>zero serwera</p></td>
+<td><p>oszustwa, brak reconnectu</p></td>
+<td><p>nie do obrony</p></td>
+</tr>
+<tr>
+<td><p>Stan wysyłany do klienta, ukrywany w UI</p></td>
+<td><p>prosto</p></td>
+<td><p>podgląd w DevTools</p></td>
+<td><p>oszustwa</p></td>
+</tr>
+<tr>
+<td><p><strong>Serwer autorytatywny + projekcja per miejsce</strong></p></td>
+<td><p>jedno miejsce prawdy i fog of war (ukrycie informacji przed przeciwnikiem)</p></td>
+<td><p>serwer trzyma mecze w pamięci</p></td>
+<td><p>reconnect i skalowanie do zrobienia</p></td>
+</tr>
+</tbody></table>
+<h2>Decyzja</h2>
+<p>W kontekście gry online z ukrytą informacją, wybieramy **serwer ASP.NET Core + SignalR, który przyjmuje tylko <code>Intent</code>, przetwarza intencje meczu sekwencyjnie (semafor) i wysyła każdemu graczowi <code>MatchView</code> z <code>Projection.ToView</code>** zamiast P2P, aby oszustwo przez klienta było niemożliwe, akceptując utrzymanie sesji w pamięci serwera (jeden proces; skalowanie poza zakresem projektu).</p>
+<h2>Konsekwencje</h2>
+<h3>Pozytywne</h3>
+<ul><li>Fog of war jest testowany (R-80) i nie zależy od UI.</li><li>Bot gra przez ten sam kontrakt co człowiek.</li></ul>
+<h3>Negatywne / ryzyka</h3>
+<ul><li>Restart serwera kończy trwające mecze (akceptowalne; replay z seeda — E6-S05).</li></ul>

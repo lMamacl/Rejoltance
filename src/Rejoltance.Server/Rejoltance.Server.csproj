@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <ItemGroup>
+    <ProjectReference Include="..\Rejoltance.ServiceDefaults\Rejoltance.ServiceDefaults.csproj" />
+    <ProjectReference Include="..\Rejoltance.Contracts\Rejoltance.Contracts.csproj" />
+    <ProjectReference Include="..\Rejoltance.Content\Rejoltance.Content.csproj" />
+    <ProjectReference Include="..\Rejoltance.Kernel\Rejoltance.Kernel.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="Rejoltance.Server.Tests" />
+  </ItemGroup>
+
+</Project>

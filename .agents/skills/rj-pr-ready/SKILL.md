@@ -1,0 +1,40 @@
+---
+name: rj-pr-ready
+description: "Lista kontrolna przed otwarciem Pull Requesta: uruchamia kompilację i testy .NET, sprawdzanie typów i testy webowe, walidację OpenSpec, markdownlint, kontrole agentów/rejestru/Confluence i przygotowuje opis PR."
+---
+
+# Umiejętność: Pełna weryfikacja przed otwarciem Pull Requesta (`rj-pr-ready`)
+
+## Kiedy używać tej procedury?
+
+Uruchamiaj po zakończeniu implementacji zadania, przed zgłoszeniem gotowości Pull Requesta do recenzji przez członka zespołu.
+
+---
+
+## Kroki wykonawcze (Krok po kroku)
+
+1. **Sprawdź nazwę gałęzi i historię commitów (`.agents/rules/50-git-i-jira.md`):**
+   - Gałąź musi pasować do wzorca `<typ>/REJ-<numer>-<krotki-opis>`.
+   - Każdy commit musi zaczynać się od `<typ>(REJ-<numer>): <opis>`.
+
+2. **Uruchom komplet automatycznych strażników jakości:**
+
+   ```bash
+   dotnet build -warnaserror
+   dotnet test
+   npm --prefix src/web run typecheck
+   npm --prefix src/web test
+   npm --prefix src/web run build
+   npm run check
+   python tools/agents/sync_agents.py --check
+   python tools/backlog/gen_jira_csv.py --check
+   python tools/content/extract_cards.py --check
+   python tools/confluence/sync_confluence.py --check
+   ```
+
+3. **Sprawdź kompletność *Definition of Done*:**
+   - Czy każda zaimplementowana reguła `R-nn` ma test `Rnn_<zachowanie>` i zaktualizowany wpis w `docs/01-dokumentacja-systemowa/03-indeks-regul-r-nn.md`?
+   - Czy dokumentacja dotkniętego modułu (`src/<moduł>/README.md` oraz odpowiednia strona w `docs/`) została zaktualizowana?
+
+4. **Przygotuj opis Pull Requesta wg szablonu `.github/PULL_REQUEST_TEMPLATE.md`:**
+   - Wypisz klucz zadania Jira (`REJ-123`), zrealizowane reguły `R-nn`, wyniki uruchomionych komend weryfikacyjnych oraz instrukcję przetestowania zmiany na żywo.

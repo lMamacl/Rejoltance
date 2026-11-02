@@ -1,0 +1,35 @@
+---
+trigger: model_decision
+description: "Gałęzie Git (main, develop, typ/REJ-123-opis), zasady commitów i PR oraz synchronizacja backlogu (backlog.toml -> CSV do Jiry)."
+---
+
+# 50. Proces Git, Jira i organizacja pracy w Scrumie
+
+> Szczegółowa instrukcja procesu: [`docs/00-przewodnik-i-setup/03-proces-pracy-i-git-scrum.md`](../../docs/00-przewodnik-i-setup/03-proces-pracy-i-git-scrum.md).
+
+## 1. Model gałęzi Git (GitFlow dopasowany do sprintów)
+
+- **`main`** — wyłącznie stabilne, przetestowane wydania na koniec sprintu oznaczone tagiem `sprint-N` (`sprint-1` .. `sprint-5`).
+- **`develop`** — główna gałąź integracyjna zespołu; każda gałąź zadaniowa startuje z `develop` i wraca do `develop` przez Pull Request.
+- **Gałęzie zadaniowe:** `<typ>/REJ-<numer>-<krotki-opis-kebab-case>`, np.:
+  - `feat/REJ-101-kolejnosc-graczy-i-start-rundy`
+  - `fix/REJ-114-obrazenia-splash-damage`
+  - `docs/REJ-002-uzupelnienie-dip`
+  - `test/REJ-203-testy-roznicowe-wyroczni`
+
+## 2. Konwencja wiadomości commitów i tytułów Pull Requestów
+
+Każdy commit i tytuł Pull Requesta jest walidowany w CI (`.github/workflows/pr-conventions.yml`) wg wzorca:
+
+```text
+<typ>(REJ-<numer>): <zwięzły opis zmiany po polsku lub angielsku>
+```
+
+Dozwolone typy: `feat`, `fix`, `docs`, `test`, `refactor`, `chore`, `ci`. Przykład: `feat(REJ-103): rozstrzyganie walki w 4 liniach (R-40..R-45)`.
+
+## 3. Zasady pracy z Jirą PB i plikiem `backlog.toml`
+
+- **Jedno źródło prawdy dla backlogu w repozytorium:** [`docs/03-dokumentacja-procesowa/02-backlog/backlog.toml`](../../docs/03-dokumentacja-procesowa/02-backlog/backlog.toml).
+- Po każdej edycji `backlog.toml` lub kolumny *Story* w [`03-indeks-regul-r-nn.md`](../../docs/01-dokumentacja-systemowa/03-indeks-regul-r-nn.md) uruchom generator:
+  `python tools/backlog/gen_jira_csv.py` (nie edytuj ręcznie wygenerowanych plików `BACKLOG.md` ani `jira-*.csv`).
+- **Wymóg uczelniany EU4:** każde zadanie realizowane w sprincie musi mieć przypisanego wykonawcę, szacunek czasu (`Original Estimate ≤ 4 h` dla podzadań technicznych) oraz regularnie rejestrowany czas pracy (*Log Work*).

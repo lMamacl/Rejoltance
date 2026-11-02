@@ -1,0 +1,75 @@
+{
+  "matchId": "sample",
+  "round": 0,
+  "phase": "mulligan",
+  "yourSeat": 0,
+  "activeSeat": null,
+  "you": {
+    "hp": 20,
+    "blood": 0,
+    "maxBlood": 0,
+    "hand": [
+      {
+        "instanceId": 1,
+        "cardId": 15,
+        "cost": 2
+      },
+      {
+        "instanceId": 2,
+        "cardId": 52,
+        "cost": 1
+      },
+      {
+        "instanceId": 3,
+        "cardId": 15,
+        "cost": 2
+      },
+      {
+        "instanceId": 4,
+        "cardId": 31,
+        "cost": 1
+      }
+    ],
+    "deckCount": 26,
+    "discardCount": 0,
+    "lanes": [
+      null,
+      null,
+      null,
+      null
+    ]
+  },
+  "opponent": {
+    "hp": 20,
+    "blood": 0,
+    "maxBlood": 0,
+    "handCount": 4,
+    "deckCount": 26,
+    "discardCount": 0,
+    "lanes": [
+      null,
+      null,
+      null,
+      null
+    ]
+  },
+  "legalActions": [
+    {
+      "kind": "mulligan",
+      "cardInstanceId": null,
+      "lanes": null
+    },
+    {
+      "kind": "surrender",
+      "cardInstanceId": null,
+      "lanes": null
+    }
+  ],
+  "pending": {
+    "id": "mulligan-0",
+    "kind": "mulligan",
+    "seat": 0,
+    "options": []
+  },
+  "result": null
+}

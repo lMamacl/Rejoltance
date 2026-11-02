@@ -1,0 +1,34 @@
+---
+name: rj-add-card
+description: "Dodaje lub przenosi definicję karty z prototypu JS do src/Rejoltance.Content/cards.json, weryfikuje obsługę efektów w Rejoltance.Kernel i dodaje testy scenariuszy w Rejoltance.Cards.Tests."
+---
+
+# Umiejętność: Przenoszenie i dodawanie karty (`rj-add-card`)
+
+## Kiedy używać tej procedury?
+
+Uruchamiaj przy przenoszeniu karty z prototypu JS do silnika C# (np. kart z talii MVP w Epiku E2) lub przy dodawaniu nowej karty do katalogu.
+
+---
+
+## Kroki wykonawcze (Krok po kroku)
+
+1. **Sprawdź definicję karty w prototypie i w `cards.json`:**
+   - Wyszukaj kartę po identyfikatorze `id` w `prototype/revibance/cards.js` oraz `src/Rejoltance.Content/cards.json` (`grep -n '"id": <N>' src/Rejoltance.Content/cards.json`).
+   - Jeśli zmieniano dane w `prototype/revibance/cards.js`, wygeneruj ponownie katalog kart:
+
+     ```bash
+     python tools/content/extract_cards.py
+     python tools/content/extract_cards.py --check
+     ```
+
+2. **Zweryfikuj słownik efektów DSL karty:**
+   - Wypisz wszystkie elementy używane przez kartę: `keywords`, `triggers`, `conditions`, `targets` oraz `actions`.
+   - Sprawdź w `Rejoltance.Content` i `Rejoltance.Kernel`, czy każdy z tych elementów jest obsługiwany. Pamiętaj o zasadzie *Fail Loud* (`R-60`): nieobsługiwany kod akcji musi rzucać jawny wyjątek podczas testów, a nie zostać zignorowany.
+
+3. **Zaimplementuj brakujące handlery efektów (jeśli wymagane):**
+   - Nowe handlery dodawaj jako czyste, deterministyczne funkcje korzystające z `SeededRng` i emitujące odpowiednie `DomainEvent`.
+
+4. **Dodaj test scenariusza karty w `tests/Rejoltance.Kernel.Tests` (docelowo planowany `tests/Rejoltance.Cards.Tests`):**
+   - Napisz test sprawdzający: koszt Blood, legalne cele (`LegalActions` / `PendingInteraction`), główny efekt karty oraz przypadek brzegowy (np. brak legalnego celu → `noop` wg `R-62`).
+   - Uruchom `dotnet test` i upewnij się, że wszystkie testy przechodzą na zielono.

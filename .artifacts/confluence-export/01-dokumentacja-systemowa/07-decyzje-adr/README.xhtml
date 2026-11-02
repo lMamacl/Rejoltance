@@ -1,0 +1,88 @@
+<ac:structured-macro ac:name="info"><ac:rich-text-body><p><strong>Synchronizacja 1:1 z repozytorium Git:</strong> <code>docs/01-dokumentacja-systemowa/07-decyzje-adr/README.md</code> (commit <code>ff9d179</code>, data eksportu: <code>2026-11-02</code>)</p></ac:rich-text-body></ac:structured-macro>
+<blockquote><p><strong>Źródło prawdy:</strong> Repozytorium (<code>docs/01-dokumentacja-systemowa/07-decyzje-adr/</code>) · <strong>Kategoria dokumentacji:</strong> Dokumentacja produktowa — systemowa (decyzje architektoniczne ADR) · <strong>Etap SDD:</strong> Fundamenty i planowanie</p></blockquote>
+<p>ADR (Architecture Decision Record) to krótki zapis jednej decyzji: kontekst, rozważane opcje, wybór i jego konsekwencje. Tworzymy go w procesie SDD (spec-driven development, czyli pracy sterowanej specyfikacją).</p>
+<p>Osobny ADR dostaje każda ważna decyzja architektoniczna, technologiczna lub procesowa, którą zespół albo prowadzący mógłby zakwestionować za miesiąc. Plik nazywamy <code>NNNN-tytul.md</code> i zaczynamy od szablonu <strong><code>0000-szablon.md</code></strong> (<code>0000-szablon.md</code>). Pomaga w tym skill <strong><code>rj-write-adr</code></strong> (<code>../../../.agents/skills/rj-write-adr/SKILL.md</code>).</p>
+<p>Zatwierdzonego ADR (<code>Status: accepted</code>) nie zmieniamy po fakcie. Jeśli zespół zmienia wcześniejszą decyzję, tworzy nowy ADR, a poprzedni oznacza jako <code>superseded by ADR-MMMM</code>. Nowy ADR wymaga akceptacji co najmniej 2 członków zespołu w pull requeście (PR).</p>
+<p>W ADR-ach oznaczamy fakty: [V] — zweryfikowane, [Z] — założenie.</p>
+<hr />
+<h2>Rejestr decyzji (ADR-0001 – ADR-0012)</h2>
+<table><thead><tr>
+<th><p>Numer ADR</p></th>
+<th><p>Tytuł decyzji</p></th>
+<th><p>Status</p></th>
+<th><p>Główny obszar</p></th>
+</tr></thead><tbody>
+<tr>
+<td><p><strong>ADR-0001</strong> (<code>0001-stos-technologiczny.md</code>)</p></td>
+<td><p>Stos technologiczny: .NET 10 + React/TypeScript + .NET Aspire</p></td>
+<td><p>Zatwierdzona (<code>accepted</code>)</p></td>
+<td><p>Technologia i uruchomienie</p></td>
+</tr>
+<tr>
+<td><p><strong>ADR-0002</strong> (<code>0002-github-i-mirror-bitbucket.md</code>)</p></td>
+<td><p>GitHub jako główne repozytorium robocze i automatyczny mirror do Bitbucket PB</p></td>
+<td><p>Zatwierdzona (<code>accepted</code>)</p></td>
+<td><p>Proces i repozytoria</p></td>
+</tr>
+<tr>
+<td><p><strong>ADR-0003</strong> (<code>0003-openspec-i-konstytucja.md</code>)</p></td>
+<td><p>OpenSpec 1.15 jako narzędzie spec-driven development i własna konstytucja projektu</p></td>
+<td><p>Zatwierdzona (<code>accepted</code>)</p></td>
+<td><p>SDD i agenci AI</p></td>
+</tr>
+<tr>
+<td><p><strong>ADR-0004</strong> (<code>0004-kernel-od-nowa-deterministyczny.md</code>)</p></td>
+<td><p>Czysty, deterministyczny silnik reguł (<code>Rejoltance.Kernel</code>) pisany od nowa w C#</p></td>
+<td><p>Zatwierdzona (<code>accepted</code>)</p></td>
+<td><p>Architektura domeny</p></td>
+</tr>
+<tr>
+<td><p><strong>ADR-0005</strong> (<code>0005-kanon-regul-prototyp-js.md</code>)</p></td>
+<td><p>Zachowanie prototypu JS v11 jako kanon zasad gry i wyrocznia testów różnicowych</p></td>
+<td><p>Zatwierdzona (<code>accepted</code>)</p></td>
+<td><p>Specyfikacja reguł</p></td>
+</tr>
+<tr>
+<td><p><strong>ADR-0006</strong> (<code>0006-serwer-autorytatywny-fog-of-war.md</code>)</p></td>
+<td><p>Serwer autorytatywny z projekcją stanu dla każdego gracza (ochrona ukrytych informacji)</p></td>
+<td><p>Zatwierdzona (<code>accepted</code>)</p></td>
+<td><p>Bezpieczeństwo i sieć</p></td>
+</tr>
+<tr>
+<td><p><strong>ADR-0007</strong> (<code>0007-sqlite-potem-postgresql.md</code>)</p></td>
+<td><p>Baza danych: SQLite na start (Sprinty 0–3), PostgreSQL od Sprintu 4</p></td>
+<td><p>Zatwierdzona (<code>accepted</code>)</p></td>
+<td><p>Architektura danych</p></td>
+</tr>
+<tr>
+<td><p><strong>ADR-0008</strong> (<code>0008-spine-first-pionowe-plastry.md</code>)</p></td>
+<td><p>Najpierw rdzeń (<em>spine-first</em>), potem pionowe plastry funkcji</p></td>
+<td><p>Proponowana (<code>proposed</code>)</p></td>
+<td><p>Planowanie i integracja</p></td>
+</tr>
+<tr>
+<td><p><strong>ADR-0009</strong> (<code>0009-kanon-agentow-i-adaptery.md</code>)</p></td>
+<td><p>Jeden kanon konfiguracji agentów AI w <code>.agents/</code> i adaptery dla 5 narzędzi IDE</p></td>
+<td><p>Zatwierdzona (<code>accepted</code>)</p></td>
+<td><p>System agentów AI</p></td>
+</tr>
+<tr>
+<td><p><strong>ADR-0010</strong> (<code>0010-kontrakt-csharp-ts-przez-probke.md</code>)</p></td>
+<td><p>Spójność kontraktu C# ↔ TypeScript sprawdzana kanonicznymi próbkami JSON</p></td>
+<td><p>Proponowana (<code>proposed</code>)</p></td>
+<td><p>Kontrakty i testy</p></td>
+</tr>
+<tr>
+<td><p><strong>ADR-0011</strong> (<code>0011-dokumentacja-hybryda-repo-confluence.md</code>)</p></td>
+<td><p>Dokumentacja w układzie 1:1 (taksonomia AltexSoft, cykl życia SDD, synchronizacja z Confluence)</p></td>
+<td><p>Zatwierdzona (<code>accepted</code>)</p></td>
+<td><p>Dokumentacja i SDD</p></td>
+</tr>
+<tr>
+<td><p><strong>ADR-0012</strong> (<code>0012-konstytucja-v2.md</code>)</p></td>
+<td><p>Konstytucja v2: nowy układ artykułów, zachowane zakazy dla agentów AI i zasada języka</p></td>
+<td><p>Zatwierdzona (<code>accepted</code>)</p></td>
+<td><p>Proces i agenci AI</p></td>
+</tr>
+</tbody></table>
+<h2>Podstrony w tej sekcji (Drzewo Confluence)</h2><ac:structured-macro ac:name="children"><ac:parameter ac:name="all">true</ac:parameter></ac:structured-macro>

@@ -1,0 +1,6 @@
+Issue Id,Parent Id,Issue Type,Summary,Epic Link,Description,Story Points,Original Estimate,Labels,Component/s
+S1,,Story,[TEST] Jako deweloper chcę uruchomić środowisko jednym poleceniem,[TEST] Fundamenty,"Kryteria akceptacji:
+Given czysty klon repozytorium
+When uruchamiam tools/setup.ps1 i aspire run
+Then widzę dashboard Aspire i serwer odpowiada /health",3,,test-import,
+T1,S1,Sub-task,[TEST] Przygotować skrypt setup.ps1,,"Zadanie testowe (4 h).",,14400,test-import,

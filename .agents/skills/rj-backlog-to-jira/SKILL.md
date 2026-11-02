@@ -1,0 +1,36 @@
+---
+name: rj-backlog-to-jira
+description: "Aktualizuje jedno źródło prawdy rejestru produktu (docs/03-dokumentacja-procesowa/02-backlog/backlog.toml), weryfikuje dwukierunkowe powiązania z regułami R-nn oraz regeneruje BACKLOG.md i pliki CSV do Jiry."
+---
+
+# Umiejętność: Synchronizacja rejestru produktu i generowanie CSV do Jiry (`rj-backlog-to-jira`)
+
+## Kiedy używać tej procedury?
+
+Uruchamiaj zawsze, gdy dodajesz, dzielisz, przenosisz lub przeszacowujesz historyjki użytkownika (`story`) i podzadania techniczne (`subtask`), albo gdy zmieniasz przypisanie reguł `R-nn` do historyjek.
+
+---
+
+## Kroki wykonawcze (Krok po kroku)
+
+1. **Edytuj wyłącznie plik źródłowy `backlog.toml`:**
+   - Plik źródłowy znajduje się w: `docs/03-dokumentacja-procesowa/02-backlog/backlog.toml`.
+   - Nigdy nie edytuj ręcznie plików wygenerowanych (`BACKLOG.md`, `jira-01-epics.csv`, `jira-02-issues.csv`, `jira-03-links.csv`).
+
+2. **Pilnuj wymogów uczelnianych (EU1–EU4):**
+   - Każde podzadanie (`[[stories.subtasks]]`) musi mieć szacunek `hours <= 4` (twarda walidacja skryptu).
+   - Każda historyjka (`[[stories]]`) musi posiadać kryteria akceptacji w formacie `GIVEN ... WHEN ... THEN ...`.
+   - Suma godzin w sprincie `S1..S5` nie powinna przekraczać pojemności zespołu (`60 h`).
+
+3. **Zadbaj o dwukierunkową spójność z indeksem reguł (`03-indeks-regul-r-nn.md`):**
+   - Każda reguła wpisana w `rules = ["R-nn"]` przy historyjce w `backlog.toml` musi mieć ten sam klucz `Ex-Syy` wpisany w kolumnie *Story* w pliku `docs/01-dokumentacja-systemowa/03-indeks-regul-r-nn.md`.
+
+4. **Uruchom generator i walidator:**
+
+   ```bash
+   python tools/backlog/gen_jira_csv.py
+   python tools/backlog/gen_jira_csv.py --check
+   npm run lint:md
+   ```
+
+   Instrukcja importu wygenerowanych plików CSV do Jiry PB znajduje się w `docs/03-dokumentacja-procesowa/02-backlog/instrukcja-importu-jira.md`.

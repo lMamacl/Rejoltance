@@ -1,0 +1,37 @@
+<ac:structured-macro ac:name="info"><ac:rich-text-body><p><strong>Synchronizacja 1:1 z repozytorium Git:</strong> <code>docs/01-dokumentacja-systemowa/07-decyzje-adr/0009-kanon-agentow-i-adaptery.md</code> (commit <code>a2bf2a4</code>, data eksportu: <code>2026-11-02</code>)</p></ac:rich-text-body></ac:structured-macro>
+<ul><li><strong>Status:</strong> zatwierdzona (2026-10-27, akceptacja Fazy 2)</li><li><strong>Data:</strong> 2026-10-27</li><li><strong>Powiązane:</strong> <code>AGENTS.md</code>, <code>.agents/</code>, <code>tools/agents/sync_agents.py</code></li></ul>
+<h2>Kontekst i problem</h2>
+<p>Każde narzędzie AI czyta zasady z innego miejsca: Antigravity i Codex — <code>.agents/</code>, Claude Code — <code>.claude/</code>, Copilot — <code>.github/</code>, Gemini — <code>.gemini/</code>. [V] Ręczne kopie się rozjeżdżają; symlinki są zawodne na Windows i w OneDrive (Vaultie też ich nie używa). [V]</p>
+<h2>Rozważane opcje</h2>
+<table><thead><tr>
+<th><p>Opcja</p></th>
+<th><p>Zalety</p></th>
+<th><p>Wady</p></th>
+<th><p>Koszt / ryzyko</p></th>
+</tr></thead><tbody>
+<tr>
+<td><p>Osobne pliki per narzędzie</p></td>
+<td><p>pełna kontrola</p></td>
+<td><p>5× utrzymanie, rozjazdy</p></td>
+<td><p>wysokie</p></td>
+</tr>
+<tr>
+<td><p>Symlinki</p></td>
+<td><p>jedna kopia</p></td>
+<td><p>Windows/OneDrive</p></td>
+<td><p>zawodne</p></td>
+</tr>
+<tr>
+<td><p><strong>Kanon + generator + check w CI</strong></p></td>
+<td><p>jedna kopia do edycji, CI pilnuje spójności</p></td>
+<td><p>trzeba uruchomić skrypt</p></td>
+<td><p>niskie</p></td>
+</tr>
+</tbody></table>
+<h2>Decyzja</h2>
+<p>W kontekście pięciu narzędzi AI, wybieramy **kanon w <code>AGENTS.md</code> i <code>.agents/{rules,agents,skills}</code> oraz skrypt <code>sync_agents.py</code>, który generuje adaptery z markerem GENERATED i w CI odrzuca rozjazd (<code>--check</code>)** zamiast osobnych plików lub symlinków, aby zmiana zasady była jedną zmianą, akceptując konieczność uruchomienia skryptu po edycji <code>.agents/</code>.</p>
+<h2>Konsekwencje</h2>
+<h3>Pozytywne</h3>
+<ul><li>10 ról, 10 skilli <code>rj-*</code> i 6 reguł działa w Claude, Antigravity, Codex, Copilot, Gemini; DeepSeek/ChatGPT w czacie — przez <code>AGENTS.md</code>.</li></ul>
+<h3>Negatywne / ryzyka</h3>
+<ul><li>Mapowanie narzędzi Antigravity → Claude (np. <code>view_file</code> → <code>Read</code>) trzeba aktualizować przy zmianach w narzędziach.</li><li>Format agentów Copilot (<code>.agent.md</code>) zawiera tylko nazwę i opis; uprawnienia są w treści [Z].</li></ul>

@@ -1,0 +1,10 @@
+T:System.Random;Kernel randomness must come from IRng stored in MatchState (ADR-0004)
+P:System.DateTime.Now;Kernel must not read the clock (ADR-0004)
+P:System.DateTime.UtcNow;Kernel must not read the clock (ADR-0004)
+P:System.DateTimeOffset.Now;Kernel must not read the clock (ADR-0004)
+P:System.DateTimeOffset.UtcNow;Kernel must not read the clock (ADR-0004)
+M:System.Guid.NewGuid;Kernel must stay deterministic (ADR-0004)
+P:System.Environment.TickCount;Kernel must not read the clock (ADR-0004)
+P:System.Environment.TickCount64;Kernel must not read the clock (ADR-0004)
+T:System.Console;Kernel has no IO; emit DomainEvents instead
+N:System.IO;Kernel has no IO

@@ -1,0 +1,16 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Rejoltance.AppHost/Rejoltance.AppHost.csproj" />
+    <Project Path="src/Rejoltance.Content/Rejoltance.Content.csproj" />
+    <Project Path="src/Rejoltance.Contracts/Rejoltance.Contracts.csproj" />
+    <Project Path="src/Rejoltance.Kernel/Rejoltance.Kernel.csproj" />
+    <Project Path="src/Rejoltance.Server/Rejoltance.Server.csproj" />
+    <Project Path="src/Rejoltance.ServiceDefaults/Rejoltance.ServiceDefaults.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Rejoltance.AppHost.Tests/Rejoltance.AppHost.Tests.csproj" />
+    <Project Path="tests/Rejoltance.Architecture.Tests/Rejoltance.Architecture.Tests.csproj" />
+    <Project Path="tests/Rejoltance.Kernel.Tests/Rejoltance.Kernel.Tests.csproj" />
+    <Project Path="tests/Rejoltance.Server.Tests/Rejoltance.Server.Tests.csproj" />
+  </Folder>
+</Solution>

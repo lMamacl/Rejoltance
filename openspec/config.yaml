@@ -1,0 +1,46 @@
+schema: spec-driven
+
+context: |
+  Projekt: RE:JOLTANCE — sieciowa taktyczna gra karciana (lane battler: 4 linie walki, zasób Blood, talie po 30 kart).
+  Zespół: 6 studentów Wydziału Informatyki Politechniki Białostockiej, projekt 2-semestralny w metodyce Scrum + Spec-Driven Development (SDD).
+  Język komunikacji, dokumentacji i specyfikacji: polski. Nazwy w kodzie (typy, metody, kontrakty, identyfikatory kart): angielski.
+
+  Nadrzędne zasady projektu (Konstytucja): .agents/rules/00-konstytucja.md
+  Dokument Wymagań Produktu (PRD wg AltexSoft): docs/01-dokumentacja-systemowa/01-prd-wymagania-produktu.md
+  Dokument Architektury Oprogramowania (SAD wg AltexSoft): docs/01-dokumentacja-systemowa/05-sad-architektura-systemu.md
+  Stos technologiczny i Roadmapa IT: docs/01-dokumentacja-systemowa/06-stos-technologiczny.md
+  Pełna specyfikacja zasad gry: docs/01-dokumentacja-systemowa/02-specyfikacja-regul-gry.md
+  Indeks reguł R-nn (macierz śledzenia): docs/01-dokumentacja-systemowa/03-indeks-regul-r-nn.md
+  Rozbieżności z prototypem JS (D-01..D-20): docs/01-dokumentacja-systemowa/04-rozbieznosci-prototypu.md
+  Podręcznik systemu agentów AI i SDD: docs/04-system-agentow-ai/README.md
+
+  Stos technologiczny (ADR-0001):
+  - Backend: .NET 10, C# 13, ASP.NET Core, SignalR (/api/hubs/match), EF Core (SQLite w S0-S3 -> PostgreSQL od S4), .NET Aspire 13, xUnit.
+  - Frontend: React 19, TypeScript 5, Vite 6, Vitest, Playwright.
+  - Wyrocznia referencyjna: prototype/revibance/engine.js (v11, kanon zasad wg ADR-0005).
+
+  Granice architektoniczne (wymuszane przez tests/Rejoltance.Architecture.Tests):
+  - Rejoltance.Contracts: 5 zamrożonych kontraktów (Intent, LegalAction, PendingInteraction, MatchView, DomainEvent). Zmiana wymaga ADR.
+  - Rejoltance.Content: dane kart z cards.json i walidacja schematu (zależy wyłącznie od Contracts).
+  - Rejoltance.Kernel: czysty, deterministyczny silnik reguł (zależy od Contracts i Content; zero I/O, zegara, sieci, bazy i System.Random).
+  - Rejoltance.Server: autorytatywny serwer czasu rzeczywistego, projekcja Fog of War (R-80…R-82), trwałość danych.
+  - src/web: klient przeglądarkowy — renderuje wyłącznie MatchView i wysyła Intent; nigdy nie oblicza reguł gry po stronie przeglądarki.
+
+rules:
+  proposal:
+    - Pisz po polsku, zwięźle i konkretnie.
+    - Wskaż powiązane klucze zadań Jira (REJ-...), numery reguł domenowych (R-nn) oraz wymagań niefunkcjonalnych (NFR-nn).
+    - Jawnie wymień, które warstwy architektury (Contracts, Content, Kernel, Server, Web) są dotknięte zmianą.
+    - Jeżeli propozycja wymaga modyfikacji 5 zamrożonych kontraktów, zażądaj utworzenia nowego rekordu ADR w docs/01-dokumentacja-systemowa/07-decyzje-adr/.
+  specs:
+    - Każde wymaganie odpowiada regule R-nn z docs/01-dokumentacja-systemowa/03-indeks-regul-r-nn.md lub wymaganiu NFR-nn.
+    - Scenariusze zapisuj w formacie GIVEN / WHEN / THEN z konkretnymi wartościami liczbowymi (HP, ATK, Blood, indeks linii 0..3, ziarno RNG).
+    - Reguły powiązane z nierozstrzygniętą rozbieżnością w docs/01-dokumentacja-systemowa/04-rozbieznosci-prototypu.md oznacz ostrzeżeniem i nie zgaduj ich docelowego działania bez decyzji zespołu.
+  design:
+    - Stosuj strukturę Technical Design Document (TDD wg AltexSoft, szablon: docs/05-szablony/szablon-tdd.md).
+    - Nie wprowadzaj nowych projektów, warstw ani zewnętrznych bibliotek bez wyraźnego uzasadnienia i zgody człowieka.
+    - W Rejoltance.Kernel cała losowość musi przechodzić wyłącznie przez jawnie przekazywany SeededRng.
+  tasks:
+    - Dziel pracę na małe, weryfikowalne podzadania inżynierskie o szacunku <= 4 godziny robocze (zgodnie z wymogiem uczelnianym EU4).
+    - Każde zadanie zmieniające zachowanie reguły gry musi obejmować napisanie lub aktualizację testu jednostkowego Rnn_<opis>.
+    - Ostatnim zadaniem na liście jest zawsze uruchomienie pełnej weryfikacji (dotnet test, npm run check) oraz aktualizacja dokumentacji modułu.

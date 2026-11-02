@@ -1,0 +1,43 @@
+<ac:structured-macro ac:name="info"><ac:rich-text-body><p><strong>Synchronizacja 1:1 z repozytorium Git:</strong> <code>docs/03-dokumentacja-procesowa/02-backlog/README.md</code> (commit <code>a2bf2a4</code>, data eksportu: <code>2026-11-02</code>)</p></ac:rich-text-body></ac:structured-macro>
+<blockquote><p><strong>Źródło prawdy:</strong> repozytorium (<code>docs/03-dokumentacja-procesowa/02-backlog/backlog.toml</code>) · <strong>Kategoria dokumentacji:</strong> Dokumentacja procesowa — rejestr produktu i sprintów · <strong>Etap SDD:</strong> dekompozycja zadań · <strong>Wymogi uczelniane:</strong> EU1, EU3, EU4</p></blockquote>
+<p>Ten katalog zawiera rejestr produktu (<em>product backlog</em>): 7 epików (<code>E0–E6</code>), 47 historyjek użytkownika z kryteriami akceptacji <code>GIVEN / WHEN / THEN</code> i podzadania o szacunku ≤ 4 godzin.</p>
+<h2>Pliki w katalogu</h2>
+<table><thead><tr>
+<th><p>Plik</p></th>
+<th><p>Co zawiera</p></th>
+<th><p>Czy edytować ręcznie?</p></th>
+</tr></thead><tbody>
+<tr>
+<td><p><strong><code>backlog.toml</code></strong> (<code>backlog.toml</code>)</p></td>
+<td><p><strong>Źródło prawdy rejestru produktu:</strong> sprinty, epiki, historyjki, kryteria akceptacji, szacunki w SP (story points) i godzinach oraz powiązane reguły <code>R-nn</code>.</p></td>
+<td><p><strong>Tak</strong> (ręcznie albo skillem <code>rj-backlog-to-jira</code>)</p></td>
+</tr>
+<tr>
+<td><p><strong><code>BACKLOG.md</code></strong> (<code>BACKLOG.md</code>)</p></td>
+<td><p>Czytelne podsumowanie: pojemność sprintów, wykorzystanie godzin zespołu i historyjki w każdym epiku.</p></td>
+<td><p><strong>Nie</strong> (generuje go <code>gen_jira_csv.py</code>)</p></td>
+</tr>
+<tr>
+<td><p><strong><code>jira-01-epics.csv</code></strong> (<code>jira-01-epics.csv</code>)</p></td>
+<td><p>Epiki do zaimportowania w Jirze PB w pierwszym kroku.</p></td>
+<td><p><strong>Nie</strong> (generuje go <code>gen_jira_csv.py</code>)</p></td>
+</tr>
+<tr>
+<td><p><strong><code>jira-02-issues.csv</code></strong> (<code>jira-02-issues.csv</code>)</p></td>
+<td><p>Historyjki i podzadania do zaimportowania w drugim kroku.</p></td>
+<td><p><strong>Nie</strong> (generuje go <code>gen_jira_csv.py</code>)</p></td>
+</tr>
+<tr>
+<td><p><strong><code>instrukcja-importu-jira.md</code></strong> (<code>instrukcja-importu-jira.md</code>)</p></td>
+<td><p>Instrukcja krok po kroku: jak zaimportować pliki CSV do uczelnianej Jiry PB.</p></td>
+<td><p>Instrukcja</p></td>
+</tr>
+<tr>
+<td><p><strong><code>test-import/</code></strong> (<code>test-import/README.md</code>)</p></td>
+<td><p>3 próbne zgłoszenia. Sprawdzisz na nich mapowanie pól w Jirze przed głównym importem.</p></td>
+<td><p>Pliki testowe</p></td>
+</tr>
+</tbody></table>
+<p>Po każdej zmianie w <code>backlog.toml</code> uruchom:</p>
+<ac:structured-macro ac:name="code"><ac:parameter ac:name="language">bash</ac:parameter><ac:plain-text-body><![CDATA[python tools/backlog/gen_jira_csv.py]]></ac:plain-text-body></ac:structured-macro>
+<h2>Podstrony w tej sekcji (Drzewo Confluence)</h2><ac:structured-macro ac:name="children"><ac:parameter ac:name="all">true</ac:parameter></ac:structured-macro>

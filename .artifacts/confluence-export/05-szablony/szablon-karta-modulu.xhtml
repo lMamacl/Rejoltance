@@ -1,0 +1,69 @@
+<ac:structured-macro ac:name="info"><ac:rich-text-body><p><strong>Synchronizacja 1:1 z repozytorium Git:</strong> <code>docs/05-szablony/szablon-karta-modulu.md</code> (commit <code>a2bf2a4</code>, data eksportu: <code>2026-11-02</code>)</p></ac:rich-text-body></ac:structured-macro>
+<blockquote><p><strong>Źródło prawdy:</strong> Repozytorium (<code>src/&lt;moduł&gt;/README.md</code>) + Confluence PB · <strong>Kategoria AltexSoft:</strong> Product: System Documentation — Source Code Documentation · <strong>Etap SDD:</strong> Realizacja (<code>Implement</code>) · <strong>Wymóg uczelniany:</strong> EU5 (indywidualna ocena każdego studenta)</p></blockquote>
+<p>Każdy student opisuje w tej karcie swój moduł kodu. Zastąp pola w nawiasach <code>&lt;...&gt;</code>. SDD to spec-driven development (praca sterowana specyfikacją), EU — efekt uczenia się, ADR — zapis decyzji architektonicznej.</p>
+<hr />
+<h2>Metadane modułu</h2>
+<table><thead><tr>
+<th><p>Pole</p></th>
+<th><p>Wartość</p></th>
+</tr></thead><tbody>
+<tr>
+<td><p><strong>Nazwa modułu / pakietu</strong></p></td>
+<td><p><code>&lt;np. Rejoltance.Kernel / src/web/src/components/Board&gt;</code></p></td>
+</tr>
+<tr>
+<td><p><strong>Właściciel modułu (autor)</strong></p></td>
+<td><p><code>&lt;Imię i nazwisko studenta&gt;</code></p></td>
+</tr>
+<tr>
+<td><p><strong>Epik nadrzędny</strong></p></td>
+<td><p><code>&lt;E1–E8&gt;</code></p></td>
+</tr>
+<tr>
+<td><p><strong>Ścieżka w repozytorium</strong></p></td>
+<td><p><code>src/&lt;ścieżka&gt;</code></p></td>
+</tr>
+<tr>
+<td><p><strong>Realizowane wymagania i reguły</strong></p></td>
+<td><p><code>&lt;np. R-15, R-28..R-39, NFR-01&gt;</code></p></td>
+</tr>
+<tr>
+<td><p><strong>Powiązane decyzje ADR</strong></p></td>
+<td><p><code>&lt;np. ADR-0002, ADR-0004&gt;</code></p></td>
+</tr>
+</tbody></table>
+<hr />
+<h2>1. Cel i odpowiedzialność modułu</h2>
+<ul><li><strong>Za co odpowiada moduł:</strong> <code>&lt;Zwięzły opis jednoznacznej odpowiedzialności komponentu&gt;</code></li><li><strong>Czego moduł celowo NIE robi (granice architektoniczne):</strong> <code>&lt;np. Nie komunikuje się z bazą danych ani z siecią&gt;</code></li></ul>
+<h2>2. Publiczny interfejs (Public API)</h2>
+<table><thead><tr>
+<th><p>Klasa / funkcja / komponent</p></th>
+<th><p>Wejście → wyjście</p></th>
+<th><p>Działanie i niezmienniki</p></th>
+</tr></thead><tbody>
+<tr>
+<td><p><code>&lt;Nazwa&gt;</code></p></td>
+<td><p><code>&lt;Parametry → Typ zwracany&gt;</code></p></td>
+<td><p><code>&lt;Opis&gt;</code></p></td>
+</tr>
+</tbody></table>
+<h2>3. Zależności i kierunek przepływu danych</h2>
+<ul><li><strong>Moduły, z których korzysta ten komponent (Imports):</strong> <code>&lt;Lista&gt;</code></li><li><strong>Moduły, które korzystają z tego komponentu (Consumers):</strong> <code>&lt;Lista&gt;</code></li></ul>
+<p><em>Diagram przepływu (Mermaid):</em></p>
+<ac:structured-macro ac:name="code"><ac:parameter ac:name="language">none</ac:parameter><ac:plain-text-body><![CDATA[flowchart LR
+  Caller["<Moduł wywołujący>"] --> This["<Opisywany moduł>"]
+  This --> Contracts["Rejoltance.Contracts"]]]></ac:plain-text-body></ac:structured-macro>
+<h2>4. Kluczowe decyzje implementacyjne i przypadki brzegowe</h2>
+<p><code>&lt;Dlaczego wybrane algorytmy lub struktury danych zostały zaimplementowane w ten sposób? Jak obsługiwane są sytuacje brzegowe (np. przepełnienie kolejki, remis HP, zerowe ziarno RNG)?&gt;</code></p>
+<h2>5. Pokrycie testami i komendy weryfikacji</h2>
+<table><thead><tr>
+<th><p>Projekt testowy / plik testu</p></th>
+<th><p>Sprawdzane scenariusze (<code>R-nn</code>)</p></th>
+<th><p>Komenda uruchomienia</p></th>
+</tr></thead><tbody>
+<tr>
+<td><p><code>tests/&lt;Projekt&gt;/&lt;PlikTestu&gt;</code></p></td>
+<td><p><code>&lt;Lista reguł i przypadków brzegowych&gt;</code></p></td>
+<td><p><code>dotnet test --filter ...</code> / <code>npm test</code></p></td>
+</tr>
+</tbody></table>

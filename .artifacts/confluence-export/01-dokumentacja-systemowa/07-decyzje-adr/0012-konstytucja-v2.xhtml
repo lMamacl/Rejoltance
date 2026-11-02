@@ -1,0 +1,46 @@
+<ac:structured-macro ac:name="info"><ac:rich-text-body><p><strong>Synchronizacja 1:1 z repozytorium Git:</strong> <code>docs/01-dokumentacja-systemowa/07-decyzje-adr/0012-konstytucja-v2.md</code> (commit <code>ff9d179</code>, data eksportu: <code>2026-11-02</code>)</p></ac:rich-text-body></ac:structured-macro>
+<blockquote><p><strong>Źródło prawdy:</strong> repozytorium (<code>docs/01-dokumentacja-systemowa/07-decyzje-adr/0012-konstytucja-v2.md</code>) · <strong>Kategoria dokumentacji:</strong> Decyzja architektoniczna (ADR) · <strong>Etap SDD:</strong> Fundamenty</p></blockquote>
+<ul><li><strong>Status:</strong> zaakceptowana</li><li><strong>Data:</strong> 2026-11-02</li><li><strong>Autorzy:</strong> Maciej Cyuńczyk (nowa wersja), Gabriel Ostaszewski (poprawki)</li><li><strong>Akceptacja:</strong> cały zespół (6 osób), rozmowa głosowa 2026-11-02; zgłosił Gabriel Ostaszewski</li><li><strong>Powiązane:</strong> ADR-0003, <code>.agents/rules/00-konstytucja.md</code></li></ul>
+<h2>Kontekst i problem</h2>
+<p>Konstytucja v1 (2026-10-27) miała 11 artykułów spisanych w pośpiechu przy starcie repozytorium. W reworku dokumentacji (gałąź <code>develop-rework</code>) Maciej ułożył ją od nowa. Nowa wersja lepiej pasuje do cyklu SDD: osobne artykuły dla specyfikacji, kart jako danych i granic modułów w CI.</p>
+<p>W nowej wersji zabrakło jednak trzech rzeczy z v1:</p>
+<ul><li>zakazów dla agentów AI (merge, push do <code>main</code>/<code>develop</code>, sekrety, zmiana konstytucji bez zgody);</li><li>zasady języka (dokumentacja po polsku, kod i commity po angielsku);</li><li>zakazu osłabiania testów.</li></ul>
+<p>Były też dwa błędne odwołania: fog of war opisano jako R-66 (to reguła warunków efektów kart; poprawnie R-80…R-82) oraz wskazano nieistniejący projekt <code>tests/Rejoltance.Cards.Tests</code>.</p>
+<p>Konstytucja v1 wymaga, żeby każdą zmianę zatwierdzić przez ADR i 2 osoby. Ten dokument jest tym ADR-em.</p>
+<h2>Rozważane opcje</h2>
+<table><thead><tr>
+<th><p>Opcja</p></th>
+<th><p>Zalety</p></th>
+<th><p>Wady</p></th>
+<th><p>Koszt / ryzyko</p></th>
+</tr></thead><tbody>
+<tr>
+<td><p>A. Zostawić v1, nową wersję odłożyć</p></td>
+<td><p>brak ryzyka</p></td>
+<td><p>tracimy lepszy układ</p></td>
+<td><p>niski</p></td>
+</tr>
+<tr>
+<td><p>B. Przyjąć wersję z reworku bez zmian</p></td>
+<td><p>prosto</p></td>
+<td><p>agenci tracą zakazy, błędne numery reguł</p></td>
+<td><p>wysokie (bezpieczeństwo, sekrety)</p></td>
+</tr>
+<tr>
+<td><p>C. Przyjąć nowy układ i przywrócić brakujące zasady</p></td>
+<td><p>lepszy układ, zachowane zabezpieczenia</p></td>
+<td><p>trzeba zatwierdzić</p></td>
+<td><p>niski</p></td>
+</tr>
+</tbody></table>
+<h2>Decyzja</h2>
+<p>W kontekście <strong>reworku dokumentacji pod SDD</strong>, mierząc się z <strong>lepszym układem nowej konstytucji, z której wypadły zakazy dla agentów</strong>, wybieramy <strong>opcję C</strong> zamiast przyjęcia wersji bez zmian, aby <strong>zachować nowy układ i nie osłabić zabezpieczeń</strong>, akceptując <strong>11 artykułów zamiast 10</strong>.</p>
+<p>Zmiany względem wersji z reworku:</p>
+<ul><li>art. X rozszerzony o 5 zakazów i obowiązków agenta AI z v1;</li><li>nowy art. XI „Język”;</li><li>art. VI: zakaz osłabiania testów, <code>Rejoltance.Cards.Tests</code> oznaczony jako planowany;</li><li>art. V: R-80…R-82 zamiast R-66; art. II: odwołanie do R-83;</li><li>art. III: walidację kart robi <code>ContentValidator</code> (w repo nie ma schematu JSON);</li><li>art. I: kanon zasad = prototyp JS v11 (ADR-0005).</li></ul>
+<h2>Konsekwencje</h2>
+<h3>Pozytywne</h3>
+<ul><li>Nowy układ artykułów odpowiada krokom SDD.</li><li>Agenci mają te same twarde granice co w v1.</li></ul>
+<h3>Negatywne / ryzyka</h3>
+<ul><li>Kolejna zmiana konstytucji znów wymaga ADR i akceptacji 2 osób.</li></ul>
+<h3>Do zrobienia</h3>
+<ul><li>[x] Akceptacja zespołu (2026-11-02), zmiana statusu na „zaakceptowana”.</li></ul>

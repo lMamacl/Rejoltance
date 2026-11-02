@@ -1,0 +1,218 @@
+<ac:structured-macro ac:name="info"><ac:rich-text-body><p><strong>Synchronizacja 1:1 z repozytorium Git:</strong> <code>docs/01-dokumentacja-systemowa/04-rozbieznosci-prototypu.md</code> (commit <code>a2bf2a4</code>, data eksportu: <code>2026-11-02</code>)</p></ac:rich-text-body></ac:structured-macro>
+<blockquote><p><strong>Źródło prawdy:</strong> repozytorium (<code>docs/01-dokumentacja-systemowa/04-rozbieznosci-prototypu.md</code>) · <strong>Kategoria dokumentacji:</strong> Dokumentacja produktowa — systemowa (notatka analityczna rozbieżności) · <strong>Etap SDD:</strong> Specyfikacja.</p></blockquote>
+<p>Wzorcem zasad gry jest prototyp JavaScript v11 (<strong>ADR-0005</strong> (<code>07-decyzje-adr/0005-kanon-regul-prototyp-js.md</code>)). Tabela poniżej zbiera wszystkie znalezione różnice między prototypem a pierwotnym opisem tekstowym (<code>docs/99-archiwum-zrodel/pomoce-dydaktyczne/RE_JOLTANCE.md</code>). Zbiera też oczywiste błędy w kodzie prototypu.</p>
+<p>Każdy punkt rozstrzygamy jako zespół w zadaniu <code>E0-S04</code>. Potem agent <code>rj-spec-analyst</code> aktualizuje regułę <code>R‑nn</code> w <code>openspec/specs/</code>. Agent <code>rj-rules-engineer</code> dopisuje lub poprawia test jednostkowy i implementację w Kernelu.</p>
+<p>Typ zgłoszenia:</p>
+<ul><li><strong>R</strong> — różnica w zasadach gry (obie wersje mają sens),</li><li><strong>B</strong> — błąd w kodzie prototypu,</li><li><strong>I</strong> — kwestia wewnętrznej architektury.</li></ul>
+<p>Kolumna „Decyzja” pokazuje stan: <code>?</code> oznacza, że czekamy na decyzję zespołu.</p>
+<table><thead><tr>
+<th><p>#</p></th>
+<th><p>Typ</p></th>
+<th><p>Temat</p></th>
+<th><p>Prototyp JS (<code>engine.js</code>)</p></th>
+<th><p>Stara specyfikacja</p></th>
+<th><p>Propozycja</p></th>
+<th><p>Reguła</p></th>
+<th><p>Decyzja</p></th>
+</tr></thead><tbody>
+<tr>
+<td><p>D-01</p></td>
+<td><p>B</p></td>
+<td><p>Jednoczesna śmierć bohaterów</p></td>
+<td><p>wynik zależy od kolejności sprawdzania: w <code>chk</code> przy remisie wygrywa gracz 1; w walce wygrywa ten, kto uderzył pierwszy (gracz 0)</p></td>
+<td><p>brak</p></td>
+<td><p><strong>remis</strong> (w szkielecie już tak)</p></td>
+<td><p>R-71</p></td>
+<td><p>?</p></td>
+</tr>
+<tr>
+<td><p>D-02</p></td>
+<td><p>R</p></td>
+<td><p>Mulligan</p></td>
+<td><p>dowolna liczba; zamienniki z góry, odrzucone wracają, talia tasowana</p></td>
+<td><p>odrzucone na dno, bez tasowania</p></td>
+<td><p>zostawić JS (zaimplementowane)</p></td>
+<td><p>R-03</p></td>
+<td><p>?</p></td>
+</tr>
+<tr>
+<td><p>D-03</p></td>
+<td><p>R</p></td>
+<td><p>Breakthrough</p></td>
+<td><p>po trafieniu jednostki bohater dostaje <strong>pełny</strong> atak (komentarz w kodzie mówi „nadwyżka”)</p></td>
+<td><p>brak słowa kluczowego</p></td>
+<td><p>do decyzji: pełny vs nadwyżka</p></td>
+<td><p>R-45</p></td>
+<td><p>?</p></td>
+</tr>
+<tr>
+<td><p>D-04</p></td>
+<td><p>B</p></td>
+<td><p>Powrót do ręki przy pełnej ręce</p></td>
+<td><p>karta znika z gry</p></td>
+<td><p>—</p></td>
+<td><p>jak przy Unkillable: na stos odrzuconych</p></td>
+<td><p>R-53</p></td>
+<td><p>?</p></td>
+</tr>
+<tr>
+<td><p>D-05</p></td>
+<td><p>B</p></td>
+<td><p>Walidacja celów</p></td>
+<td><p>brak: gość może wskazać jednostkę wroga do poświęcenia; zły indeks wyboru rzuca wyjątek po zapłaceniu kosztu</p></td>
+<td><p>—</p></td>
+<td><p>serwer zawsze waliduje przed zmianą stanu</p></td>
+<td><p>R-25, R-82</p></td>
+<td><p>błąd</p></td>
+</tr>
+<tr>
+<td><p>D-06</p></td>
+<td><p>B</p></td>
+<td><p>Brak wybranego celu</p></td>
+<td><p><code>TargetEnemyUnit</code> bez wyboru → przeciwnik naprzeciw lub <strong>losowy</strong> wróg</p></td>
+<td><p>—</p></td>
+<td><p><code>PendingInteraction</code> albo błąd</p></td>
+<td><p>R-84</p></td>
+<td><p>błąd</p></td>
+</tr>
+<tr>
+<td><p>D-07</p></td>
+<td><p>R</p></td>
+<td><p>Naziemny atakujący vs latający obrońca</p></td>
+<td><p>uderzenie idzie w <strong>bohatera</strong> (liczy się tylko „ten sam status Flying”)</p></td>
+<td><p>uderzenie trafia jednostkę („Flying nie chroni przed naziemnymi”)</p></td>
+<td><p>do decyzji — duży wpływ na balans</p></td>
+<td><p>R-33</p></td>
+<td><p>?</p></td>
+</tr>
+<tr>
+<td><p>D-08</p></td>
+<td><p>R</p></td>
+<td><p>Pancerz a Burning</p></td>
+<td><p>Armored redukuje obrażenia od Burning</p></td>
+<td><p>Armored <strong>nie</strong> redukuje Burning</p></td>
+<td><p>do decyzji</p></td>
+<td><p>R-15, R-40</p></td>
+<td><p>?</p></td>
+</tr>
+<tr>
+<td><p>D-09</p></td>
+<td><p>R</p></td>
+<td><p>BurnSource a efekty</p></td>
+<td><p>Burning nakładany przy każdych obrażeniach od jednostki (także efektami)</p></td>
+<td><p>tylko przy bezpośrednich uderzeniach</p></td>
+<td><p>do decyzji</p></td>
+<td><p>R-43</p></td>
+<td><p>?</p></td>
+</tr>
+<tr>
+<td><p>D-10</p></td>
+<td><p>R</p></td>
+<td><p>Kolejność efektów przed walką</p></td>
+<td><p>zawsze gracz 0, potem 1</p></td>
+<td><p>gracz A (rozpoczynający), potem B</p></td>
+<td><p>specyfikacja (A, potem B) — sprawiedliwsze</p></td>
+<td><p>R-31</p></td>
+<td><p>?</p></td>
+</tr>
+<tr>
+<td><p>D-11</p></td>
+<td><p>I</p></td>
+<td><p>Efekty pasywne</p></td>
+<td><p>Tea Maid (46), Wyvern (60), Survivalist (14) zakodowane po id; <code>Passive</code> z danych ignorowany</p></td>
+<td><p>—</p></td>
+<td><p>opisać w DSL (ADR + E2-S07)</p></td>
+<td><p>R-23, R-67</p></td>
+<td><p>do zrobienia</p></td>
+</tr>
+<tr>
+<td><p>D-12</p></td>
+<td><p>B</p></td>
+<td><p>Obniżki kosztu po powrocie</p></td>
+<td><p>README twierdzi, że zostają; kod je kasuje</p></td>
+<td><p>„przepadają”</p></td>
+<td><p>zgodnie z kodem i specyfikacją: przepadają</p></td>
+<td><p>R-24, R-53</p></td>
+<td><p>zgodne</p></td>
+</tr>
+<tr>
+<td><p>D-13</p></td>
+<td><p>B</p></td>
+<td><p>Wyciek informacji</p></td>
+<td><p>numery <code>uid</code> nadawane przed tasowaniem → gość zna rękę i kolejność talii hosta</p></td>
+<td><p>—</p></td>
+<td><p>identyfikator nadawany przy wyjściu z talii (zrobione w Kernelu)</p></td>
+<td><p>R-81</p></td>
+<td><p>naprawione</p></td>
+</tr>
+<tr>
+<td><p>D-14</p></td>
+<td><p>B</p></td>
+<td><p>XSS</p></td>
+<td><p><code>innerHTML</code> z danymi od hosta</p></td>
+<td><p>—</p></td>
+<td><p>React bez <code>dangerouslySetInnerHTML</code></p></td>
+<td><p>—</p></td>
+<td><p>naprawione (architektura)</p></td>
+</tr>
+<tr>
+<td><p>D-15</p></td>
+<td><p>R</p></td>
+<td><p>Tokeny‑czary</p></td>
+<td><p>czary‑tokeny trafiają na stos odrzuconych (mogą wrócić przez <code>DrawFromDiscard</code>), tokeny‑jednostki znikają</p></td>
+<td><p>brak</p></td>
+<td><p>do decyzji: czy tokeny‑czary też znikają</p></td>
+<td><p>R-22</p></td>
+<td><p>?</p></td>
+</tr>
+<tr>
+<td><p>D-16</p></td>
+<td><p>B</p></td>
+<td><p>Parametr słowa kluczowego = 0</p></td>
+<td><p><code>kwp</code> traktuje 0 jak 1</p></td>
+<td><p>—</p></td>
+<td><p>0 oznacza 0</p></td>
+<td><p>R-40, R-44</p></td>
+<td><p>?</p></td>
+</tr>
+<tr>
+<td><p>D-17</p></td>
+<td><p>B</p></td>
+<td><p>Pętla reakcji</p></td>
+<td><p><code>resolve</code> przerywa po 30 iteracjach po cichu</p></td>
+<td><p>—</p></td>
+<td><p>błąd z diagnostyką</p></td>
+<td><p>R-54</p></td>
+<td><p>błąd</p></td>
+</tr>
+<tr>
+<td><p>D-18</p></td>
+<td><p>R</p></td>
+<td><p>Mulligan w starym C#</p></td>
+<td><p>—</p></td>
+<td><p>(C#: maks. 3 karty)</p></td>
+<td><p>zostawić JS (dowolna liczba)</p></td>
+<td><p>R-03</p></td>
+<td><p>?</p></td>
+</tr>
+<tr>
+<td><p>D-19</p></td>
+<td><p>B</p></td>
+<td><p>Opis karty Regifter</p></td>
+<td><p>README: „tylko ty dobierasz 2”</p></td>
+<td><p>dane: poświęcona → ty 2, wróg 1</p></td>
+<td><p>dane są kanonem; poprawić opis</p></td>
+<td><p>—</p></td>
+<td><p>?</p></td>
+</tr>
+<tr>
+<td><p>D-20</p></td>
+<td><p>I</p></td>
+<td><p>Bot widzi efekty z ręki przeciwnika</p></td>
+<td><p>projekcja bota zawiera prawdziwą rękę przeciwnika</p></td>
+<td><p>—</p></td>
+<td><p>bot gra tylko na <code>MatchView</code> (fog of war)</p></td>
+<td><p>R-80</p></td>
+<td><p>do zrobienia (E5)</p></td>
+</tr>
+</tbody></table>
