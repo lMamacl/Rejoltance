@@ -1,0 +1,159 @@
+<ac:structured-macro ac:name="info"><ac:rich-text-body><p><strong>Synchronizacja 1:1 z repozytorium Git:</strong> <code>docs/01-dokumentacja-systemowa/02-specyfikacja-regul-gry.md</code> (commit <code>10829d3</code>, data eksportu: <code>2026-11-02</code>)</p></ac:rich-text-body></ac:structured-macro>
+<blockquote><p><strong>Źródło prawdy:</strong> repozytorium (<code>docs/01-dokumentacja-systemowa/02-specyfikacja-regul-gry.md</code>) · <strong>Kategoria dokumentacji:</strong> Dokumentacja produktowa — systemowa (Wymagania funkcjonalne i reguły domenowe) · <strong>Etap SDD:</strong> Specyfikacja · <strong>Kanon:</strong> zachowanie prototypu <code>prototype/revibance</code> v11 (<strong>ADR-0005</strong> (<code>07-decyzje-adr/0005-kanon-regul-prototyp-js.md</code>)).</p></blockquote>
+<p>Niniejszy dokument wyjaśnia w przystępny sposób kompletne zasady gry <strong>RE:JOLTANCE</strong>. Wykonywalne wymagania ze scenariuszami <code>GIVEN / WHEN / THEN</code> znajdują się w <code>openspec/specs/*/spec.md</code>, natomiast macierz śledzalności identyfikatorów <code>R‑nn</code> i testów jednostkowych dostępna jest w dokumencie <strong><strong>1.3 Indeks reguł R‑nn</strong> (<code>03-indeks-regul-r-nn.md</code>)</strong>. Miejsca sporne oznaczono znacznikiem <strong><code>[D‑nn]</code></strong> i szczegółowo opisano w dokumencie <strong><strong>1.4 Analiza rozbieżności prototypu</strong> (<code>04-rozbieznosci-prototypu.md</code>)</strong>.</p>
+<p>Najlepiej czytać z otwartym prototypem: <code>npx serve prototype/revibance</code> → zagraj z botem.</p>
+<h2>1. O co chodzi</h2>
+<p>Dwóch graczy, każdy z talią 30 kart i bohaterem z <strong>20 HP</strong>. Plansza ma <strong>4 linie</strong> (0–3), w każdej jest jeden slot na jednostkę po każdej stronie. Wygrywa ten, kto pierwszy sprowadzi HP wrogiego bohatera do 0 (R-70). Gra nie ma limitu rund — kończy się najpóźniej przez obrażenia z pustej talii (R-14).</p>
+<p><strong>Karty:</strong> 69 kolekcjonerskich (jednostki i akcje) + 9 tokenów tworzonych przez efekty. Jednostka ma koszt, atak i HP; akcja (czar) ma koszt i efekt. <strong>Podtypy</strong> (Animal, Demon, Funko Pop, Human, Machine, Mercenary, Monster, Mystical, Token) działają jak plemiona dla warunków efektów.</p>
+<p><strong>Talia</strong> (R-01): dokładnie 30 kart, maks. 3 kopie, bez tokenów. W grze jest 5 talii startowych.</p>
+<h2>2. Zasób: Blood</h2>
+<p>W rundzie <em>n</em> każdy gracz ma <strong>min(n, 10)</strong> Blood, odnawiane na początku rundy — niewydane przepada (R-10). Koszt zagrania (R-23) = koszt z karty − obniżki (efekty z ręki, Tea Maid dla akcji) + podwyżki (Wyvern przeciwnika: +6 do akcji), nigdy poniżej 0. Efekt <code>AddResource</code> może dodać Blood do maks. 10 (R-65).</p>
+<h2>3. Początek meczu</h2>
+<ol><li>Każdy dobiera <strong>4 karty</strong> z przetasowanej talii (R-02).</li><li><strong>Mulligan</strong> (R-03): wskazujesz dowolną liczbę kart do wymiany — dobierasz tyle samo z góry talii, potem odrzucone wracają do talii i talia jest tasowana <strong>[D-02]</strong>.</li><li><strong>Kolejność</strong> (R-04): każdy deklaruje „pierwszy/drugi”. Różne wybory są honorowane, takie same — losowanie.</li></ol>
+<h2>4. Runda</h2>
+<p>Na początku rundy: numer +1, Blood odnowione, od rundy 2 każdy <strong>dobiera 1 kartę</strong> (R-10). Rozpoczynający zmienia się co rundę (R-11).</p>
+<p>Gracz rozpoczynający rundę to <strong>A</strong>, drugi to <strong>B</strong> (R-12):</p>
+<table><thead><tr>
+<th><p>Krok</p></th>
+<th><p>Aktywny</p></th>
+<th><p>Może zagrać</p></th>
+</tr></thead><tbody>
+<tr>
+<td><p>1. Jednostki</p></td>
+<td><p>A</p></td>
+<td><p>tylko jednostki</p></td>
+</tr>
+<tr>
+<td><p>2. Mieszany</p></td>
+<td><p>B</p></td>
+<td><p>jednostki i akcje</p></td>
+</tr>
+<tr>
+<td><p>3. Akcje</p></td>
+<td><p>A</p></td>
+<td><p>tylko akcje</p></td>
+</tr>
+<tr>
+<td><p>4. Walka</p></td>
+<td><p>—</p></td>
+<td><p>automatyczna</p></td>
+</tr>
+</tbody></table>
+<p>Aktywny gracz kończy krok, kiedy chce. <strong>Ręka</strong> mieści 8 kart — nadmiar trafia na stos odrzuconych (R-13). <strong>Pusta talia</strong>: zamiast dobrania obrażenia 1, potem 2, 3… — stos odrzuconych <strong>nie</strong> jest tasowany do talii (R-14).</p>
+<p><strong>Koniec rundy</strong> (R-15): każda jednostka z Burning traci 1 HP (pancerz redukuje — <strong>[D-08]</strong>), potem śmierć i sprawdzenie zwycięstwa.</p>
+<h2>5. Zagrywanie kart</h2>
+<ul><li>Jednostkę stawiasz na <strong>wolny slot własnej linii</strong> (R-21). Dostaje stały bonus gracza (ModifyGlobalBuff). Najpierw działa jej „Po zagraniu”, potem reakcje sojuszników.</li><li>Akcję możesz zagrać tylko, jeśli istnieją wszystkie wymagane cele (R-22). Po rozstrzygnięciu trafia na stos odrzuconych — albo do ręki przeciwnika (<code>GiveToOpponent</code>, „prezent”).</li><li><strong>Cele</strong> (R-25): wroga jednostka · przyjazna jednostka · dowolna jednostka · wroga jednostka lub bohater · jednostka do poświęcenia · kilka jednostek do poświęcenia · karta z talii · opcja (A/B). Serwer zawsze sprawdza, czy cel jest legalny <strong>[D-05]</strong>.</li><li><strong>Efekty z ręki</strong> (R-24) działają tylko, póki karta jest w ręce: tanieje (np. za każde poświęcenie), zbiera bonus ataku albo sama wskakuje na planszę w miejsce zmarłej jednostki.</li></ul>
+<h2>6. Walka</h2>
+<p>Linie rozstrzygają się po kolei <strong>0 → 1 → 2 → 3</strong> (R-30). W każdej linii:</p>
+<ol><li><strong>Przed walką</strong> — efekty „przed walką” (np. nałóż Marked, podpal, 5 obrażeń bohaterowi); cel wybiera właściciel. Kolejność: gracz 0, potem 1 <strong>[D-10]</strong> (R-31).</li><li><strong>Uderzenia</strong> — obie jednostki uderzają <strong>jednocześnie</strong> atakiem sprzed jakichkolwiek obrażeń; obie mogą zginąć (R-32). - Ten sam status <strong>Flying</strong> po obu stronach (obie latają lub obie nie) → uderzenie trafia jednostkę naprzeciw. - Inaczej, albo gdy naprzeciw nikogo nie ma → uderzenie trafia <strong>bohatera</strong> (R-33) <strong>[D-07]</strong>.</li><li><strong>Kolejka wyzwalaczy z obrażeń</strong> — „gdy zada obrażenia jednostce/bohaterowi”, „gdy zabije” — wykonują się po obu uderzeniach, nawet jeśli jednostka ginie (R-34).</li><li><strong>Śmierć</strong> (R-50).</li><li><strong>Po walce</strong> — efekty „po walce” ocalałych (np. Bonus Attack), potem znów śmierć.</li></ol>
+<p><strong>Bonus Attack</strong> (R-35) to natychmiastowe, jednostronne uderzenie poza walką, według tych samych reguł.</p>
+<h2>7. Słowa kluczowe i statusy</h2>
+<table><thead><tr>
+<th><p>Słowo</p></th>
+<th><p>Działanie</p></th>
+<th><p>Reguła</p></th>
+</tr></thead><tbody>
+<tr>
+<td><p><strong>Flying</strong></p></td>
+<td><p>atakuje bohatera, jeśli obrońca nie lata; zwykła jednostka też omija latającą <strong>[D-07]</strong></p></td>
+<td><p>R-33</p></td>
+</tr>
+<tr>
+<td><p><strong>Armored (n)</strong></p></td>
+<td><p>−n do każdego trafienia (min 0), przed Marked; Armor2 = 2</p></td>
+<td><p>R-40</p></td>
+</tr>
+<tr>
+<td><p><strong>Marked</strong></p></td>
+<td><p>otrzymywane obrażenia ×2 (po pancerzu); nie dotyczy Burning; trwały</p></td>
+<td><p>R-41</p></td>
+</tr>
+<tr>
+<td><p><strong>Stunned</strong></p></td>
+<td><p>pomija najbliższe uderzenie (też Bonus Attack), potem znika</p></td>
+<td><p>R-42</p></td>
+</tr>
+<tr>
+<td><p><strong>Burning</strong></p></td>
+<td><p>−1 HP na koniec rundy, trwały do śmierci lub Silence</p></td>
+<td><p>R-15, R-43</p></td>
+</tr>
+<tr>
+<td><p><strong>BurnSource</strong></p></td>
+<td><p>podpala jednostki, którym zada obrażenia <strong>[D-09]</strong></p></td>
+<td><p>R-43</p></td>
+</tr>
+<tr>
+<td><p><strong>SplashDamage (n)</strong></p></td>
+<td><p>po uderzeniu n obrażeń wrogim jednostkom w sąsiednich liniach (nie bohaterowi, nie gdy Stunned)</p></td>
+<td><p>R-44</p></td>
+</tr>
+<tr>
+<td><p><strong>Breakthrough</strong></p></td>
+<td><p>po trafieniu jednostki — dodatkowo pełny atak w bohatera <strong>[D-03]</strong></p></td>
+<td><p>R-45</p></td>
+</tr>
+<tr>
+<td><p><strong>SoulGuard</strong></p></td>
+<td><p>raz ratuje przed śmiercią (zostaje 1 HP); nie chroni przed Sacrifice; aura Survivalist daje go sojusznikom</p></td>
+<td><p>R-46</p></td>
+</tr>
+<tr>
+<td><p><strong>Unkillable</strong></p></td>
+<td><p>po śmierci (i efektach pośmiertnych) wraca do ręki; pełna ręka → odrzucone; token znika</p></td>
+<td><p>R-47</p></td>
+</tr>
+</tbody></table>
+<p>Nałożenie statusu wywołuje reakcje kart typu „gdy wróg zostanie naznaczony” (R-48).</p>
+<h2>8. Śmierć, poświęcenie, wyciszenie</h2>
+<ul><li><strong>Śmierć</strong> (R-50): HP ≤ 0. Kolejność: efekty pośmiertne jednostki → reakcje sojuszników → efekty kart w ręce. Karta idzie na stos odrzuconych.</li><li><strong>Sacrifice</strong> (R-51): najpierw efekty „gdy poświęcona” samej jednostki, potem zniszczenie (SoulGuard nie pomaga), potem reakcje „gdy inna jednostka zostanie poświęcona”.</li><li><strong>Silence</strong> (R-52): kasuje słowa kluczowe, statusy i bonusy (atak/HP do wartości z karty) i trwale wyłącza wszystkie zdolności — także pośmiertne i pasywne.</li><li><strong>Powrót do ręki</strong> (R-53): karta wraca jako nowa, bez bonusów <strong>[D-04]</strong>.</li></ul>
+<h2>9. Efekty kart (DSL)</h2>
+<p>Karta to dane: <code>Effects[] = { Trigger, Zone?, Condition?, Targeting?, Actions[] }</code> (R-60). Nieznane słowo w danych = błąd przy starcie serwera (R-68).</p>
+<p><strong>Wyzwalacze (15):</strong> OnPlayed, OnDeath, OnKill, OnSacrificed, OnOtherUnitSacrificed, OnFriendlyUnitDied, OnFriendlyCardDrawn, OnOpponentCardDrawn, OnStatusApplied, OnPreCombatLine, OnPostCombatLine, OnDamagedEnemyUnit, OnDamagedEnemyHero, OnFriendlyActionPlayed, Passive.</p>
+<p><strong>Akcje (25):</strong></p>
+<table><thead><tr>
+<th><p>Grupa</p></th>
+<th><p>Akcje</p></th>
+<th><p>Reguła</p></th>
+</tr></thead><tbody>
+<tr>
+<td><p>obrażenia i leczenie</p></td>
+<td><p>DealDamage, LoseHealth, Heal, HealToFull</p></td>
+<td><p>R-61</p></td>
+</tr>
+<tr>
+<td><p>statystyki</p></td>
+<td><p>BuffStats, ModifyGlobalBuff, AbsorbStats</p></td>
+<td><p>R-62</p></td>
+</tr>
+<tr>
+<td><p>karty i strefy</p></td>
+<td><p>DrawCard, DrawFromDiscard, TutorCard, AddCardToHand, ShuffleDeck, GiveToOpponent</p></td>
+<td><p>R-63, R-22</p></td>
+</tr>
+<tr>
+<td><p>plansza</p></td>
+<td><p>MakeAUnit, SummonUnit, MoveRight, DestroyUnit, ReturnToHand, Transform</p></td>
+<td><p>R-64, R-69, R-24</p></td>
+</tr>
+<tr>
+<td><p>statusy</p></td>
+<td><p>ApplyStatus, Silence</p></td>
+<td><p>R-48, R-52</p></td>
+</tr>
+<tr>
+<td><p>poświęcenie i ataki</p></td>
+<td><p>SacrificeUnit, SacrificeUnits, BonusAttack</p></td>
+<td><p>R-51, R-35</p></td>
+</tr>
+<tr>
+<td><p>zasób</p></td>
+<td><p>AddResource</p></td>
+<td><p>R-65</p></td>
+</tr>
+</tbody></table>
+<p><strong>Warunki:</strong> And, Or, Not, IsSelf, IsSubtype, IsStatus, IsEnemy, IsFriendly, HasSubtypeOnBoard (R-66). <strong>Pasywne</strong> (Tea Maid, Wyvern, Survivalist) w prototypie są zakodowane po numerach kart — u nas mają wynikać z danych (R-67, <strong>[D-11]</strong>).</p>
+<h2>10. Koniec meczu</h2>
+<ul><li>HP bohatera ≤ 0 → przegrana, natychmiast — także w środku walki (R-70).</li><li>Obaj bohaterowie ≤ 0 w tym samym momencie → <strong>remis</strong> (R-71, <strong>[D-01]</strong>).</li><li>Poddanie się — w każdej chwili (R-72). Rozłączenie — 60 s na powrót, potem walkower (R-73).</li></ul>
+<h2>11. Gra online — zasady uczciwości</h2>
+<p>Serwer jest jedynym sędzią (R-80…R-84): klient wysyła tylko intencje, dostaje tylko swój widok (ręka przeciwnika = liczba), każdy ruch jest sprawdzany, a mecz da się odtworzyć z seeda i listy intencji. Szczegóły: <code>openspec/specs/server-authority</code>.</p>

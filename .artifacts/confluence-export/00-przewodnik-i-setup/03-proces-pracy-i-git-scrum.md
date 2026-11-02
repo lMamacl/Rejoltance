@@ -1,4 +1,4 @@
-<!-- CONFLUENCE 1:1 EXPORT | Source: docs/00-przewodnik-i-setup/03-proces-pracy-i-git-scrum.md @ 7e9a336 (2026-11-02) -->
+<!-- CONFLUENCE 1:1 EXPORT | Source: docs/00-przewodnik-i-setup/03-proces-pracy-i-git-scrum.md @ 10829d3 (2026-11-02) -->
 # 0.3 Proces pracy zespołu, przepływ Git, Jira i Scrum
 
 > **Źródło prawdy:** repozytorium (`docs/00-przewodnik-i-setup/03-proces-pracy-i-git-scrum.md`) · **Kategoria dokumentacji:** Dokumentacja procesowa — Standardy pracy deweloperskiej i Scrum · **Etap SDD:** Cały cykl SDD

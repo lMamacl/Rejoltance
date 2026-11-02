@@ -1,4 +1,4 @@
-<!-- CONFLUENCE 1:1 EXPORT | Source: docs/03-dokumentacja-procesowa/03-scrum-i-spotkania/szablon-review-retro.md @ 7e9a336 (2026-11-02) -->
+<!-- CONFLUENCE 1:1 EXPORT | Source: docs/03-dokumentacja-procesowa/03-scrum-i-spotkania/szablon-review-retro.md @ 10829d3 (2026-11-02) -->
 # Sprint N — Przegląd sprintu i retrospektywa
 
 **Okres:** RRRR-MM-DD – RRRR-MM-DD · **Właściciel Produktu w sprincie:** <imię> · **Cel sprintu:** <jedno zdanie>

@@ -1,0 +1,674 @@
+<ac:structured-macro ac:name="info"><ac:rich-text-body><p><strong>Synchronizacja 1:1 z repozytorium Git:</strong> <code>docs/03-dokumentacja-procesowa/02-backlog/BACKLOG.md</code> (commit <code>10829d3</code>, data eksportu: <code>2026-11-02</code>)</p></ac:rich-text-body></ac:structured-macro>
+<p>Pojemność: 6 os. × 5 h/tydz., bufor 10%. Godziny story = suma tasków albo <code>estimate_h</code>.</p>
+<h2>Sprinty</h2>
+<table><thead><tr>
+<th><p>Sprint</p></th>
+<th><p>Daty</p></th>
+<th><p>Cel</p></th>
+<th><p>Pojemność [h]</p></th>
+<th><p>Zaplanowane [h]</p></th>
+<th><p>SP</p></th>
+<th><p>Wykorzystanie</p></th>
+</tr></thead><tbody>
+<tr>
+<td><p>S0</p></td>
+<td><p>2026-10-27 – 2026-11-02</p></td>
+<td><p>Zespół pracuje w jednym repo i Jirze; DIP gotowy; spór o reguły rozstrzygnięty.</p></td>
+<td><p>30</p></td>
+<td><p>27</p></td>
+<td><p>12</p></td>
+<td><p>90%</p></td>
+</tr>
+<tr>
+<td><p>S1</p></td>
+<td><p>2026-11-03 – 2026-11-16</p></td>
+<td><p>Dwie przeglądarki wchodzą do jednego pokoju i rozgrywają mulligan, wybór kolejności i start rundy.</p></td>
+<td><p>60</p></td>
+<td><p>54</p></td>
+<td><p>26</p></td>
+<td><p>90%</p></td>
+</tr>
+<tr>
+<td><p>S2</p></td>
+<td><p>2026-11-17 – 2026-11-30</p></td>
+<td><p>Gracze zagrywają jednostki w krokach rundy, serwer odrzuca nielegalne ruchy.</p></td>
+<td><p>60</p></td>
+<td><p>57</p></td>
+<td><p>26</p></td>
+<td><p>95%</p></td>
+</tr>
+<tr>
+<td><p>S3</p></td>
+<td><p>2026-12-01 – 2026-12-14</p></td>
+<td><p>Walka 4 linii rozstrzyga się do końca meczu; można zagrać z prostym botem.</p></td>
+<td><p>60</p></td>
+<td><p>49</p></td>
+<td><p>24</p></td>
+<td><p>82%</p></td>
+</tr>
+<tr>
+<td><p>S4</p></td>
+<td><p>2026-12-15 – 2027-01-11</p></td>
+<td><p>Słowa kluczowe walki działają; lobby z pokojami; baza PostgreSQL w Aspire.</p></td>
+<td><p>60</p></td>
+<td><p>50</p></td>
+<td><p>25</p></td>
+<td><p>83%</p></td>
+</tr>
+<tr>
+<td><p>S5</p></td>
+<td><p>2027-01-12 – 2027-01-25</p></td>
+<td><p>Grywalne MVP z 12 kartami online i z botem, wdrożone pod publicznym adresem.</p></td>
+<td><p>60</p></td>
+<td><p>54</p></td>
+<td><p>26</p></td>
+<td><p>90%</p></td>
+</tr>
+<tr>
+<td><p>S6</p></td>
+<td><p>semestr 2</p></td>
+<td><p>Semestr 2 — pierwszy sprint (pełna pula kart, mocniejszy bot, replay).</p></td>
+<td><p>—</p></td>
+<td><p>90</p></td>
+<td><p>40</p></td>
+<td><p>—</p></td>
+</tr>
+<tr>
+<td><p>S7</p></td>
+<td><p>semestr 2</p></td>
+<td><p>Semestr 2 — dodatki (obserwator, ranking, balans).</p></td>
+<td><p>—</p></td>
+<td><p>48</p></td>
+<td><p>21</p></td>
+<td><p>—</p></td>
+</tr>
+</tbody></table>
+<p><strong>Semestr 1:</strong> 41 story, 139 SP, 291 h. <strong>Poniżej linii cięcia (semestr 2):</strong> 15 story, 61 SP, 138 h.</p>
+<h2>E0 Fundamenty i proces</h2>
+<p>Środowisko, DIP, ceremonie Scrum, kontakt z użytkownikiem końcowym. Wspólna odpowiedzialność zespołu. Właściciel: PO sprintu (rotacyjnie).</p>
+<table><thead><tr>
+<th><p>Story</p></th>
+<th><p>Tytuł</p></th>
+<th><p>Sprint</p></th>
+<th><p>Fala</p></th>
+<th><p>SP</p></th>
+<th><p>h</p></th>
+<th><p>Reguły</p></th>
+</tr></thead><tbody>
+<tr>
+<td><p>E0-S01</p></td>
+<td><p>Konfiguracja narzędzi zespołu</p></td>
+<td><p>S0</p></td>
+<td><p>W0</p></td>
+<td><p>3</p></td>
+<td><p>7</p></td>
+<td><p>—</p></td>
+</tr>
+<tr>
+<td><p>E0-S02</p></td>
+<td><p>Dokument Inicjujący Projekt (DIP)</p></td>
+<td><p>S0</p></td>
+<td><p>W0</p></td>
+<td><p>5</p></td>
+<td><p>13</p></td>
+<td><p>—</p></td>
+</tr>
+<tr>
+<td><p>E0-S03</p></td>
+<td><p>Rada graczy testowych</p></td>
+<td><p>S0</p></td>
+<td><p>W0</p></td>
+<td><p>2</p></td>
+<td><p>3</p></td>
+<td><p>—</p></td>
+</tr>
+<tr>
+<td><p>E0-S04</p></td>
+<td><p>Rozstrzygnięcie rozbieżności reguł D-01…D-20</p></td>
+<td><p>S0</p></td>
+<td><p>W0</p></td>
+<td><p>2</p></td>
+<td><p>4</p></td>
+<td><p>R-03, R-33, R-45, R-71</p></td>
+</tr>
+<tr>
+<td><p>E0-S11</p></td>
+<td><p>Ceremonie Scrum — Sprint 1</p></td>
+<td><p>S1</p></td>
+<td><p>W0</p></td>
+<td><p>2</p></td>
+<td><p>4</p></td>
+<td><p>—</p></td>
+</tr>
+<tr>
+<td><p>E0-S12</p></td>
+<td><p>Ceremonie Scrum — Sprint 2</p></td>
+<td><p>S2</p></td>
+<td><p>W0</p></td>
+<td><p>2</p></td>
+<td><p>4</p></td>
+<td><p>—</p></td>
+</tr>
+<tr>
+<td><p>E0-S13</p></td>
+<td><p>Ceremonie Scrum — Sprint 3</p></td>
+<td><p>S3</p></td>
+<td><p>W0</p></td>
+<td><p>2</p></td>
+<td><p>4</p></td>
+<td><p>—</p></td>
+</tr>
+<tr>
+<td><p>E0-S14</p></td>
+<td><p>Ceremonie Scrum — Sprint 4</p></td>
+<td><p>S4</p></td>
+<td><p>W0</p></td>
+<td><p>2</p></td>
+<td><p>4</p></td>
+<td><p>—</p></td>
+</tr>
+<tr>
+<td><p>E0-S15</p></td>
+<td><p>Ceremonie Scrum — Sprint 5 i podsumowanie semestru</p></td>
+<td><p>S5</p></td>
+<td><p>W0</p></td>
+<td><p>3</p></td>
+<td><p>5</p></td>
+<td><p>—</p></td>
+</tr>
+</tbody></table>
+<h2>E1 Silnik reguł (Kernel)</h2>
+<p>Deterministyczne reguły gry: runda, kroki, walka, słowa kluczowe, śmierć. src/Rejoltance.Kernel, reguły R-0x…R-5x, R-7x. Właściciel: do przydzielenia (#9).</p>
+<table><thead><tr>
+<th><p>Story</p></th>
+<th><p>Tytuł</p></th>
+<th><p>Sprint</p></th>
+<th><p>Fala</p></th>
+<th><p>SP</p></th>
+<th><p>h</p></th>
+<th><p>Reguły</p></th>
+</tr></thead><tbody>
+<tr>
+<td><p>E1-S01</p></td>
+<td><p>Wybór kolejności i start rundy</p></td>
+<td><p>S1</p></td>
+<td><p>W1</p></td>
+<td><p>3</p></td>
+<td><p>8</p></td>
+<td><p>R-04, R-10, R-11</p></td>
+</tr>
+<tr>
+<td><p>E1-S02</p></td>
+<td><p>Kroki rundy i zagrywanie jednostek</p></td>
+<td><p>S2</p></td>
+<td><p>W1</p></td>
+<td><p>5</p></td>
+<td><p>12</p></td>
+<td><p>R-12, R-20, R-21</p></td>
+</tr>
+<tr>
+<td><p>E1-S03</p></td>
+<td><p>Walka 4 linii i koniec meczu</p></td>
+<td><p>S3</p></td>
+<td><p>W1</p></td>
+<td><p>5</p></td>
+<td><p>9</p></td>
+<td><p>R-30, R-32, R-33, R-50, R-70, R-71</p></td>
+</tr>
+<tr>
+<td><p>E1-S07</p></td>
+<td><p>Kolejka wyzwalaczy z obrażeń i Bonus Attack</p></td>
+<td><p>S3</p></td>
+<td><p>W1</p></td>
+<td><p>3</p></td>
+<td><p>6</p></td>
+<td><p>R-34, R-35</p></td>
+</tr>
+<tr>
+<td><p>E1-S04</p></td>
+<td><p>Słowa kluczowe walki</p></td>
+<td><p>S4</p></td>
+<td><p>W1</p></td>
+<td><p>8</p></td>
+<td><p>14</p></td>
+<td><p>R-15, R-40, R-41, R-42, R-43, R-44, R-45</p></td>
+</tr>
+<tr>
+<td><p>E1-S05</p></td>
+<td><p>SoulGuard, Unkillable, Sacrifice</p></td>
+<td><p>S5</p></td>
+<td><p>W1</p></td>
+<td><p>5</p></td>
+<td><p>9</p></td>
+<td><p>R-46, R-47, R-51, R-54</p></td>
+</tr>
+<tr>
+<td><p>E1-S06</p></td>
+<td><p>Silence i powrót do ręki</p></td>
+<td><p>S6</p></td>
+<td><p>W2</p></td>
+<td><p>3</p></td>
+<td><p>6</p></td>
+<td><p>R-52, R-53</p></td>
+</tr>
+<tr>
+<td><p>E1-S08</p></td>
+<td><p>Efekty przed i po walce z wyborem celu</p></td>
+<td><p>S6</p></td>
+<td><p>W2</p></td>
+<td><p>3</p></td>
+<td><p>8</p></td>
+<td><p>R-31, R-84</p></td>
+</tr>
+</tbody></table>
+<h2>E2 Interpreter efektów kart (DSL)</h2>
+<p>Karty jako dane: rejestr akcji, wyzwalacze, warunki, cele, koszt. src/Rejoltance.Content + handlery w Kernelu, reguły R-2x, R-6x. Właściciel: do przydzielenia (#9).</p>
+<table><thead><tr>
+<th><p>Story</p></th>
+<th><p>Tytuł</p></th>
+<th><p>Sprint</p></th>
+<th><p>Fala</p></th>
+<th><p>SP</p></th>
+<th><p>h</p></th>
+<th><p>Reguły</p></th>
+</tr></thead><tbody>
+<tr>
+<td><p>E2-S01</p></td>
+<td><p>Rejestr akcji, wyzwalaczy i warunków</p></td>
+<td><p>S1</p></td>
+<td><p>W1</p></td>
+<td><p>5</p></td>
+<td><p>9</p></td>
+<td><p>R-60, R-66, R-68</p></td>
+</tr>
+<tr>
+<td><p>E2-S02</p></td>
+<td><p>Wybór i walidacja celów</p></td>
+<td><p>S2</p></td>
+<td><p>W1</p></td>
+<td><p>5</p></td>
+<td><p>9</p></td>
+<td><p>R-22, R-25</p></td>
+</tr>
+<tr>
+<td><p>E2-S03</p></td>
+<td><p>Akcje obrażeń, leczenia i statystyk</p></td>
+<td><p>S3</p></td>
+<td><p>W1</p></td>
+<td><p>3</p></td>
+<td><p>8</p></td>
+<td><p>R-48, R-61, R-62</p></td>
+</tr>
+<tr>
+<td><p>E2-S04</p></td>
+<td><p>Akcje kart, stref i zasobu</p></td>
+<td><p>S4</p></td>
+<td><p>W1</p></td>
+<td><p>3</p></td>
+<td><p>8</p></td>
+<td><p>R-13, R-63, R-65</p></td>
+</tr>
+<tr>
+<td><p>E2-S05</p></td>
+<td><p>Talia MVP: 12 kart grywalnych end-to-end</p></td>
+<td><p>S5</p></td>
+<td><p>W1</p></td>
+<td><p>3</p></td>
+<td><p>8</p></td>
+<td><p>R-01</p></td>
+</tr>
+<tr>
+<td><p>E2-S06</p></td>
+<td><p>Koszt i efekty działające z ręki</p></td>
+<td><p>S6</p></td>
+<td><p>W2</p></td>
+<td><p>3</p></td>
+<td><p>8</p></td>
+<td><p>R-23, R-24</p></td>
+</tr>
+<tr>
+<td><p>E2-S07</p></td>
+<td><p>Efekty pasywne w danych (bez hardcodu id)</p></td>
+<td><p>S6</p></td>
+<td><p>W2</p></td>
+<td><p>3</p></td>
+<td><p>6</p></td>
+<td><p>R-67</p></td>
+</tr>
+<tr>
+<td><p>E2-S08</p></td>
+<td><p>Akcje planszy: MakeAUnit, MoveRight, DestroyUnit, Transform</p></td>
+<td><p>S6</p></td>
+<td><p>W2</p></td>
+<td><p>3</p></td>
+<td><p>8</p></td>
+<td><p>R-64, R-69</p></td>
+</tr>
+<tr>
+<td><p>E2-S09</p></td>
+<td><p>Wszystkie 69 kart</p></td>
+<td><p>S7</p></td>
+<td><p>W2</p></td>
+<td><p>8</p></td>
+<td><p>20</p></td>
+<td><p>—</p></td>
+</tr>
+</tbody></table>
+<h2>E3 Serwer i sieć czasu rzeczywistego</h2>
+<p>Pokoje PvP, SignalR, walidacja i autoryzacja, zdarzenia per gracz, reconnect, timer. src/Rejoltance.Server, reguły R-7x, R-8x. Właściciel: do przydzielenia (#9).</p>
+<table><thead><tr>
+<th><p>Story</p></th>
+<th><p>Tytuł</p></th>
+<th><p>Sprint</p></th>
+<th><p>Fala</p></th>
+<th><p>SP</p></th>
+<th><p>h</p></th>
+<th><p>Reguły</p></th>
+</tr></thead><tbody>
+<tr>
+<td><p>E3-S01</p></td>
+<td><p>Pokój PvP na kod / link</p></td>
+<td><p>S1</p></td>
+<td><p>W1</p></td>
+<td><p>5</p></td>
+<td><p>9</p></td>
+<td><p>R-80, R-82</p></td>
+</tr>
+<tr>
+<td><p>E3-S02</p></td>
+<td><p>Autoryzacja miejsca i walidacja intencji</p></td>
+<td><p>S2</p></td>
+<td><p>W1</p></td>
+<td><p>3</p></td>
+<td><p>6</p></td>
+<td><p>R-81, R-82</p></td>
+</tr>
+<tr>
+<td><p>E3-S03</p></td>
+<td><p>Zdarzenia dla animacji per gracz</p></td>
+<td><p>S3</p></td>
+<td><p>W1</p></td>
+<td><p>3</p></td>
+<td><p>6</p></td>
+<td><p>R-80</p></td>
+</tr>
+<tr>
+<td><p>E3-S04</p></td>
+<td><p>Limit czasu tury</p></td>
+<td><p>S4</p></td>
+<td><p>W1</p></td>
+<td><p>3</p></td>
+<td><p>6</p></td>
+<td><p>R-31</p></td>
+</tr>
+<tr>
+<td><p>E3-S05</p></td>
+<td><p>Reconnect w 60 sekund</p></td>
+<td><p>S6</p></td>
+<td><p>W2</p></td>
+<td><p>5</p></td>
+<td><p>10</p></td>
+<td><p>R-73</p></td>
+</tr>
+<tr>
+<td><p>E3-S06</p></td>
+<td><p>Ochrona hubu: rate limiting i logi bezpieczeństwa</p></td>
+<td><p>S5</p></td>
+<td><p>W1</p></td>
+<td><p>2</p></td>
+<td><p>5</p></td>
+<td><p>—</p></td>
+</tr>
+<tr>
+<td><p>E3-S07</p></td>
+<td><p>Tryb obserwatora</p></td>
+<td><p>S7</p></td>
+<td><p>W3</p></td>
+<td><p>5</p></td>
+<td><p>10</p></td>
+<td><p>—</p></td>
+</tr>
+</tbody></table>
+<h2>E4 Klient web</h2>
+<p>React + TypeScript: plansza, ręka, prompty, lobby, animacje, dźwięk. src/web — renderuje MatchView, wysyła Intent. Właściciel: do przydzielenia (#9).</p>
+<table><thead><tr>
+<th><p>Story</p></th>
+<th><p>Tytuł</p></th>
+<th><p>Sprint</p></th>
+<th><p>Fala</p></th>
+<th><p>SP</p></th>
+<th><p>h</p></th>
+<th><p>Reguły</p></th>
+</tr></thead><tbody>
+<tr>
+<td><p>E4-S01</p></td>
+<td><p>Plansza 4 linie i wachlarz ręki</p></td>
+<td><p>S1</p></td>
+<td><p>W1</p></td>
+<td><p>5</p></td>
+<td><p>9</p></td>
+<td><p>R-80</p></td>
+</tr>
+<tr>
+<td><p>E4-S02</p></td>
+<td><p>Zagrywanie kart z podświetleniem legalnych ruchów</p></td>
+<td><p>S2</p></td>
+<td><p>W1</p></td>
+<td><p>5</p></td>
+<td><p>10</p></td>
+<td><p>R-20</p></td>
+</tr>
+<tr>
+<td><p>E4-S03</p></td>
+<td><p>Prompty: mulligan, kolejność, wybór celu</p></td>
+<td><p>S3</p></td>
+<td><p>W1</p></td>
+<td><p>3</p></td>
+<td><p>6</p></td>
+<td><p>R-03, R-04, R-84</p></td>
+</tr>
+<tr>
+<td><p>E4-S07</p></td>
+<td><p>Lobby: utwórz pokój, dołącz kodem, wybierz talię</p></td>
+<td><p>S4</p></td>
+<td><p>W1</p></td>
+<td><p>3</p></td>
+<td><p>6</p></td>
+<td><p>—</p></td>
+</tr>
+<tr>
+<td><p>E4-S04</p></td>
+<td><p>Grafiki kart, glosariusz słów kluczowych, powiększenie</p></td>
+<td><p>S6</p></td>
+<td><p>W2</p></td>
+<td><p>3</p></td>
+<td><p>8</p></td>
+<td><p>—</p></td>
+</tr>
+<tr>
+<td><p>E4-S05</p></td>
+<td><p>Animacje zdarzeń i dźwięki</p></td>
+<td><p>S5</p></td>
+<td><p>W1</p></td>
+<td><p>5</p></td>
+<td><p>8</p></td>
+<td><p>—</p></td>
+</tr>
+<tr>
+<td><p>E4-S06</p></td>
+<td><p>Ekran końca meczu, poddanie, rewanż</p></td>
+<td><p>S6</p></td>
+<td><p>W2</p></td>
+<td><p>2</p></td>
+<td><p>4</p></td>
+<td><p>—</p></td>
+</tr>
+</tbody></table>
+<h2>E5 Bot AI i symulator</h2>
+<p>Wyrocznia z prototypu, testy różnicowe, boty jako Policy na LegalActions, symulator headless, balans. Właściciel: do przydzielenia (#9).</p>
+<table><thead><tr>
+<th><p>Story</p></th>
+<th><p>Tytuł</p></th>
+<th><p>Sprint</p></th>
+<th><p>Fala</p></th>
+<th><p>SP</p></th>
+<th><p>h</p></th>
+<th><p>Reguły</p></th>
+</tr></thead><tbody>
+<tr>
+<td><p>E5-S01</p></td>
+<td><p>Wyrocznia: prototyp JS uruchamiany headless z seedem</p></td>
+<td><p>S1</p></td>
+<td><p>W1</p></td>
+<td><p>3</p></td>
+<td><p>8</p></td>
+<td><p>R-83</p></td>
+</tr>
+<tr>
+<td><p>E5-S02</p></td>
+<td><p>Testy różnicowe Kernel vs wyrocznia</p></td>
+<td><p>S2</p></td>
+<td><p>W1</p></td>
+<td><p>3</p></td>
+<td><p>8</p></td>
+<td><p>R-83</p></td>
+</tr>
+<tr>
+<td><p>E5-S03</p></td>
+<td><p>Bot losowy (Policy na LegalActions)</p></td>
+<td><p>S3</p></td>
+<td><p>W1</p></td>
+<td><p>3</p></td>
+<td><p>6</p></td>
+<td><p>—</p></td>
+</tr>
+<tr>
+<td><p>E5-S04</p></td>
+<td><p>Symulator headless: N partii bot vs bot</p></td>
+<td><p>S4</p></td>
+<td><p>W1</p></td>
+<td><p>3</p></td>
+<td><p>6</p></td>
+<td><p>R-54, R-83</p></td>
+</tr>
+<tr>
+<td><p>E5-S05</p></td>
+<td><p>Tryb gry z botem w lobby</p></td>
+<td><p>S5</p></td>
+<td><p>W1</p></td>
+<td><p>3</p></td>
+<td><p>8</p></td>
+<td><p>—</p></td>
+</tr>
+<tr>
+<td><p>E5-S06</p></td>
+<td><p>Bot heurystyczny (port beam search z prototypu)</p></td>
+<td><p>S6</p></td>
+<td><p>W2</p></td>
+<td><p>5</p></td>
+<td><p>12</p></td>
+<td><p>—</p></td>
+</tr>
+<tr>
+<td><p>E5-S07</p></td>
+<td><p>Raport balansu kart</p></td>
+<td><p>S7</p></td>
+<td><p>W3</p></td>
+<td><p>3</p></td>
+<td><p>6</p></td>
+<td><p>—</p></td>
+</tr>
+</tbody></table>
+<h2>E6 Platforma: konta, talie, dane, wdrożenie</h2>
+<p>CI/CD, testy E2E, konta, talie i deckbuilder, PostgreSQL, wdrożenie demo, dokumentacja (EU5/EU6), historia i replay. Właściciel: do przydzielenia (#9).</p>
+<table><thead><tr>
+<th><p>Story</p></th>
+<th><p>Tytuł</p></th>
+<th><p>Sprint</p></th>
+<th><p>Fala</p></th>
+<th><p>SP</p></th>
+<th><p>h</p></th>
+<th><p>Reguły</p></th>
+</tr></thead><tbody>
+<tr>
+<td><p>E6-S01</p></td>
+<td><p>CI na GitHubie i smoke test E2E</p></td>
+<td><p>S1</p></td>
+<td><p>W0</p></td>
+<td><p>3</p></td>
+<td><p>7</p></td>
+<td><p>—</p></td>
+</tr>
+<tr>
+<td><p>E6-S02</p></td>
+<td><p>Konta graczy — backend</p></td>
+<td><p>S2</p></td>
+<td><p>W1</p></td>
+<td><p>3</p></td>
+<td><p>8</p></td>
+<td><p>—</p></td>
+</tr>
+<tr>
+<td><p>E6-S03</p></td>
+<td><p>PostgreSQL w Aspire</p></td>
+<td><p>S4</p></td>
+<td><p>W1</p></td>
+<td><p>3</p></td>
+<td><p>6</p></td>
+<td><p>—</p></td>
+</tr>
+<tr>
+<td><p>E6-S09</p></td>
+<td><p>Ekran logowania i rejestracji</p></td>
+<td><p>S3</p></td>
+<td><p>W1</p></td>
+<td><p>2</p></td>
+<td><p>4</p></td>
+<td><p>—</p></td>
+</tr>
+<tr>
+<td><p>E6-S04</p></td>
+<td><p>Własne talie i deckbuilder</p></td>
+<td><p>S6</p></td>
+<td><p>W2</p></td>
+<td><p>5</p></td>
+<td><p>10</p></td>
+<td><p>R-01</p></td>
+</tr>
+<tr>
+<td><p>E6-S05</p></td>
+<td><p>Wdrożenie demo pod publicznym adresem</p></td>
+<td><p>S5</p></td>
+<td><p>W1</p></td>
+<td><p>3</p></td>
+<td><p>6</p></td>
+<td><p>—</p></td>
+</tr>
+<tr>
+<td><p>E6-S06</p></td>
+<td><p>Dokumentacja techniczna i użytkownika w Confluence</p></td>
+<td><p>S5</p></td>
+<td><p>W1</p></td>
+<td><p>2</p></td>
+<td><p>5</p></td>
+<td><p>—</p></td>
+</tr>
+<tr>
+<td><p>E6-S07</p></td>
+<td><p>Historia meczów i odtwarzanie (replay)</p></td>
+<td><p>S6</p></td>
+<td><p>W2</p></td>
+<td><p>5</p></td>
+<td><p>10</p></td>
+<td><p>R-83</p></td>
+</tr>
+<tr>
+<td><p>E6-S08</p></td>
+<td><p>Ranking i panel administratora</p></td>
+<td><p>S7</p></td>
+<td><p>W3</p></td>
+<td><p>5</p></td>
+<td><p>12</p></td>
+<td><p>—</p></td>
+</tr>
+</tbody></table>

@@ -1,0 +1,143 @@
+<ac:structured-macro ac:name="info"><ac:rich-text-body><p><strong>Synchronizacja 1:1 z repozytorium Git:</strong> <code>docs/04-system-agentow-ai/04-warsztat-tworzenie-agentow-skilli-i-kart.md</code> (commit <code>10829d3</code>, data eksportu: <code>2026-11-02</code>)</p></ac:rich-text-body></ac:structured-macro>
+<blockquote><p><strong>Źródło prawdy:</strong> repozytorium (<code>docs/04-system-agentow-ai/04-warsztat-tworzenie-agentow-skilli-i-kart.md</code>) · <strong>Kategoria dokumentacji:</strong> Dokumentacja procesowa — Podręcznik warsztatowy zespołu i AI · <strong>Etap SDD:</strong> Cały cykl SDD</p></blockquote>
+<p>Ten dokument to praktyczny podręcznik („warsztat”) dla każdego członka zespołu. Wyjaśnia krok po kroku, <strong>jak samodzielnie rozbudowywać system agentowy (<code>.agents/</code>)</strong>, <strong>jak tworzyć i synchronizować dokumentację z Confluence</strong>, <strong>jak rejestrować decyzje architektoniczne (ADR)</strong> oraz <strong>jak dodawać nowe karty do gry</strong>.</p>
+<hr />
+<h2>Warsztat 1: Jak samodzielnie zbudować nową rolę agenta AI?</h2>
+<p>Nową rolę agenta (<code>.agents/agents/rj-&lt;rola&gt;.md</code>) tworzymy wtedy, gdy pojawia się <strong>nowy obszar odpowiedzialności wymagający odrębnego zestawu uprawnień narzędziowych</strong> (np. dedykowany tester wydajności lub projektant balansu talii). Jeśli potrzebujesz jedynie nowej procedury krok po kroku dla istniejących agentów — przejdź do <strong>Warsztatu 2 (Tworzenie skilla)</strong>.</p>
+<h3>Krok 1: Utwórz plik definicji roli w <code>.agents/agents/rj-&lt;nazwa&gt;.md</code></h3>
+<p>Plik musi zaczynać się od nagłówka YAML (<em>frontmatter</em>) zgodnego ze schematem walidowanym przez <code>tools/agents/sync_agents.py</code>:</p>
+<ac:structured-macro ac:name="code"><ac:parameter ac:name="language">markdown</ac:parameter><ac:plain-text-body><![CDATA[---
+name: rj-ui-tester
+category: verification
+description: "Weryfikacja (QA/UX): uruchamia testy komponentowe oraz przeglądarkowe E2E Playwright dla klienta webowego i weryfikuje zgodność z wymaganiami dostępności NFR-20..NFR-22. Rola wyłącznie do odczytu."
+tools:
+  - view_file
+  - list_dir
+  - find_by_name
+  - grep_search
+  - run_command
+skills:
+  - rj-pr-ready
+mainAgent: false
+subagent: true
+model: inherit
+commandExecutionPolicy: sandbox
+---
+
+# Rola: Inżynier Testów Interfejsu Użytkownika (`rj-ui-tester`)
+
+## 1. Misja i odpowiedzialność w procesie SDD
+...
+## 2. Wbudowane umiejętności (Skille)
+...
+## 3. Kontekst wejściowy (Co należy przeczytać na starcie)
+...
+## 4. Standardowa procedura działania (Krok po kroku)
+...
+## 5. Ograniczenia i zakazy (Czego nie wolno robić)
+...
+## 6. Format raportu wyjściowego]]></ac:plain-text-body></ac:structured-macro>
+<h3>Krok 2: Dobierz minimalny zestaw narzędzi (<code>tools</code>) oraz wbudowane skille (<code>skills</code>)</h3>
+<p>Skrypt <code>sync_agents.py</code> automatycznie tłumaczy identyfikatory narzędzi na format wymagany przez poszczególne środowiska IDE:</p>
+<table><thead><tr>
+<th><p>Identyfikator w <code>.agents/agents/</code></p></th>
+<th><p>Odpowiednik w Claude Code</p></th>
+<th><p>Kiedy przyznać to narzędzie agentowi?</p></th>
+</tr></thead><tbody>
+<tr>
+<td><p><code>view_file</code>, <code>list_dir</code>, <code>find_by_name</code>, <code>grep_search</code></p></td>
+<td><p><code>Read</code>, <code>Glob</code>, <code>Grep</code></p></td>
+<td><p>Zawsze — pozwala agentowi czytać kod i dokumentację projektu.</p></td>
+</tr>
+<tr>
+<td><p><code>run_command</code></p></td>
+<td><p><code>Bash</code></p></td>
+<td><p>Gdy agent musi uruchamiać komendy budowania, testy lub skrypty w <code>tools/</code>.</p></td>
+</tr>
+<tr>
+<td><p><code>write_to_file</code>, <code>replace_file_content</code>, <code>multi_replace_file_content</code></p></td>
+<td><p><code>Write</code>, <code>Edit</code></p></td>
+<td><p><strong>Wyłącznie dla ról implementacyjnych i analitycznych.</strong> Role z grupy <code>verification</code> (<code>rj-reviewer</code>, <code>rj-security-reviewer</code>, <code>rj-test-verifier</code>) nie mogą posiadać narzędzi zapisu!</p></td>
+</tr>
+<tr>
+<td><p><code>search_web</code>, <code>read_url_content</code></p></td>
+<td><p><code>WebSearch</code>, <code>WebFetch</code></p></td>
+<td><p>Gdy agent potrzebuje sprawdzać zewnętrzną dokumentację bibliotek (<code>rj-researcher</code>, <code>rj-architect</code>).</p></td>
+</tr>
+<tr>
+<td><p><code>invoke_subagent</code></p></td>
+<td><p><code>Task</code></p></td>
+<td><p>Wyłącznie dla głównego koordynatora (<code>rj-orchestrator</code>).</p></td>
+</tr>
+</tbody></table>
+<h3>Krok 3: Wygeneruj adaptery IDE i zwaliduj konfigurację</h3>
+<ac:structured-macro ac:name="code"><ac:parameter ac:name="language">bash</ac:parameter><ac:plain-text-body><![CDATA[python tools/agents/sync_agents.py
+python tools/agents/sync_agents.py --check]]></ac:plain-text-body></ac:structured-macro>
+<p>Skrypt utworzy odpowiednie pliki w <code>.claude/agents/</code> oraz <code>.github/agents/</code> i sprawdzi poprawność wszystkich powiązań. Na koniec dopisz nowego agenta do tabeli w <code>AGENTS.md</code> oraz <code>02-katalog-rol-i-wbudowanych-skilli.md</code>.</p>
+<hr />
+<h2>Warsztat 2: Jak samodzielnie zbudować nowy skill dla agentów i ludzi?</h2>
+<p><strong>Skill</strong> to powtarzalna procedura inżynierska zapisana w pliku <code>.agents/skills/rj-&lt;czasownik&gt;-&lt;obiekt&gt;/SKILL.md</code>. Dobry skill jest napisany tak jasno, że może go wykonać zarówno agent AI, jak i nowy student w zespole.</p>
+<h3>Krok 1: Utwórz katalog i plik <code>SKILL.md</code></h3>
+<p>Nazwa katalogu musi zaczynać się od prefiksu <code>rj-</code> i być identyczna z polem <code>name</code> w nagłówku pliku:</p>
+<ac:structured-macro ac:name="code"><ac:parameter ac:name="language">markdown</ac:parameter><ac:plain-text-body><![CDATA[---
+name: rj-review-ui
+description: "Reviews React components in src/web against UI architecture rules (renders MatchView only, highlights moves from legalActions, meets WCAG 2.1 AA contrast and keyboard navigation). Use before opening a PR that modifies src/web."
+---
+
+# Skill: Przegląd jakości i dostępności komponentów UI (`rj-review-ui`)
+
+## 1. Cel i zastosowanie
+...
+## 2. Powiązani agenci i etap SDD
+...
+## 3. Wymagane dane wejściowe
+...
+## 4. Procedura wykonania (Krok po kroku)
+1. ...
+2. ...
+## 5. Weryfikacja i kryteria poprawności
+...
+## 6. Ograniczenia bezpieczeństwa (Czego nie wolno)]]></ac:plain-text-body></ac:structured-macro>
+<blockquote><p><strong>Wskazówka techniczna:</strong> Pole <code>description</code> w nagłówku YAML piszemy po angielsku (maks. 1024 znaki), jasno określając <strong>CO</strong> robi skill i <strong>KIEDY</strong> należy go użyć — to na podstawie tego pola silniki AI automatycznie dobierają skill do zadania. Samą treść instrukcji piszemy po polsku.</p></blockquote>
+<h3>Krok 2: Przypisz skill do odpowiednich agentów i uruchom synchronizację</h3>
+<ol><li>Dopisz nazwę skilla do listy <code>skills:</code> w wybranych plikach <code>.agents/agents/rj-*.md</code>.</li><li>Uruchom synchronizację:</li></ol>
+<ac:structured-macro ac:name="code"><ac:parameter ac:name="language">bash</ac:parameter><ac:plain-text-body><![CDATA[   python tools/agents/sync_agents.py
+   python tools/agents/sync_agents.py --check]]></ac:plain-text-body></ac:structured-macro>
+<p>Skrypt automatycznie skopiuje skill do <code>.claude/skills/</code>, <code>.github/skills/</code>, <code>.gemini/skills/</code> oraz wygeneruje komendę ukośnikową <code>/rj-review-ui</code> w <code>.agents/workflows/</code>.</p>
+<hr />
+<h2>Warsztat 3: Jak tworzyć dokumentację i przenosić ją do Confluence PB?</h2>
+<ol><li><strong>Wybierz właściwą sekcję w <code>docs/</code></strong> zgodnie z architekturą 1:1 (<code>00-przewodnik-i-setup</code>, <code>01-dokumentacja-systemowa</code>, <code>02-dokumentacja-uzytkownika</code>, <code>03-dokumentacja-procesowa</code>, <code>04-system-agentow-ai</code>, <code>05-szablony</code>).</li><li><strong>Skorzystaj z odpowiedniego szablonu</strong> z katalogu <strong><code>docs/05-szablony/</code></strong> (<code>../05-szablony/README.md</code>) (np. <code>szablon-karta-modulu.md</code> przy dokumentowaniu swojego modułu na zaliczenie efektu <strong>EU5</strong> lub <code>szablon-qa-raport-i-checklista.md</code> na zaliczenie <strong>EU6</strong>).</li><li><strong>Dodaj ustandaryzowany blok metadanych</strong> pod tytułem dokumentu:</li></ol>
+<ac:structured-macro ac:name="code"><ac:parameter ac:name="language">markdown</ac:parameter><ac:plain-text-body><![CDATA[   > **Źródło prawdy:** repozytorium (`docs/...`) · **Kategoria AltexSoft:** ... · **Etap SDD:** ...]]></ac:plain-text-body></ac:structured-macro>
+<ol><li><strong>Zwaliduj formatowanie i wygeneruj paczkę do Confluence:</strong></li></ol>
+<ac:structured-macro ac:name="code"><ac:parameter ac:name="language">bash</ac:parameter><ac:plain-text-body><![CDATA[   npm run check
+   python tools/confluence/sync_confluence.py]]></ac:plain-text-body></ac:structured-macro>
+<p>Gotowe do wklejenia (lub automatycznej publikacji przez REST API) strony znajdziesz w katalogu <code>.artifacts/confluence-export/</code>.</p>
+<hr />
+<h2>Warsztat 4: Jak napisać i zatwierdzić decyzję architektoniczną (ADR)?</h2>
+<p>Decyzję ADR tworzymy zawsze, gdy wybieramy technologię, zmieniamy jeden z 5 zamrożonych kontraktów lub ustalamy regułę procesową, o którą ktoś może zapytać za miesiąc (możesz użyć skilla <code>/rj-write-adr</code>).</p>
+<ol><li>Sprawdź najwyższy numer w <code>docs/01-dokumentacja-systemowa/07-decyzje-adr/</code> i utwórz nowy plik <code>NNNN-krotki-tytul.md</code> na bazie wzorca <strong><code>0000-szablon.md</code></strong> (<code>../01-dokumentacja-systemowa/07-decyzje-adr/0000-szablon.md</code>).</li><li>Ustaw początkowy status na <code>proposed</code>.</li><li>Opisz <strong>Kontekst i problem</strong>, porównaj minimum <strong>2–3 opcje w tabeli</strong> (Zalety, Wady, Koszt/Ryzyko) i sformułuj decyzję w postaci zdania <strong>Y-statement</strong>: &gt; <em>„W kontekście <strong>X</strong>, mierząc się z <strong>Y</strong>, wybieramy <strong>Z</strong> zamiast <strong>A</strong>, aby osiągnąć <strong>B</strong>, akceptując <strong>C</strong>.”</em></li><li>Dopisz nowy dokument do tabeli w <code>07-decyzje-adr/README.md</code> i otwórz Pull Request. Po uzyskaniu akceptacji od 2 członków zespołu zmień status na <code>accepted</code>.</li></ol>
+<hr />
+<h2>Warsztat 5: Jak dodać lub zmodyfikować kartę w grze?</h2>
+<p>Karty w <strong>RE:JOLTANCE</strong> są czystymi danymi generowanymi z kanonicznego prototypu JS (<code>prototype/revibance/cards.js</code>) do pliku <code>src/Rejoltance.Content/Data/cards.json</code> (możesz użyć skilla <code>/rj-add-card</code>).</p>
+<h3>Wariant A: Karta wykorzystuje istniejące słowa kluczowe, wyzwalacze i akcje DSL</h3>
+<ol><li>Otwórz plik <code>prototype/revibance/cards.js</code> i dodaj lub edytuj wpis w tablicy <code>CARDS</code>:</li></ol>
+<ac:structured-macro ac:name="code"><ac:parameter ac:name="language">javascript</ac:parameter><ac:plain-text-body><![CDATA[   {
+     "Id": 70,
+     "Name": "Ember Hound",
+     "Type": "Unit",
+     "Subtypes": ["Animal"],
+     "Cost": 2,
+     "Attack": 2,
+     "Health": 2,
+     "Keywords": ["BurnSource"],
+     "Description": "Applies Burning to units it damages.",
+     "Effects": []
+   }]]></ac:plain-text-body></ac:structured-macro>
+<ol><li>Uruchom skrypt ekstrakcji danych:</li></ol>
+<ac:structured-macro ac:name="code"><ac:parameter ac:name="language">bash</ac:parameter><ac:plain-text-body><![CDATA[   python tools/content/extract_cards.py]]></ac:plain-text-body></ac:structured-macro>
+<ol><li>Uruchom testy walidatora katalogu kart:</li></ol>
+<ac:structured-macro ac:name="code"><ac:parameter ac:name="language">bash</ac:parameter><ac:plain-text-body><![CDATA[   dotnet test tests/Rejoltance.Kernel.Tests --filter ContentTests]]></ac:plain-text-body></ac:structured-macro>
+<p><em>(Jeśli dodałeś nową kartę ponad obecne 69 kart kolekcjonerskich + 9 tokenów, zaktualizuj oczekiwaną liczbę kart w teście <code>Catalog_contains_all_prototype_cards</code>).</em></p>
+<h3>Wariant B: Karta wymaga nowego słowa kluczowego, wyzwalacza lub akcji w DSL</h3>
+<p>Jeśli karta wprowadza mechanikę nieobecną w klasie <code>src/Rejoltance.Content/Vocabulary.cs</code>:</p>
+<ol><li>Najpierw utwórz specyfikację reguły <code>R-nn</code> w <code>openspec/specs/</code> (<strong>Przewodnik OpenSpec</strong> (<code>03-jak-pisac-specyfikacje-openspec.md</code>)).</li><li>Dodaj nowe słowo do <code>Vocabulary.cs</code>, zaimplementuj jego obsługę w <code>Rejoltance.Kernel</code> i napisz test jednostkowy <code>Rnn_...</code>.</li><li>Dopiero w ostatnim kroku dodaj kartę i wygeneruj <code>cards.json</code>.</li></ol>

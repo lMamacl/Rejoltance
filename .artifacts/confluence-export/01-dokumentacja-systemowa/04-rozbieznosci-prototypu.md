@@ -1,4 +1,4 @@
-<!-- CONFLUENCE 1:1 EXPORT | Source: docs/01-dokumentacja-systemowa/04-rozbieznosci-prototypu.md @ 7e9a336 (2026-11-02) -->
+<!-- CONFLUENCE 1:1 EXPORT | Source: docs/01-dokumentacja-systemowa/04-rozbieznosci-prototypu.md @ 10829d3 (2026-11-02) -->
 # 1.4 Analiza rozbieżności i znanych błędów prototypu (D‑01..D‑20)
 
 > **Źródło prawdy:** repozytorium (`docs/01-dokumentacja-systemowa/04-rozbieznosci-prototypu.md`) · **Kategoria dokumentacji:** Dokumentacja produktowa — systemowa (Notatka analityczna rozbieżności) · **Etap SDD:** Specyfikacja.

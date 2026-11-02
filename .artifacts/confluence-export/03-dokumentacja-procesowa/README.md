@@ -1,4 +1,4 @@
-<!-- CONFLUENCE 1:1 EXPORT | Source: docs/03-dokumentacja-procesowa/README.md @ 7e9a336 (2026-11-02) -->
+<!-- CONFLUENCE 1:1 EXPORT | Source: docs/03-dokumentacja-procesowa/README.md @ 10829d3 (2026-11-02) -->
 # 03. Dokumentacja procesowa i zarządzanie Scrum
 
 Katalog `03-dokumentacja-procesowa/` obejmuje pełny zestaw dokumentów procesowych zgodnie z klasyfikacją AltexSoft: dokument inicjujący projekt, harmonogramy i szacunki, rejestr produktu (*backlog*), szablony ceremonii Scrum, agendy spotkań oraz notatki badawcze.

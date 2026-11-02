@@ -1,0 +1,117 @@
+<ac:structured-macro ac:name="info"><ac:rich-text-body><p><strong>Synchronizacja 1:1 z repozytorium Git:</strong> <code>docs/00-przewodnik-i-setup/01-szybki-start-i-instalacja.md</code> (commit <code>10829d3</code>, data eksportu: <code>2026-11-02</code>)</p></ac:rich-text-body></ac:structured-macro>
+<blockquote><p><strong>Źródło prawdy:</strong> repozytorium (<code>docs/00-przewodnik-i-setup/01-szybki-start-i-instalacja.md</code>) · <strong>Kategoria dokumentacji:</strong> Instrukcja konfiguracji środowiska · <strong>Etap SDD:</strong> Fundamenty</p></blockquote>
+<p>Niniejsza instrukcja pozwala skonfigurować kompletne środowisko deweloperskie projektu <strong>RE:JOLTANCE</strong> od zera i uruchomić działający serwer gry wraz z klientem webowym w mniej niż 5 minut.</p>
+<hr />
+<h2>1. Wymagane oprogramowanie (instalacja jednorazowa)</h2>
+<p>Do codziennej pracy w Sprintach 0–3 <strong>nie jest wymagany Docker</strong>. Wszystkie komponenty (serwer ASP.NET Core, klient Vite/React oraz lokalna baza SQLite) uruchamiają się natywnie.</p>
+<table><thead><tr>
+<th><p>Narzędzie</p></th>
+<th><p>Wersja</p></th>
+<th><p>Polecenie instalacji na Windows (<code>winget</code>)</p></th>
+<th><p>Przeznaczenie w projekcie</p></th>
+</tr></thead><tbody>
+<tr>
+<td><p><strong>.NET SDK</strong></p></td>
+<td><p>10.0 LTS</p></td>
+<td><p><code>winget install Microsoft.DotNet.SDK.10</code></p></td>
+<td><p>Kompilacja i uruchamianie backendu (<code>Kernel</code>, <code>Content</code>, <code>Contracts</code>, <code>Server</code>), testów xUnit oraz orkiestratora Aspire (<code>AppHost</code>).</p></td>
+</tr>
+<tr>
+<td><p><strong>Node.js</strong></p></td>
+<td><p>24 LTS (min. 22.13)</p></td>
+<td><p><code>winget install OpenJS.NodeJS.LTS</code></p></td>
+<td><p>Klient webowy (<code>src/web</code>), narzędzie <code>openspec</code> oraz linter dokumentacji <code>markdownlint-cli2</code>.</p></td>
+</tr>
+<tr>
+<td><p><strong>Git</strong></p></td>
+<td><p>najnowsza</p></td>
+<td><p><code>winget install Git.Git</code></p></td>
+<td><p>Kontrola wersji i praca na gałęziach zadaniowych.</p></td>
+</tr>
+<tr>
+<td><p><strong>Python</strong></p></td>
+<td><p>3.11 – 3.13</p></td>
+<td><p><code>winget install Python.Python.3.13</code></p></td>
+<td><p>Skrypty automatyzujące w katalogu <code>tools/</code> (synchronizacja agentów, ekstrakcja kart, generator CSV do Jiry, eksporter Confluence).</p></td>
+</tr>
+<tr>
+<td><p><strong>uv</strong> <em>(opcjonalnie)</em></p></td>
+<td><p>najnowsza</p></td>
+<td><p><code>winget install astral-sh.uv</code></p></td>
+<td><p>Uruchamianie serwera MCP (<code>mcp-atlassian</code>) do integracji agentów AI z Jirą i Confluence PB.</p></td>
+</tr>
+<tr>
+<td><p><strong>Docker Desktop / Podman</strong> <em>(od Sprintu 4)</em></p></td>
+<td><p>najnowsza</p></td>
+<td><p><code>winget install Docker.DockerDesktop</code></p></td>
+<td><p>Uruchamianie kontenera bazy danych PostgreSQL w środowisku lokalnym od Sprintu 4 (zgodnie z ADR-0007).</p></td>
+</tr>
+</tbody></table>
+<hr />
+<h2>2. Pobranie repozytorium i automatyczna konfiguracja</h2>
+<p>Zalecamy sklonowanie repozytorium do <strong>krótkiej ścieżki dyskowej poza folderem synchronizowanym przez OneDrive</strong> (np. <code>C:\dev\Rejoltance</code>). Synchronizacja OneDrive potrafi blokować pliki w katalogach <code>bin/</code>, <code>obj/</code> oraz <code>node_modules/</code>, a ścieżki przekraczające 260 znaków mogą powodować błędy procesów pomocniczych na systemie Windows.</p>
+<h3>System Windows (PowerShell)</h3>
+<ac:structured-macro ac:name="code"><ac:parameter ac:name="language">powershell</ac:parameter><ac:plain-text-body><![CDATA[git clone https://github.com/lMamacl/Rejoltance.git C:\dev\Rejoltance
+cd C:\dev\Rejoltance
+powershell -ExecutionPolicy Bypass -File tools/setup.ps1 -TrustDevCert]]></ac:plain-text-body></ac:structured-macro>
+<h3>Systemy macOS oraz Linux (Bash)</h3>
+<ac:structured-macro ac:name="code"><ac:parameter ac:name="language">bash</ac:parameter><ac:plain-text-body><![CDATA[git clone https://github.com/lMamacl/Rejoltance.git ~/dev/Rejoltance
+cd ~/dev/Rejoltance
+bash tools/setup.sh]]></ac:plain-text-body></ac:structured-macro>
+<h3>Co wykonuje skrypt <code>setup</code>?</h3>
+<ol><li>Uruchamia diagnostykę środowiska (<code>tools/doctor.ps1</code>), sprawdzając wersje narzędzi oraz ustawienia systemu.</li><li>Przy podaniu flagi <code>-TrustDevCert</code> instaluje i zatwierdza lokalny certyfikat deweloperski HTTPS dla platformy .NET (wymaga jednorazowego kliknięcia „Tak” w oknie systemowym Windows).</li><li>Pobiera pakiety NuGet oraz instaluje zależności npm w katalogu głównym i w <code>src/web</code>.</li><li>Kompiluje całą solucję <code>Rejoltance.slnx</code> i wykonuje szybkie testy jednostkowe oraz architektoniczne.</li></ol>
+<hr />
+<h2>3. Uruchamianie aplikacji</h2>
+<h3>Wariant A (rekomendowany): Orkiestracja .NET Aspire jednym poleceniem</h3>
+<p>Z głównego katalogu repozytorium uruchom:</p>
+<ac:structured-macro ac:name="code"><ac:parameter ac:name="language">powershell</ac:parameter><ac:plain-text-body><![CDATA[dotnet run --project src/Rejoltance.AppHost]]></ac:plain-text-body></ac:structured-macro>
+<p><em>(Jeśli masz zainstalowane narzędzie Aspire CLI, możesz użyć krótszego polecenia <code>aspire run</code>).</em></p>
+<p>Po starcie w terminalu pojawi się link do <strong>panelu .NET Aspire Dashboard</strong>. W panelu zobaczysz dwa uruchomione zasoby:</p>
+<ul><li><strong><code>server</code></strong> (<code>Rejoltance.Server</code>) — serwer ASP.NET Core z hubem SignalR (<code>/api/hubs/match</code>) oraz punktami końcowymi REST (<code>/api/info</code>, <code>/api/cards</code>, <code>/api/decks</code>, <code>/health</code>). Lokalna baza SQLite tworzy się automatycznie w pliku <code>.data/rejoltance.db</code>.</li><li><strong><code>web</code></strong> (<code>src/web</code>) — serwer deweloperski Vite z aplikacją React + TypeScript, skonfigurowany z automatycznym proxy kierującym ruch <code>/api/*</code> do serwera backendowego. Kliknij adres URL zasobu <strong><code>web</code></strong>, aby otworzyć grę w przeglądarce.</li></ul>
+<h3>Wariant B (awaryjny): Uruchomienie serwera i klienta w dwóch osobnych terminalach</h3>
+<p>Jeśli na Twoim komputerze polityki bezpieczeństwa systemu Windows blokują orkiestrator Aspire, możesz uruchomić oba procesy niezależnie:</p>
+<ol><li><strong>Terminal 1 (Backend C#):</strong></li></ol>
+<ac:structured-macro ac:name="code"><ac:parameter ac:name="language">powershell</ac:parameter><ac:plain-text-body><![CDATA[   dotnet run --project src/Rejoltance.Server]]></ac:plain-text-body></ac:structured-macro>
+<p>Odczytaj z logów startowych adres HTTP serwera (domyślnie <code>http://localhost:5000</code> lub port wskazany w <code>launchSettings.json</code>).</p>
+<ol><li><strong>Terminal 2 (Frontend React + Vite):</strong></li></ol>
+<ac:structured-macro ac:name="code"><ac:parameter ac:name="language">powershell</ac:parameter><ac:plain-text-body><![CDATA[   cd src/web
+   $env:SERVER_HTTP="http://localhost:5000"
+   npm run dev]]></ac:plain-text-body></ac:structured-macro>
+<h3>Uruchomienie referencyjnego prototypu JS</h3>
+<p>Aby zagrać w oryginalny prototyp referencyjny (<code>prototype/revibance</code>), który stanowi kanon zasad gry:</p>
+<ac:structured-macro ac:name="code"><ac:parameter ac:name="language">powershell</ac:parameter><ac:plain-text-body><![CDATA[npx serve prototype/revibance]]></ac:plain-text-body></ac:structured-macro>
+<hr />
+<h2>4. Rozwiązywanie typowych problemów</h2>
+<p>W razie jakichkolwiek problemów pierwszym krokiem jest uruchomienie bezinwazyjnego skryptu diagnostycznego:</p>
+<ac:structured-macro ac:name="code"><ac:parameter ac:name="language">powershell</ac:parameter><ac:plain-text-body><![CDATA[powershell -ExecutionPolicy Bypass -File tools/doctor.ps1]]></ac:plain-text-body></ac:structured-macro>
+<table><thead><tr>
+<th><p>Objaw błędu</p></th>
+<th><p>Przyczyna</p></th>
+<th><p>Rozwiązanie</p></th>
+</tr></thead><tbody>
+<tr>
+<td><p><code>Could not load file or assembly ... (0x800711C7)</code> lub komunikat <em>„Zasady kontroli aplikacji zablokowały ten plik”</em></p></td>
+<td><p>Funkcja <strong>Smart App Control</strong> w systemie Windows 11 blokuje lokalnie kompilowane pliki DLL podczas uruchamiania przez Aspire.</p></td>
+<td><p>Używaj <strong>Wariantu B</strong> (uruchamianie serwera i klienta w dwóch terminalach) albo wyłącz funkcję Smart App Control w <em>Ustawienia → Zabezpieczenia Windows → Kontrola aplikacji i przeglądarki</em> (uwaga: wyłączenie tej funkcji w Windows 11 jest nieodwracalne bez reinstalacji systemu).</p></td>
+</tr>
+<tr>
+<td><p><code>An error occurred trying to start process ... dcp.exe</code></p></td>
+<td><p>Ścieżka do repozytorium przekracza limit 260 znaków na Windows.</p></td>
+<td><p>Przenieś repozytorium do krótkiej ścieżki (np. <code>C:\dev\Rejoltance</code>) i włącz obsługę długich ścieżek: <code>git config --system core.longpaths true</code>.</p></td>
+</tr>
+<tr>
+<td><p>Proces zawiesza się na komunikacie <em>„Ufanie certyfikatom…”</em></p></td>
+<td><p>Lokalny certyfikat deweloperski HTTPS nie został zatwierdzony.</p></td>
+<td><p>Uruchom w terminalu <code>dotnet dev-certs https --trust</code> i zaakceptuj okno dialogowe systemu.</p></td>
+</tr>
+<tr>
+<td><p>Losowe błędy dostępu do plików w <code>bin/</code>, <code>obj/</code> lub wolna kompilacja</p></td>
+<td><p>Repozytorium znajduje się wewnątrz katalogu synchronizowanego przez <strong>OneDrive</strong>.</p></td>
+<td><p>Przenieś klon repozytorium poza katalog OneDrive (np. do <code>C:\dev\Rejoltance</code>).</p></td>
+</tr>
+<tr>
+<td><p>Błąd kompilacji pakietów C++ podczas instalacji narzędzi Python (<code>uv</code>)</p></td>
+<td><p>Użycie rozwojowej wersji Python 3.15, dla której brakuje gotowych pakietów binarnych (<code>wheels</code>).</p></td>
+<td><p>Zainstaluj stabilną wersję Python 3.13 (<code>winget install Python.Python.3.13</code>) i wymuś jej użycie (<code>uv tool install --python 3.13 ...</code>).</p></td>
+</tr>
+</tbody></table>

@@ -1,4 +1,4 @@
-<!-- CONFLUENCE 1:1 EXPORT | Source: docs/01-dokumentacja-systemowa/03-indeks-regul-r-nn.md @ 7e9a336 (2026-11-02) -->
+<!-- CONFLUENCE 1:1 EXPORT | Source: docs/01-dokumentacja-systemowa/03-indeks-regul-r-nn.md @ 10829d3 (2026-11-02) -->
 # 1.3 Indeks reguł gry (R‑nn) i macierz śledzalności testów
 
 > **Źródło prawdy:** repozytorium (`docs/01-dokumentacja-systemowa/03-indeks-regul-r-nn.md`) · **Kategoria dokumentacji:** Dokumentacja produktowa — systemowa (Macierz śledzenia wymagań) · **Etap SDD:** Specyfikacja i weryfikacja.

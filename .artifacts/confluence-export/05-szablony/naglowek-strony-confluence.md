@@ -1,4 +1,4 @@
-<!-- CONFLUENCE 1:1 EXPORT | Source: docs/05-szablony/naglowek-strony-confluence.md @ 7e9a336 (2026-11-02) -->
+<!-- CONFLUENCE 1:1 EXPORT | Source: docs/05-szablony/naglowek-strony-confluence.md @ 10829d3 (2026-11-02) -->
 # 5.1 Standard nagłówka metadanych strony w Confluence
 
 Każda strona w przestrzeni projektowej **Confluence PB** zaczyna się od ujednoliconego bloku informacyjnego (makro informacyjne lub blok cytatu na górze strony). Blok ten jednoznacznie wskazuje czytelnikowi, gdzie znajduje się źródło prawdy dokumentu, kto za niego odpowiada oraz do którego etapu procesu **Spec-Driven Development (SDD)** i kategorii dokumentacji należy dana strona.

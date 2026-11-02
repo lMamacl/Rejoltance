@@ -1,4 +1,4 @@
-<!-- CONFLUENCE 1:1 EXPORT | Source: docs/00-przewodnik-i-setup/06-decyzje-otwarte-i-zalozenia.md @ 7e9a336 (2026-11-02) -->
+<!-- CONFLUENCE 1:1 EXPORT | Source: docs/00-przewodnik-i-setup/06-decyzje-otwarte-i-zalozenia.md @ 10829d3 (2026-11-02) -->
 # 0.6 Decyzje otwarte do zespołu oraz założenia projektowe
 
 > **Źródło prawdy:** repozytorium (`docs/00-przewodnik-i-setup/06-decyzje-otwarte-i-zalozenia.md`) · **Kategoria dokumentacji:** Założenia produktowe i procesowe oraz pytania otwarte · **Etap SDD:** Specyfikacja i planowanie

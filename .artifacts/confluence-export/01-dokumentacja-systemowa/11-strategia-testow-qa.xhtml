@@ -1,0 +1,153 @@
+<ac:structured-macro ac:name="info"><ac:rich-text-body><p><strong>Synchronizacja 1:1 z repozytorium Git:</strong> <code>docs/01-dokumentacja-systemowa/11-strategia-testow-qa.md</code> (commit <code>10829d3</code>, data eksportu: <code>2026-11-02</code>)</p></ac:rich-text-body></ac:structured-macro>
+<blockquote><p><strong>Źródło prawdy:</strong> repozytorium (<code>docs/01-dokumentacja-systemowa/11-strategia-testow-qa.md</code>) · <strong>Kategoria dokumentacji:</strong> Dokumentacja produktowa — systemowa (Zapewnienie jakości i strategia testów) · <strong>Etap SDD:</strong> Weryfikacja · <strong>Wymóg uczelniany:</strong> EU6</p></blockquote>
+<p>Dokument definiuje kompleksową strategię zapewnienia jakości dla projektu <strong>RE:JOLTANCE</strong>. Określa poziomy testów w piramidzie testowej, narzędzia weryfikacji, zasady śledzenia powiązań między wymaganiami a testami oraz kryteria wejścia i wyjścia dla Pull Requestów i sprintów.</p>
+<p>Gotowe szablony operacyjne dla poszczególnych sprintów znajdują się w katalogu <strong><code>05-szablony/</code></strong> (<code>../05-szablony/README.md</code>):</p>
+<ul><li><strong><code>szablon-qa-plan-testow.md</code></strong> (<code>../05-szablony/szablon-qa-plan-testow.md</code>) — plan testów sprintu i specyfikacja przypadków testowych,</li><li><strong><code>szablon-qa-raport-i-checklista.md</code></strong> (<code>../05-szablony/szablon-qa-raport-i-checklista.md</code>) — raport z wykonania testów i lista kontrolna przed wydaniem.</li></ul>
+<hr />
+<h2>1. Fundamentalne zasady jakości w podejściu SDD</h2>
+<ol><li><strong>Test jako wykonywalna specyfikacja (Konstytucja, Art. V):</strong> Każde wymaganie funkcjonalne reguł gry (<code>R-01..R-84</code>) oraz weryfikowalne automatycznie wymaganie niefunkcjonalne (<code>NFR-01..NFR-70</code>) musi posiadać test automatyczny, którego nazwa zaczyna się bezpośrednio od identyfikatora wymagania (np. <code>R14_drawing_from_empty_deck_deals_growing_fatigue_damage</code>).</li><li><strong>Zakaz osłabiania testów:</strong> W przypadku niepowodzenia testu zabrania się usuwania asercji, wyłączania testu atrybutem <code>[Fact(Skip = ...)]</code> lub modyfikowania oczekiwanego wyniku bez formalnej decyzji zespołu o zmianie specyfikacji.</li><li><strong>Bramka CI (Zero Broken Builds):</strong> Żaden Pull Request nie może zostać scalony do gałęzi <code>develop</code> ani <code>main</code>, jeśli którykolwiek z automatycznych etapów potoku GitHub Actions (<code>dotnet</code>, <code>web</code>, <code>repo</code>) zakończył się błędem.</li><li><strong>Reprodukcja błędów przed naprawą:</strong> Każdy błąd zgłoszony podczas sesji testowych lub na <em>Sprint Review</em> wymaga najpierw napisania testu jednostkowego lub integracyjnego odtwarzającego defekt, a dopiero w kolejnym kroku implementacji poprawki.</li></ol>
+<hr />
+<h2>2. Piramida testów projektu RE:JOLTANCE</h2>
+<ac:structured-macro ac:name="code"><ac:parameter ac:name="language">none</ac:parameter><ac:plain-text-body><![CDATA[                       ▲  Mniej testów, dłuższy czas wykonania, pełna integracja
+      Testy Użyteczności │  Sesje z Radą Graczy (NFR-20, NFR-21) — raporty w Confluence
+          Testy E2E      │  Playwright: Chromium, Firefox, WebKit (od Sprintu 1 — E6-S01)
+     Smoke Test AppHost  │  Aspire.Hosting.Testing: start całego środowiska i /health
+    Testy Integracyjne   │  Rejoltance.Server.Tests: serwer in-memory + klient SignalR
+     Testy Kontraktu     │  Złoty plik match-view.sample.json (C# zapisuje ↔ TS waliduje)
+   Testy Architektury    │  Rejoltance.Architecture.Tests: granice modułów i czystość DTO
+  Testy Jednostkowe UI   │  Vitest + Testing Library (src/web): komponenty i store Zustand
+ Testy Jednostkowe Reguł │  Rejoltance.Kernel.Tests: reguły R-nn, determinizm, Fog of War
+                       ▼  Najwięcej testów, czas wykonania < 2 s, pełna izolacja]]></ac:plain-text-body></ac:structured-macro>
+<h3>Zestawienie poziomów testowania i narzędzi</h3>
+<table><thead><tr>
+<th><p>Poziom testów</p></th>
+<th><p>Projekt / Lokalizacja</p></th>
+<th><p>Narzędzia</p></th>
+<th><p>Co dokładnie weryfikuje?</p></th>
+<th><p>Częstotliwość uruchamiania</p></th>
+<th><p>Stan obecny (Sprint 0)</p></th>
+</tr></thead><tbody>
+<tr>
+<td><p><strong>1. Jednostkowe reguł i danych</strong></p></td>
+<td><p><code>tests/Rejoltance.Kernel.Tests</code></p></td>
+<td><p>xUnit</p></td>
+<td><p>Reguły <code>R-nn</code>, determinizm <code>SeededRng</code>, projekcja <code>Projection.ToView</code> (<em>Fog of War</em>), walidacja 78 kart i 5 talii w <code>CardCatalog</code>.</p></td>
+<td><p>Przy każdej zmianie kodu i w każdym PR (<code>&lt; 2 s</code>)</p></td>
+<td><p><strong>Aktywne (25 testów)</strong></p></td>
+</tr>
+<tr>
+<td><p><strong>2. Granice architektoniczne</strong></p></td>
+<td><p><code>tests/Rejoltance.Architecture.Tests</code></p></td>
+<td><p>xUnit + <code>NetArchTest.Rules</code></p></td>
+<td><p>Jednokierunkowe zależności między modułami, brak logiki w <code>Rejoltance.Contracts</code>, brak mutowalnych pól statycznych (<code>NFR-50</code>).</p></td>
+<td><p>W każdym PR (<code>&lt; 1 s</code>)</p></td>
+<td><p><strong>Aktywne (11 testów)</strong></p></td>
+</tr>
+<tr>
+<td><p><strong>3. Integracyjne serwera i kontraktu</strong></p></td>
+<td><p><code>tests/Rejoltance.Server.Tests</code></p></td>
+<td><p><code>WebApplicationFactory</code> + <code>SignalR.Client</code></p></td>
+<td><p>Punkty końcowe REST, hub SignalR, autoryzacja miejsc przy stole oraz generowanie i walidacja próbki <code>match-view.sample.json</code> (<code>NFR-11</code>).</p></td>
+<td><p>W każdym PR (<code>~15 s</code>)</p></td>
+<td><p><strong>Aktywne (7 testów)</strong></p></td>
+</tr>
+<tr>
+<td><p><strong>4. Jednostkowe i komponentowe UI</strong></p></td>
+<td><p><code>src/web/src/**/*.test.ts(x)</code></p></td>
+<td><p>Vitest + React Testing Library + jsdom</p></td>
+<td><p>Renderowanie widoku <code>MatchView</code>, obsługa intencji w magazynie <code>Zustand</code> na sztucznym transporcie oraz zgodność typów TS z próbką JSON.</p></td>
+<td><p>W każdym PR (<code>~2 s</code>)</p></td>
+<td><p><strong>Aktywne (5 testów)</strong></p></td>
+</tr>
+<tr>
+<td><p><strong>5. Smoke test całej aplikacji</strong></p></td>
+<td><p><code>tests/Rejoltance.AppHost.Tests</code></p></td>
+<td><p><code>Aspire.Hosting.Testing</code> (<code>Category=Integration</code>)</p></td>
+<td><p>Uruchomienie pełnego orkiestratora Aspire (<code>server</code> + <code>web</code>), weryfikacja punktu <code>/health</code> oraz działania proxy Vite (<code>NFR-60</code>).</p></td>
+<td><p>W każdym przebiegu CI na GitHubie (<code>~1–2 min</code>)</p></td>
+<td><p><strong>Aktywne (2 testy)</strong></p></td>
+</tr>
+<tr>
+<td><p><strong>6. Walidacja specyfikacji i dokumentacji</strong></p></td>
+<td><p>Katalog główny (<code>npm run check</code>)</p></td>
+<td><p><code>openspec validate --strict</code>, <code>markdownlint-cli2</code>, skrypty <code>--check</code></p></td>
+<td><p>Poprawność strukturalna wymagań i scenariuszy <code>GIVEN/WHEN/THEN</code>, spójność adapterów agentów AI, kart JSON oraz plików CSV backlogu.</p></td>
+<td><p>W każdym PR (<code>~3 s</code>)</p></td>
+<td><p><strong>Aktywne (10 specyfikacji + wszystkie pliki MD)</strong></p></td>
+</tr>
+<tr>
+<td><p><strong>7. Testy różnicowe z wyrocznią JS</strong></p></td>
+<td><p><code>src/Rejoltance.Sim</code> <em>(planowane)</em></p></td>
+<td><p>Node.js (<code>engine.js</code>) + xUnit</p></td>
+<td><p>Porównanie wyników przejść stanów pomiędzy referencyjnym prototypem JS a nowym Kernelem C# na tych samych danych wejściowych.</p></td>
+<td><p>Od Sprintu 2 (<code>E5-S02</code>)</p></td>
+<td><p>Zaplanowane</p></td>
+</tr>
+<tr>
+<td><p><strong>8. Masowe symulacje stabilności</strong></p></td>
+<td><p><code>src/Rejoltance.Sim</code> <em>(planowane)</em></p></td>
+<td><p>Symulator bot-vs-bot</p></td>
+<td><p>Rozegranie 300 pełnych partii między botami w celu wykrycia zakleszczeń, przekroczenia limitu reakcji lub naruszenia niezmienników (<code>NFR-51</code>).</p></td>
+<td><p>Od Sprintu 4 (<code>E5-S04</code>)</p></td>
+<td><p>Zaplanowane</p></td>
+</tr>
+<tr>
+<td><p><strong>9. Testy przeglądarkowe E2E</strong></p></td>
+<td><p><code>tests/e2e</code> <em>(planowane)</em></p></td>
+<td><p>Playwright (Chromium, Firefox, WebKit)</p></td>
+<td><p>Pełny przepływ użytkownika w prawdziwych przeglądarkach: utworzenie meczu, mulligan, zagranie karty i zakończenie pojedynku (<code>NFR-10</code>).</p></td>
+<td><p>Od Sprintu 1 (<code>E6-S01</code>)</p></td>
+<td><p>Zaplanowane</p></td>
+</tr>
+<tr>
+<td><p><strong>10. Testy użyteczności (UAT)</strong></p></td>
+<td><p>Sesje z Radą Graczy</p></td>
+<td><p>Scenariusze testowe + obserwacja</p></td>
+<td><p>Weryfikacja łatwości nauki (<code>NFR-20</code> ≤ 15 min) i czytelności podpowiedzi interfejsu (<code>NFR-21</code>).</p></td>
+<td><p>Na <em>Sprint Review</em> S3 i S5</p></td>
+<td><p>Szablon gotowy</p></td>
+</tr>
+</tbody></table>
+<hr />
+<h2>3. Standardy pisania testów w projekcie</h2>
+<h3>3.1 Konwencja nazewnicza i struktura <code>GIVEN / WHEN / THEN</code></h3>
+<p>Każdy test reguły domenowej w <code>tests/Rejoltance.Kernel.Tests/</code> jest bezpośrednio powiązany ze scenariuszem w <code>openspec/specs/</code> oraz indeksem <strong><code>03-indeks-regul-r-nn.md</code></strong> (<code>03-indeks-regul-r-nn.md</code>):</p>
+<ac:structured-macro ac:name="code"><ac:parameter ac:name="language">csharp</ac:parameter><ac:plain-text-body><![CDATA[[Fact]
+public void R14_drawing_from_empty_deck_deals_growing_fatigue_damage()
+{
+    // GIVEN: Gracz 0 ma pustą talię i 20 HP
+    var state = TestMatches.CreateEmptyDeckState(seat: 0);
+
+    // WHEN: Gracz 0 dwukrotnie próbuje dobrać kartę
+    var (afterFirst, _) = MatchEngine.DrawCard(state, seat: 0);
+    var (afterSecond, _) = MatchEngine.DrawCard(afterFirst, seat: 0);
+
+    // THEN: Pierwsza próba zadaje 1 obrażenie (19 HP), a druga 2 obrażenia (17 HP)
+    Assert.Equal(19, afterFirst.Players[0].Hp);
+    Assert.Equal(17, afterSecond.Players[0].Hp);
+}]]></ac:plain-text-body></ac:structured-macro>
+<h3>3.2 Izolacja i szybkość wykonania</h3>
+<ul><li>Testy w <code>Rejoltance.Kernel.Tests</code> nie mogą dotykać systemu plików, sieci ani bazy danych. Stan początkowy budujemy za pomocą fabryki <code>TestMatches</code> oraz wyrażeń niemutowalnych <code>with { ... }</code>.</li><li>Wolne testy wymagające uruchomienia całego środowiska Aspire oznaczamy atrybutem <code>[Trait(&quot;Category&quot;, &quot;Integration&quot;)]</code>, dzięki czemu podczas codziennego kodowania polecenie <code>dotnet test Rejoltance.slnx --filter &quot;Category!=Integration&quot;</code> wykonuje się w kilka sekund.</li></ul>
+<hr />
+<h2>4. Kryteria wejścia i wyjścia testowania</h2>
+<table><thead><tr>
+<th><p>Etap procesu</p></th>
+<th><p>Kryteria wejścia (Entry Criteria)</p></th>
+<th><p>Kryteria wyjścia (Exit Criteria / Definition of Done)</p></th>
+</tr></thead><tbody>
+<tr>
+<td><p><strong>Implementacja zadania (Story / Sub-task)</strong></p></td>
+<td><p>1. Zdefiniowane kryteria akceptacji <code>GIVEN/WHEN/THEN</code>.<br />2. Dla zadań ≥ 3 SP zatwierdzona propozycja zmiany w <code>openspec/changes/</code> z listą testów w <code>tasks.md</code>.</p></td>
+<td><p>1. Napisane i przechodzące testy jednostkowe/integracyjne dla wszystkich dotkniętych reguł <code>R-nn</code> / <code>NFR-nn</code>.<br />2. Zaktualizowana kolumna <code>Test</code> i <code>Status</code> w <code>03-indeks-regul-r-nn.md</code>.</p></td>
+</tr>
+<tr>
+<td><p><strong>Scalenie Pull Requesta do <code>develop</code></strong></p></td>
+<td><p>1. Kod zsynchronizowany z bieżącą gałęzią <code>develop</code>.<br />2. Wypełniony opis PR z listą uruchomionych lokalnie komend testowych.</p></td>
+<td><p>1. Zielony status wszystkich 3 zadań w GitHub Actions CI (<code>dotnet</code>, <code>web</code>, <code>repo</code>).<br />2. Pozytywna recenzja kodu (<em>Approve</em>) od co najmniej jednego członka zespołu.</p></td>
+</tr>
+<tr>
+<td><p><strong>Zamknięcie Sprintu (Sprint Review)</strong></p></td>
+<td><p>1. Scalenie zaplanowanych zadań do <code>develop</code> i utworzenie PR <code>develop → main</code>.<br />2. Przygotowany plan testów sprintu wg szablonu <code>szablon-qa-plan-testow.md</code>.</p></td>
+<td><p>1. 0 otwartych błędów krytycznych (<code>P0</code>) i poważnych (<code>P1</code>).<br />2. Opublikowany w Confluence raport z testów sprintu (<code>szablon-qa-raport-i-checklista.md</code>) na bazie artefaktu <code>dotnet-test-results</code> (TRX) z CI.</p></td>
+</tr>
+</tbody></table>

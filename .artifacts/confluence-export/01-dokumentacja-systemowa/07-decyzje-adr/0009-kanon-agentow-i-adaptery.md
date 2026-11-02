@@ -1,4 +1,4 @@
-<!-- CONFLUENCE 1:1 EXPORT | Source: docs/01-dokumentacja-systemowa/07-decyzje-adr/0009-kanon-agentow-i-adaptery.md @ 7e9a336 (2026-11-02) -->
+<!-- CONFLUENCE 1:1 EXPORT | Source: docs/01-dokumentacja-systemowa/07-decyzje-adr/0009-kanon-agentow-i-adaptery.md @ 10829d3 (2026-11-02) -->
 # ADR-0009: Jeden kanon zasad agentów w `.agents/`, generowane adaptery
 
 - **Status:** zatwierdzona (2026-10-27, akceptacja Fazy 2)

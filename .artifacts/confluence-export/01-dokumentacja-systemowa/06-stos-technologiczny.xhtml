@@ -1,0 +1,282 @@
+<ac:structured-macro ac:name="info"><ac:rich-text-body><p><strong>Synchronizacja 1:1 z repozytorium Git:</strong> <code>docs/01-dokumentacja-systemowa/06-stos-technologiczny.md</code> (commit <code>10829d3</code>, data eksportu: <code>2026-11-02</code>)</p></ac:rich-text-body></ac:structured-macro>
+<blockquote><p><strong>Źródło prawdy:</strong> repozytorium (<code>docs/01-dokumentacja-systemowa/06-stos-technologiczny.md</code>) · <strong>Kategoria dokumentacji:</strong> Dokumentacja produktowa — systemowa (Stos technologiczny i roadmapa IT) · <strong>Etap SDD:</strong> Planowanie · <strong>Powiązane decyzje:</strong> <strong>ADR-0001</strong> (<code>07-decyzje-adr/0001-stos-technologiczny.md</code>), <strong>ADR-0003</strong> (<code>07-decyzje-adr/0003-openspec-i-konstytucja.md</code>), <strong>ADR-0007</strong> (<code>07-decyzje-adr/0007-sqlite-potem-postgresql.md</code>)</p></blockquote>
+<p>Dokument definiuje kompletny stos technologiczny projektu <strong>RE:JOLTANCE</strong>, dokładne wersje używanych narzędzi i bibliotek (zweryfikowane z plikami <code>global.json</code>, <code>Directory.Packages.props</code> oraz <code>package.json</code>), uzasadnienie przyjętych wyborów architektonicznych oraz harmonogram wprowadzania technologii w kolejnych sprintach (<em>Technology Roadmap</em>).</p>
+<hr />
+<h2>1. Specyfikacja stosu technologicznego</h2>
+<h3>1.1 Backend, silnik reguł i orkiestracja (.NET)</h3>
+<table><thead><tr>
+<th><p>Warstwa</p></th>
+<th><p>Technologia / Pakiet</p></th>
+<th><p>Wersja</p></th>
+<th><p>Rola w architekturze systemu</p></th>
+<th><p>Powiązana decyzja</p></th>
+</tr></thead><tbody>
+<tr>
+<td><p><strong>Język i platforma uruchomieniowa</strong></p></td>
+<td><p>C# 14 / .NET SDK</p></td>
+<td><p><code>10.0</code> LTS (<code>rollForward: latestFeature</code>)</p></td>
+<td><p>Implementacja czystego silnika reguł (<code>Kernel</code>), katalogu kart (<code>Content</code>), kontraktów (<code>Contracts</code>) i serwera gry (<code>Server</code>).</p></td>
+<td><p><strong>ADR-0001</strong> (<code>07-decyzje-adr/0001-stos-technologiczny.md</code>)</p></td>
+</tr>
+<tr>
+<td><p><strong>Serwer HTTP i komunikacja czasu rzeczywistego</strong></p></td>
+<td><p>ASP.NET Core + SignalR</p></td>
+<td><p><code>10.0.0</code></p></td>
+<td><p>Obsługa punktów końcowych REST (<code>/api/*</code>), dwukierunkowego kanału WebSocket (<code>/api/hubs/match</code>) oraz serwowanie zbudowanego klienta webowego w środowisku demo.</p></td>
+<td><p><strong>ADR-0001</strong> (<code>07-decyzje-adr/0001-stos-technologiczny.md</code>), <strong>ADR-0006</strong> (<code>07-decyzje-adr/0006-serwer-autorytatywny-fog-of-war.md</code>)</p></td>
+</tr>
+<tr>
+<td><p><strong>Warstwa dostępu do danych (ORM)</strong></p></td>
+<td><p>Entity Framework Core</p></td>
+<td><p><code>10.0.14</code></p></td>
+<td><p>Mapowanie obiektowo-relacyjne dla kont graczy, talii oraz zapisów zakończonych meczów (<code>RejoltanceDb</code>).</p></td>
+<td><p><strong>ADR-0007</strong> (<code>07-decyzje-adr/0007-sqlite-potem-postgresql.md</code>)</p></td>
+</tr>
+<tr>
+<td><p><strong>Baza danych (Sprinty 0–3)</strong></p></td>
+<td><p>SQLite (<code>Microsoft.EntityFrameworkCore.Sqlite</code>)</p></td>
+<td><p><code>10.0.14</code></p></td>
+<td><p>Lokalna, bezserwerowa baza danych w pliku <code>.data/rejoltance.db</code>, niewymagająca instalacji Dockera na laptopach zespołu.</p></td>
+<td><p><strong>ADR-0007</strong> (<code>07-decyzje-adr/0007-sqlite-potem-postgresql.md</code>)</p></td>
+</tr>
+<tr>
+<td><p><strong>Baza danych (od Sprintu 4)</strong></p></td>
+<td><p>PostgreSQL</p></td>
+<td><p><code>16+</code></p></td>
+<td><p>Docelowa relacyjna baza danych dla środowiska demonstracyjnego i produkcyjnego, uruchamiana lokalnie jako kontener w Aspire.</p></td>
+<td><p><strong>ADR-0007</strong> (<code>07-decyzje-adr/0007-sqlite-potem-postgresql.md</code>)</p></td>
+</tr>
+<tr>
+<td><p><strong>Orkiestracja deweloperska</strong></p></td>
+<td><p>.NET Aspire (<code>Aspire.AppHost.Sdk</code>, <code>Aspire.Hosting.JavaScript</code>)</p></td>
+<td><p><code>13.6.4</code></p></td>
+<td><p>Uruchamianie serwera backendowego i klienta Vite jednym poleceniem, automatyczna konfiguracja zmiennych środowiskowych, proxy i panelu diagnostycznego.</p></td>
+<td><p><strong>ADR-0001</strong> (<code>07-decyzje-adr/0001-stos-technologiczny.md</code>)</p></td>
+</tr>
+<tr>
+<td><p><strong>Telemetria i obserwowalność</strong></p></td>
+<td><p>OpenTelemetry (.NET)</p></td>
+<td><p><code>1.17.0</code></p></td>
+<td><p>Zbieranie logów strukturalnych, metryk i śladów wykonania (<em>Distributed Tracing</em>) w <code>Rejoltance.ServiceDefaults</code>.</p></td>
+<td><p><strong>ADR-0001</strong> (<code>07-decyzje-adr/0001-stos-technologiczny.md</code>)</p></td>
+</tr>
+</tbody></table>
+<h3>1.2 Klient webowy (Frontend SPA)</h3>
+<table><thead><tr>
+<th><p>Warstwa</p></th>
+<th><p>Technologia / Pakiet</p></th>
+<th><p>Wersja</p></th>
+<th><p>Rola w architekturze systemu</p></th>
+<th><p>Powiązana decyzja</p></th>
+</tr></thead><tbody>
+<tr>
+<td><p><strong>Biblioteka interfejsu użytkownika</strong></p></td>
+<td><p>React + React DOM</p></td>
+<td><p><code>19.3.0</code></p></td>
+<td><p>Deklaratywne budowanie komponentów planszy 4 linii, wachlarza ręki, nakładek interakcji (<code>PendingInteraction</code>) i ekranów menu.</p></td>
+<td><p><strong>ADR-0001</strong> (<code>07-decyzje-adr/0001-stos-technologiczny.md</code>)</p></td>
+</tr>
+<tr>
+<td><p><strong>Język i system typów</strong></p></td>
+<td><p>TypeScript</p></td>
+<td><p><code>5.9.0</code></p></td>
+<td><p>Ścisłe typowanie kontraktów komunikacyjnych (<code>MatchView</code>, <code>Intent</code>, <code>DomainEvent</code>) oraz komponentów UI.</p></td>
+<td><p><strong>ADR-0010</strong> (<code>07-decyzje-adr/0010-kontrakt-csharp-ts-przez-probke.md</code>)</p></td>
+</tr>
+<tr>
+<td><p><strong>Narzędzie budowania i serwer deweloperski</strong></p></td>
+<td><p>Vite</p></td>
+<td><p><code>8.3.0</code></p></td>
+<td><p>Błyskawiczny serwer deweloperski z Hot Module Replacement (HMR) i optymalizacją paczki produkcyjnej (budżet ≤ 500 kB gzip).</p></td>
+<td><p><strong>ADR-0001</strong> (<code>07-decyzje-adr/0001-stos-technologiczny.md</code>)</p></td>
+</tr>
+<tr>
+<td><p><strong>Zarządzanie stanem klienta</strong></p></td>
+<td><p>Zustand</p></td>
+<td><p><code>5.0.13</code></p></td>
+<td><p>Lekki, przewidywalny magazyn stanu (<code>createMatchStore</code>) oddzielony od warstwy transportowej (łatwe testowanie na sztucznym transporcie).</p></td>
+<td><p>—</p></td>
+</tr>
+<tr>
+<td><p><strong>Klient komunikacji czasu rzeczywistego</strong></p></td>
+<td><p><code>@microsoft/signalr</code></p></td>
+<td><p><code>10.0.0</code></p></td>
+<td><p>Utrzymywanie połączenia WebSocket z <code>MatchHub</code>, automatyczne wznawianie połączenia i odbiór zdarzeń <code>MatchUpdated</code>.</p></td>
+<td><p><strong>ADR-0006</strong> (<code>07-decyzje-adr/0006-serwer-autorytatywny-fog-of-war.md</code>)</p></td>
+</tr>
+</tbody></table>
+<h3>1.3 Jakość kodu, testowanie automatyczne, SDD i narzędzia AI</h3>
+<table><thead><tr>
+<th><p>Obszar</p></th>
+<th><p>Technologia / Narzędzie</p></th>
+<th><p>Wersja</p></th>
+<th><p>Zastosowanie w projekcie</p></th>
+</tr></thead><tbody>
+<tr>
+<td><p><strong>Testy jednostkowe i integracyjne .NET</strong></p></td>
+<td><p>xUnit + <code>Microsoft.AspNetCore.Mvc.Testing</code></p></td>
+<td><p><code>2.9.3</code> / <code>10.0.14</code></p></td>
+<td><p>Testy reguł domenowych (<code>Rnn_...</code>), determinizmu, projekcji oraz in-memory testy serwera z prawdziwym klientem SignalR.</p></td>
+</tr>
+<tr>
+<td><p><strong>Testy granic architektonicznych</strong></p></td>
+<td><p><code>NetArchTest.Rules</code></p></td>
+<td><p><code>1.3.2</code></p></td>
+<td><p>Automatyczna weryfikacja braku niedozwolonych zależności pomiędzy modułami oraz braku logiki w kontraktach (<code>NFR-50</code>).</p></td>
+</tr>
+<tr>
+<td><p><strong>Testy dymne całej aplikacji</strong></p></td>
+<td><p><code>Aspire.Hosting.Testing</code></p></td>
+<td><p><code>13.6.4</code></p></td>
+<td><p>Test integracyjny uruchamiający cały graf zasobów Aspire i weryfikujący odpowiedź <code>/health</code> oraz proxy klienta webowego (<code>NFR-60</code>).</p></td>
+</tr>
+<tr>
+<td><p><strong>Statyczna analiza kodu C#</strong></p></td>
+<td><p>Roslyn Analyzers + <code>BannedApiAnalyzers</code></p></td>
+<td><p><code>5.6.0</code></p></td>
+<td><p>Blokowanie niedeterministycznych API (<code>System.Random</code>, <code>DateTime</code>, <code>File</code>) wewnątrz modułu <code>Rejoltance.Kernel</code> na etapie kompilacji.</p></td>
+</tr>
+<tr>
+<td><p><strong>Testy jednostkowe i komponentowe UI</strong></p></td>
+<td><p>Vitest + React Testing Library + jsdom</p></td>
+<td><p><code>4.1.0</code> / <code>16.3.2</code></p></td>
+<td><p>Testowanie komponentów React, magazynu Zustand oraz zgodności próbki kontraktu JSON po stronie TypeScript.</p></td>
+</tr>
+<tr>
+<td><p><strong>Testy End-to-End (E2E)</strong></p></td>
+<td><p>Playwright</p></td>
+<td><p><em>Planowane w S1 (<code>E6-S01</code>)</em></p></td>
+<td><p>Automatyczne testy pełnych scenariuszy rozgrywki w przeglądarkach Chromium, Firefox i WebKit (<code>NFR-10</code>).</p></td>
+</tr>
+<tr>
+<td><p><strong>Spec-Driven Development (SDD)</strong></p></td>
+<td><p>OpenSpec (<code>@fission-ai/openspec</code>)</p></td>
+<td><p><code>1.15.0</code></p></td>
+<td><p>Zarządzanie żywymi specyfikacjami (<code>openspec/specs/</code>) i propozycjami zmian (<code>openspec/changes/</code>) wraz z walidacją <code>openspec validate --strict</code> w CI.</p></td>
+</tr>
+<tr>
+<td><p><strong>Walidacja dokumentacji</strong></p></td>
+<td><p><code>markdownlint-cli2</code></p></td>
+<td><p><code>0.20.0</code></p></td>
+<td><p>Kontrola jakości i spójności formatowania wszystkich plików Markdown w repozytorium.</p></td>
+</tr>
+<tr>
+<td><p><strong>Skrypty automatyzujące (<code>tools/</code>)</strong></p></td>
+<td><p>Python (biblioteka standardowa, <code>tomllib</code>)</p></td>
+<td><p><code>3.11+</code> (zalecany <code>3.13</code>)</p></td>
+<td><p>Synchronizacja adapterów agentów AI (<code>sync_agents.py</code>), ekstrakcja kart (<code>extract_cards.py</code>), generator CSV do Jiry (<code>gen_jira_csv.py</code>), eksporter Confluence (<code>sync_confluence.py</code>).</p></td>
+</tr>
+<tr>
+<td><p><strong>Ekosystem Agentów AI</strong></p></td>
+<td><p>Claude Code, Antigravity, GitHub Copilot, Gemini CLI, OpenAI Codex</p></td>
+<td><p>—</p></td>
+<td><p>Wsparcie procesu SDD na bazie jednego źródła zasad w <code>.agents/</code> i <code>AGENTS.md</code> (<strong>ADR-0009</strong> (<code>07-decyzje-adr/0009-kanon-agentow-i-adaptery.md</code>)).</p></td>
+</tr>
+</tbody></table>
+<hr />
+<h2>2. Uzasadnienie wyborów technologicznych i odrzucone alternatywy</h2>
+<table><thead><tr>
+<th><p>Obszar decyzyjny</p></th>
+<th><p>Wybrane rozwiązanie</p></th>
+<th><p>Odrzucone alternatywy</p></th>
+<th><p>Uzasadnienie architektoniczne wyboru</p></th>
+</tr></thead><tbody>
+<tr>
+<td><p><strong>Stos serwerowy i język domeny</strong></p></td>
+<td><p><strong>C# / .NET 10 LTS</strong></p></td>
+<td><p>Full-stack TypeScript (Node.js), C# + Godot</p></td>
+<td><p>Większość 6-osobowego zespołu posiada doświadczenie w C# z wcześniejszych projektów; .NET 10 zapewnia silne typowanie rekordów, dojrzały serwer SignalR, EF Core oraz długoterminowe wsparcie LTS (wsparcie dla .NET 8 wygasa w listopadzie 2026 r.).</p></td>
+</tr>
+<tr>
+<td><p><strong>Protokół komunikacji czasu rzeczywistego</strong></p></td>
+<td><p><strong>ASP.NET Core SignalR</strong></p></td>
+<td><p>Surowe gniazda WebSocket, WebRTC / PeerJS (P2P)</p></td>
+<td><p>Architektura P2P w prototypie umożliwiała oszustwa i podglądanie kart przeciwnika. SignalR zapewnia natywne wsparcie dla autorytatywnego serwera, grup meczowych, automatycznego wznawiania połączeń i silnie typowanych hubów.</p></td>
+</tr>
+<tr>
+<td><p><strong>Technologia klienta webowego</strong></p></td>
+<td><p><strong>React 19 + TypeScript + Vite</strong></p></td>
+<td><p>Czysty JS (Vanilla DOM z prototypu), Blazor WebAssembly</p></td>
+<td><p>Czysty JS w prototypie prowadził do trudnego w utrzymaniu kodu imperatywnego i podatności XSS (<code>innerHTML</code>). React + TypeScript zapewnia bezpieczne, komponentowe renderowanie widoku <code>MatchView</code> przy zachowaniu niskiego rozmiaru paczki i łatwego wykorzystania stylów CSS z prototypu.</p></td>
+</tr>
+<tr>
+<td><p><strong>Strategia bazy danych</strong></p></td>
+<td><p><strong>SQLite (S0–S3) → PostgreSQL (od S4)</strong></p></td>
+<td><p>PostgreSQL w kontenerze od pierwszego dnia</p></td>
+<td><p>Wymuszenie instalacji i konfiguracji Dockera u wszystkich 6 osób w pierwszym tygodniu stanowiło ryzyko zablokowania startu prac. EF Core izoluje kod od dostawcy bazy, pozwalając na bezinwazyjną pracę na pliku SQLite i przejście na kontener PostgreSQL w Sprincie 4.</p></td>
+</tr>
+<tr>
+<td><p><strong>Narzędzie Spec-Driven Development</strong></p></td>
+<td><p><strong>OpenSpec 1.15 + Konstytucja w <code>.agents/</code></strong></p></td>
+<td><p>GitHub Spec Kit (<code>specify-cli</code>), BMAD</p></td>
+<td><p>W przeprowadzonych testach porównawczych (<code>04-badania-i-analizy/faza-1-porownanie.md</code>) Spec Kit wykazał konflikty przy instalacji dla wielu narzędzi AI jednocześnie i generował blisko 10 tys. linii szablonów. OpenSpec instaluje się czysto dla wszystkich 5 narzędzi AI i posiada szybki walidator CLI dla potoku CI.</p></td>
+</tr>
+<tr>
+<td><p><strong>Kontrola zgodności kontraktów C# ↔ TS</strong></p></td>
+<td><p><strong>Wspólna próbka JSON (<code>match-view.sample.json</code>)</strong></p></td>
+<td><p>Generator OpenAPI / NSwag, brak automatycznej kontroli</p></td>
+<td><p>Główne komunikaty gry przechodzą przez SignalR, którego standard OpenAPI nie obejmuje. Złoty plik JSON generowany przez testy C# i weryfikowany kompilatorem TypeScript (<code>tsc</code>) daje 100% gwarancji wykrycia niezgodności bez narzutu zewnętrznych generatorów.</p></td>
+</tr>
+</tbody></table>
+<hr />
+<h2>3. Roadmapa technologiczna</h2>
+<p>Poniższy harmonogram określa moment wprowadzania kolejnych elementów technologicznych w powiązaniu z zaplanowanymi sprintami i historyjkami w backlogu:</p>
+<p><em>Diagram przepływu (Mermaid):</em></p>
+<ac:structured-macro ac:name="code"><ac:parameter ac:name="language">none</ac:parameter><ac:plain-text-body><![CDATA[flowchart LR
+  S0["Sprint 0 (27.10–02.11)<br/>Fundamenty<br/>.NET 10, Aspire, SignalR,<br/>React/TS, SQLite, OpenSpec"] --> S1["Sprint 1 (03.11–16.11)<br/>Rdzeń Kernela i E2E<br/>Playwright w CI,<br/>pełny cykl rundy"]
+  S1 --> S2["Sprint 2 (17.11–30.11)<br/>Bezpieczeństwo i Wyrocznia<br/>ASP.NET Core Identity,<br/>Rate Limiting, Wyrocznia JS↔C#"]
+  S2 --> S3["Sprint 3 (01.12–14.12)<br/>Bot AI i Pokoje PvP<br/>Moduł Rejoltance.Sim,<br/>heurystyczny Bot AI"]
+  S3 --> S4["Sprint 4 (15.12–11.01)<br/>Dane produkcyjne<br/>Kontener PostgreSQL w Aspire,<br/>symulator 300 partii"]
+  S4 --> S5["Sprint 5 (12.01–25.01)<br/>Wdrożenie Demo<br/>Obraz kontenera OCI,<br/>hosting z HTTPS, testy obciążeniowe"]]]></ac:plain-text-body></ac:structured-macro>
+<table><thead><tr>
+<th><p>Sprint / Etap</p></th>
+<th><p>Wprowadzana technologia lub mechanizm</p></th>
+<th><p>Powiązane zadanie (Backlog)</p></th>
+<th><p>Weryfikowane wymaganie jakościowe</p></th>
+</tr></thead><tbody>
+<tr>
+<td><p><strong>Sprint 0</strong> <em>(zrealizowane)</em></p></td>
+<td><p>Szkielet solucji .NET 10, <code>Rejoltance.AppHost</code> (Aspire), <code>MatchHub</code> (SignalR), klient React + Vite, baza SQLite, walidacja OpenSpec i CI w GitHub Actions.</p></td>
+<td><p><code>E0-S01</code>, <code>E0-S02</code></p></td>
+<td><p><code>NFR-11</code>, <code>NFR-50</code>, <code>NFR-52</code>, <code>NFR-60</code></p></td>
+</tr>
+<tr>
+<td><p><strong>Sprint 1</strong></p></td>
+<td><p>Wdrożenie testów przeglądarkowych End-to-End <strong>Playwright</strong> (Chromium, Firefox, WebKit) w potoku GitHub Actions.</p></td>
+<td><p><code>E6-S01</code></p></td>
+<td><p><code>NFR-10</code></p></td>
+</tr>
+<tr>
+<td><p><strong>Sprint 2</strong></p></td>
+<td><p>Wdrożenie <strong>ASP.NET Core Identity</strong> (rejestracja, logowanie, ciasteczka <code>HttpOnly</code>), middleware <strong>Rate Limiting</strong> dla huba SignalR oraz <strong>wyroczni testów różnicowych</strong> uruchamiającej silnik prototypu JS w Node.js.</p></td>
+<td><p><code>E6-S02</code>, <code>E3-S06</code>, <code>E5-S02</code></p></td>
+<td><p><code>NFR-40</code>, <code>NFR-41</code>, <code>NFR-51</code></p></td>
+</tr>
+<tr>
+<td><p><strong>Sprint 3</strong></p></td>
+<td><p>Utworzenie projektu <strong><code>Rejoltance.Sim</code></strong> z interfejsem <code>IBotPolicy</code> i implementacją bota AI grającego przez standardowy kontrakt <code>Intent</code>.</p></td>
+<td><p><code>E5-S03</code></p></td>
+<td><p><code>NFR-20</code></p></td>
+</tr>
+<tr>
+<td><p><strong>Sprint 4</strong></p></td>
+<td><p>Włączenie kontenera <strong>PostgreSQL 16+</strong> w <code>Rejoltance.AppHost</code>, weryfikacja migracji EF Core na obu silnikach bazodanowych oraz uruchomienie symulatora masowych gier bot-vs-bot.</p></td>
+<td><p><code>E6-S03</code>, <code>E5-S04</code></p></td>
+<td><p><code>NFR-01</code>, <code>NFR-31</code>, <strong>ADR-0007</strong> (<code>07-decyzje-adr/0007-sqlite-potem-postgresql.md</code>)</p></td>
+</tr>
+<tr>
+<td><p><strong>Sprint 5</strong></p></td>
+<td><p>Publikacja zunifikowanego <strong>obrazu kontenera OCI</strong> (<code>PublishWithContainerFiles</code>) i wdrożenie publicznej instancji demonstracyjnej z certyfikatem TLS/HTTPS.</p></td>
+<td><p><code>E6-S05</code></p></td>
+<td><p><code>NFR-30</code>, <code>NFR-61</code></p></td>
+</tr>
+<tr>
+<td><p><strong>Semestr 2</strong></p></td>
+<td><p>Rozbudowa trwałości o tabelę talii (<code>Deckbuilder</code>), zapisywanie pełnego dziennika intencji do deterministycznego <strong>Replayu</strong> oraz ewaluacja generatora kontraktów C# → TS.</p></td>
+<td><p><code>E6-S04</code>, <code>E6-S07</code></p></td>
+<td><p><strong>ADR-0010</strong> (<code>07-decyzje-adr/0010-kontrakt-csharp-ts-przez-probke.md</code>)</p></td>
+</tr>
+</tbody></table>
+<hr />
+<h2>4. Polityka zarządzania wersjami i zależnościami</h2>
+<ol><li><strong>Centralne zarządzanie pakietami NuGet (Central Package Management):</strong> Wszystkie wersje pakietów .NET są zdefiniowane w jednym pliku <code>Directory.Packages.props</code> w katalogu głównym. Projekty <code>.csproj</code> nie mogą deklarować własnych atrybutów <code>Version</code>.</li><li><strong>Deterministyczne instalacje npm:</strong> Zarówno katalog główny narzędzi, jak i projekt <code>src/web</code> posiadają zatwierdzone pliki <code>package-lock.json</code>. W potoku CI oraz skryptach startowych używane jest polecenie <code>npm ci</code>.</li><li><strong>Automatyczne aktualizacje bezpieczeństwa:</strong> Usługa GitHub <strong>Dependabot</strong> (<code>.github/dependabot.yml</code>) co tydzień sprawdza aktualizacje pakietów NuGet, npm oraz akcji GitHub, grupując poprawki z ekosystemów Microsoft i Aspire. Podatności o priorytecie wysokim i krytycznym są aktualizowane w czasie ≤ 7 dni (<code>NFR-42</code>).</li></ol>

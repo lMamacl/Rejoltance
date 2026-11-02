@@ -1,4 +1,4 @@
-<!-- CONFLUENCE 1:1 EXPORT | Source: docs/05-szablony/README.md @ 7e9a336 (2026-11-02) -->
+<!-- CONFLUENCE 1:1 EXPORT | Source: docs/05-szablony/README.md @ 10829d3 (2026-11-02) -->
 # 05. Biblioteka szablonów dokumentacji technicznej
 
 Katalog `05-szablony/` zawiera kompletny zestaw gotowych szablonów dla wszystkich typów dokumentacji wyróżnionych w klasyfikacji AltexSoft oraz wykorzystywanych w procesie **Spec-Driven Development (SDD)**.

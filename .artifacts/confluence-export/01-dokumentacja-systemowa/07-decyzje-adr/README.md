@@ -1,4 +1,4 @@
-<!-- CONFLUENCE 1:1 EXPORT | Source: docs/01-dokumentacja-systemowa/07-decyzje-adr/README.md @ 7e9a336 (2026-11-02) -->
+<!-- CONFLUENCE 1:1 EXPORT | Source: docs/01-dokumentacja-systemowa/07-decyzje-adr/README.md @ 10829d3 (2026-11-02) -->
 # 1.7 Decyzje architektoniczne (ADR)
 
 > **Źródło prawdy:** Repozytorium (`docs/01-dokumentacja-systemowa/07-decyzje-adr/`) · **Kategoria dokumentacji:** Dokumentacja produktowa — systemowa (Decyzje architektoniczne ADR) · **Etap SDD:** Fundamenty i planowanie

@@ -1,0 +1,39 @@
+<ac:structured-macro ac:name="info"><ac:rich-text-body><p><strong>Synchronizacja 1:1 z repozytorium Git:</strong> <code>docs/01-dokumentacja-systemowa/07-decyzje-adr/0011-dokumentacja-hybryda-repo-confluence.md</code> (commit <code>10829d3</code>, data eksportu: <code>2026-11-02</code>)</p></ac:rich-text-body></ac:structured-macro>
+<ul><li><strong>Status:</strong> zatwierdzona (decyzja zespołu, 2026-11; formalna akceptacja 2 osób)</li><li><strong>Data:</strong> 2026-11-01</li><li><strong>Powiązane:</strong> Zadanie 01 (CEZ), <code>docs/00-przewodnik-i-setup/02-architektura-dokumentacji-sdd.md</code>, ADR-0003, ADR-0009</li></ul>
+<h2>Kontekst i problem</h2>
+<p>Prowadzący oczekuje struktury dokumentacji w <strong>Confluence PB</strong>, obejmującej analizę wymagań, stos technologiczny i architekturę, pod spec‑driven development (SDD). [V] W SDD specyfikacja steruje pracą ludzi i agentów AI: musi być wersjonowana razem z kodem, przeglądana w PR i walidowana w CI (<code>openspec validate</code>). [V] Confluence dobrze służy do współpracy, prezentacji i oceny, ale agent nie wykona procesu SDD na stronie wiki, a kopie ręczne się rozjeżdżają. [Z]</p>
+<h2>Rozważane opcje</h2>
+<table><thead><tr>
+<th><p>Opcja</p></th>
+<th><p>Zalety</p></th>
+<th><p>Wady</p></th>
+<th><p>Koszt / ryzyko</p></th>
+</tr></thead><tbody>
+<tr>
+<td><p>Wszystko w Confluence</p></td>
+<td><p>jedno miejsce, wygodne dla prowadzącego</p></td>
+<td><p>specyfikacji nie da się walidować ani przeglądać w PR; agenci czytają nieaktualne kopie</p></td>
+<td><p>rozjazd specyfikacji i kodu</p></td>
+</tr>
+<tr>
+<td><p>Wszystko w repo</p></td>
+<td><p>jedno źródło, wersjonowanie</p></td>
+<td><p>Confluence pusty → nie spełnia wymagań przedmiotu (EU5/EU6)</p></td>
+<td><p>ryzyko oceny</p></td>
+</tr>
+<tr>
+<td><p><strong>Hybryda z jasnym podziałem</strong></p></td>
+<td><p>SDD działa na repo; Confluence ma pełne drzewo, mapę i dokumenty ludzkie</p></td>
+<td><p>trzeba pilnować publikacji kopii</p></td>
+<td><p>proces publikacji + banner „źródło”</p></td>
+</tr>
+</tbody></table>
+<h2>Decyzja</h2>
+<p>W kontekście SDD z agentami AI i wymagania uczelni, by dokumentacja żyła w Confluence, wybieramy <strong>hybrydę</strong>: <strong>repo</strong> jest źródłem prawdy dla wszystkiego, co steruje implementacją (wymagania funkcjonalne i niefunkcjonalne, architektura, stos, API, ADR, strategia testów, standardy), a <strong>Confluence</strong> jest źródłem prawdy dla dokumentacji ludzkiej i procesowej (badania z użytkownikami, protokoły odbioru, raporty sprintów, notatki ze spotkań, dokumentacja użytkownika) oraz zawiera <strong>pełne drzewo dokumentacji</strong> z kopiami stron z repo — zamiast trzymania wszystkiego w jednym miejscu, aby specyfikacje były wykonywalne i weryfikowalne, a prowadzący widział kompletną dokumentację, akceptując obowiązek publikacji kopii przy każdej zmianie na <code>develop</code>.</p>
+<h2>Konsekwencje</h2>
+<h3>Pozytywne</h3>
+<ul><li>Każda strona w Confluence ma nagłówek „Źródło prawdy: repo / Confluence” — wiadomo, gdzie poprawiać.</li><li>Agent AI czyta aktualne specyfikacje z repo; ludzie przeglądają je w Confluence.</li></ul>
+<h3>Negatywne / ryzyka</h3>
+<ul><li>Kopie w Confluence mogą się zestarzeć → w Definition of Done: „strona w Confluence zaktualizowana”; datę i commit źródła podajemy w nagłówku strony.</li><li>Jeśli prowadzący wymaga edycji wyłącznie w Confluence — nowy ADR zastępujący ten.</li></ul>
+<h3>Do zrobienia</h3>
+<ul><li>[x] Drzewo stron w Confluence i układ 1:1 w <code>docs/</code> wg <code>docs/00-przewodnik-i-setup/02-architektura-dokumentacji-sdd.md</code></li><li>[x] Skrypt synchronizacji i walidacji <code>tools/confluence/sync_confluence.py</code> + skill <code>rj-sync-confluence</code></li></ul>

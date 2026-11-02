@@ -1,4 +1,4 @@
-<!-- CONFLUENCE 1:1 EXPORT | Source: docs/01-dokumentacja-systemowa/07-decyzje-adr/0000-szablon.md @ 7e9a336 (2026-11-02) -->
+<!-- CONFLUENCE 1:1 EXPORT | Source: docs/01-dokumentacja-systemowa/07-decyzje-adr/0000-szablon.md @ 10829d3 (2026-11-02) -->
 # ADR-NNNN: <krótki tytuł>
 
 - **Status:** proponowana <!-- proposed | accepted | superseded by ADR-XXXX | deprecated -->

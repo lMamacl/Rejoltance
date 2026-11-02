@@ -1,4 +1,4 @@
-<!-- CONFLUENCE 1:1 EXPORT | Source: docs/04-system-agentow-ai/04-warsztat-tworzenie-agentow-skilli-i-kart.md @ 7e9a336 (2026-11-02) -->
+<!-- CONFLUENCE 1:1 EXPORT | Source: docs/04-system-agentow-ai/04-warsztat-tworzenie-agentow-skilli-i-kart.md @ 10829d3 (2026-11-02) -->
 # 4.4 Warsztat inżynierski: Jak samodzielnie budować agentów, umiejętności, dokumentację, ADR i karty
 
 > **Źródło prawdy:** repozytorium (`docs/04-system-agentow-ai/04-warsztat-tworzenie-agentow-skilli-i-kart.md`) · **Kategoria dokumentacji:** Dokumentacja procesowa — Podręcznik warsztatowy zespołu i AI · **Etap SDD:** Cały cykl SDD

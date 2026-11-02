@@ -1,4 +1,4 @@
-<!-- CONFLUENCE 1:1 EXPORT | Source: docs/04-system-agentow-ai/02-katalog-rol-i-wbudowanych-skilli.md @ 7e9a336 (2026-11-02) -->
+<!-- CONFLUENCE 1:1 EXPORT | Source: docs/04-system-agentow-ai/02-katalog-rol-i-wbudowanych-skilli.md @ 10829d3 (2026-11-02) -->
 # 4.2 Katalog ról agentów i macierz wbudowanych umiejętności
 
 > **Źródło prawdy:** Repozytorium (`docs/04-system-agentow-ai/02-katalog-rol-i-wbudowanych-skilli.md`) · **Kategoria dokumentacji:** Dokumentacja procesowa — Katalog ról i umiejętności AI · **Etap SDD:** Cały cykl SDD

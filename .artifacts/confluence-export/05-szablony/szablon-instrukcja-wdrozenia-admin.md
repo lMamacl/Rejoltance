@@ -1,4 +1,4 @@
-<!-- CONFLUENCE 1:1 EXPORT | Source: docs/05-szablony/szablon-instrukcja-wdrozenia-admin.md @ 7e9a336 (2026-11-02) -->
+<!-- CONFLUENCE 1:1 EXPORT | Source: docs/05-szablony/szablon-instrukcja-wdrozenia-admin.md @ 10829d3 (2026-11-02) -->
 # 5.11 Szablon: Instrukcja Wdrożenia i Utrzymania (System Administrator Guide)
 
 > **Źródło prawdy:** Repozytorium / Confluence PB · **Kategoria AltexSoft:** Product: User Documentation — System Administrator Documentation · **Etap SDD:** Wydanie (`Release`)

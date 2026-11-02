@@ -1,0 +1,37 @@
+<ac:structured-macro ac:name="info"><ac:rich-text-body><p><strong>Synchronizacja 1:1 z repozytorium Git:</strong> <code>docs/01-dokumentacja-systemowa/07-decyzje-adr/0004-kernel-od-nowa-deterministyczny.md</code> (commit <code>10829d3</code>, data eksportu: <code>2026-11-02</code>)</p></ac:rich-text-body></ac:structured-macro>
+<ul><li><strong>Status:</strong> zatwierdzona (2026-10-27)</li><li><strong>Data:</strong> 2026-10-27</li><li><strong>Powiązane:</strong> ADR-0005, <code>src/Rejoltance.Kernel</code>, reguły R-83, R-84</li></ul>
+<h2>Kontekst i problem</h2>
+<p>Istnieją dwa stare silniki: C#/Godot <code>CardGame.Core</code> (9 258 LOC, 64 testy, repo <code>Bluzacy2/CardGame</code> — niedostępne lokalnie, audyt zbyt optymistyczny) oraz prototyp JS (dziurawy: brak seeda, UI w silniku, cichy <code>return []</code>, hardcod kart, brak modelu „czekam na gracza”). [V] Serwer autorytatywny, replay, bot i testy wymagają silnika, który jest czysty i powtarzalny.</p>
+<h2>Rozważane opcje</h2>
+<table><thead><tr>
+<th><p>Opcja</p></th>
+<th><p>Zalety</p></th>
+<th><p>Wady</p></th>
+<th><p>Koszt / ryzyko</p></th>
+</tr></thead><tbody>
+<tr>
+<td><p>Refaktor starego C# Core („ścieżka B”)</p></td>
+<td><p>64 testy na start</p></td>
+<td><p>reguły ≠ kanon JS; singletony; brak dostępu do repo; przenosi dziury</p></td>
+<td><p>niepewny</p></td>
+</tr>
+<tr>
+<td><p>Port 1:1 z JS</p></td>
+<td><p>szybki start</p></td>
+<td><p>przenosi wszystkie błędy z listy D‑nn</p></td>
+<td><p>wysoki dług</p></td>
+</tr>
+<tr>
+<td><p><strong>Nowy Kernel wg kontraktów</strong></p></td>
+<td><p>determinizm, <code>PendingInteraction</code>, testy R‑nn od dnia 1</p></td>
+<td><p>trzeba napisać wszystko</p></td>
+<td><p>~ MVP 340 h wg analizy</p></td>
+</tr>
+</tbody></table>
+<h2>Decyzja</h2>
+<p>W kontekście serwera autorytatywnego i potrzeby replayów, mierząc się z błędami obu starych silników, wybieramy **nowy Kernel w C#: niemutowalny <code>MatchState</code>, <code>reduce(state, seat, intent) → (state, events)</code>, <code>SeededRng</code> (SplitMix64) w stanie, <code>PendingInteraction</code> zamiast blokowania** zamiast refaktoru lub portu, aby każdy mecz był powtarzalny z seeda i listy intencji, akceptując koszt napisania reguł od zera (stare 64 testy C# traktujemy jako listę przypadków brzegowych, nie kod).</p>
+<h2>Konsekwencje</h2>
+<h3>Pozytywne</h3>
+<ul><li>Build blokuje <code>System.Random</code>, zegar i IO w Kernelu (<code>BannedSymbols.txt</code>); testy granic w CI.</li><li>Replay = seed + intencje (<code>MatchSessionManager</code> już je zapisuje).</li></ul>
+<h3>Negatywne / ryzyka</h3>
+<ul><li>Największe ryzyko projektu: zakres reguł (55 wymagań). Mitygacja: linia cięcia w backlogu, wyrocznia JS (E5-S04).</li></ul>

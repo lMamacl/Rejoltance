@@ -1,4 +1,4 @@
-<!-- CONFLUENCE 1:1 EXPORT | Source: docs/05-szablony/szablon-karta-modulu.md @ 7e9a336 (2026-11-02) -->
+<!-- CONFLUENCE 1:1 EXPORT | Source: docs/05-szablony/szablon-karta-modulu.md @ 10829d3 (2026-11-02) -->
 # 5.7 Szablon: Karta Modułu Inżynierskiego (Source Code Documentation)
 
 > **Źródło prawdy:** Repozytorium (`src/<moduł>/README.md`) + Confluence PB · **Kategoria AltexSoft:** Product: System Documentation — Source Code Documentation · **Etap SDD:** Realizacja (`Implement`) · **Wymóg uczelniany:** EU5 (indywidualna ocena każdego studenta)

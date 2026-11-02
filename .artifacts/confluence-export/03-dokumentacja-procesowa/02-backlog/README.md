@@ -1,4 +1,4 @@
-<!-- CONFLUENCE 1:1 EXPORT | Source: docs/03-dokumentacja-procesowa/02-backlog/README.md @ 7e9a336 (2026-11-02) -->
+<!-- CONFLUENCE 1:1 EXPORT | Source: docs/03-dokumentacja-procesowa/02-backlog/README.md @ 10829d3 (2026-11-02) -->
 # 3.2 Rejestr produktu i eksport do Jiry PB
 
 > **Źródło prawdy:** repozytorium (`docs/03-dokumentacja-procesowa/02-backlog/backlog.toml`) · **Kategoria dokumentacji:** Dokumentacja procesowa — Rejestr produktu i sprintów · **Etap SDD:** Dekompozycja zadań · **Wymogi uczelniane:** EU1, EU3, EU4

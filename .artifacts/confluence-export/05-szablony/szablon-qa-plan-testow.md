@@ -1,4 +1,4 @@
-<!-- CONFLUENCE 1:1 EXPORT | Source: docs/05-szablony/szablon-qa-plan-testow.md @ 7e9a336 (2026-11-02) -->
+<!-- CONFLUENCE 1:1 EXPORT | Source: docs/05-szablony/szablon-qa-plan-testow.md @ 10829d3 (2026-11-02) -->
 # 5.8 Szablon QA: Plan Testów i Specyfikacja Przypadków Testowych
 
 > **Źródło prawdy:** Confluence PB / Repozytorium · **Kategoria AltexSoft:** Product: System Documentation — Quality Assurance (Test Plan & Test Case Specifications) · **Etap SDD:** Weryfikacja (`Verify`) · **Wymóg uczelniany:** EU6

@@ -1,0 +1,39 @@
+<ac:structured-macro ac:name="info"><ac:rich-text-body><p><strong>Synchronizacja 1:1 z repozytorium Git:</strong> <code>docs/01-dokumentacja-systemowa/07-decyzje-adr/0002-github-i-mirror-bitbucket.md</code> (commit <code>10829d3</code>, data eksportu: <code>2026-11-02</code>)</p></ac:rich-text-body></ac:structured-macro>
+<ul><li><strong>Status:</strong> zatwierdzona (2026-10-27)</li><li><strong>Data:</strong> 2026-10-27</li><li><strong>Powiązane:</strong> <code>.github/workflows/mirror-bitbucket.yml</code>, pytanie otwarte #4</li></ul>
+<h2>Kontekst i problem</h2>
+<p>Instrukcja pracowni wymaga przeglądów kodu w Bitbucket PB (DC 8.14.4) i raportowania przez Jira/Bitbucket. [V] Zespół chce GitHub Actions, GitHub Pages dla prototypu i integracji narzędzi AI (Copilot, agenci), które najlepiej działają z GitHubem. [V] Bitbucket DC nie ma Pipelines (CI trzeba by stawiać osobno). [Z]</p>
+<h2>Rozważane opcje</h2>
+<table><thead><tr>
+<th><p>Opcja</p></th>
+<th><p>Zalety</p></th>
+<th><p>Wady</p></th>
+<th><p>Koszt / ryzyko</p></th>
+</tr></thead><tbody>
+<tr>
+<td><p><strong>GitHub główny + mirror</strong></p></td>
+<td><p>Actions, Pages, Copilot, Dependabot; kod jest też w Bitbucket</p></td>
+<td><p>review odbywa się na GitHubie</p></td>
+<td><p>prowadzący może wymagać review w Bitbucket (#4)</p></td>
+</tr>
+<tr>
+<td><p>Bitbucket główny</p></td>
+<td><p>pełna zgodność z instrukcją</p></td>
+<td><p>brak CI w DC, słabsza integracja AI</p></td>
+<td><p>CI do zbudowania samodzielnie</p></td>
+</tr>
+<tr>
+<td><p>Tylko GitHub</p></td>
+<td><p>najprościej</p></td>
+<td><p>ryzyko formalne przy ocenie</p></td>
+<td><p>—</p></td>
+</tr>
+</tbody></table>
+<h2>Decyzja</h2>
+<p>W kontekście wymogów uczelni i potrzeby CI oraz narzędzi AI, wybieramy **GitHub jako miejsce pracy (PR, review, CI) i automatyczny mirror gałęzi <code>main</code>, <code>develop</code> oraz tagów <code>sprint-*</code> do Bitbucket PB** zamiast pracy w Bitbucket, aby mieć działające CI od pierwszego dnia, akceptując, że review trzeba udokumentować linkiem do PR w zgłoszeniu Jira (do potwierdzenia z prowadzącym).</p>
+<h2>Konsekwencje</h2>
+<h3>Pozytywne</h3>
+<ul><li>CI, Pages, Dependabot, szablony PR/issue działają bez dodatkowej infrastruktury.</li></ul>
+<h3>Negatywne / ryzyka</h3>
+<ul><li>Sekret <code>BITBUCKET_TOKEN</code> musi ustawić admin repo; bez niego mirror jest pomijany (nie psuje CI).</li><li>Jeśli prowadzący wymaga review w Bitbucket — wracamy do tego ADR (nowy ADR zastępujący).</li></ul>
+<h3>Do zrobienia</h3>
+<ul><li>[ ] E0-S01: konfiguracja sekretów i ochrony gałęzi</li><li>[ ] Zapytać prowadzącego o akceptację review na GitHubie (#4)</li></ul>

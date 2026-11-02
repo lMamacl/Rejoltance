@@ -1,4 +1,4 @@
-<!-- CONFLUENCE 1:1 EXPORT | Source: docs/03-dokumentacja-procesowa/04-badania-i-analizy/faza-0-analiza.md @ 7e9a336 (2026-11-02) -->
+<!-- CONFLUENCE 1:1 EXPORT | Source: docs/03-dokumentacja-procesowa/04-badania-i-analizy/faza-0-analiza.md @ 10829d3 (2026-11-02) -->
 # Faza 0 — analiza materiałów źródłowych
 
 **Data:** 2026-10-27 · **Status:** zaakceptowana (decyzje poniżej) · Legenda: **[V]** zweryfikowane, **[Z]** założenie, **[?]** nieznane.

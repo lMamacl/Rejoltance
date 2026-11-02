@@ -1,4 +1,4 @@
-<!-- CONFLUENCE 1:1 EXPORT | Source: docs/02-dokumentacja-uzytkownika/02-instrukcja-wdrozenia-i-utrzymania.md @ 7e9a336 (2026-11-02) -->
+<!-- CONFLUENCE 1:1 EXPORT | Source: docs/02-dokumentacja-uzytkownika/02-instrukcja-wdrozenia-i-utrzymania.md @ 10829d3 (2026-11-02) -->
 # 2.2 Instrukcja wdrożenia, konfiguracji i utrzymania systemu (Podręcznik administratora)
 
 > **Źródło prawdy:** repozytorium (`docs/02-dokumentacja-uzytkownika/02-instrukcja-wdrozenia-i-utrzymania.md`) · **Kategoria dokumentacji:** Dokumentacja produktowa — użytkownika (Podręcznik administratora systemu) · **Etap SDD:** Wydanie · **Wymóg uczelniany:** EU5 / EU6

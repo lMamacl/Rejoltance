@@ -1,4 +1,4 @@
-<!-- CONFLUENCE 1:1 EXPORT | Source: docs/01-dokumentacja-systemowa/07-decyzje-adr/0006-serwer-autorytatywny-fog-of-war.md @ 7e9a336 (2026-11-02) -->
+<!-- CONFLUENCE 1:1 EXPORT | Source: docs/01-dokumentacja-systemowa/07-decyzje-adr/0006-serwer-autorytatywny-fog-of-war.md @ 10829d3 (2026-11-02) -->
 # ADR-0006: Serwer autorytatywny, fog of war w projekcji
 
 - **Status:** zatwierdzona (2026-10-27)

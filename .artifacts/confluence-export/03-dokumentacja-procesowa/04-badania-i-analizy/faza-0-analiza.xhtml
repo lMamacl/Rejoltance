@@ -1,0 +1,52 @@
+<ac:structured-macro ac:name="info"><ac:rich-text-body><p><strong>Synchronizacja 1:1 z repozytorium Git:</strong> <code>docs/03-dokumentacja-procesowa/04-badania-i-analizy/faza-0-analiza.md</code> (commit <code>10829d3</code>, data eksportu: <code>2026-11-02</code>)</p></ac:rich-text-body></ac:structured-macro>
+<p><strong>Data:</strong> 2026-10-27 · <strong>Status:</strong> zaakceptowana (decyzje poniżej) · Legenda: <strong>[V]</strong> zweryfikowane, <strong>[Z]</strong> założenie, <strong>[?]</strong> nieznane.</p>
+<h2>Streszczenie źródeł</h2>
+<table><thead><tr>
+<th><p>Źródło</p></th>
+<th><p>Najważniejsze ustalenia</p></th>
+</tr></thead><tbody>
+<tr>
+<td><p><code>REJOLTANCE-ANALIZA.md</code> (główne) [V]</p></td>
+<td><p>20 rozbieżności dema ze specyfikacją; architektura 7 warstw i 5 kontraktów; 12 wzorców (reducer, jedno źródło legalności, pending, DSL + rejestr, fail loud, seeded RNG, projekcja fog of war, test granic, R‑nn); 6 ról; ryzyka; MVP ≈ 340 h (480 h z ryzykiem)</p></td>
+</tr>
+<tr>
+<td><p><code>RE_JOLTANCE.md</code> [V]</p></td>
+<td><p>stara specyfikacja zasad (fazy, walka, słowa kluczowe, Sacrifice, Silence, koszty)</p></td>
+</tr>
+<tr>
+<td><p>prototyp JS <code>revibance</code> [V]</p></td>
+<td><p>69 kart + 9 tokenów, 25 akcji, 15 triggerów; P2P PeerJS (host = autorytet); bot beam search; <strong>brak testów</strong>; reguły v11 różnią się od specyfikacji; błędy: remis → wygrywa gracz 1, brak walidacji celów, wyciek ręki przez <code>uid</code>, XSS przez <code>innerHTML</code>, karty 46/60/14 zakodowane na sztywno, brak seeda</p></td>
+</tr>
+<tr>
+<td><p><code>AUDYT_TECHNICZNY_REJOLTANCE.md</code> [V]</p></td>
+<td><p>audytuje <strong>inny kod</strong> (C#/Godot <code>Bluzacy2/CardGame</code>, nieobecny lokalnie); estymaty nierealne (~124 h całość); pomija prototyp JS → tylko kontekst</p></td>
+</tr>
+<tr>
+<td><p><code>brainstorm-…-rework.md</code> [V]</p></td>
+<td><p>wymagania: SignalR, fog of war, deckbuilder 30/3, bot, konta, panel admina, replay; 6 epików</p></td>
+</tr>
+<tr>
+<td><p><code>wymagania uczelniane.md</code>, <code>instrukcje.md</code> [V]</p></td>
+<td><p>EU1–EU7; DIP + każdy student pisze własny epik; PO w 1 sprincie; Burndown (godziny i zadania); Log Work; Confluence; code review w Bitbucket; workflow Jira <code>Open → In Progress → Resolved → Closed</code></p></td>
+</tr>
+<tr>
+<td><p>Vaultie (<code>.agents</code>, <code>.agent</code>, kickoff‑kit) [V]</p></td>
+<td><p>format agentów/reguł/skilli Antigravity, etykiety prawdy, ADR ze zdaniem Y, DIP, handbook PO (<code>feature/KEY-NN-opis</code>, commit <code>KEY-NN: …</code>, zadania ≤ 4 h)</p></td>
+</tr>
+<tr>
+<td><p>szablon pi‑wo [V]</p></td>
+<td><p>gałęzie <code>main</code>, <code>develop</code>, <code>feature/&lt;obszar&gt;</code>; brak CI i szablonów</p></td>
+</tr>
+</tbody></table>
+<h2>Środowisko i integracje [V]</h2>
+<ul><li>Atlassian PB dostępny z internetu: Jira (LDAP), Bitbucket DC 8.14.4, Confluence 8.4.5 (<code>devtools.wi.pb.edu.pl</code>).</li><li><code>mcp-atlassian</code> obsługuje Jira DC ≥ 8.14 i Confluence DC przez Personal Access Token.</li><li>Antigravity czyta <code>AGENTS.md</code> i <code>.agents/{rules,workflows,skills}</code>; Aspire 13.6 ma <code>AddViteApp</code>.</li></ul>
+<h2>Decyzje podjęte</h2>
+<ol><li>GitHub główny + mirror do Bitbucket PB.</li><li>Frontend: React + TypeScript + Vite.</li><li>Narzędzia AI zespołu: Claude Code, Antigravity, Copilot, Gemini, Codex, DeepSeek → wspólny <code>AGENTS.md</code> + <code>.agents/</code>.</li><li>SQLite na start, PostgreSQL później (Aspire bez Dockera).</li><li><strong>Kernel pisany od nowa</strong> (stare C# tylko jako lista przypadków brzegowych + wzór <code>DeterministicRng</code>).</li><li><strong>Kanon reguł = prototyp JS v11</strong>; ewidentne błędy → <code>docs/01-dokumentacja-systemowa/04-rozbieznosci-prototypu.md</code> do decyzji zespołu.</li><li>Materiały (kod, assety prototypu) można commitować — autorem jest zespół.</li><li>Sprinty: S0 27.10–2.11 · S1 3–16.11 · S2 17–30.11 · S3 1–14.12 · S4 15.12–11.01 · S5 12–25.01.</li><li>(Faza 1) Narzędzie SDD: <strong>OpenSpec</strong> + własna konstytucja; gałęzie <code>typ/REJ-123-opis</code>.</li></ol>
+<h2>Pytania otwarte do zespołu</h2>
+<p>Numery #1–#10 są przywoływane w innych dokumentach (np. „pytanie otwarte #6”).</p>
+<h3>Proces / uczelnia</h3>
+<ul><li><strong>#1</strong> Klucz projektu Jira i kto go zakłada (w repo placeholder <code>REJ</code>).</li><li><strong>#2</strong> Przydział PO do sprintów (6 osób, 5 sprintów — czy S0 się liczy?).</li><li><strong>#3</strong> Mapowanie workflow <code>Open/In Progress/Resolved/Closed</code> na tablicę.</li><li><strong>#4</strong> Czy prowadzący zakłada repo w Bitbucket (cel mirrora) i czy wystarczy review na GitHubie z linkiem w Jirze.</li></ul>
+<h3>Produkt</h3>
+<ul><li><strong>#5</strong> Zakres MVP talii (12 kart vs 69).</li><li><strong>#6</strong> Które zachowania JS to błędy (remis, mulligan z tasowaniem, Breakthrough = pełne obrażenia, powrót do pełnej ręki usuwa kartę).</li><li><strong>#7</strong> Użytkownik końcowy / rada graczy testowych (EU1/EU2).</li></ul>
+<h3>Techniczne</h3>
+<ul><li><strong>#8</strong> Hosting demo (Azure for Students / Railway / serwer uczelni).</li><li><strong>#9</strong> Kto jest właścicielem którego epiku (E1–E6).</li><li><strong>#10</strong> Czy wszyscy mogą zainstalować Docker/Podman przed S4 (PostgreSQL).</li></ul>

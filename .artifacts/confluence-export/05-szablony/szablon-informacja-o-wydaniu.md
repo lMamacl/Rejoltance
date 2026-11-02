@@ -1,4 +1,4 @@
-<!-- CONFLUENCE 1:1 EXPORT | Source: docs/05-szablony/szablon-informacja-o-wydaniu.md @ 7e9a336 (2026-11-02) -->
+<!-- CONFLUENCE 1:1 EXPORT | Source: docs/05-szablony/szablon-informacja-o-wydaniu.md @ 10829d3 (2026-11-02) -->
 # 5.12 Szablon: Informacja o Wydaniu i Lista Kontrolna Wydania (Release Notes)
 
 > **Źródło prawdy:** Confluence PB / GitHub Releases · **Kategoria AltexSoft:** Process Documentation — Release Plan, Notes & Release Checklist · **Etap SDD:** Wydanie (`Release`) · **Wymóg uczelniany:** EU3

@@ -1,0 +1,99 @@
+<ac:structured-macro ac:name="info"><ac:rich-text-body><p><strong>Synchronizacja 1:1 z repozytorium Git:</strong> <code>docs/05-szablony/README.md</code> (commit <code>10829d3</code>, data eksportu: <code>2026-11-02</code>)</p></ac:rich-text-body></ac:structured-macro>
+<p>Katalog <code>05-szablony/</code> zawiera kompletny zestaw gotowych szablonów dla wszystkich typów dokumentacji wyróżnionych w klasyfikacji AltexSoft oraz wykorzystywanych w procesie <strong>Spec-Driven Development (SDD)</strong>.</p>
+<p>Podczas gdy <strong>PRD</strong> (<strong><code>01-prd-wymagania-produktu.md</code></strong> (<code>../01-dokumentacja-systemowa/01-prd-wymagania-produktu.md</code>)) oraz <strong>SAD</strong> (<strong><code>05-sad-architektura-systemu.md</code></strong> (<code>../01-dokumentacja-systemowa/05-sad-architektura-systemu.md</code>)) zostały w pełni opracowane dla projektu <strong>RE:JOLTANCE</strong> w sekcji <code>01-dokumentacja-systemowa/</code>, poniższe szablony stanowią ustandaryzowane wzorce do tworzenia kolejnych stron w <strong>Confluence PB</strong> oraz nowych dokumentów w kolejnych sprintach.</p>
+<hr />
+<h2>Katalog szablonów (Układ 1:1 z Confluence)</h2>
+<table><thead><tr>
+<th><p>Nr</p></th>
+<th><p>Plik szablonu</p></th>
+<th><p>Kategoria i typ dokumentacji</p></th>
+<th><p>Etap SDD</p></th>
+<th><p>Kiedy używać tego szablonu?</p></th>
+</tr></thead><tbody>
+<tr>
+<td><p><strong>5.1</strong></p></td>
+<td><p><strong><code>naglowek-strony-confluence.md</code></strong> (<code>naglowek-strony-confluence.md</code>)</p></td>
+<td><p>Standard metadanych strony</p></td>
+<td><p>Wszystkie etapy</p></td>
+<td><p>Na początku każdej strony w przestrzeni Confluence PB (wstawiany automatycznie przez <code>sync_confluence.py</code>).</p></td>
+</tr>
+<tr>
+<td><p><strong>5.2</strong></p></td>
+<td><p><strong><code>szablon-prd.md</code></strong> (<code>szablon-prd.md</code>)</p></td>
+<td><p>Dokumentacja systemowa — <strong>Wymagania produktu (PRD)</strong></p></td>
+<td><p>Specyfikacja</p></td>
+<td><p>Przy definiowaniu wymagań produktu lub nowego dużego modułu funkcjonalnego.</p></td>
+</tr>
+<tr>
+<td><p><strong>5.3</strong></p></td>
+<td><p><strong><code>szablon-sad.md</code></strong> (<code>szablon-sad.md</code>)</p></td>
+<td><p>Dokumentacja systemowa — <strong>Architektura systemu (SAD)</strong></p></td>
+<td><p>Planowanie</p></td>
+<td><p>Przy opisie architektury systemu (struktura AltexSoft + arc42 + model C4).</p></td>
+</tr>
+<tr>
+<td><p><strong>5.4</strong></p></td>
+<td><p><strong><code>szablon-tdd.md</code></strong> (<code>szablon-tdd.md</code>)</p></td>
+<td><p>Dokumentacja systemowa — <strong>Szczegółowy projekt techniczny (TDD)</strong></p></td>
+<td><p>Planowanie / Zadania</p></td>
+<td><p>Przy niskopoziomowym projektowaniu technicznym złożonej funkcji (także jako wzorzec dla <code>openspec/changes/&lt;id&gt;/design.md</code>).</p></td>
+</tr>
+<tr>
+<td><p><strong>5.5</strong></p></td>
+<td><p><strong><code>szablon-ux-persona-scenariusz.md</code></strong> (<code>szablon-ux-persona-scenariusz.md</code>)</p></td>
+<td><p>Dokumentacja systemowa — <strong>UX: Persony, scenariusze i mapa historyjek</strong></p></td>
+<td><p>Specyfikacja</p></td>
+<td><p>Podczas wywiadów z użytkownikami końcowymi (Radą Graczy) i mapowania podróży gracza.</p></td>
+</tr>
+<tr>
+<td><p><strong>5.6</strong></p></td>
+<td><p><strong><code>szablon-ux-test-uzytecznosci.md</code></strong> (<code>szablon-ux-test-uzytecznosci.md</code>)</p></td>
+<td><p>Dokumentacja systemowa — <strong>UX: Raport z testów użyteczności</strong></p></td>
+<td><p>Weryfikacja</p></td>
+<td><p>Po sesjach testów użyteczności z Radą Graczy na koniec sprintu (<code>NFR-20</code>).</p></td>
+</tr>
+<tr>
+<td><p><strong>5.7</strong></p></td>
+<td><p><strong><code>szablon-karta-modulu.md</code></strong> (<code>szablon-karta-modulu.md</code>)</p></td>
+<td><p>Dokumentacja systemowa — <strong>Karta modułu kodu źródłowego</strong></p></td>
+<td><p>Realizacja</p></td>
+<td><p>Do dokumentowania własnego modułu kodu (<code>src/&lt;moduł&gt;/README.md</code> oraz strona w Confluence na zaliczenie <strong>EU5</strong>).</p></td>
+</tr>
+<tr>
+<td><p><strong>5.8</strong></p></td>
+<td><p><strong><code>szablon-qa-plan-testow.md</code></strong> (<code>szablon-qa-plan-testow.md</code>)</p></td>
+<td><p>Dokumentacja systemowa — <strong>QA: Plan testów i specyfikacja przypadków testowych</strong></p></td>
+<td><p>Weryfikacja</p></td>
+<td><p>Na początku sprintu do zaplanowania zakresu testów i przypadków testowych (<strong>EU6</strong>).</p></td>
+</tr>
+<tr>
+<td><p><strong>5.9</strong></p></td>
+<td><p><strong><code>szablon-qa-raport-i-checklista.md</code></strong> (<code>szablon-qa-raport-i-checklista.md</code>)</p></td>
+<td><p>Dokumentacja systemowa — <strong>QA: Raport z testów i lista kontrolna</strong></p></td>
+<td><p>Weryfikacja</p></td>
+<td><p>Na koniec sprintu przed przeglądem sprintu do udokumentowania wyników testów z CI i pokrycia wymagań (<strong>EU6</strong>).</p></td>
+</tr>
+<tr>
+<td><p><strong>5.10</strong></p></td>
+<td><p><strong><code>szablon-podrecznik-gracza.md</code></strong> (<code>szablon-podrecznik-gracza.md</code>)</p></td>
+<td><p>Dokumentacja użytkownika — <strong>Podręcznik użytkownika końcowego</strong></p></td>
+<td><p>Wydanie</p></td>
+<td><p>Do rozbudowy instrukcji użytkownika końcowego, szybkiego startu i sekcji najczęściej zadawanych pytań.</p></td>
+</tr>
+<tr>
+<td><p><strong>5.11</strong></p></td>
+<td><p><strong><code>szablon-instrukcja-wdrozenia-admin.md</code></strong> (<code>szablon-instrukcja-wdrozenia-admin.md</code>)</p></td>
+<td><p>Dokumentacja użytkownika — <strong>Podręcznik administratora systemu</strong></p></td>
+<td><p>Wydanie</p></td>
+<td><p>Do dokumentowania procedur instalacji, konfiguracji, bezpieczeństwa i kopii zapasowych.</p></td>
+</tr>
+<tr>
+<td><p><strong>5.12</strong></p></td>
+<td><p><strong><code>szablon-informacja-o-wydaniu.md</code></strong> (<code>szablon-informacja-o-wydaniu.md</code>)</p></td>
+<td><p>Dokumentacja procesowa — <strong>Informacja o wydaniu i lista kontrolna</strong></p></td>
+<td><p>Wydanie</p></td>
+<td><p>Przy publikacji każdego kolejnego wydania <code>sprint-N</code> na gałęzi <code>main</code>.</p></td>
+</tr>
+</tbody></table>
+<blockquote><p><strong>Pozostałe szablony procesowe w repozytorium:</strong><br />- Szablon decyzji architektonicznej (<strong>ADR</strong>): <strong><code>01-dokumentacja-systemowa/07-decyzje-adr/0000-szablon.md</code></strong> (<code>../01-dokumentacja-systemowa/07-decyzje-adr/0000-szablon.md</code>)<br />- Szablony ceremonii Scrum (<strong>Daily Scrum</strong>, <strong>Przegląd sprintu i retrospektywa</strong>): <strong><code>03-dokumentacja-procesowa/03-scrum-i-spotkania/</code></strong> (<code>../03-dokumentacja-procesowa/03-scrum-i-spotkania/README.md</code>)</p></blockquote>
+<h2>Podstrony w tej sekcji (Drzewo Confluence)</h2><ac:structured-macro ac:name="children"><ac:parameter ac:name="all">true</ac:parameter></ac:structured-macro>

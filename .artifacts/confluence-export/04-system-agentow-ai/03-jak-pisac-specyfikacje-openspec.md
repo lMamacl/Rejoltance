@@ -1,4 +1,4 @@
-<!-- CONFLUENCE 1:1 EXPORT | Source: docs/04-system-agentow-ai/03-jak-pisac-specyfikacje-openspec.md @ 7e9a336 (2026-11-02) -->
+<!-- CONFLUENCE 1:1 EXPORT | Source: docs/04-system-agentow-ai/03-jak-pisac-specyfikacje-openspec.md @ 10829d3 (2026-11-02) -->
 # 4.3 Przewodnik pisania specyfikacji w OpenSpec (Spec-Driven Development)
 
 > **Źródło prawdy:** repozytorium (`docs/04-system-agentow-ai/03-jak-pisac-specyfikacje-openspec.md`) · **Kategoria dokumentacji:** Dokumentacja procesowa — Standard specyfikacji SDD · **Etap SDD:** Specyfikacja i planowanie

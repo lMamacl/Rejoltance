@@ -1,4 +1,4 @@
-<!-- CONFLUENCE 1:1 EXPORT | Source: docs/03-dokumentacja-procesowa/02-backlog/instrukcja-importu-jira.md @ 7e9a336 (2026-11-02) -->
+<!-- CONFLUENCE 1:1 EXPORT | Source: docs/03-dokumentacja-procesowa/02-backlog/instrukcja-importu-jira.md @ 10829d3 (2026-11-02) -->
 # Instrukcja importu Product Backlogu do systemu Jira PB
 
 > **Źródło prawdy:** repozytorium (`docs/03-dokumentacja-procesowa/02-backlog/instrukcja-importu-jira.md`) · **Kategoria AltexSoft:** Process Documentation — Tooling Guide · **Etap SDD:** Dekompozycja zadań (`Tasks`)

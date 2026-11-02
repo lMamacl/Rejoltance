@@ -1,0 +1,76 @@
+<ac:structured-macro ac:name="info"><ac:rich-text-body><p><strong>Synchronizacja 1:1 z repozytorium Git:</strong> <code>docs/05-szablony/szablon-qa-raport-i-checklista.md</code> (commit <code>10829d3</code>, data eksportu: <code>2026-11-02</code>)</p></ac:rich-text-body></ac:structured-macro>
+<blockquote><p><strong>Źródło prawdy:</strong> Confluence PB · <strong>Kategoria AltexSoft:</strong> Product: System Documentation — Quality Assurance (Test Report &amp; Test Checklists) · <strong>Etap SDD:</strong> Weryfikacja (<code>Verify</code>) · <strong>Wymóg uczelniany:</strong> EU6</p></blockquote>
+<hr />
+<h2>1. Podsumowanie wykonania testów w Sprincie <code>N</code></h2>
+<table><thead><tr>
+<th><p>Metryka jakościowa</p></th>
+<th><p>Wynik w Sprincie <code>N</code></p></th>
+<th><p>Wartość docelowa (Brama jakości)</p></th>
+<th><p>Status</p></th>
+</tr></thead><tbody>
+<tr>
+<td><p><strong>Testy jednostkowe C# (<code>Rejoltance.Kernel.Tests</code> + <code>Cards.Tests</code>)</strong></p></td>
+<td><p><code>&lt;Przeszło / Razem&gt;</code></p></td>
+<td><p>100% zielone</p></td>
+<td><p><code>✅ / ❌</code></p></td>
+</tr>
+<tr>
+<td><p><strong>Testy integracyjne (<code>Rejoltance.Host.Tests</code>)</strong></p></td>
+<td><p><code>&lt;Przeszło / Razem&gt;</code></p></td>
+<td><p>100% zielone</p></td>
+<td><p><code>✅ / ❌</code></p></td>
+</tr>
+<tr>
+<td><p><strong>Testy jednostkowe UI (<code>Vitest</code>)</strong></p></td>
+<td><p><code>&lt;Przeszło / Razem&gt;</code></p></td>
+<td><p>100% zielone</p></td>
+<td><p><code>✅ / ❌</code></p></td>
+</tr>
+<tr>
+<td><p><strong>Testy E2E (<code>Playwright</code>)</strong></p></td>
+<td><p><code>&lt;Przeszło / Razem&gt;</code></p></td>
+<td><p>100% zielone</p></td>
+<td><p><code>✅ / ❌</code></p></td>
+</tr>
+<tr>
+<td><p><strong>Pokrycie kodu w <code>Rejoltance.Kernel</code> (Line Coverage)</strong></p></td>
+<td><p><code>&lt;X %&gt;</code></p></td>
+<td><p><code>≥ 90%</code> (<code>NFR-41</code>)</p></td>
+<td><p><code>✅ / ❌</code></p></td>
+</tr>
+<tr>
+<td><p><strong>Czas rozstrzygnięcia akcji w <code>Kernel</code> (p99)</strong></p></td>
+<td><p><code>&lt;X ms&gt;</code></p></td>
+<td><p><code>≤ 5 ms</code> (<code>NFR-01</code>)</p></td>
+<td><p><code>✅ / ❌</code></p></td>
+</tr>
+<tr>
+<td><p><strong>Link do przebiegu GitHub Actions CI</strong></p></td>
+<td><p><code>&lt;URL do zielonego przebiegu CI&gt;</code></p></td>
+<td><p>Zielony status</p></td>
+<td><p><code>✅ / ❌</code></p></td>
+</tr>
+</tbody></table>
+<hr />
+<h2>2. Lista kontrolna dymnych testów akceptacyjnych przed Sprint Review (Test Checklist)</h2>
+<ul><li>[ ] Aplikacja uruchamia się czysto jedną komendą <code>docker compose up --build</code> (<code>NFR-50</code>).</li><li>[ ] Endpoint diagnostyczny <code>GET /health</code> zwraca status <code>200 OK</code> (<code>NFR-53</code>).</li><li>[ ] Gracz może utworzyć pokój w lobby i dołączyć do niego z drugiej karty przeglądarki lub wybrać grę z botem AI.</li><li>[ ] Faza wymiany kart startowych (mulligan) przebiega bez błędów dla obu graczy (<code>R-12</code>).</li><li>[ ] Cztery kroki rundy (<em>Jednostki → Akcje → Walka → Koniec rundy</em>) zmieniają się we właściwej kolejności (<code>R-15</code>).</li><li>[ ] Zerwanie połączenia WebSocket i odświeżenie karty przeglądarki przywraca aktualny widok stołu bez ujawnienia ukrytych kart przeciwnika (<code>R-66</code>, <code>NFR-30</code>).</li><li>[ ] Po obniżeniu HP lidera do <code>0</code> wyświetla się ekran podsumowania meczu z poprawnym zwycięzcą (<code>R-64</code>).</li></ul>
+<hr />
+<h2>3. Rejestr wykrytych defektów (Bug Report Log)</h2>
+<table><thead><tr>
+<th><p>ID błędu (Jira)</p></th>
+<th><p>Krótki opis defektu i kroki reprodukcji</p></th>
+<th><p>Dotknięta reguła (<code>R-nn</code>)</p></th>
+<th><p>Priorytet (<code>P0–P3</code>)</p></th>
+<th><p>Status przed wydaniem (<code>Naprawiony / Otwarty</code>)</p></th>
+</tr></thead><tbody>
+<tr>
+<td><p><code>REJ-...</code></p></td>
+<td><p></p></td>
+<td><p></p></td>
+<td><p></p></td>
+<td><p></p></td>
+</tr>
+</tbody></table>
+<hr />
+<h2>4. Decyzja jakościowa (QA Sign-Off)</h2>
+<ul><li><strong>Rekomendacja zespołu QA:</strong> <code>&lt;Akceptacja wydania na gałąź main / Wstrzymanie wydania do czasu naprawy błędów P0/P1&gt;</code></li><li><strong>Podpis i data:</strong> <code>&lt;Imię i nazwisko, RRRR-MM-DD&gt;</code></li></ul>

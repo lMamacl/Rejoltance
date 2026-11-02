@@ -1,0 +1,348 @@
+<ac:structured-macro ac:name="info"><ac:rich-text-body><p><strong>Synchronizacja 1:1 z repozytorium Git:</strong> <code>docs/03-dokumentacja-procesowa/01-dip-dokument-inicjujacy.md</code> (commit <code>10829d3</code>, data eksportu: <code>2026-11-02</code>)</p></ac:rich-text-body></ac:structured-macro>
+<blockquote><p>Wymóg zaliczenia (semestr 1): DIP nie jest oceniany liczbowo, ale jego brak = ocena niedostateczna.<br /><strong>Każdy student jest autorem jednego epiku (EU1)</strong> — sekcja 4. Wersja do oceny: kopia w Confluence PB.<br />Pola <code>⟨…⟩</code> uzupełnia zespół na spotkaniu startowym (pytania otwarte #1, #2, #9).</p></blockquote>
+<h2>Metadane</h2>
+<table><thead><tr>
+<th><p>Pole</p></th>
+<th><p>Wartość</p></th>
+</tr></thead><tbody>
+<tr>
+<td><p>Nazwa projektu</p></td>
+<td><p>RE:JOLTANCE — sieciowa taktyczna gra karciana z autorytatywnym serwerem i klientem webowym</p></td>
+</tr>
+<tr>
+<td><p>Klucz projektu w Jira</p></td>
+<td><p><code>REJ</code> ⟨do potwierdzenia — #1⟩</p></td>
+</tr>
+<tr>
+<td><p>Wersja dokumentu</p></td>
+<td><p>v0.9 (projekt do zatwierdzenia)</p></td>
+</tr>
+<tr>
+<td><p>Data zatwierdzenia</p></td>
+<td><p>⟨RRRR-MM-DD⟩</p></td>
+</tr>
+<tr>
+<td><p>Prowadzący / Scrum Master</p></td>
+<td><p>⟨tytuł, imię i nazwisko⟩</p></td>
+</tr>
+<tr>
+<td><p>Repozytorium</p></td>
+<td><p>&lt;https://github.com/lMamacl/Rejoltance&gt; (mirror: Bitbucket PB — ADR-0002)</p></td>
+</tr>
+<tr>
+<td><p>Skład zespołu</p></td>
+<td><p>1. ⟨imię⟩ — E1 · 2. ⟨imię⟩ — E2 · 3. ⟨imię⟩ — E3 · 4. ⟨imię⟩ — E4 · 5. ⟨imię⟩ — E5 · 6. ⟨imię⟩ — E6</p></td>
+</tr>
+</tbody></table>
+<h2>1. Wstęp, kontekst i cele</h2>
+<h3>1.1 Problem</h3>
+<p>RE:JOLTANCE to autorska gra karciana zespołu (lane battler: 4 linie, zasób Blood, talie po 30 kart). Istnieją dwie wersje: desktopowa (Godot/C#) — wymagająca instalacji i bez gry sieciowej — oraz prototyp przeglądarkowy w JS, w którym gra P2P jest podatna na oszustwa (podgląd ręki przeciwnika, nielegalne cele, XSS), a silnik nie ma determinizmu ani testów (<strong><code>04-badania-i-analizy/faza-0-analiza.md</code></strong> (<code>04-badania-i-analizy/faza-0-analiza.md</code>)). Gracz nie może więc bezpiecznie zagrać z kolegą online ani zaufać, że zasady działają poprawnie.</p>
+<h3>1.2 Cel i wartość</h3>
+<p>Celem dwusemestralnego projektu jest gra webowa, w którą:</p>
+<ul><li>można zagrać z drugą osobą przez link lub z botem, bez instalacji (przeglądarka, także na laptopach w sali);</li><li>serwer jest jedynym sędzią — ręka przeciwnika i kolejność talii są niewidoczne, każdy ruch jest walidowany;</li><li>zasady są spisane jako 55 testowalnych reguł R‑nn i pokryte testami automatycznymi (EU6);</li><li>każdy mecz da się odtworzyć z seeda i listy ruchów (powtórki, analiza balansu).</li></ul>
+<h3>1.3 Ograniczenia i założenia</h3>
+<ul><li>Stos: .NET 10 + ASP.NET Core + SignalR, React + TypeScript + Vite, Aspire, SQLite → PostgreSQL (ADR-0001, ADR-0007).</li><li>Narzędzia uczelni: Jira, Confluence, Bitbucket PB; kod i CI na GitHubie (ADR-0002).</li><li>Czas: 6 osób × ok. 5 h tygodniowo; Sprint 0 (1 tydzień) + 5 sprintów dwutygodniowych w semestrze 1.</li><li>Kanon zasad: prototyp JS v11 (ADR-0005); sporne miejsca w <strong><code>01-dokumentacja-systemowa/04-rozbieznosci-prototypu.md</code></strong> (<code>../01-dokumentacja-systemowa/04-rozbieznosci-prototypu.md</code>).</li><li>Praca wspierana agentami AI wg konstytucji projektu (<code>.agents/rules/00-konstytucja.md</code>) — decyzje i odpowiedzialność po stronie ludzi.</li></ul>
+<h2>2. Użytkownik końcowy i pętla walidacji (EU1, EU2)</h2>
+<h3>2.1 Persony</h3>
+<table><thead><tr>
+<th><p>Persona</p></th>
+<th><p>Kto</p></th>
+<th><p>Bolączki</p></th>
+<th><p>Oczekiwane korzyści</p></th>
+</tr></thead><tbody>
+<tr>
+<td><p><strong>Gracz okazjonalny</strong></p></td>
+<td><p>student WI PB, gra w przerwie między zajęciami</p></td>
+<td><p>instalacja gier, brak przeciwnika „od ręki”</p></td>
+<td><p>link → gra w 5 s; bot, gdy nikt nie ma czasu</p></td>
+</tr>
+<tr>
+<td><p><strong>Gracz zaawansowany</strong></p></td>
+<td><p>członek koła naukowego / fan gier karcianych</p></td>
+<td><p>niejasne zasady, oszustwa online</p></td>
+<td><p>czytelne reguły, uczciwy serwer, własne talie</p></td>
+</tr>
+<tr>
+<td><p><strong>Projektant gry</strong></p></td>
+<td><p>autorzy gry (Bluzacy, PanCoto)</p></td>
+<td><p>brak danych o balansie</p></td>
+<td><p>symulacje bot‑vs‑bot, statystyki kart (semestr 2)</p></td>
+</tr>
+</tbody></table>
+<p>Reprezentanci: rada graczy testowych — 3 osoby spoza zespołu ⟨imiona⟩ (story E0-S03).</p>
+<h3>2.2 Plan współpracy</h3>
+<ol><li><strong>Inicjacja (S0):</strong> rozmowa z radą graczy na prototypie — co jest niejasne, co przeszkadza (wejście do E0-S04).</li><li><strong>Każdy sprint:</strong> Sprint Review z co najmniej 2 graczami testowymi; zadania demonstrowane przez autorów.</li><li><strong>Ślad:</strong> protokół odbioru w Confluence (szablon <strong><code>03-scrum-i-spotkania/szablon-review-retro.md</code></strong> (<code>03-scrum-i-spotkania/szablon-review-retro.md</code>)) + zgłoszenia w Jirze z feedbacku.</li><li><strong>Koniec semestru:</strong> mini‑turniej na Sprint Review S5 (gra online + bot).</li></ol>
+<h2>3. Wizja architektoniczna</h2>
+<p>Modularny monolit z granicami wymuszanymi testami architektury (<code>tests/Rejoltance.Architecture.Tests</code>). Szczegóły: <strong><code>01-dokumentacja-systemowa/05-sad-architektura-systemu.md</code></strong> (<code>../01-dokumentacja-systemowa/05-sad-architektura-systemu.md</code>) oraz <strong><code>08-mapa-kodu-i-modulow.md</code></strong> (<code>../01-dokumentacja-systemowa/08-mapa-kodu-i-modulow.md</code>).</p>
+<ac:structured-macro ac:name="code"><ac:parameter ac:name="language">none</ac:parameter><ac:plain-text-body><![CDATA[src/web (React/TS)  ── Intent ──►  Rejoltance.Server (SignalR, sesje, API, baza)
+        ▲                                  │
+        └──── MatchView + DomainEvent ─────┤
+                                           ▼
+                             Rejoltance.Kernel (reguły, deterministyczny)
+                                           ▼
+                             Rejoltance.Content (karty jako dane) → Rejoltance.Contracts (5 kontraktów)]]></ac:plain-text-body></ac:structured-macro>
+<ul><li><strong>Kontrakty zamrożone:</strong> <code>Intent</code>, <code>LegalAction</code>, <code>PendingInteraction</code>, <code>MatchView</code>, <code>DomainEvent</code>; zmiana = ADR (konstytucja, art. IV).</li><li><strong>Izolacja:</strong> każdy epik ma własny moduł/katalog i właściciela (CODEOWNERS); własność ≠ wyłączność.</li><li><strong>Trwałość:</strong> tylko konta, talie i zakończone mecze; mecze w toku w pamięci serwera.</li></ul>
+<h2>4. Epiki (EU1)</h2>
+<blockquote><p>Pełne historyjki, kryteria i szacunki: <strong><code>02-backlog/backlog.toml</code></strong> (<code>02-backlog/backlog.toml</code>) → <strong><code>02-backlog/BACKLOG.md</code></strong> (<code>02-backlog/BACKLOG.md</code>). Poniżej po 3 kluczowe historyjki epiku w semestrze 1.</p></blockquote>
+<h3>Epik 1: Silnik reguł (Kernel)</h3>
+<ul><li><strong>Autor (EU1):</strong> ⟨student 1⟩ · <strong>Klucz Jira:</strong> ⟨REJ-…⟩ · <strong>Moduł:</strong> <code>src/Rejoltance.Kernel</code></li><li><strong>Zakres:</strong> runda i kroki, zagrywanie jednostek, walka 4 linii, słowa kluczowe, ochrony przed śmiercią, koniec meczu (R-0x…R-5x, R-7x).</li><li><strong>Historyjki:</strong></li><li><code>E1-S01</code> Jako gracz chcę po mulliganie zdecydować, czy zaczynam, i rozpocząć rundę 1, aby mecz przeszedł do gry. <em>GIVEN</em> obaj zrobili mulligan <em>WHEN</em> gracz 0 wybiera „pierwszy”, a gracz 1 „drugi” <em>THEN</em> rundę 1 zaczyna gracz 0, obaj mają 1/1 Blood.</li><li><code>E1-S03</code> Jako gracz chcę, żeby po kroku akcji linie rozstrzygnęły się same, aby jednostki walczyły, a mecz mógł się zakończyć. <em>GIVEN</em> jednostki 3/2 i 2/3 naprzeciw <em>WHEN</em> linia się rozstrzyga <em>THEN</em> obie giną.</li><li><code>E1-S04</code> Jako gracz chcę, żeby Armored, Marked, Stunned, Burning, SplashDamage i Breakthrough działały, aby karty miały tożsamość. <em>GIVEN</em> jednostka z Armored(1) i Marked <em>WHEN</em> dostaje trafienie za 3 <em>THEN</em> traci 4 HP.</li></ul>
+<h3>Epik 2: Interpreter efektów kart (DSL)</h3>
+<ul><li><strong>Autor (EU1):</strong> ⟨student 2⟩ · <strong>Klucz Jira:</strong> ⟨REJ-…⟩ · <strong>Moduł:</strong> <code>src/Rejoltance.Content</code> + handlery efektów</li><li><strong>Zakres:</strong> rejestr akcji, wyzwalacze, warunki, wybór i walidacja celów, koszt, talia MVP 12 kart (R-2x, R-6x).</li><li><strong>Historyjki:</strong></li><li><code>E2-S01</code> Jako twórca kart chcę, żeby efekt był wykonywany z danych przez rejestr handlerów, aby nowa karta nie wymagała zmiany silnika. <em>GIVEN</em> akcja bez handlera <em>WHEN</em> efekt się uruchamia <em>THEN</em> rzucany jest wyjątek z nazwą akcji.</li><li><code>E2-S02</code> Jako gracz online chcę, żeby serwer przyjmował tylko legalne cele, aby nikt nie poświęcił mojej jednostki. <em>GIVEN</em> karta wymagająca poświęcenia przyjaznej jednostki <em>WHEN</em> wskazuję jednostkę wroga <em>THEN</em> intencja jest odrzucona.</li><li><code>E2-S05</code> Jako gracz testowy chcę zagrać pełny mecz talią 12 różnych kart, aby ocenić grę na Sprint Review. <em>GIVEN</em> talia MVP <em>WHEN</em> rozgrywam mecz z botem <em>THEN</em> każda z 12 kart działa zgodnie z opisem.</li></ul>
+<h3>Epik 3: Serwer i sieć czasu rzeczywistego</h3>
+<ul><li><strong>Autor (EU1):</strong> ⟨student 3⟩ · <strong>Klucz Jira:</strong> ⟨REJ-…⟩ · <strong>Moduł:</strong> <code>src/Rejoltance.Server</code></li><li><strong>Zakres:</strong> pokoje PvP, SignalR, autoryzacja miejsca, zdarzenia per gracz, limit czasu tury, ochrona hubu (R-7x, R-8x).</li><li><strong>Historyjki:</strong></li><li><code>E3-S01</code> Jako gracz chcę utworzyć pokój i wysłać koledze kod, aby zagrać w dwóch przeglądarkach. <em>GIVEN</em> pełny pokój <em>WHEN</em> trzecia osoba wpisze kod <em>THEN</em> dostaje komunikat „pokój pełny”.</li><li><code>E3-S02</code> Jako gracz online chcę, żeby nikt nie mógł grać za mnie, aby mecz był uczciwy. <em>GIVEN</em> gracz 1 <em>WHEN</em> wysyła intencję w kroku gracza 0 <em>THEN</em> intencja jest odrzucona.</li><li><code>E3-S04</code> Jako gracz chcę, żeby przeciwnik nie mógł grać w nieskończoność, aby mecz miał tempo. <em>GIVEN</em> aktywny gracz nic nie robi 90 s <em>WHEN</em> czas minie <em>THEN</em> krok jest automatycznie zakończony.</li></ul>
+<h3>Epik 4: Klient web</h3>
+<ul><li><strong>Autor (EU1):</strong> ⟨student 4⟩ · <strong>Klucz Jira:</strong> ⟨REJ-…⟩ · <strong>Moduł:</strong> <code>src/web</code></li><li><strong>Zakres:</strong> plansza i ręka, zagrywanie z podświetleniem legalnych ruchów, prompty, lobby, animacje i dźwięk.</li><li><strong>Historyjki:</strong></li><li><code>E4-S01</code> Jako gracz chcę widzieć planszę, rękę, HP i Blood jak w prototypie, aby rozumieć stan gry. <em>GIVEN</em> ręka przeciwnika <em>WHEN</em> patrzę na jego stronę <em>THEN</em> widzę tylko rewersy w liczbie <code>handCount</code>.</li><li><code>E4-S02</code> Jako gracz chcę kliknąć lub przeciągnąć kartę na podświetloną linię, aby grać intuicyjnie. <em>GIVEN</em> karta grywalna <em>WHEN</em> ją zaznaczę <em>THEN</em> podświetlają się tylko linie z <code>legalActions</code>.</li><li><code>E4-S05</code> Jako gracz chcę widzieć ataki, obrażenia i śmierć jednostek, aby gra była czytelna. <em>GIVEN</em> zdarzenia walki <em>WHEN</em> przychodzi <code>MatchUpdated</code> <em>THEN</em> odtwarzam je po kolei z dźwiękami.</li></ul>
+<h3>Epik 5: Bot AI i symulator</h3>
+<ul><li><strong>Autor (EU1):</strong> ⟨student 5⟩ · <strong>Klucz Jira:</strong> ⟨REJ-…⟩ · <strong>Moduł:</strong> <code>tools/oracle</code>, <code>src/Rejoltance.Sim</code> (powstanie)</li><li><strong>Zakres:</strong> wyrocznia z prototypu, testy różnicowe, bot na <code>LegalActions</code>, symulator headless, tryb gry z botem.</li><li><strong>Historyjki:</strong></li><li><code>E5-S01</code> Jako inżynier reguł chcę uruchomić silnik prototypu w Node z seedem, aby mieć wzorcowe wyniki. <em>GIVEN</em> ten sam seed <em>WHEN</em> uruchamiam dwa razy <em>THEN</em> wyniki są identyczne.</li><li><code>E5-S03</code> Jako gracz chcę zagrać z botem wykonującym legalne ruchy, aby testować grę bez drugiego człowieka. <em>GIVEN</em> mecz z botem <em>WHEN</em> bot jest aktywny <em>THEN</em> wykonuje tylko ruchy z <code>LegalActions</code>.</li><li><code>E5-S04</code> Jako projektant balansu chcę rozegrać 300 partii bez UI, aby wykryć zawieszenia i sprawdzić determinizm. <em>GIVEN</em> seedy 1..300 <em>WHEN</em> uruchamiam symulator <em>THEN</em> wszystkie partie się kończą, a powtórka daje ten sam wynik.</li></ul>
+<h3>Epik 6: Platforma — konta, dane, wdrożenie, jakość</h3>
+<ul><li><strong>Autor (EU1):</strong> ⟨student 6⟩ · <strong>Klucz Jira:</strong> ⟨REJ-…⟩ · <strong>Moduł:</strong> CI/CD, <code>tests/</code>, baza, konta</li><li><strong>Zakres:</strong> CI i testy E2E, konta graczy, PostgreSQL, wdrożenie demo, dokumentacja w Confluence (EU5/EU6).</li><li><strong>Historyjki:</strong></li><li><code>E6-S01</code> Jako zespół chcę zielone CI z testem E2E, aby każdy PR był automatycznie sprawdzony. <em>GIVEN</em> uruchomiony AppHost <em>WHEN</em> Playwright otwiera klienta <em>THEN</em> startuje sandbox i wykonuje mulligan.</li><li><code>E6-S02</code> Jako gracz chcę założyć konto i się zalogować, aby mieć swoje talie i historię. <em>GIVEN</em> 5 błędnych logowań w minutę <em>WHEN</em> próbuję szósty raz <em>THEN</em> dostaję odmowę.</li><li><code>E6-S05</code> Jako gracz testowy chcę wejść na adres i zagrać bez instalacji, aby testować grę między zajęciami. <em>GIVEN</em> obraz kontenera z CI <em>WHEN</em> wdrażam na hosting <em>THEN</em> gra działa pod adresem HTTPS.</li></ul>
+<p>Epik wspólny <strong>E0 Fundamenty i proces</strong> (narzędzia, DIP, ceremonie, rada graczy) nie ma jednego autora — odpowiada PO danego sprintu.</p>
+<h2>5. Harmonogram semestru 1 (EU4)</h2>
+<table><thead><tr>
+<th><p>Sprint</p></th>
+<th><p>Termin</p></th>
+<th><p>Cel</p></th>
+<th><p>Pojemność [h]</p></th>
+<th><p>Zaplanowane [h]</p></th>
+</tr></thead><tbody>
+<tr>
+<td><p>S0</p></td>
+<td><p>27.10–2.11</p></td>
+<td><p>repo, Jira, DIP, rozstrzygnięcie reguł spornych</p></td>
+<td><p>30</p></td>
+<td><p>27</p></td>
+</tr>
+<tr>
+<td><p>S1</p></td>
+<td><p>3.11–16.11</p></td>
+<td><p>dwie przeglądarki w jednym pokoju: mulligan, kolejność, start rundy</p></td>
+<td><p>60</p></td>
+<td><p>54</p></td>
+</tr>
+<tr>
+<td><p>S2</p></td>
+<td><p>17.11–30.11</p></td>
+<td><p>zagrywanie jednostek w krokach; serwer odrzuca nielegalne ruchy</p></td>
+<td><p>60</p></td>
+<td><p>57</p></td>
+</tr>
+<tr>
+<td><p>S3</p></td>
+<td><p>1.12–14.12</p></td>
+<td><p>walka 4 linii do końca meczu; prosty bot</p></td>
+<td><p>60</p></td>
+<td><p>49</p></td>
+</tr>
+<tr>
+<td><p>S4</p></td>
+<td><p>15.12–11.01</p></td>
+<td><p>słowa kluczowe, lobby, PostgreSQL (przerwa świąteczna)</p></td>
+<td><p>60</p></td>
+<td><p>50</p></td>
+</tr>
+<tr>
+<td><p>S5</p></td>
+<td><p>12.01–25.01</p></td>
+<td><p>MVP: 12 kart online i z botem, wdrożenie, dokumentacja</p></td>
+<td><p>60</p></td>
+<td><p>54</p></td>
+</tr>
+</tbody></table>
+<p>Szczegóły i linia cięcia: <strong><code>02-backlog/BACKLOG.md</code></strong> (<code>02-backlog/BACKLOG.md</code>).</p>
+<h2>6. Organizacja zespołu (EU2, EU3, EU4)</h2>
+<h3>6.1 Rotacja roli Product Ownera</h3>
+<p>Każdy student jest PO w co najmniej jednym sprincie. Sprintów jest 6 (S0–S5) na 6 osób ⟨do potwierdzenia z prowadzącym, czy S0 się liczy — #2⟩.</p>
+<table><thead><tr>
+<th><p>Sprint</p></th>
+<th><p>PO</p></th>
+<th><p>Akcent</p></th>
+</tr></thead><tbody>
+<tr>
+<td><p>S0</p></td>
+<td><p>⟨student⟩</p></td>
+<td><p>DIP, konfiguracja narzędzi, rada graczy</p></td>
+</tr>
+<tr>
+<td><p>S1</p></td>
+<td><p>⟨student⟩</p></td>
+<td><p>pierwszy planning z podziałem na taski ≤ 4 h, Burndown</p></td>
+</tr>
+<tr>
+<td><p>S2</p></td>
+<td><p>⟨student⟩</p></td>
+<td><p>pilnowanie pojemności (sprint najbardziej obciążony)</p></td>
+</tr>
+<tr>
+<td><p>S3</p></td>
+<td><p>⟨student⟩</p></td>
+<td><p>integracja walki, Review z graczami</p></td>
+</tr>
+<tr>
+<td><p>S4</p></td>
+<td><p>⟨student⟩</p></td>
+<td><p>planowanie wokół przerwy świątecznej</p></td>
+</tr>
+<tr>
+<td><p>S5</p></td>
+<td><p>⟨student⟩</p></td>
+<td><p>stabilizacja, dokumentacja, demo i turniej</p></td>
+</tr>
+</tbody></table>
+<h3>6.2 RACI</h3>
+<table><thead><tr>
+<th><p>Aktywność</p></th>
+<th><p>PO sprintu</p></th>
+<th><p>Autor epiku</p></th>
+<th><p>Zespół</p></th>
+<th><p>Prowadzący</p></th>
+</tr></thead><tbody>
+<tr>
+<td><p>Założenia epiku (EU1)</p></td>
+<td><p>C</p></td>
+<td><p><strong>A/R</strong></p></td>
+<td><p>C</p></td>
+<td><p>I</p></td>
+</tr>
+<tr>
+<td><p>Planning i podział zadań (EU3)</p></td>
+<td><p><strong>A/R</strong></p></td>
+<td><p>C</p></td>
+<td><p>C</p></td>
+<td><p>I</p></td>
+</tr>
+<tr>
+<td><p>Estymacja w Jira (EU4)</p></td>
+<td><p>A</p></td>
+<td><p><strong>R</strong></p></td>
+<td><p>R</p></td>
+<td><p>I</p></td>
+</tr>
+<tr>
+<td><p>Burndown (EU4)</p></td>
+<td><p><strong>A/R</strong></p></td>
+<td><p>I</p></td>
+<td><p>I</p></td>
+<td><p>I</p></td>
+</tr>
+<tr>
+<td><p>Daily i raporty</p></td>
+<td><p><strong>A/R</strong></p></td>
+<td><p>R</p></td>
+<td><p>R</p></td>
+<td><p>I</p></td>
+</tr>
+<tr>
+<td><p>Implementacja (EU2)</p></td>
+<td><p>I</p></td>
+<td><p><strong>A/R</strong></p></td>
+<td><p>R</p></td>
+<td><p>I</p></td>
+</tr>
+<tr>
+<td><p>Dokumentacja modułu w Confluence (EU6)</p></td>
+<td><p>C</p></td>
+<td><p><strong>A/R</strong></p></td>
+<td><p>R</p></td>
+<td><p>I</p></td>
+</tr>
+<tr>
+<td><p>Sprint Review (EU5)</p></td>
+<td><p><strong>A/R</strong></p></td>
+<td><p>R</p></td>
+<td><p>R</p></td>
+<td><p>I</p></td>
+</tr>
+<tr>
+<td><p>Arbitraż sporów o estymację</p></td>
+<td><p>R</p></td>
+<td><p>R</p></td>
+<td><p>I</p></td>
+<td><p><strong>A</strong></p></td>
+</tr>
+<tr>
+<td><p>Akceptacja ADR / zmiany kontraktu</p></td>
+<td><p>C</p></td>
+<td><p>R</p></td>
+<td><p><strong>A</strong> (2 osoby)</p></td>
+<td><p>I</p></td>
+</tr>
+</tbody></table>
+<h2>7. Rejestr ryzyk (EU4)</h2>
+<table><thead><tr>
+<th><p>ID</p></th>
+<th><p>Ryzyko</p></th>
+<th><p>P‑stwo</p></th>
+<th><p>Wpływ</p></th>
+<th><p>Mitygacja</p></th>
+<th><p>Właściciel</p></th>
+</tr></thead><tbody>
+<tr>
+<td><p>R-1</p></td>
+<td><p>Zakres reguł większy niż pojemność (MVP ≈ 291 h w semestrze 1)</p></td>
+<td><p>wysokie</p></td>
+<td><p>wysoki</p></td>
+<td><p>linia cięcia W0–W3; talia MVP 12 kart; cięcie od dołu</p></td>
+<td><p>PO sprintu</p></td>
+</tr>
+<tr>
+<td><p>R-2</p></td>
+<td><p>Bus factor 1 w Kernelu (ścieżka krytyczna E1)</p></td>
+<td><p>wysokie</p></td>
+<td><p>wysoki</p></td>
+<td><p>sub‑taski E1 dla 2 osób; review każdego PR; testy R‑nn i wyrocznia</p></td>
+<td><p>autor E1</p></td>
+</tr>
+<tr>
+<td><p>R-3</p></td>
+<td><p>Rozjazd kontraktów C#↔TS</p></td>
+<td><p>średnie</p></td>
+<td><p>wysoki</p></td>
+<td><p>ADR-0010: próbka JSON sprawdzana w obu językach; PR z recenzentem z drugiej strony</p></td>
+<td><p>autor E3/E4</p></td>
+</tr>
+<tr>
+<td><p>R-4</p></td>
+<td><p>Błędne reguły przepisane z prototypu</p></td>
+<td><p>średnie</p></td>
+<td><p>średni</p></td>
+<td><p><strong><code>04-rozbieznosci-prototypu.md</code></strong> (<code>../01-dokumentacja-systemowa/04-rozbieznosci-prototypu.md</code>) + decyzje E0-S04; testy różnicowe z wyrocznią (E5-S02)</p></td>
+<td><p>autor E1/E5</p></td>
+</tr>
+<tr>
+<td><p>R-5</p></td>
+<td><p>Utrata kontaktu z graczami testowymi</p></td>
+<td><p>średnie</p></td>
+<td><p>krytyczny</p></td>
+<td><p>3 osoby + zastępstwo; termin Review potwierdzany 3 dni wcześniej</p></td>
+<td><p>PO sprintu</p></td>
+</tr>
+<tr>
+<td><p>R-6</p></td>
+<td><p>Problemy środowiska Windows (Smart App Control, OneDrive, długie ścieżki)</p></td>
+<td><p>średnie</p></td>
+<td><p>średni</p></td>
+<td><p><code>tools/doctor.ps1</code>, <strong><code>01-szybki-start-i-instalacja.md</code></strong> (<code>../00-przewodnik-i-setup/01-szybki-start-i-instalacja.md</code>), CI jako dowód działania</p></td>
+<td><p>autor E6</p></td>
+</tr>
+<tr>
+<td><p>R-7</p></td>
+<td><p>Agent AI wprowadza błąd lub zmyśla</p></td>
+<td><p>średnie</p></td>
+<td><p>średni</p></td>
+<td><p>konstytucja (art. X), recenzja człowieka, testy obowiązkowe, etykiety [V]/[Z]</p></td>
+<td><p>wszyscy</p></td>
+</tr>
+<tr>
+<td><p>R-8</p></td>
+<td><p>Nierówne zaangażowanie</p></td>
+<td><p>średnie</p></td>
+<td><p>średni</p></td>
+<td><p>jawne raporty ze spotkań dziennych, rejestrowanie czasu w Jirze, zadania dla każdego w każdym sprincie</p></td>
+<td><p>PO sprintu</p></td>
+</tr>
+</tbody></table>
+<h2>8. Umowa zespołowa</h2>
+<h3>8.1 Kryteria Gotowości (DoR)</h3>
+<p>Zadanie wchodzi do sprintu, gdy: ma kryteria <code>GIVEN / WHEN / THEN</code> · podzadanie ≤ 4 h · wykonawca potwierdził szacunek na spotkaniu planującym · zależności są gotowe lub zamockowane (atrapa transportu, próbka kontraktu) · historyjka ≥ 3 SP ma zaakceptowaną zmianę OpenSpec.</p>
+<h3>8.2 Kryteria Ukończenia (DoD)</h3>
+<p>Zadanie przechodzi do stanu <em>Rozwiązane</em>, gdy: kod znajduje się na gałęzi <code>typ/REJ-123-opis</code> · CI jest zielone (kompilacja bez ostrzeżeń, testy, lintery) · napisano testy dla logiki (reguły: test <code>Rnn_…</code>) · Pull Request został zaakceptowany przez ≥ 1 inną osobę · dokumentacja modułu została zaktualizowana (repozytorium + Confluence) · czas został zarejestrowany w Jirze · zmiana została pokazana na środowisku deweloperskim i sprawdzona z kryteriami akceptacji.</p>

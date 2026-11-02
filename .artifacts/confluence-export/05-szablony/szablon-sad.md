@@ -1,4 +1,4 @@
-<!-- CONFLUENCE 1:1 EXPORT | Source: docs/05-szablony/szablon-sad.md @ 7e9a336 (2026-11-02) -->
+<!-- CONFLUENCE 1:1 EXPORT | Source: docs/05-szablony/szablon-sad.md @ 10829d3 (2026-11-02) -->
 # 5.3 Szablon: Dokument Architektury Oprogramowania (Software Architecture Document — SAD)
 
 > **Źródło prawdy:** `<Repozytorium>` · **Kategoria AltexSoft:** Product: System Documentation — Software Architecture Document (SAD) · **Etap SDD:** Plan (`Plan`)

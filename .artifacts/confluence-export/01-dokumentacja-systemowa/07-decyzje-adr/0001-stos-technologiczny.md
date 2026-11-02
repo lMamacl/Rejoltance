@@ -1,4 +1,4 @@
-<!-- CONFLUENCE 1:1 EXPORT | Source: docs/01-dokumentacja-systemowa/07-decyzje-adr/0001-stos-technologiczny.md @ 7e9a336 (2026-11-02) -->
+<!-- CONFLUENCE 1:1 EXPORT | Source: docs/01-dokumentacja-systemowa/07-decyzje-adr/0001-stos-technologiczny.md @ 10829d3 (2026-11-02) -->
 # ADR-0001: Stos — .NET 10 + React/TypeScript + Aspire
 
 - **Status:** zatwierdzona (decyzja zespołu, 2026-10-27; formalna akceptacja 2 osób na spotkaniu startowym)

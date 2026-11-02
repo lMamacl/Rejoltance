@@ -1,4 +1,4 @@
-<!-- CONFLUENCE 1:1 EXPORT | Source: docs/01-dokumentacja-systemowa/07-decyzje-adr/0011-dokumentacja-hybryda-repo-confluence.md @ 7e9a336 (2026-11-02) -->
+<!-- CONFLUENCE 1:1 EXPORT | Source: docs/01-dokumentacja-systemowa/07-decyzje-adr/0011-dokumentacja-hybryda-repo-confluence.md @ 10829d3 (2026-11-02) -->
 # ADR-0011: Dokumentacja hybrydowa — repo dla SDD, Confluence dla ludzi i procesu
 
 - **Status:** zatwierdzona (decyzja zespołu, 2026-11; formalna akceptacja 2 osób)

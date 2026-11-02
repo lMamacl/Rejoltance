@@ -1,4 +1,4 @@
-<!-- CONFLUENCE 1:1 EXPORT | Source: docs/00-przewodnik-i-setup/README.md @ 7e9a336 (2026-11-02) -->
+<!-- CONFLUENCE 1:1 EXPORT | Source: docs/00-przewodnik-i-setup/README.md @ 10829d3 (2026-11-02) -->
 # 00. Przewodnik, konfiguracja środowiska i architektura SDD
 
 Sekcja startowa stanowi punkt wejścia do projektu **RE:JOLTANCE** dla członków zespołu, prowadzącego zajęcia oraz agentów AI. Znajdziesz tutaj instrukcję konfiguracji środowiska, architekturę dokumentacji w podejściu Spec-Driven Development (SDD), zasady codziennej pracy w Scrumie, słownik pojęć oraz szczegółowy plan migracji i wdrożenia zmian względem dotychczasowego układu gałęzi `develop`.

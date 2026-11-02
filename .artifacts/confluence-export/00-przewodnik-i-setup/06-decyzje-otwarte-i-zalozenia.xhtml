@@ -1,0 +1,204 @@
+<ac:structured-macro ac:name="info"><ac:rich-text-body><p><strong>Synchronizacja 1:1 z repozytorium Git:</strong> <code>docs/00-przewodnik-i-setup/06-decyzje-otwarte-i-zalozenia.md</code> (commit <code>10829d3</code>, data eksportu: <code>2026-11-02</code>)</p></ac:rich-text-body></ac:structured-macro>
+<blockquote><p><strong>Źródło prawdy:</strong> repozytorium (<code>docs/00-przewodnik-i-setup/06-decyzje-otwarte-i-zalozenia.md</code>) · <strong>Kategoria dokumentacji:</strong> Założenia produktowe i procesowe oraz pytania otwarte · <strong>Etap SDD:</strong> Specyfikacja i planowanie</p></blockquote>
+<p>Dokument gromadzi w jednym miejscu wszystkie otwarte pytania wymagające decyzji zespołu lub prowadzącego zajęcia (<code>#1–#10</code>) oraz rejestr przyjętych założeń projektowych, które podlegają weryfikacji w kolejnych sprintach.</p>
+<hr />
+<h2>1. Pytania otwarte do rozstrzygnięcia (<code>#1–#10</code>)</h2>
+<p>Po podjęciu decyzji na spotkaniu zespołu należy wpisać ustalenie w kolumnie „Podjęta decyzja” oraz zaktualizować wskazane pliki powiązane.</p>
+<table><thead><tr>
+<th><p>ID</p></th>
+<th><p>Obszar</p></th>
+<th><p>Pytanie wymagające rozstrzygnięcia</p></th>
+<th><p>Osoba decyzyjna</p></th>
+<th><p>Pliki do aktualizacji po decyzji</p></th>
+<th><p>Podjęta decyzja</p></th>
+</tr></thead><tbody>
+<tr>
+<td><p><strong>#1</strong></p></td>
+<td><p>Proces / Jira</p></td>
+<td><p>Jaki będzie ostateczny klucz projektu w uczelnianej Jirze (obecnie przyjęto placeholder <code>REJ</code>) i kiedy projekt zostanie założony?</p></td>
+<td><p>Prowadzący zajęcia</p></td>
+<td><p><code>backlog.toml</code> (<code>project_key</code>), <code>.github/workflows/pr-conventions.yml</code>, <code>.agents/rules/50-git-i-jira.md</code>, <code>01-dip-dokument-inicjujacy.md</code></p></td>
+<td><p><em>Do potwierdzenia na zajęciach</em></p></td>
+</tr>
+<tr>
+<td><p><strong>#2</strong></p></td>
+<td><p>Proces / Scrum</p></td>
+<td><p>Jaki jest harmonogram rotacji roli Product Ownera w poszczególnych sprintach i czy Sprint 0 wlicza się do puli ocenianych sprintów PO?</p></td>
+<td><p>Zespół + Prowadzący</p></td>
+<td><p><code>01-dip-dokument-inicjujacy.md</code> §6.1, <code>01-prd-wymagania-produktu.md</code> §2</p></td>
+<td><p><em>Do ustalenia na spotkaniu startowym</em></p></td>
+</tr>
+<tr>
+<td><p><strong>#3</strong></p></td>
+<td><p>Proces / Jira</p></td>
+<td><p>Jak dokładnie mapujemy uczelniany przepływ pracy (<code>Open → In Progress → Resolved → Closed</code>) na kolumny tablicy Scrumowej?</p></td>
+<td><p>Product Owner S1</p></td>
+<td><p><code>03-proces-pracy-i-git-scrum.md</code>, <code>01-dip-dokument-inicjujacy.md</code> §8</p></td>
+<td><p><em>Do ustalenia przy konfiguracji tablicy</em></p></td>
+</tr>
+<tr>
+<td><p><strong>#4</strong></p></td>
+<td><p>Proces / Git</p></td>
+<td><p>Czy prowadzący akceptuje prowadzenie Code Review na GitHubie (z linkami w zadaniach Jira i automatycznym mirrorem kodu do Bitbucket PB)?</p></td>
+<td><p>Prowadzący zajęcia</p></td>
+<td><p><code>0002-github-i-mirror-bitbucket.md</code>, konfiguracja sekretów <code>BITBUCKET_TOKEN</code></p></td>
+<td><p><em>Do potwierdzenia z prowadzącym</em></p></td>
+</tr>
+<tr>
+<td><p><strong>#5</strong></p></td>
+<td><p>Produkt / MVP</p></td>
+<td><p>Które dokładnie 12 kart wchodzi w skład zawężonej talii MVP na pierwszy kamień milowy w Semestrze 1?</p></td>
+<td><p>Zespół + Rada Graczy</p></td>
+<td><p>Zadanie <code>E2-S05</code>, <code>01-prd-wymagania-produktu.md</code> §4</p></td>
+<td><p><em>Do wyboru w Sprincie 0</em></p></td>
+</tr>
+<tr>
+<td><p><strong>#6</strong></p></td>
+<td><p>Produkt / Reguły</p></td>
+<td><p>Jak rozstrzygamy 20 zidentyfikowanych rozbieżności prototypu JS (<code>D-01..D-20</code>, m.in. remis bohaterów, Flying vs jednostki naziemne, Breakthrough)?</p></td>
+<td><p>Zespół + Autorzy gry</p></td>
+<td><p><code>04-rozbieznosci-prototypu.md</code>, <code>openspec/specs/*</code>, testy w <code>Rejoltance.Kernel.Tests</code></p></td>
+<td><p><em>Zadanie <code>E0-S04</code> w Sprincie 0</em></p></td>
+</tr>
+<tr>
+<td><p><strong>#7</strong></p></td>
+<td><p>Produkt / EU1</p></td>
+<td><p>Kto personalnie wchodzi w skład 3-osobowej Rady Graczy Testowych (reprezentantów użytkownika końcowego spoza zespołu)?</p></td>
+<td><p>Product Owner S0</p></td>
+<td><p><code>01-dip-dokument-inicjujacy.md</code> §2.1, <code>01-prd-wymagania-produktu.md</code> §3, zadanie <code>E0-S03</code></p></td>
+<td><p><em>Do wpisania w Sprincie 0</em></p></td>
+</tr>
+<tr>
+<td><p><strong>#8</strong></p></td>
+<td><p>Techniczne</p></td>
+<td><p>Gdzie hostujemy publiczną instancję demonstracyjną na potrzeby Sprint Review (Azure for Students, Railway, serwer wydziałowy)?</p></td>
+<td><p>Właściciel Epiku E6</p></td>
+<td><p><code>05-sad-architektura-systemu.md</code> §7, zadanie <code>E6-S05</code></p></td>
+<td><p><em>Do wyboru przed Sprintem 3</em></p></td>
+</tr>
+<tr>
+<td><p><strong>#9</strong></p></td>
+<td><p>Organizacja</p></td>
+<td><p>Który student jest właścicielem którego epiku (<code>E1–E6</code>) w ramach indywidualnego zaliczenia efektu EU1 oraz dokumentacji EU5/EU6?</p></td>
+<td><p>Zespół (6 osób)</p></td>
+<td><p><code>01-dip-dokument-inicjujacy.md</code>, <code>01-prd-wymagania-produktu.md</code>, <code>backlog.toml</code>, <code>.github/CODEOWNERS</code></p></td>
+<td><p><em>Do przydzielenia na spotkaniu startowym</em></p></td>
+</tr>
+<tr>
+<td><p><strong>#10</strong></p></td>
+<td><p>Techniczne</p></td>
+<td><p>Czy wszyscy członkowie zespołu mogą zainstalować Docker Desktop lub Podman przed rozpoczęciem Sprintu 4 (migracja na PostgreSQL)?</p></td>
+<td><p>Zespół</p></td>
+<td><p><code>0007-sqlite-potem-postgresql.md</code>, zadanie <code>E6-S03</code></p></td>
+<td><p><em>Do weryfikacji przed Sprintem 4</em></p></td>
+</tr>
+</tbody></table>
+<hr />
+<h2>2. Rejestr założeń projektowych i technicznych</h2>
+<p>Założenia przyjęte na etapie projektowania architektury i planowania backlogu, które umożliwiają pracę bez przestojów i podlegają walidacji w toku projektu.</p>
+<h3>A. Założenia procesowe i organizacyjne</h3>
+<table><thead><tr>
+<th><p>Kod</p></th>
+<th><p>Przyjęte założenie</p></th>
+<th><p>Sposób weryfikacji</p></th>
+<th><p>Plan awaryjny (jeśli założenie okaże się błędne)</p></th>
+</tr></thead><tbody>
+<tr>
+<td><p><strong>Z-01</strong></p></td>
+<td><p>Klucz projektu w Jirze PB to <code>REJ</code>.</p></td>
+<td><p>Założenie projektu przez prowadzącego (#1).</p></td>
+<td><p>Jednorazowa zmiana <code>project_key</code> w <code>backlog.toml</code> i regeneracja plików CSV skryptem <code>gen_jira_csv.py</code>.</p></td>
+</tr>
+<tr>
+<td><p><strong>Z-02</strong></p></td>
+<td><p>Efektywna dostępność czasowa każdego studenta wynosi średnio <strong>5 godzin tygodniowo</strong> (łącznie 30 h/tydz. na 6-osobowy zespół, z 10% buforem bezpieczeństwa).</p></td>
+<td><p>Pomiar rzeczywistego czasu pracy (<em>Log Work</em>) i prędkości zespołu (<em>Velocity</em>) na koniec Sprintu 1.</p></td>
+<td><p>Korekta linii cięcia między falami <code>W1</code> i <code>W2</code> podczas <em>Sprint Planningu</em> S2.</p></td>
+</tr>
+<tr>
+<td><p><strong>Z-03</strong></p></td>
+<td><p>Przerwa świąteczno-noworoczna w Sprincie 4 (15.12–11.01) odpowiada realnemu nakładowi pracy standardowego dwutygodniowego sprintu.</p></td>
+<td><p>Planowanie dostępności zespołu na początku Sprintu 4.</p></td>
+<td><p>Zmniejszenie puli zadań w Sprincie 4 o 20–30%.</p></td>
+</tr>
+<tr>
+<td><p><strong>Z-04</strong></p></td>
+<td><p>Serwery uczelniane (<code>devtools.wi.pb.edu.pl</code>) są dostępne z sieci domowych bez konieczności zestawiania tunelu VPN.</p></td>
+<td><p>Pierwsze logowanie członków zespołu do Jiry i Confluence PB.</p></td>
+<td><p>Dopisanie instrukcji konfiguracji uczelnianego VPN do dokumentu <code>01-szybki-start-i-instalacja.md</code>.</p></td>
+</tr>
+</tbody></table>
+<h3>B. Założenia narzędziowe i techniczne</h3>
+<table><thead><tr>
+<th><p>Kod</p></th>
+<th><p>Przyjęte założenie</p></th>
+<th><p>Sposób weryfikacji</p></th>
+<th><p>Plan awaryjny (jeśli założenie okaże się błędne)</p></th>
+</tr></thead><tbody>
+<tr>
+<td><p><strong>Z-10</strong></p></td>
+<td><p>Pole <code>Original Estimate</code> podczas importu CSV do Jiry Server/DC przyjmuje wartości wyrażone w sekundach (np. <code>14400</code> = 4h).</p></td>
+<td><p>Próbny import plików z katalogu <code>02-backlog/test-import/</code>.</p></td>
+<td><p>Zmiana parametru <code>estimate_format = &quot;jira&quot;</code> w <code>backlog.toml</code> i ponowne wygenerowanie plików CSV.</p></td>
+</tr>
+<tr>
+<td><p><strong>Z-11</strong></p></td>
+<td><p>W uczelnianych instancjach Jira i Confluence PB włączona jest możliwość generowania <em>Personal Access Tokens (PAT)</em> do integracji MCP oraz skryptu <code>sync_confluence.py</code>.</p></td>
+<td><p>Konfiguracja przez pierwszą osobę według instrukcji w <code>01-architektura-i-konfiguracja-agentow.md</code>.</p></td>
+<td><p>Korzystanie z eksportu lokalnego (<code>.artifacts/confluence-export/</code>) i wklejanie stron Markdown w edytorze Confluence.</p></td>
+</tr>
+<tr>
+<td><p><strong>Z-12</strong></p></td>
+<td><p>Zabezpieczenie <em>Smart App Control</em> w Windows 11 blokuje lokalne biblioteki DLL tylko na części komputerów studenckich.</p></td>
+<td><p>Uruchomienie skryptu <code>tools/doctor.ps1</code> przez wszystkich członków zespołu (zadanie <code>E0-S01</code>).</p></td>
+<td><p>Uruchamianie serwera i klienta w dwóch osobnych terminalach (Wariant B w instrukcji startowej) oraz oparcie weryfikacji integracyjnej o GitHub Actions CI.</p></td>
+</tr>
+</tbody></table>
+<h3>C. Założenia produktowe i domenowe</h3>
+<table><thead><tr>
+<th><p>Kod</p></th>
+<th><p>Przyjęte założenie</p></th>
+<th><p>Sposób weryfikacji</p></th>
+<th><p>Plan awaryjny (jeśli założenie okaże się błędne)</p></th>
+</tr></thead><tbody>
+<tr>
+<td><p><strong>Z-20</strong></p></td>
+<td><p>Kanonicznym źródłem reguł gry jest prototyp JavaScript <code>prototype/revibance</code> (wersja v11 z dnia 27.10.2026), z wyłączeniem udokumentowanych błędów implementacyjnych (<code>D-01..D-20</code>).</p></td>
+<td><p>Warsztat weryfikacyjny z autorami gry w Sprincie 0 (<code>E0-S04</code>).</p></td>
+<td><p>Aktualizacja specyfikacji w <code>openspec/specs/</code> oraz indeksu <code>03-indeks-regul-r-nn.md</code>.</p></td>
+</tr>
+<tr>
+<td><p><strong>Z-21</strong></p></td>
+<td><p>Wszystkie zasoby graficzne (<code>img/*.webp</code>), dźwiękowe (<code>sfx/*.wav</code>, <code>audio/music.mp3</code>) oraz czcionki z prototypu mogą być legalnie przechowywane w repozytorium projektu.</p></td>
+<td><p>Potwierdzone przez autorów prototypu w zespole (27.10.2026).</p></td>
+<td><p>—</p></td>
+</tr>
+</tbody></table>
+<hr />
+<h2>3. Decyzje zamknięte i zweryfikowane</h2>
+<table><thead><tr>
+<th><p>Obszar</p></th>
+<th><p>Rozstrzygnięcie</p></th>
+<th><p>Data i źródło decyzji</p></th>
+</tr></thead><tbody>
+<tr>
+<td><p>Stos technologiczny</p></td>
+<td><p>Backend C# .NET 10 (ASP.NET Core + SignalR), frontend React 19 + TypeScript + Vite, orkiestracja .NET Aspire 13.</p></td>
+<td><p>2026-10-27 · <strong>ADR-0001</strong> (<code>../01-dokumentacja-systemowa/07-decyzje-adr/0001-stos-technologiczny.md</code>)</p></td>
+</tr>
+<tr>
+<td><p>Architektura silnika</p></td>
+<td><p>Silnik reguł (<code>Rejoltance.Kernel</code>) pisany od nowa jako czysty, deterministyczny reduktor stanu; prototyp JS stanowi kanon reguł.</p></td>
+<td><p>2026-10-27 · <strong>ADR-0004</strong> (<code>../01-dokumentacja-systemowa/07-decyzje-adr/0004-kernel-od-nowa-deterministyczny.md</code>), <strong>ADR-0005</strong> (<code>../01-dokumentacja-systemowa/07-decyzje-adr/0005-kanon-regul-prototyp-js.md</code>)</p></td>
+</tr>
+<tr>
+<td><p>Framework SDD</p></td>
+<td><p>Wybrano narzędzie <strong>OpenSpec</strong> wraz z konstytucją projektu w <code>.agents/rules/00-konstytucja.md</code>.</p></td>
+<td><p>2026-10-27 · <strong>ADR-0003</strong> (<code>../01-dokumentacja-systemowa/07-decyzje-adr/0003-openspec-i-konstytucja.md</code>)</p></td>
+</tr>
+<tr>
+<td><p>Architektura dokumentacji</p></td>
+<td><p>Układ 1:1 między repozytorium <code>docs/</code> a przestrzenią Confluence PB oparty na klasyfikacji AltexSoft i procesie SDD.</p></td>
+<td><p>2026-11-02 · <strong>ADR-0011</strong> (<code>../01-dokumentacja-systemowa/07-decyzje-adr/0011-dokumentacja-hybryda-repo-confluence.md</code>)</p></td>
+</tr>
+</tbody></table>

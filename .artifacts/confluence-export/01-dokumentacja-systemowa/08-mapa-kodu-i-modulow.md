@@ -1,4 +1,4 @@
-<!-- CONFLUENCE 1:1 EXPORT | Source: docs/01-dokumentacja-systemowa/08-mapa-kodu-i-modulow.md @ 7e9a336 (2026-11-02) -->
+<!-- CONFLUENCE 1:1 EXPORT | Source: docs/01-dokumentacja-systemowa/08-mapa-kodu-i-modulow.md @ 10829d3 (2026-11-02) -->
 # 1.8 Mapa kodu źródłowego i modułów
 
 > **Źródło prawdy:** repozytorium (`docs/01-dokumentacja-systemowa/08-mapa-kodu-i-modulow.md`) · **Kategoria dokumentacji:** Dokumentacja produktowa — systemowa (Dokumentacja kodu źródłowego) · **Etap SDD:** Realizacja

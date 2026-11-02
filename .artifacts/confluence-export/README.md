@@ -1,4 +1,4 @@
-<!-- CONFLUENCE 1:1 EXPORT | Source: docs/README.md @ 7e9a336 (2026-11-02) -->
+<!-- CONFLUENCE 1:1 EXPORT | Source: docs/README.md @ 10829d3 (2026-11-02) -->
 # Dokumentacja projektu RE:JOLTANCE
 
 Witaj w centralnym repozytorium dokumentacji projektu **RE:JOLTANCE** (sieciowej, taktycznej gry karcianej realizowanej w ramach przedmiotu *Projekt zespołowy* na Wydziale Informatyki Politechniki Białostockiej).

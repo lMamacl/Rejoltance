@@ -1,4 +1,4 @@
-<!-- CONFLUENCE 1:1 EXPORT | Source: docs/01-dokumentacja-systemowa/11-strategia-testow-qa.md @ 7e9a336 (2026-11-02) -->
+<!-- CONFLUENCE 1:1 EXPORT | Source: docs/01-dokumentacja-systemowa/11-strategia-testow-qa.md @ 10829d3 (2026-11-02) -->
 # 1.11 Strategia zapewnienia jakości i testów automatycznych (QA)
 
 > **Źródło prawdy:** repozytorium (`docs/01-dokumentacja-systemowa/11-strategia-testow-qa.md`) · **Kategoria dokumentacji:** Dokumentacja produktowa — systemowa (Zapewnienie jakości i strategia testów) · **Etap SDD:** Weryfikacja · **Wymóg uczelniany:** EU6

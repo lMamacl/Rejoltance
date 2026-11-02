@@ -1,4 +1,4 @@
-<!-- CONFLUENCE 1:1 EXPORT | Source: docs/01-dokumentacja-systemowa/07-decyzje-adr/0003-openspec-i-konstytucja.md @ 7e9a336 (2026-11-02) -->
+<!-- CONFLUENCE 1:1 EXPORT | Source: docs/01-dokumentacja-systemowa/07-decyzje-adr/0003-openspec-i-konstytucja.md @ 10829d3 (2026-11-02) -->
 # ADR-0003: OpenSpec jako narzędzie spec‑driven development + własna konstytucja
 
 - **Status:** zatwierdzona (2026-10-27, akceptacja Fazy 1)

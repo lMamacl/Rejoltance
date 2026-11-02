@@ -1,0 +1,93 @@
+<ac:structured-macro ac:name="info"><ac:rich-text-body><p><strong>Synchronizacja 1:1 z repozytorium Git:</strong> <code>docs/04-system-agentow-ai/03-jak-pisac-specyfikacje-openspec.md</code> (commit <code>10829d3</code>, data eksportu: <code>2026-11-02</code>)</p></ac:rich-text-body></ac:structured-macro>
+<blockquote><p><strong>Źródło prawdy:</strong> repozytorium (<code>docs/04-system-agentow-ai/03-jak-pisac-specyfikacje-openspec.md</code>) · <strong>Kategoria dokumentacji:</strong> Dokumentacja procesowa — Standard specyfikacji SDD · <strong>Etap SDD:</strong> Specyfikacja i planowanie</p></blockquote>
+<p>Niniejszy przewodnik wyjaśnia krok po kroku, jak w praktyce stosujemy podejście <strong>Spec-Driven Development (SDD)</strong> przy użyciu narzędzia <strong>OpenSpec</strong>.</p>
+<hr />
+<h2>1. Kiedy tworzymy specyfikację zmiany w OpenSpec?</h2>
+<table><thead><tr>
+<th><p>Rodzaj zadania</p></th>
+<th><p>Czy wymagana jest zmiana w <code>openspec/changes/</code>?</p></th>
+<th><p>Wymagany artefakt przed kodowaniem</p></th>
+</tr></thead><tbody>
+<tr>
+<td><p><strong>Historyjka (Story) o rozmiarze ≥ 3 SP</strong></p></td>
+<td><p><strong>TAK (obowiązkowo)</strong></p></td>
+<td><p>Zatwierdzona propozycja zmiany w <code>openspec/changes/rej-123-...</code></p></td>
+</tr>
+<tr>
+<td><p><strong>Każda zmiana lub implementacja reguły gry (<code>R-nn</code>)</strong></p></td>
+<td><p><strong>TAK (obowiązkowo)</strong></p></td>
+<td><p>Scenariusze <code>GIVEN / WHEN / THEN</code> w delcie specyfikacji + lista testów <code>Rnn_...</code></p></td>
+</tr>
+<tr>
+<td><p><strong>Każda modyfikacja 5 kontraktów (<code>Rejoltance.Contracts</code>)</strong></p></td>
+<td><p><strong>TAK (obowiązkowo + decyzja ADR)</strong></p></td>
+<td><p>Zmiana OpenSpec z plikiem <code>design.md</code> oraz dokument ADR zatwierdzony przez 2 osoby</p></td>
+</tr>
+<tr>
+<td><p><strong>Drobna poprawka błędu, stylów CSS lub dokumentacji (&lt; 3 SP)</strong></p></td>
+<td><p><strong>NIE (ścieżka szybka)</strong></p></td>
+<td><p>Krótki, 5-punktowy plan działania przedstawiony człowiekowi lub wpisany w opis PR</p></td>
+</tr>
+</tbody></table>
+<hr />
+<h2>2. Struktura katalogu <code>openspec/</code></h2>
+<ac:structured-macro ac:name="code"><ac:parameter ac:name="language">none</ac:parameter><ac:plain-text-body><![CDATA[openspec/
+├── config.yaml                          # Konfiguracja projektu i reguły walidacji dla agentów
+├── specs/                               # ŻYWA SPECYFIKACJA SYSTEMU (Stan aktualny — 10 obszarów)
+│   ├── match-setup/spec.md              # Reguły R-01..R-04 (przygotowanie meczu, mulligan)
+│   ├── round-flow/spec.md               # Reguły R-10..R-15 (przebieg rundy, Blood, Fatigue)
+│   ├── playing-cards/spec.md            # Reguły R-20..R-25 (zagrywanie kart, koszty, cele)
+│   ├── combat/spec.md                   # Reguły R-30..R-35 (walka na 4 liniach, Flying)
+│   ├── keywords/spec.md                 # Reguły R-40..R-48 (słowa kluczowe i statusy)
+│   ├── death-and-removal/spec.md        # Reguły R-50..R-54 (śmierć, Sacrifice, Silence)
+│   ├── card-effects/spec.md             # Reguły R-60..R-69 (interpreter efektów DSL)
+│   ├── match-end/spec.md                # Reguły R-70..R-73 (warunki zwycięstwa, remis, poddanie)
+│   ├── server-authority/spec.md         # Reguły R-80..R-84 (Fog of War, determinizm, Pending)
+│   └── quality-attributes/spec.md       # Wymagania niefunkcjonalne NFR-01..NFR-70 (ISO 25010)
+│
+└── changes/                             # PROPOZYCJE ZMIAN W TOKU (SDD Workflow)
+    ├── rej-45-choose-order/             # Przykład otwartej zmiany dla zadania REJ-45
+    │   ├── proposal.md                  # 1. Dlaczego i co zmieniamy (zakres + poza zakresem)
+    │   ├── specs/                       # 2. Delta wymagań (ADDED / MODIFIED / REMOVED)
+    │   │   └── match-setup/spec.md
+    │   ├── design.md                    # 3. Projekt techniczny zmiany (TDD — moduły, kontrakty)
+    │   └── tasks.md                     # 4. Lista zadań implementacyjnych ≤ 4 h z nazwami testów
+    └── archive/                         # Archiwum zrealizowanych i scalonych zmian]]></ac:plain-text-body></ac:structured-macro>
+<hr />
+<h2>3. Cykl życia specyfikacji krok po kroku (Przykład: Zadanie <code>REJ-45</code>)</h2>
+<h3>Krok 1: Utworzenie gałęzi i wygenerowanie propozycji (<code>/opsx:propose</code>)</h3>
+<p>Po utworzeniu gałęzi <code>feature/REJ-45-choose-order</code> wywołaj w swoim narzędziu AI polecenie:</p>
+<ul><li><strong>Claude Code / Gemini CLI:</strong> <code>/opsx:propose REJ-45 wybór kolejności po mulliganie i rozpoczęcie rundy 1 (R-04, R-10, R-11)</code></li><li><strong>Antigravity / GitHub Copilot:</strong> <code>/opsx-propose REJ-45 wybór kolejności po mulliganie i rozpoczęcie rundy 1 (R-04, R-10, R-11)</code></li><li><strong>OpenAI Codex:</strong> <code>$openspec-propose REJ-45 wybór kolejności po mulliganie i rozpoczęcie rundy 1 (R-04, R-10, R-11)</code></li></ul>
+<p>Agent (korzystając z wiedzy ról <code>rj-rules-expert</code> oraz <code>rj-architect</code>) utworzy katalog <code>openspec/changes/rej-45-choose-order/</code> wraz z kompletem plików.</p>
+<h3>Krok 2: Weryfikacja merytoryczna i walidacja techniczna</h3>
+<p>Przejrzyj wygenerowane pliki pod kątem czterech kryteriów:</p>
+<ol><li>Czy w <code>proposal.md</code> znajduje się klucz Jira (<code>REJ-45</code>) oraz wyraźna sekcja <strong>Poza zakresem (Out of Scope)</strong>?</li><li>Czy każde zmieniane lub dodawane wymaganie w <code>specs/&lt;obszar&gt;/spec.md</code> posiada identyfikator <code>R-nn</code> oraz co najmniej jeden konkretny scenariusz <code>GIVEN / WHEN / THEN</code> oparty na wartościach liczbowych z prototypu?</li><li>Czy w <code>tasks.md</code> każde zadanie ma pracochłonność <strong>≤ 4 h</strong> i wskazuje dokładną nazwę testu xUnit/Vitest (np. <code>R04_different_order_choices_respect_wants_first_preference</code>)?</li><li>Uruchom walidator CLI:</li></ol>
+<ac:structured-macro ac:name="code"><ac:parameter ac:name="language">bash</ac:parameter><ac:plain-text-body><![CDATA[   npx openspec validate rej-45-choose-order --strict]]></ac:plain-text-body></ac:structured-macro>
+<h3>Krok 3: Bramka akceptacji człowieka (Human Approval Gate)</h3>
+<p>Zatwierdź pliki propozycji na swojej gałęzi i pokaż je Product Ownerowi sprintu lub właścicielowi epiku. <strong>Kodowanie rozpoczynamy dopiero po uzyskaniu akceptacji specyfikacji.</strong> Zapobiega to pisaniu kodu, który trzeba byłoby przepisywać po Code Review.</p>
+<h3>Krok 4: Implementacja według <code>tasks.md</code> (<code>/opsx:apply</code>)</h3>
+<p>Wywołaj <code>/opsx:apply</code> (lub realizuj kolejne punkty z <code>tasks.md</code> z pomocą <code>rj-backend-engineer</code> / <code>rj-frontend-engineer</code>). Dla każdego punktu najpierw powstaje test, a następnie implementacja. Po ukończeniu każdego kroku zadanie w <code>tasks.md</code> jest oznaczane jako <code>[x]</code>.</p>
+<h3>Krok 5: Archiwizacja po scaleniu Pull Requesta (<code>/opsx:archive</code>)</h3>
+<p>Po zatwierdzeniu i scaleniu Pull Requesta wywołaj <code>/opsx:archive</code>. Narzędzie OpenSpec automatycznie włączy zmiany z delty do głównej specyfikacji w <code>openspec/specs/</code> i przeniesie katalog zmiany do <code>openspec/changes/archive/</code>.</p>
+<hr />
+<h2>4. Standard formatowania wymagań i scenariuszy w OpenSpec</h2>
+<p>Walidator <code>openspec validate --all --strict</code> (uruchamiany w każdym przebiegu CI) wymaga zachowania angielskich słów kluczowych struktury Markdown przy polskojęzycznej treści merytorycznej:</p>
+<ac:structured-macro ac:name="code"><ac:parameter ac:name="language">markdown</ac:parameter><ac:plain-text-body><![CDATA[## MODIFIED Requirements
+
+### Requirement: R-04 Wybór kolejności rozpoczęcia gry
+
+Po zakończeniu mulliganu przez obu graczy system SHALL przyjąć od każdego gracza deklarację `wantsFirst` określającą, czy chce on rozpoczynać rundę 1 jako Gracz A.
+
+#### Scenario: Gracze wybierają przeciwne preferencje
+
+- **GIVEN** obaj gracze zakończyli fazę mulliganu
+- **WHEN** gracz 0 wysyła `chooseOrder(wantsFirst: true)`, a gracz 1 wysyła `chooseOrder(wantsFirst: false)`
+- **THEN** rundę 1 rozpoczyna gracz 0, a obaj gracze otrzymują `1/1 Blood`
+
+#### Scenario: Gracze wybierają tę samą preferencję
+
+- **GIVEN** obaj gracze zakończyli fazę mulliganu
+- **WHEN** obaj gracze wysyłają `chooseOrder(wantsFirst: true)`
+- **THEN** gracz rozpoczynający rundę 1 zostaje wylosowany deterministycznie za pomocą `SeededRng` meczu]]></ac:plain-text-body></ac:structured-macro>
+<h3>Najważniejsze reguły walidatora OpenSpec</h3>
+<ol><li>Nagłówki muszą mieć dokładną postać <code>### Requirement: &lt;ID i tytuł&gt;</code> oraz <code>#### Scenario: &lt;Tytuł scenariusza&gt;</code>.</li><li>Treść wymagania pod nagłówkiem <code>### Requirement:</code> musi zawierać słowo kluczowe <strong><code>SHALL</code></strong> lub <strong><code>MUST</code></strong> (pisane wielkimi literami) i nie powinna przekraczać 500 znaków (szczegółowe przypadki umieszczaj w sekcjach <code>#### Scenario:</code>).</li><li>Każdy scenariusz musi zawierać punkty <strong><code>- **GIVEN** ...</code></strong>, <strong><code>- **WHEN** ...</code></strong> oraz <strong><code>- **THEN** ...</code></strong>.</li></ol>

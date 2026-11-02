@@ -1,4 +1,4 @@
-<!-- CONFLUENCE 1:1 EXPORT | Source: docs/05-szablony/szablon-qa-raport-i-checklista.md @ 7e9a336 (2026-11-02) -->
+<!-- CONFLUENCE 1:1 EXPORT | Source: docs/05-szablony/szablon-qa-raport-i-checklista.md @ 10829d3 (2026-11-02) -->
 # 5.9 Szablon QA: Raport z Testów i Lista Kontrolna Wydania (Test Report & Checklist)
 
 > **Źródło prawdy:** Confluence PB · **Kategoria AltexSoft:** Product: System Documentation — Quality Assurance (Test Report & Test Checklists) · **Etap SDD:** Weryfikacja (`Verify`) · **Wymóg uczelniany:** EU6

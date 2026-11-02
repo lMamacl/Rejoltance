@@ -1,4 +1,4 @@
-<!-- CONFLUENCE 1:1 EXPORT | Source: docs/03-dokumentacja-procesowa/03-scrum-i-spotkania/README.md @ 7e9a336 (2026-11-02) -->
+<!-- CONFLUENCE 1:1 EXPORT | Source: docs/03-dokumentacja-procesowa/03-scrum-i-spotkania/README.md @ 10829d3 (2026-11-02) -->
 # 3.3 Ceremonie Scrum, raporty sprintów i spotkania zespołu
 
 > **Źródło prawdy:** repozytorium (`docs/03-dokumentacja-procesowa/03-scrum-i-spotkania/`) oraz Confluence PB · **Kategoria dokumentacji:** Dokumentacja procesowa — Raporty, metryki i notatki ze spotkań · **Etap SDD:** Weryfikacja i proces Scrum · **Wymogi uczelniane:** EU2, EU3, EU4, EU5

@@ -1,4 +1,4 @@
-<!-- CONFLUENCE 1:1 EXPORT | Source: docs/01-dokumentacja-systemowa/README.md @ 7e9a336 (2026-11-02) -->
+<!-- CONFLUENCE 1:1 EXPORT | Source: docs/01-dokumentacja-systemowa/README.md @ 10829d3 (2026-11-02) -->
 # 01. Dokumentacja produktowa — systemowa
 
 Katalog `01-dokumentacja-systemowa/` zawiera kompletną dokumentację systemową projektu **RE:JOLTANCE** zgodnie z klasyfikacją przedstawioną w opracowaniu AltexSoft.

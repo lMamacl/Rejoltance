@@ -1,4 +1,4 @@
-<!-- CONFLUENCE 1:1 EXPORT | Source: docs/04-system-agentow-ai/README.md @ 7e9a336 (2026-11-02) -->
+<!-- CONFLUENCE 1:1 EXPORT | Source: docs/04-system-agentow-ai/README.md @ 10829d3 (2026-11-02) -->
 # 04. Inżynieria agentowa i automatyzacja Spec-Driven Development (SDD)
 
 Witaj w przewodniku po systemie **inżynierii agentowej** projektu **RE:JOLTANCE**. Ponieważ nasz projekt jest rozwijany w podejściu **Spec-Driven Development (SDD)** ze wsparciem wyspecjalizowanych agentów AI, cały ten mechanizm został zaprojektowany tak, aby był **w pełni przejrzysty, zrozumiały i łatwy w rozbudowie dla każdego członka zespołu**.

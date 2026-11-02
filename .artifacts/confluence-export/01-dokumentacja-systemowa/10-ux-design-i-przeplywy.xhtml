@@ -1,0 +1,198 @@
+<ac:structured-macro ac:name="info"><ac:rich-text-body><p><strong>Synchronizacja 1:1 z repozytorium Git:</strong> <code>docs/01-dokumentacja-systemowa/10-ux-design-i-przeplywy.md</code> (commit <code>10829d3</code>, data eksportu: <code>2026-11-02</code>)</p></ac:rich-text-body></ac:structured-macro>
+<blockquote><p><strong>Źródło prawdy:</strong> repozytorium (<code>docs/01-dokumentacja-systemowa/10-ux-design-i-przeplywy.md</code>) · <strong>Kategoria dokumentacji:</strong> Dokumentacja produktowa — systemowa (Projekt UX i przewodnik stylu) · <strong>Etap SDD:</strong> Planowanie</p></blockquote>
+<p>Niniejszy dokument opisuje architekturę informacji, mapę ekranów, szkielet układu planszy (<em>wireframe</em>), kluczowe przepływy użytkownika (<em>User Flows</em>) oraz przewodnik stylu wizualnego (<em>UI Style Guide</em>) dla klienta webowego <strong>RE:JOLTANCE</strong> (<code>src/web</code>). Działającym prototypem referencyjnym dla interakcji oraz zasobów audiowizualnych jest aplikacja w katalogu <strong><code>prototype/revibance/</code></strong> (<code>../../prototype/README.md</code>).</p>
+<p>Szablony do dokumentowania badań z użytkownikami znajdują się w katalogu <strong><code>05-szablony/</code></strong> (<code>../05-szablony/README.md</code>):</p>
+<ul><li><strong><code>szablon-ux-persona-scenariusz.md</code></strong> (<code>../05-szablony/szablon-ux-persona-scenariusz.md</code>) — persony, scenariusze i mapa historyjek użytkownika,</li><li><strong><code>szablon-ux-test-uzytecznosci.md</code></strong> (<code>../05-szablony/szablon-ux-test-uzytecznosci.md</code>) — raport z sesji testów użyteczności z Radą Graczy.</li></ul>
+<hr />
+<h2>1. Architektura informacji i mapa ekranów</h2>
+<p><em>Diagram przepływu (Mermaid):</em></p>
+<ac:structured-macro ac:name="code"><ac:parameter ac:name="language">none</ac:parameter><ac:plain-text-body><![CDATA[flowchart TD
+  Start(["Wejście przez link w przeglądarce"]) --> Menu["Ekran 1: Menu Główne"]
+  Menu --> Auth["Ekran 2: Logowanie / Rejestracja / Tryb Gościa"]
+  Menu --> Lobby["Ekran 3: Lobby PvP (Utwórz pokój / Dołącz kodem)"]
+  Menu --> BotSetup["Ekran 4: Konfiguracja meczu z Botem AI (Wybór talii)"]
+  Menu --> Deckbuilder["Ekran 5: Kreator Talii (Deckbuilder 30 kart)"]
+  Menu --> Settings["Modal: Ustawienia dźwięku, czcionki i dostępności"]
+
+  Lobby --> Board["Ekran 6: Plansza Meczowa (4 linie)"]
+  BotSetup --> Board
+
+  Board --> Overlays["Nakładki interakcji (PendingInteraction):<br/>Mulligan · Wybór kolejności · Wybór celu · Podgląd stosów"]
+  Overlays --> Board
+  Board --> Log["Panel boczny: Dziennik zdarzeń meczu (Combat Log)"]
+  Board --> Zoom["Podgląd karty + Glosariusz słów kluczowych"]
+  Board --> EndScreen["Ekran 7: Podsumowanie meczu (Wynik · Rewanż · Powrót do menu)"]
+  EndScreen --> Menu]]></ac:plain-text-body></ac:structured-macro>
+<h3>Zestawienie ekranów i powiązanych zadań w backlogu</h3>
+<table><thead><tr>
+<th><p>Ekran / Widok</p></th>
+<th><p>Odpowiednik w prototypie (<code>index.html</code>)</p></th>
+<th><p>Status w kliencie React (<code>src/web</code>)</p></th>
+<th><p>Powiązane zadanie (Jira / Backlog)</p></th>
+</tr></thead><tbody>
+<tr>
+<td><p><strong>Menu główne</strong></p></td>
+<td><p><code>#menu</code></p></td>
+<td><p>W backlogu (obecnie bezpośredni start piaskownicy)</p></td>
+<td><p><code>E4-S07</code></p></td>
+</tr>
+<tr>
+<td><p><strong>Logowanie i rejestracja</strong></p></td>
+<td><p><em>(brak w prototypie)</em></p></td>
+<td><p>W backlogu</p></td>
+<td><p><code>E6-S02</code>, <code>E6-S09</code></p></td>
+</tr>
+<tr>
+<td><p><strong>Lobby 1v1 (kod pokoju, link)</strong></p></td>
+<td><p><code>#lobby</code></p></td>
+<td><p>W backlogu</p></td>
+<td><p><code>E3-S01</code>, <code>E4-S07</code></p></td>
+</tr>
+<tr>
+<td><p><strong>Wybór talii i mecz z botem</strong></p></td>
+<td><p><code>#botmenu</code></p></td>
+<td><p>W backlogu</p></td>
+<td><p><code>E5-S05</code></p></td>
+</tr>
+<tr>
+<td><p><strong>Plansza meczowa (4 linie, HP, Blood, ręka)</strong></p></td>
+<td><p><code>#game</code></p></td>
+<td><p><strong>Zaimplementowany szkielet w <code>src/web</code></strong></p></td>
+<td><p><code>E4-S01</code>, <code>E4-S02</code></p></td>
+</tr>
+<tr>
+<td><p><strong>Nakładki wyboru (<code>PendingInteraction</code>)</strong></p></td>
+<td><p><code>#mul</code></p></td>
+<td><p><strong>Zaimplementowany mulligan</strong>, pozostałe w backlogu</p></td>
+<td><p><code>E4-S03</code></p></td>
+</tr>
+<tr>
+<td><p><strong>Powiększenie karty i glosariusz słów kluczowych</strong></p></td>
+<td><p><code>#zoom</code></p></td>
+<td><p>W backlogu</p></td>
+<td><p><code>E4-S04</code></p></td>
+</tr>
+<tr>
+<td><p><strong>Dziennik rozgrywki (Log zdarzeń)</strong></p></td>
+<td><p><code>#hist</code></p></td>
+<td><p>W backlogu</p></td>
+<td><p><code>E4-S05</code></p></td>
+</tr>
+<tr>
+<td><p><strong>Koniec meczu i potwierdzenie poddania</strong></p></td>
+<td><p><code>#ov</code>, <code>#modal</code></p></td>
+<td><p><strong>Zaimplementowane poddanie i wynik</strong></p></td>
+<td><p><code>E4-S06</code></p></td>
+</tr>
+<tr>
+<td><p>**Kreator talii (<em>Deckbuilder</em>)**</p></td>
+<td><p><code>#bld</code></p></td>
+<td><p>W backlogu (Fala W2 — Semestr 2)</p></td>
+<td><p><code>E6-S04</code></p></td>
+</tr>
+</tbody></table>
+<hr />
+<h2>2. Makieta układu ekranu rozgrywki</h2>
+<p>Ekran rozgrywki zaprojektowano w proporcjach panoramicznych (<code>16:9</code>, rozdzielczość bazowa <code>1920×1080</code> skalowana responsywnie do okna przeglądarki od <code>1280×720</code>):</p>
+<ac:structured-macro ac:name="code"><ac:parameter ac:name="language">none</ac:parameter><ac:plain-text-body><![CDATA[┌──────────────────────────────────────────────────────────────────────────────────┐
+│ [Poddaj mecz]    Faza: Krok Jednostek (Twój ruch)     [Dziennik] [⚙]    Runda 3  │
+│ Ostatnie zdarzenia: [Dobrano kartę] [Zagrano: Iron Hound -> Linia 1]             │
+├──────────────────────────────────────────────────────────────────────────────────┤
+│ PRZECIWNIK   ❤ 17/20 HP   💧 Blood: ●●○ (2/3)   Ręka: 4 karty   Talia: 22  Stos: 3│
+│                                                                                  │
+│     ┌──────────────┐   ┌──────────────┐   ┌──────────────┐   ┌──────────────┐    │
+│     │   Linia 0    │   │   Linia 1    │   │   Linia 2    │   │   Linia 3    │    │
+│     │  [Wroga J.]  │   │   (pusto)    │   │  [Wroga J.]  │   │   (pusto)    │    │
+│     └──────────────┘   └──────────────┘   └──────────────┘   └──────────────┘    │
+│                            ─── TOR WALKI 4 LINII ───                             │
+│     ┌──────────────┐   ┌──────────────┐   ┌──────────────┐   ┌──────────────┐    │
+│     │   Linia 0    │   │   Linia 1    │   │   Linia 2    │   │   Linia 3    │    │
+│     │  [Twoja J.]  │   │  [Twoja J.]  │   │   (pusto)    │   │   (pusto)    │    │
+│     └──────────────┘   └──────────────┘   └──────────────┘   └──────────────┘    │
+│                                                                                  │
+│ TY (Miejsce 0) ❤ 20/20 HP  💧 Blood: ●●● (3/3)  Talia: 21  Stos: 2  [Zakończ krok]│
+│             ╭─────────╮ ╭─────────╮ ╭─────────╮ ╭─────────╮ ╭─────────╮          │
+│             │ Karta 1 │ │ Karta 2 │ │ Karta 3 │ │ Karta 4 │ │ Karta 5 │          │
+│             ╰─────────╯ ╰─────────╯ ╰─────────╯ ╰─────────╯ ╰─────────╯          │
+└──────────────────────────────────────────────────────────────────────────────────┘]]></ac:plain-text-body></ac:structured-macro>
+<h3>Zasady interakcji i ergonomii (<code>NFR-21</code>, <code>NFR-22</code>)</h3>
+<ol><li><strong>Podświetlanie wyłącznie legalnych ruchów (<code>legalActions</code>):</strong> Po wybraniu karty z ręki interfejs podświetla wyłącznie te sloty linii i cele, które znajdują się w tablicy <code>view.legalActions</code> przesłanej przez serwer. Próba zagrania karty zbyt drogiej wyświetla czytelny komunikat w języku polskim (np. <em>„Niewystarczająca ilość Blood”</em>).</li><li><strong>Obsługa za pomocą myszy i klawiatury:</strong> - Klawisze <code>1–8</code> wybierają odpowiednią kartę z ręki gracza. - Klawisze strzałek / <code>1–4</code> pozwalają wskazać linię lub cel. - Klawisz <code>Enter</code> lub <code>Spacja</code> zatwierdza wybór lub kończy bieżący krok (<code>endStep</code>). - Klawisz <code>Escape</code> lub prawy przycisk myszy anuluje bieżące zaznaczenie karty.</li></ol>
+<hr />
+<h2>3. Przepływ użytkownika: Rozpoczęcie pojedynku 1v1 przez link</h2>
+<p><em>Diagram przepływu (Mermaid):</em></p>
+<ac:structured-macro ac:name="code"><ac:parameter ac:name="language">none</ac:parameter><ac:plain-text-body><![CDATA[sequenceDiagram
+  autonumber
+  actor A as Gracz A (Twórca pokoju)
+  actor B as Gracz B (Zaproszony kolega)
+  participant UI as Klient Webowy (src/web)
+  participant S as Serwer (MatchHub)
+
+  A->>UI: Wybiera „Graj z kolegą” i talię startową
+  UI->>S: CreateRoom(deckName)
+  S-->>UI: Zwraca kod pokoju i link zapraszający
+  A->>B: Przesyła link na komunikatorze (np. Discord / Teams)
+  B->>UI: Otwiera link w przeglądarce i wybiera talię
+  UI->>S: JoinRoom(roomCode, deckName)
+  S-->>UI: MatchUpdated (faza: mulligan, pending: wybierz karty do wymiany)
+  A->>UI: Zatwierdza mulligan
+  B->>UI: Zatwierdza mulligan
+  S-->>UI: MatchUpdated (faza: chooseOrder)
+  A->>UI: Wybiera preferencję kolejności
+  B->>UI: Wybiera preferencję kolejności
+  S-->>UI: MatchUpdated (Runda 1, faza: unitStep, Blood: 1/1)]]></ac:plain-text-body></ac:structured-macro>
+<hr />
+<h2>4. Przewodnik stylu wizualnego</h2>
+<p>Oprawa wizualna gry utrzymana jest w mrocznej, kontrastowej stylistyce <em>dark tactical pixel-art</em>, przeniesionej bezpośrednio z prototypu <code>prototype/revibance/style.css</code>.</p>
+<h3>4.1 Paleta barw i weryfikacja kontrastu WCAG 2.1 AA (<code>NFR-22</code>)</h3>
+<table><thead><tr>
+<th><p>Token CSS</p></th>
+<th><p>Wartość HEX</p></th>
+<th><p>Zastosowanie w interfejsie</p></th>
+<th><p>Współczynnik kontrastu względem tła <code>#050505</code></p></th>
+<th><p>Status WCAG 2.1</p></th>
+</tr></thead><tbody>
+<tr>
+<td><p><code>--bg</code></p></td>
+<td><p><code>#050505</code></p></td>
+<td><p>Główne tło planszy i ekranów aplikacji.</p></td>
+<td><p>—</p></td>
+<td><p>Tło bazowe</p></td>
+</tr>
+<tr>
+<td><p><code>--ln</code></p></td>
+<td><p><code>#2a2a2a</code></p></td>
+<td><p>Obramowania slotów linii, kart i kontenerów.</p></td>
+<td><p><code>1.4 : 1</code></p></td>
+<td><p>Element dekoracyjny</p></td>
+</tr>
+<tr>
+<td><p><code>--tx</code></p></td>
+<td><p><code>#8d8d8d</code></p></td>
+<td><p>Tekst pomocniczy, etykiety statystyk i opisów.</p></td>
+<td><p><strong><code>6.1 : 1</code></strong></p></td>
+<td><p><strong>Spełnia AA</strong> (wymagane ≥ 4.5:1)</p></td>
+</tr>
+<tr>
+<td><p><code>--hi</code></p></td>
+<td><p><code>#cfcfcf</code></p></td>
+<td><p>Tekst główny, nazwy kart, wartości HP i nagłówki.</p></td>
+<td><p><strong><code>13.1 : 1</code></strong></p></td>
+<td><p><strong>Spełnia AAA</strong> (wymagane ≥ 7.0:1)</p></td>
+</tr>
+<tr>
+<td><p><code>--red</code></p></td>
+<td><p><code>#c4161c</code></p></td>
+<td><p>Akcent kolorystyczny zasobu <em>Blood</em>, obrażeń i zagrożenia.</p></td>
+<td><p><code>3.4 : 1</code></p></td>
+<td><p>Dozwolony dla dużych napisów (≥ 24 px) i ikon z etykietą</p></td>
+</tr>
+<tr>
+<td><p><code>--dim</code></p></td>
+<td><p><code>#3a3a3a</code></p></td>
+<td><p>Tło nieaktywnych przycisków i niedostępnych akcji.</p></td>
+<td><p><code>1.8 : 1</code></p></td>
+<td><p>Wyłącznie dla elementów wyłączonych (<code>disabled</code>)</p></td>
+</tr>
+</tbody></table>
+<h3>4.2 Typografia, grafika i udźwiękowienie</h3>
+<ul><li><strong>Zestawy czcionek (<code>prototype/revibance/fonts/</code>):</strong> Styl pikselowy (<em>Pixelify Sans</em>, <em>Silkscreen</em>, <em>DotGothic16</em>, <em>Jersey 15</em>) oraz czytelny styl klasyczny (<em>Cinzel</em> dla nagłówków + <em>Alegreya Sans</em> dla opisów kart), przełączane w ustawieniach dostępności.</li><li><strong>Zasoby kart (<code>prototype/revibance/img/</code>):</strong> Ilustracje kart w formacie WebP (<code>1.webp</code> .. <code>69.webp</code>, tokeny <code>900.webp</code> .. <code>908.webp</code>), rewers karty <code>back.webp</code> oraz ramka awersu <code>CardFront.png</code>.</li><li><strong>Bezpieczeństwo wizualne (<code>NFR-70</code>):</strong> Wszystkie animacje uderzeń i podpaleń są pozbawione błysków przekraczających 3 Hz oraz automatycznie skracane przy wykryciu flagi systemowej <code>@media (prefers-reduced-motion: reduce)</code>.</li></ul>

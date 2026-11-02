@@ -1,4 +1,4 @@
-<!-- CONFLUENCE 1:1 EXPORT | Source: docs/01-dokumentacja-systemowa/07-decyzje-adr/0007-sqlite-potem-postgresql.md @ 7e9a336 (2026-11-02) -->
+<!-- CONFLUENCE 1:1 EXPORT | Source: docs/01-dokumentacja-systemowa/07-decyzje-adr/0007-sqlite-potem-postgresql.md @ 10829d3 (2026-11-02) -->
 # ADR-0007: SQLite na start, PostgreSQL od Sprintu 4
 
 - **Status:** zatwierdzona (2026-10-27)

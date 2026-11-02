@@ -1,4 +1,4 @@
-<!-- CONFLUENCE 1:1 EXPORT | Source: docs/01-dokumentacja-systemowa/07-decyzje-adr/0010-kontrakt-csharp-ts-przez-probke.md @ 7e9a336 (2026-11-02) -->
+<!-- CONFLUENCE 1:1 EXPORT | Source: docs/01-dokumentacja-systemowa/07-decyzje-adr/0010-kontrakt-csharp-ts-przez-probke.md @ 10829d3 (2026-11-02) -->
 # ADR-0010: Zgodność kontraktu C# ↔ TypeScript przez wspólną próbkę JSON
 
 - **Status:** proponowana (do akceptacji; rewizja po Sprincie 2)
