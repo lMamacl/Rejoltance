@@ -21,6 +21,11 @@ Usage:
         --url https://devtools.wi.pb.edu.pl/confluence \\
         --user twoj_login --password twoje_haslo
 
+    # 5. Publish selected pages (parent README pages are included automatically):
+    python tools/confluence/sync_confluence.py --publish \
+        --include docs/04-system-agentow-ai/03-jak-pisac-specyfikacje-openspec.md \
+        --url https://devtools.wi.pb.edu.pl/confluence
+
 Standard library only (Python 3.11+).
 """
 
@@ -164,6 +169,42 @@ def validate_tree() -> tuple[list[str], list[Path]]:
                 errors.append(f"{rel_src}: broken relative link -> {raw_target!r}")
 
     return errors, md_files
+
+
+def select_pages(md_files: list[Path], patterns: list[str]) -> tuple[list[str], list[Path]]:
+    """Select pages by repository/docs-relative paths and include their README parents."""
+    pages_by_path = {path.resolve(): path for path in md_files}
+    selected: set[Path] = set()
+    errors: list[str] = []
+
+    for raw_pattern in patterns:
+        pattern = raw_pattern.replace("\\", "/")
+        if Path(pattern).is_absolute():
+            matches = [path for path in md_files if path.resolve().match(pattern)]
+        else:
+            matches = [
+                path
+                for path in md_files
+                if path.relative_to(ROOT).as_posix() == pattern
+                or path.relative_to(DOCS_DIR).as_posix() == pattern
+                or path.match(pattern)
+            ]
+        if not matches:
+            errors.append(f"--include pattern matched no active Markdown pages: {raw_pattern}")
+        selected.update(path.resolve() for path in matches)
+
+    for path in list(selected):
+        current = path.parent
+        while current == DOCS_DIR or DOCS_DIR in current.parents:
+            parent_readme = current / "README.md"
+            resolved_parent = parent_readme.resolve()
+            if resolved_parent in pages_by_path:
+                selected.add(resolved_parent)
+            if current == DOCS_DIR:
+                break
+            current = current.parent
+
+    return errors, sorted((pages_by_path[path] for path in selected), key=lambda path: path.as_posix())
 
 
 def git_commit_short() -> str:
@@ -654,6 +695,13 @@ def main() -> int:
     parser.add_argument("--export", action="store_true", help="validate and write Confluence Markdown + XHTML bundle")
     parser.add_argument("--publish", action="store_true", help="publish the entire docs/ tree to Confluence 8.4.5 via REST API")
     parser.add_argument("--dry-run", action="store_true", help="preview the page hierarchy to be published without calling the network")
+    parser.add_argument(
+        "--include",
+        action="append",
+        default=[],
+        metavar="PATH_OR_GLOB",
+        help="publish/export only matching docs pages; may be repeated, parent README pages are included",
+    )
     parser.add_argument("--url", default=os.environ.get("CONFLUENCE_URL", DEFAULT_CONFLUENCE_URL), help="Confluence base URL")
     parser.add_argument("--space-key", default=None, help="Confluence Space Key (auto-detected if omitted)")
     parser.add_argument("--token", default=None, help="Confluence Personal Access Token (or CONFLUENCE_PERSONAL_TOKEN env var)")
@@ -669,12 +717,22 @@ def main() -> int:
             print(f"  - {err}")
         return 1
 
+    selected_md_files = md_files
+    if args.include and (args.publish or args.export):
+        selection_errors, selected_md_files = select_pages(md_files, args.include)
+        if selection_errors:
+            print("Confluence page selection errors:")
+            for err in selection_errors:
+                print(f"  - {err}")
+            return 1
+        print(f"Selected {len(selected_md_files)} pages for {'publication' if args.publish else 'export'}.")
+
     if args.export:
-        export_bundle(md_files)
-        print(f"OK: validated and exported {len(md_files)} Confluence pages (MD + XHTML) to {EXPORT_DIR.relative_to(ROOT).as_posix()}/")
+        export_bundle(selected_md_files)
+        print(f"OK: validated and exported {len(selected_md_files)} Confluence pages (MD + XHTML) to {EXPORT_DIR.relative_to(ROOT).as_posix()}/")
 
     if args.publish:
-        return publish_to_confluence(md_files, args)
+        return publish_to_confluence(selected_md_files, args)
 
     if not args.export:
         print(
