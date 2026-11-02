@@ -1,4 +1,4 @@
-<!-- CONFLUENCE 1:1 EXPORT | Source: docs/00-przewodnik-i-setup/07-plan-wdrozenia-i-migracji.md @ a2bf2a4 (2026-11-02) -->
+<!-- CONFLUENCE 1:1 EXPORT | Source: docs/00-przewodnik-i-setup/07-plan-wdrozenia-i-migracji.md @ ff9d179 (2026-11-02) -->
 # 0.7 Plan wdrożenia i migracji: Co zmienić i co podmienić względem dotychczasowego podejścia
 
 > **Źródło prawdy:** repozytorium (`docs/00-przewodnik-i-setup/07-plan-wdrozenia-i-migracji.md`) · **Kategoria dokumentacji:** dokumentacja procesowa — plan zmian i wdrożenia · **Etap SDD:** Fundamenty i organizacja projektu
@@ -122,7 +122,7 @@ Skróty: PRD (Product Requirements Document) to wymagania produktu. SAD (Softwar
 
 | Stary plik na `develop` | Nowy plik w `.agents/rules/` | Zmiana |
 |---|---|---|
-| `00-konstytucja.md` | `00-konstytucja.md` | Przepisana prostym językiem polskim. Po przeglądzie ma 11 artykułów: wróciły zakazy dla agentów AI i artykuł o języku (ADR-0012, status: proponowana). |
+| `00-konstytucja.md` | `00-konstytucja.md` | Przepisana prostym językiem polskim. Po przeglądzie ma 11 artykułów: wróciły zakazy dla agentów AI i artykuł o języku (ADR-0012, zaakceptowana 2026-11-02). |
 | `10-prawda-i-niepewnosc.md` | `10-prawda-i-niepewnosc.md` | Usunięte znaczniki `[V]`/`[Z]`. Jasna kolejność źródeł prawdy i obsługa rozbieżności `D-nn`. |
 | `20-plan-i-zakres.md` | `20-plan-i-zakres.md` | Jasne kryteria, kiedy potrzebna jest propozycja zmiany w OpenSpec. Lista operacji wymagających zgody człowieka. |
 | `30-granice-architektury.md` | `30-architektura-i-kontrakty.md` | Połączone granice 5 modułów z ochroną 5 zamrożonych kontraktów komunikacyjnych. |

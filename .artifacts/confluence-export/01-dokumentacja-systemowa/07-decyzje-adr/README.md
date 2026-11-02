@@ -1,4 +1,4 @@
-<!-- CONFLUENCE 1:1 EXPORT | Source: docs/01-dokumentacja-systemowa/07-decyzje-adr/README.md @ a2bf2a4 (2026-11-02) -->
+<!-- CONFLUENCE 1:1 EXPORT | Source: docs/01-dokumentacja-systemowa/07-decyzje-adr/README.md @ ff9d179 (2026-11-02) -->
 # 1.7 Decyzje architektoniczne (ADR)
 
 > **Źródło prawdy:** Repozytorium (`docs/01-dokumentacja-systemowa/07-decyzje-adr/`) · **Kategoria dokumentacji:** Dokumentacja produktowa — systemowa (decyzje architektoniczne ADR) · **Etap SDD:** Fundamenty i planowanie
@@ -28,4 +28,4 @@ W ADR-ach oznaczamy fakty: [V] — zweryfikowane, [Z] — założenie.
 | [ADR-0009](0009-kanon-agentow-i-adaptery.md) | Jeden kanon konfiguracji agentów AI w `.agents/` i adaptery dla 5 narzędzi IDE | Zatwierdzona (`accepted`) | System agentów AI |
 | [ADR-0010](0010-kontrakt-csharp-ts-przez-probke.md) | Spójność kontraktu C# ↔ TypeScript sprawdzana kanonicznymi próbkami JSON | Proponowana (`proposed`) | Kontrakty i testy |
 | [ADR-0011](0011-dokumentacja-hybryda-repo-confluence.md) | Dokumentacja w układzie 1:1 (taksonomia AltexSoft, cykl życia SDD, synchronizacja z Confluence) | Zatwierdzona (`accepted`) | Dokumentacja i SDD |
-| [ADR-0012](0012-konstytucja-v2.md) | Konstytucja v2: nowy układ artykułów, zachowane zakazy dla agentów AI i zasada języka | Proponowana (`proposed`) | Proces i agenci AI |
+| [ADR-0012](0012-konstytucja-v2.md) | Konstytucja v2: nowy układ artykułów, zachowane zakazy dla agentów AI i zasada języka | Zatwierdzona (`accepted`) | Proces i agenci AI |
