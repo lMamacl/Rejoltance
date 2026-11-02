@@ -1,0 +1,541 @@
+{
+  "space": "REJOLTANCE",
+  "pages": [
+    {
+      "title": "0.1 Szybki start i instalacja środowiska deweloperskiego",
+      "section": "00. Przewodnik i konfiguracja środowiska",
+      "repo_path": "docs/00-przewodnik-i-setup/01-szybki-start-i-instalacja.md",
+      "export_path": ".artifacts/confluence-export/00-przewodnik-i-setup/01-szybki-start-i-instalacja.md",
+      "commit": "7e9a336",
+      "exported_at": "2026-11-02"
+    },
+    {
+      "title": "0.2 Architektura dokumentacji pod Spec-Driven Development (SDD) i mapowanie Confluence",
+      "section": "00. Przewodnik i konfiguracja środowiska",
+      "repo_path": "docs/00-przewodnik-i-setup/02-architektura-dokumentacji-sdd.md",
+      "export_path": ".artifacts/confluence-export/00-przewodnik-i-setup/02-architektura-dokumentacji-sdd.md",
+      "commit": "7e9a336",
+      "exported_at": "2026-11-02"
+    },
+    {
+      "title": "0.3 Proces pracy zespołu, przepływ Git, Jira i Scrum",
+      "section": "00. Przewodnik i konfiguracja środowiska",
+      "repo_path": "docs/00-przewodnik-i-setup/03-proces-pracy-i-git-scrum.md",
+      "export_path": ".artifacts/confluence-export/00-przewodnik-i-setup/03-proces-pracy-i-git-scrum.md",
+      "commit": "7e9a336",
+      "exported_at": "2026-11-02"
+    },
+    {
+      "title": "0.4 Ściąga komend deweloperskich, testowych i SDD",
+      "section": "00. Przewodnik i konfiguracja środowiska",
+      "repo_path": "docs/00-przewodnik-i-setup/04-sciaga-komend.md",
+      "export_path": ".artifacts/confluence-export/00-przewodnik-i-setup/04-sciaga-komend.md",
+      "commit": "7e9a336",
+      "exported_at": "2026-11-02"
+    },
+    {
+      "title": "0.5 Słownik pojęć domenowych, technicznych i procesowych",
+      "section": "00. Przewodnik i konfiguracja środowiska",
+      "repo_path": "docs/00-przewodnik-i-setup/05-slownik-pojec.md",
+      "export_path": ".artifacts/confluence-export/00-przewodnik-i-setup/05-slownik-pojec.md",
+      "commit": "7e9a336",
+      "exported_at": "2026-11-02"
+    },
+    {
+      "title": "0.6 Decyzje otwarte do zespołu oraz założenia projektowe",
+      "section": "00. Przewodnik i konfiguracja środowiska",
+      "repo_path": "docs/00-przewodnik-i-setup/06-decyzje-otwarte-i-zalozenia.md",
+      "export_path": ".artifacts/confluence-export/00-przewodnik-i-setup/06-decyzje-otwarte-i-zalozenia.md",
+      "commit": "7e9a336",
+      "exported_at": "2026-11-02"
+    },
+    {
+      "title": "0.7 Plan wdrożenia i migracji: Co zmienić i co podmienić względem dotychczasowego podejścia",
+      "section": "00. Przewodnik i konfiguracja środowiska",
+      "repo_path": "docs/00-przewodnik-i-setup/07-plan-wdrozenia-i-migracji.md",
+      "export_path": ".artifacts/confluence-export/00-przewodnik-i-setup/07-plan-wdrozenia-i-migracji.md",
+      "commit": "7e9a336",
+      "exported_at": "2026-11-02"
+    },
+    {
+      "title": "00. Przewodnik, konfiguracja środowiska i architektura SDD",
+      "section": "00. Przewodnik i konfiguracja środowiska",
+      "repo_path": "docs/00-przewodnik-i-setup/README.md",
+      "export_path": ".artifacts/confluence-export/00-przewodnik-i-setup/README.md",
+      "commit": "7e9a336",
+      "exported_at": "2026-11-02"
+    },
+    {
+      "title": "1.1 Wymagania produktu (PRD) — RE:JOLTANCE",
+      "section": "01. Dokumentacja produktowa — systemowa (PRD i SAD)",
+      "repo_path": "docs/01-dokumentacja-systemowa/01-prd-wymagania-produktu.md",
+      "export_path": ".artifacts/confluence-export/01-dokumentacja-systemowa/01-prd-wymagania-produktu.md",
+      "commit": "7e9a336",
+      "exported_at": "2026-11-02"
+    },
+    {
+      "title": "1.2 Specyfikacja funkcjonalna zasad gry — RE:JOLTANCE (v2)",
+      "section": "01. Dokumentacja produktowa — systemowa (PRD i SAD)",
+      "repo_path": "docs/01-dokumentacja-systemowa/02-specyfikacja-regul-gry.md",
+      "export_path": ".artifacts/confluence-export/01-dokumentacja-systemowa/02-specyfikacja-regul-gry.md",
+      "commit": "7e9a336",
+      "exported_at": "2026-11-02"
+    },
+    {
+      "title": "1.3 Indeks reguł gry (R‑nn) i macierz śledzalności testów",
+      "section": "01. Dokumentacja produktowa — systemowa (PRD i SAD)",
+      "repo_path": "docs/01-dokumentacja-systemowa/03-indeks-regul-r-nn.md",
+      "export_path": ".artifacts/confluence-export/01-dokumentacja-systemowa/03-indeks-regul-r-nn.md",
+      "commit": "7e9a336",
+      "exported_at": "2026-11-02"
+    },
+    {
+      "title": "1.4 Analiza rozbieżności i znanych błędów prototypu (D‑01..D‑20)",
+      "section": "01. Dokumentacja produktowa — systemowa (PRD i SAD)",
+      "repo_path": "docs/01-dokumentacja-systemowa/04-rozbieznosci-prototypu.md",
+      "export_path": ".artifacts/confluence-export/01-dokumentacja-systemowa/04-rozbieznosci-prototypu.md",
+      "commit": "7e9a336",
+      "exported_at": "2026-11-02"
+    },
+    {
+      "title": "1.5 Dokument architektury systemu (SAD) — RE:JOLTANCE",
+      "section": "01. Dokumentacja produktowa — systemowa (PRD i SAD)",
+      "repo_path": "docs/01-dokumentacja-systemowa/05-sad-architektura-systemu.md",
+      "export_path": ".artifacts/confluence-export/01-dokumentacja-systemowa/05-sad-architektura-systemu.md",
+      "commit": "7e9a336",
+      "exported_at": "2026-11-02"
+    },
+    {
+      "title": "1.6 Stos technologiczny i roadmapa technologiczna",
+      "section": "01. Dokumentacja produktowa — systemowa (PRD i SAD)",
+      "repo_path": "docs/01-dokumentacja-systemowa/06-stos-technologiczny.md",
+      "export_path": ".artifacts/confluence-export/01-dokumentacja-systemowa/06-stos-technologiczny.md",
+      "commit": "7e9a336",
+      "exported_at": "2026-11-02"
+    },
+    {
+      "title": "ADR-NNNN: <krótki tytuł>",
+      "section": "01. Dokumentacja produktowa — systemowa (PRD i SAD)",
+      "repo_path": "docs/01-dokumentacja-systemowa/07-decyzje-adr/0000-szablon.md",
+      "export_path": ".artifacts/confluence-export/01-dokumentacja-systemowa/07-decyzje-adr/0000-szablon.md",
+      "commit": "7e9a336",
+      "exported_at": "2026-11-02"
+    },
+    {
+      "title": "ADR-0001: Stos — .NET 10 + React/TypeScript + Aspire",
+      "section": "01. Dokumentacja produktowa — systemowa (PRD i SAD)",
+      "repo_path": "docs/01-dokumentacja-systemowa/07-decyzje-adr/0001-stos-technologiczny.md",
+      "export_path": ".artifacts/confluence-export/01-dokumentacja-systemowa/07-decyzje-adr/0001-stos-technologiczny.md",
+      "commit": "7e9a336",
+      "exported_at": "2026-11-02"
+    },
+    {
+      "title": "ADR-0002: GitHub jako główne repozytorium, mirror do Bitbucket PB",
+      "section": "01. Dokumentacja produktowa — systemowa (PRD i SAD)",
+      "repo_path": "docs/01-dokumentacja-systemowa/07-decyzje-adr/0002-github-i-mirror-bitbucket.md",
+      "export_path": ".artifacts/confluence-export/01-dokumentacja-systemowa/07-decyzje-adr/0002-github-i-mirror-bitbucket.md",
+      "commit": "7e9a336",
+      "exported_at": "2026-11-02"
+    },
+    {
+      "title": "ADR-0003: OpenSpec jako narzędzie spec‑driven development + własna konstytucja",
+      "section": "01. Dokumentacja produktowa — systemowa (PRD i SAD)",
+      "repo_path": "docs/01-dokumentacja-systemowa/07-decyzje-adr/0003-openspec-i-konstytucja.md",
+      "export_path": ".artifacts/confluence-export/01-dokumentacja-systemowa/07-decyzje-adr/0003-openspec-i-konstytucja.md",
+      "commit": "7e9a336",
+      "exported_at": "2026-11-02"
+    },
+    {
+      "title": "ADR-0004: Silnik reguł pisany od nowa, czysty i deterministyczny",
+      "section": "01. Dokumentacja produktowa — systemowa (PRD i SAD)",
+      "repo_path": "docs/01-dokumentacja-systemowa/07-decyzje-adr/0004-kernel-od-nowa-deterministyczny.md",
+      "export_path": ".artifacts/confluence-export/01-dokumentacja-systemowa/07-decyzje-adr/0004-kernel-od-nowa-deterministyczny.md",
+      "commit": "7e9a336",
+      "exported_at": "2026-11-02"
+    },
+    {
+      "title": "ADR-0005: Kanonem zasad jest prototyp JS v11",
+      "section": "01. Dokumentacja produktowa — systemowa (PRD i SAD)",
+      "repo_path": "docs/01-dokumentacja-systemowa/07-decyzje-adr/0005-kanon-regul-prototyp-js.md",
+      "export_path": ".artifacts/confluence-export/01-dokumentacja-systemowa/07-decyzje-adr/0005-kanon-regul-prototyp-js.md",
+      "commit": "7e9a336",
+      "exported_at": "2026-11-02"
+    },
+    {
+      "title": "ADR-0006: Serwer autorytatywny, fog of war w projekcji",
+      "section": "01. Dokumentacja produktowa — systemowa (PRD i SAD)",
+      "repo_path": "docs/01-dokumentacja-systemowa/07-decyzje-adr/0006-serwer-autorytatywny-fog-of-war.md",
+      "export_path": ".artifacts/confluence-export/01-dokumentacja-systemowa/07-decyzje-adr/0006-serwer-autorytatywny-fog-of-war.md",
+      "commit": "7e9a336",
+      "exported_at": "2026-11-02"
+    },
+    {
+      "title": "ADR-0007: SQLite na start, PostgreSQL od Sprintu 4",
+      "section": "01. Dokumentacja produktowa — systemowa (PRD i SAD)",
+      "repo_path": "docs/01-dokumentacja-systemowa/07-decyzje-adr/0007-sqlite-potem-postgresql.md",
+      "export_path": ".artifacts/confluence-export/01-dokumentacja-systemowa/07-decyzje-adr/0007-sqlite-potem-postgresql.md",
+      "commit": "7e9a336",
+      "exported_at": "2026-11-02"
+    },
+    {
+      "title": "ADR-0008: Najpierw kręgosłup (spine), potem pionowe plastry",
+      "section": "01. Dokumentacja produktowa — systemowa (PRD i SAD)",
+      "repo_path": "docs/01-dokumentacja-systemowa/07-decyzje-adr/0008-spine-first-pionowe-plastry.md",
+      "export_path": ".artifacts/confluence-export/01-dokumentacja-systemowa/07-decyzje-adr/0008-spine-first-pionowe-plastry.md",
+      "commit": "7e9a336",
+      "exported_at": "2026-11-02"
+    },
+    {
+      "title": "ADR-0009: Jeden kanon zasad agentów w `.agents/`, generowane adaptery",
+      "section": "01. Dokumentacja produktowa — systemowa (PRD i SAD)",
+      "repo_path": "docs/01-dokumentacja-systemowa/07-decyzje-adr/0009-kanon-agentow-i-adaptery.md",
+      "export_path": ".artifacts/confluence-export/01-dokumentacja-systemowa/07-decyzje-adr/0009-kanon-agentow-i-adaptery.md",
+      "commit": "7e9a336",
+      "exported_at": "2026-11-02"
+    },
+    {
+      "title": "ADR-0010: Zgodność kontraktu C# ↔ TypeScript przez wspólną próbkę JSON",
+      "section": "01. Dokumentacja produktowa — systemowa (PRD i SAD)",
+      "repo_path": "docs/01-dokumentacja-systemowa/07-decyzje-adr/0010-kontrakt-csharp-ts-przez-probke.md",
+      "export_path": ".artifacts/confluence-export/01-dokumentacja-systemowa/07-decyzje-adr/0010-kontrakt-csharp-ts-przez-probke.md",
+      "commit": "7e9a336",
+      "exported_at": "2026-11-02"
+    },
+    {
+      "title": "ADR-0011: Dokumentacja hybrydowa — repo dla SDD, Confluence dla ludzi i procesu",
+      "section": "01. Dokumentacja produktowa — systemowa (PRD i SAD)",
+      "repo_path": "docs/01-dokumentacja-systemowa/07-decyzje-adr/0011-dokumentacja-hybryda-repo-confluence.md",
+      "export_path": ".artifacts/confluence-export/01-dokumentacja-systemowa/07-decyzje-adr/0011-dokumentacja-hybryda-repo-confluence.md",
+      "commit": "7e9a336",
+      "exported_at": "2026-11-02"
+    },
+    {
+      "title": "1.7 Decyzje architektoniczne (ADR)",
+      "section": "01. Dokumentacja produktowa — systemowa (PRD i SAD)",
+      "repo_path": "docs/01-dokumentacja-systemowa/07-decyzje-adr/README.md",
+      "export_path": ".artifacts/confluence-export/01-dokumentacja-systemowa/07-decyzje-adr/README.md",
+      "commit": "7e9a336",
+      "exported_at": "2026-11-02"
+    },
+    {
+      "title": "1.8 Mapa kodu źródłowego i modułów",
+      "section": "01. Dokumentacja produktowa — systemowa (PRD i SAD)",
+      "repo_path": "docs/01-dokumentacja-systemowa/08-mapa-kodu-i-modulow.md",
+      "export_path": ".artifacts/confluence-export/01-dokumentacja-systemowa/08-mapa-kodu-i-modulow.md",
+      "commit": "7e9a336",
+      "exported_at": "2026-11-02"
+    },
+    {
+      "title": "1.9 Dokumentacja kontraktów komunikacyjnych i API (REST + SignalR)",
+      "section": "01. Dokumentacja produktowa — systemowa (PRD i SAD)",
+      "repo_path": "docs/01-dokumentacja-systemowa/09-kontrakty-i-api.md",
+      "export_path": ".artifacts/confluence-export/01-dokumentacja-systemowa/09-kontrakty-i-api.md",
+      "commit": "7e9a336",
+      "exported_at": "2026-11-02"
+    },
+    {
+      "title": "1.10 Projekt UX, mapa ekranów, przepływy i przewodnik stylu",
+      "section": "01. Dokumentacja produktowa — systemowa (PRD i SAD)",
+      "repo_path": "docs/01-dokumentacja-systemowa/10-ux-design-i-przeplywy.md",
+      "export_path": ".artifacts/confluence-export/01-dokumentacja-systemowa/10-ux-design-i-przeplywy.md",
+      "commit": "7e9a336",
+      "exported_at": "2026-11-02"
+    },
+    {
+      "title": "1.11 Strategia zapewnienia jakości i testów automatycznych (QA)",
+      "section": "01. Dokumentacja produktowa — systemowa (PRD i SAD)",
+      "repo_path": "docs/01-dokumentacja-systemowa/11-strategia-testow-qa.md",
+      "export_path": ".artifacts/confluence-export/01-dokumentacja-systemowa/11-strategia-testow-qa.md",
+      "commit": "7e9a336",
+      "exported_at": "2026-11-02"
+    },
+    {
+      "title": "01. Dokumentacja produktowa — systemowa",
+      "section": "01. Dokumentacja produktowa — systemowa (PRD i SAD)",
+      "repo_path": "docs/01-dokumentacja-systemowa/README.md",
+      "export_path": ".artifacts/confluence-export/01-dokumentacja-systemowa/README.md",
+      "commit": "7e9a336",
+      "exported_at": "2026-11-02"
+    },
+    {
+      "title": "2.1 Podręcznik gracza i przewodnik szybkiego startu — RE:JOLTANCE",
+      "section": "02. Dokumentacja produktowa — użytkownika i wdrożenia",
+      "repo_path": "docs/02-dokumentacja-uzytkownika/01-podrecznik-gracza.md",
+      "export_path": ".artifacts/confluence-export/02-dokumentacja-uzytkownika/01-podrecznik-gracza.md",
+      "commit": "7e9a336",
+      "exported_at": "2026-11-02"
+    },
+    {
+      "title": "2.2 Instrukcja wdrożenia, konfiguracji i utrzymania systemu (Podręcznik administratora)",
+      "section": "02. Dokumentacja produktowa — użytkownika i wdrożenia",
+      "repo_path": "docs/02-dokumentacja-uzytkownika/02-instrukcja-wdrozenia-i-utrzymania.md",
+      "export_path": ".artifacts/confluence-export/02-dokumentacja-uzytkownika/02-instrukcja-wdrozenia-i-utrzymania.md",
+      "commit": "7e9a336",
+      "exported_at": "2026-11-02"
+    },
+    {
+      "title": "02. Dokumentacja produktowa — użytkownika i administratora",
+      "section": "02. Dokumentacja produktowa — użytkownika i wdrożenia",
+      "repo_path": "docs/02-dokumentacja-uzytkownika/README.md",
+      "export_path": ".artifacts/confluence-export/02-dokumentacja-uzytkownika/README.md",
+      "commit": "7e9a336",
+      "exported_at": "2026-11-02"
+    },
+    {
+      "title": "Dokument Inicjujący Projekt (DIP) — RE:JOLTANCE",
+      "section": "03. Dokumentacja procesowa i zarządcza",
+      "repo_path": "docs/03-dokumentacja-procesowa/01-dip-dokument-inicjujacy.md",
+      "export_path": ".artifacts/confluence-export/03-dokumentacja-procesowa/01-dip-dokument-inicjujacy.md",
+      "commit": "7e9a336",
+      "exported_at": "2026-11-02"
+    },
+    {
+      "title": "Backlog — podsumowanie (generowane)",
+      "section": "03. Dokumentacja procesowa i zarządcza",
+      "repo_path": "docs/03-dokumentacja-procesowa/02-backlog/BACKLOG.md",
+      "export_path": ".artifacts/confluence-export/03-dokumentacja-procesowa/02-backlog/BACKLOG.md",
+      "commit": "7e9a336",
+      "exported_at": "2026-11-02"
+    },
+    {
+      "title": "Instrukcja importu Product Backlogu do systemu Jira PB",
+      "section": "03. Dokumentacja procesowa i zarządcza",
+      "repo_path": "docs/03-dokumentacja-procesowa/02-backlog/instrukcja-importu-jira.md",
+      "export_path": ".artifacts/confluence-export/03-dokumentacja-procesowa/02-backlog/instrukcja-importu-jira.md",
+      "commit": "7e9a336",
+      "exported_at": "2026-11-02"
+    },
+    {
+      "title": "3.2 Rejestr produktu i eksport do Jiry PB",
+      "section": "03. Dokumentacja procesowa i zarządcza",
+      "repo_path": "docs/03-dokumentacja-procesowa/02-backlog/README.md",
+      "export_path": ".artifacts/confluence-export/03-dokumentacja-procesowa/02-backlog/README.md",
+      "commit": "7e9a336",
+      "exported_at": "2026-11-02"
+    },
+    {
+      "title": "Testowy import CSV do Jiry PB",
+      "section": "03. Dokumentacja procesowa i zarządcza",
+      "repo_path": "docs/03-dokumentacja-procesowa/02-backlog/test-import/README.md",
+      "export_path": ".artifacts/confluence-export/03-dokumentacja-procesowa/02-backlog/test-import/README.md",
+      "commit": "7e9a336",
+      "exported_at": "2026-11-02"
+    },
+    {
+      "title": "3.3 Ceremonie Scrum, raporty sprintów i spotkania zespołu",
+      "section": "03. Dokumentacja procesowa i zarządcza",
+      "repo_path": "docs/03-dokumentacja-procesowa/03-scrum-i-spotkania/README.md",
+      "export_path": ".artifacts/confluence-export/03-dokumentacja-procesowa/03-scrum-i-spotkania/README.md",
+      "commit": "7e9a336",
+      "exported_at": "2026-11-02"
+    },
+    {
+      "title": "Spotkanie startowe zespołu — agenda (Kick-off Sprintu 0)",
+      "section": "03. Dokumentacja procesowa i zarządcza",
+      "repo_path": "docs/03-dokumentacja-procesowa/03-scrum-i-spotkania/spotkanie-startowe-agenda.md",
+      "export_path": ".artifacts/confluence-export/03-dokumentacja-procesowa/03-scrum-i-spotkania/spotkanie-startowe-agenda.md",
+      "commit": "7e9a336",
+      "exported_at": "2026-11-02"
+    },
+    {
+      "title": "Notatka ze spotkania Daily Scrum — Sprint N — RRRR-MM-DD",
+      "section": "03. Dokumentacja procesowa i zarządcza",
+      "repo_path": "docs/03-dokumentacja-procesowa/03-scrum-i-spotkania/szablon-daily.md",
+      "export_path": ".artifacts/confluence-export/03-dokumentacja-procesowa/03-scrum-i-spotkania/szablon-daily.md",
+      "commit": "7e9a336",
+      "exported_at": "2026-11-02"
+    },
+    {
+      "title": "Sprint N — Przegląd sprintu i retrospektywa",
+      "section": "03. Dokumentacja procesowa i zarządcza",
+      "repo_path": "docs/03-dokumentacja-procesowa/03-scrum-i-spotkania/szablon-review-retro.md",
+      "export_path": ".artifacts/confluence-export/03-dokumentacja-procesowa/03-scrum-i-spotkania/szablon-review-retro.md",
+      "commit": "7e9a336",
+      "exported_at": "2026-11-02"
+    },
+    {
+      "title": "Faza 0 — analiza materiałów źródłowych",
+      "section": "03. Dokumentacja procesowa i zarządcza",
+      "repo_path": "docs/03-dokumentacja-procesowa/04-badania-i-analizy/faza-0-analiza.md",
+      "export_path": ".artifacts/confluence-export/03-dokumentacja-procesowa/04-badania-i-analizy/faza-0-analiza.md",
+      "commit": "7e9a336",
+      "exported_at": "2026-11-02"
+    },
+    {
+      "title": "Faza 1 — porównanie narzędzi i rekomendacje",
+      "section": "03. Dokumentacja procesowa i zarządcza",
+      "repo_path": "docs/03-dokumentacja-procesowa/04-badania-i-analizy/faza-1-porownanie.md",
+      "export_path": ".artifacts/confluence-export/03-dokumentacja-procesowa/04-badania-i-analizy/faza-1-porownanie.md",
+      "commit": "7e9a336",
+      "exported_at": "2026-11-02"
+    },
+    {
+      "title": "3.4 Badania techniczne i analizy porównawcze",
+      "section": "03. Dokumentacja procesowa i zarządcza",
+      "repo_path": "docs/03-dokumentacja-procesowa/04-badania-i-analizy/README.md",
+      "export_path": ".artifacts/confluence-export/03-dokumentacja-procesowa/04-badania-i-analizy/README.md",
+      "commit": "7e9a336",
+      "exported_at": "2026-11-02"
+    },
+    {
+      "title": "03. Dokumentacja procesowa i zarządzanie Scrum",
+      "section": "03. Dokumentacja procesowa i zarządcza",
+      "repo_path": "docs/03-dokumentacja-procesowa/README.md",
+      "export_path": ".artifacts/confluence-export/03-dokumentacja-procesowa/README.md",
+      "commit": "7e9a336",
+      "exported_at": "2026-11-02"
+    },
+    {
+      "title": "4.1 Architektura i konfiguracja systemu agentów AI",
+      "section": "04. System agentów AI i SDD",
+      "repo_path": "docs/04-system-agentow-ai/01-architektura-i-konfiguracja-agentow.md",
+      "export_path": ".artifacts/confluence-export/04-system-agentow-ai/01-architektura-i-konfiguracja-agentow.md",
+      "commit": "7e9a336",
+      "exported_at": "2026-11-02"
+    },
+    {
+      "title": "4.2 Katalog ról agentów i macierz wbudowanych umiejętności",
+      "section": "04. System agentów AI i SDD",
+      "repo_path": "docs/04-system-agentow-ai/02-katalog-rol-i-wbudowanych-skilli.md",
+      "export_path": ".artifacts/confluence-export/04-system-agentow-ai/02-katalog-rol-i-wbudowanych-skilli.md",
+      "commit": "7e9a336",
+      "exported_at": "2026-11-02"
+    },
+    {
+      "title": "4.3 Przewodnik pisania specyfikacji w OpenSpec (Spec-Driven Development)",
+      "section": "04. System agentów AI i SDD",
+      "repo_path": "docs/04-system-agentow-ai/03-jak-pisac-specyfikacje-openspec.md",
+      "export_path": ".artifacts/confluence-export/04-system-agentow-ai/03-jak-pisac-specyfikacje-openspec.md",
+      "commit": "7e9a336",
+      "exported_at": "2026-11-02"
+    },
+    {
+      "title": "4.4 Warsztat inżynierski: Jak samodzielnie budować agentów, umiejętności, dokumentację, ADR i karty",
+      "section": "04. System agentów AI i SDD",
+      "repo_path": "docs/04-system-agentow-ai/04-warsztat-tworzenie-agentow-skilli-i-kart.md",
+      "export_path": ".artifacts/confluence-export/04-system-agentow-ai/04-warsztat-tworzenie-agentow-skilli-i-kart.md",
+      "commit": "7e9a336",
+      "exported_at": "2026-11-02"
+    },
+    {
+      "title": "04. Inżynieria agentowa i automatyzacja Spec-Driven Development (SDD)",
+      "section": "04. System agentów AI i SDD",
+      "repo_path": "docs/04-system-agentow-ai/README.md",
+      "export_path": ".artifacts/confluence-export/04-system-agentow-ai/README.md",
+      "commit": "7e9a336",
+      "exported_at": "2026-11-02"
+    },
+    {
+      "title": "5.1 Standard nagłówka metadanych strony w Confluence",
+      "section": "05. Biblioteka szablonów dokumentacji",
+      "repo_path": "docs/05-szablony/naglowek-strony-confluence.md",
+      "export_path": ".artifacts/confluence-export/05-szablony/naglowek-strony-confluence.md",
+      "commit": "7e9a336",
+      "exported_at": "2026-11-02"
+    },
+    {
+      "title": "05. Biblioteka szablonów dokumentacji technicznej",
+      "section": "05. Biblioteka szablonów dokumentacji",
+      "repo_path": "docs/05-szablony/README.md",
+      "export_path": ".artifacts/confluence-export/05-szablony/README.md",
+      "commit": "7e9a336",
+      "exported_at": "2026-11-02"
+    },
+    {
+      "title": "5.12 Szablon: Informacja o Wydaniu i Lista Kontrolna Wydania (Release Notes)",
+      "section": "05. Biblioteka szablonów dokumentacji",
+      "repo_path": "docs/05-szablony/szablon-informacja-o-wydaniu.md",
+      "export_path": ".artifacts/confluence-export/05-szablony/szablon-informacja-o-wydaniu.md",
+      "commit": "7e9a336",
+      "exported_at": "2026-11-02"
+    },
+    {
+      "title": "5.11 Szablon: Instrukcja Wdrożenia i Utrzymania (System Administrator Guide)",
+      "section": "05. Biblioteka szablonów dokumentacji",
+      "repo_path": "docs/05-szablony/szablon-instrukcja-wdrozenia-admin.md",
+      "export_path": ".artifacts/confluence-export/05-szablony/szablon-instrukcja-wdrozenia-admin.md",
+      "commit": "7e9a336",
+      "exported_at": "2026-11-02"
+    },
+    {
+      "title": "5.7 Szablon: Karta Modułu Inżynierskiego (Source Code Documentation)",
+      "section": "05. Biblioteka szablonów dokumentacji",
+      "repo_path": "docs/05-szablony/szablon-karta-modulu.md",
+      "export_path": ".artifacts/confluence-export/05-szablony/szablon-karta-modulu.md",
+      "commit": "7e9a336",
+      "exported_at": "2026-11-02"
+    },
+    {
+      "title": "5.10 Szablon: Podręcznik Użytkownika Końcowego (End-User Documentation)",
+      "section": "05. Biblioteka szablonów dokumentacji",
+      "repo_path": "docs/05-szablony/szablon-podrecznik-gracza.md",
+      "export_path": ".artifacts/confluence-export/05-szablony/szablon-podrecznik-gracza.md",
+      "commit": "7e9a336",
+      "exported_at": "2026-11-02"
+    },
+    {
+      "title": "5.2 Szablon: Dokument Wymagań Produktu (Product Requirements Document — PRD)",
+      "section": "05. Biblioteka szablonów dokumentacji",
+      "repo_path": "docs/05-szablony/szablon-prd.md",
+      "export_path": ".artifacts/confluence-export/05-szablony/szablon-prd.md",
+      "commit": "7e9a336",
+      "exported_at": "2026-11-02"
+    },
+    {
+      "title": "5.8 Szablon QA: Plan Testów i Specyfikacja Przypadków Testowych",
+      "section": "05. Biblioteka szablonów dokumentacji",
+      "repo_path": "docs/05-szablony/szablon-qa-plan-testow.md",
+      "export_path": ".artifacts/confluence-export/05-szablony/szablon-qa-plan-testow.md",
+      "commit": "7e9a336",
+      "exported_at": "2026-11-02"
+    },
+    {
+      "title": "5.9 Szablon QA: Raport z Testów i Lista Kontrolna Wydania (Test Report & Checklist)",
+      "section": "05. Biblioteka szablonów dokumentacji",
+      "repo_path": "docs/05-szablony/szablon-qa-raport-i-checklista.md",
+      "export_path": ".artifacts/confluence-export/05-szablony/szablon-qa-raport-i-checklista.md",
+      "commit": "7e9a336",
+      "exported_at": "2026-11-02"
+    },
+    {
+      "title": "5.3 Szablon: Dokument Architektury Oprogramowania (Software Architecture Document — SAD)",
+      "section": "05. Biblioteka szablonów dokumentacji",
+      "repo_path": "docs/05-szablony/szablon-sad.md",
+      "export_path": ".artifacts/confluence-export/05-szablony/szablon-sad.md",
+      "commit": "7e9a336",
+      "exported_at": "2026-11-02"
+    },
+    {
+      "title": "5.4 Szablon: Projekt Techniczny Funkcjonalności (Technical Design Document — TDD)",
+      "section": "05. Biblioteka szablonów dokumentacji",
+      "repo_path": "docs/05-szablony/szablon-tdd.md",
+      "export_path": ".artifacts/confluence-export/05-szablony/szablon-tdd.md",
+      "commit": "7e9a336",
+      "exported_at": "2026-11-02"
+    },
+    {
+      "title": "5.5 Szablon UX: Persony, scenariusze użytkownika i mapa historyjek",
+      "section": "05. Biblioteka szablonów dokumentacji",
+      "repo_path": "docs/05-szablony/szablon-ux-persona-scenariusz.md",
+      "export_path": ".artifacts/confluence-export/05-szablony/szablon-ux-persona-scenariusz.md",
+      "commit": "7e9a336",
+      "exported_at": "2026-11-02"
+    },
+    {
+      "title": "5.6 Szablon UX: Raport z testów użyteczności (Usability Testing Report)",
+      "section": "05. Biblioteka szablonów dokumentacji",
+      "repo_path": "docs/05-szablony/szablon-ux-test-uzytecznosci.md",
+      "export_path": ".artifacts/confluence-export/05-szablony/szablon-ux-test-uzytecznosci.md",
+      "commit": "7e9a336",
+      "exported_at": "2026-11-02"
+    },
+    {
+      "title": "Dokumentacja projektu RE:JOLTANCE",
+      "section": "RE:JOLTANCE — Strona Główna",
+      "repo_path": "docs/README.md",
+      "export_path": ".artifacts/confluence-export/README.md",
+      "commit": "7e9a336",
+      "exported_at": "2026-11-02"
+    }
+  ]
+}
