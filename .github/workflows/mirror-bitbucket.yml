@@ -1,7 +1,7 @@
 name: Mirror to Bitbucket PB
 
 # Pushes main and develop (and sprint tags) to the university Bitbucket so the course has the code there too.
-# One-time setup by a repo admin (see docs/00-start/jak-pracujemy.md#mirror-bitbucket):
+# One-time setup by a repo admin (see docs/00-przewodnik-i-setup/03-proces-pracy-i-git-scrum.md):
 #   Settings → Secrets and variables → Actions:
 #     secret   BITBUCKET_TOKEN  = Bitbucket DC HTTP access token with "Repository write"
 #     variable BITBUCKET_REPO_URL = https://devtools.wi.pb.edu.pl/bitbucket/scm/<PROJECT>/<repo>.git

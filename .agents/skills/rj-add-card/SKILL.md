@@ -1,22 +1,34 @@
 ---
 name: rj-add-card
-description: Adds or changes a card - edits the canonical prototype data, regenerates cards.json, validates the DSL vocabulary and adds tests. Use when a task mentions a new card, card stats or card effects.
+description: "Dodaje lub przenosi definicję karty z prototypu JS do src/Rejoltance.Content/cards.json, weryfikuje obsługę efektów w Rejoltance.Kernel i dodaje testy scenariuszy w Rejoltance.Cards.Tests."
 ---
 
-# Dodanie / zmiana karty
+# Umiejętność: Przenoszenie i dodawanie karty (`rj-add-card`)
 
-Karty są danymi. Źródło: `prototype/revibance/cards.js` (kanon, ADR-0005) → generowany `src/Rejoltance.Content/Data/cards.json`.
+## Kiedy używać tej procedury?
 
-## Kroki
+Uruchamiaj przy przenoszeniu karty z prototypu JS do silnika C# (np. kart z talii MVP w Epiku E2) lub przy dodawaniu nowej karty do katalogu.
 
-1. Edytuj obiekt karty w `prototype/revibance/cards.js` (`CARDS=[…]`). Kolekcjonerskie id 1–899, tokeny ≥ 900.
-2. Wygeneruj: `python tools/content/extract_cards.py`.
-3. Każde słowo DSL (`Trigger`, `Actions[].Type`, `Target`, `Keywords`, `Condition`) musi być w `src/Rejoltance.Content/Vocabulary.cs`.
-   - Nowe słowo → **to już nie jest „tylko karta”**: potrzebny handler w Kernelu i test R‑nn (zadanie dla `rj-backend-engineer`, plan + akceptacja).
-4. `dotnet test tests/Rejoltance.Kernel.Tests` — `ContentTests` waliduje cały katalog i talie startowe (fail loud).
-5. Talia startowa zmieniona → `DECKS=[…]` w tym samym pliku; reguły: 30 kart, ≤ 3 kopie, bez tokenów.
-6. Opis karty (`Description`) zgodny z efektem — recenzent porównuje.
+---
 
-## Nie wolno
+## Kroki wykonawcze (Krok po kroku)
 
-Edytować `cards.json` ręcznie (CI: `extract_cards.py --check`).
+1. **Sprawdź definicję karty w prototypie i w `cards.json`:**
+   - Wyszukaj kartę po identyfikatorze `id` w `prototype/revibance/cards.js` oraz `src/Rejoltance.Content/cards.json` (`grep -n '"id": <N>' src/Rejoltance.Content/cards.json`).
+   - Jeśli zmieniano dane w `prototype/revibance/cards.js`, wygeneruj ponownie katalog kart:
+
+     ```bash
+     python tools/content/extract_cards.py
+     python tools/content/extract_cards.py --check
+     ```
+
+2. **Zweryfikuj słownik efektów DSL karty:**
+   - Wypisz wszystkie elementy używane przez kartę: `keywords`, `triggers`, `conditions`, `targets` oraz `actions`.
+   - Sprawdź w `Rejoltance.Content` i `Rejoltance.Kernel`, czy każdy z tych elementów jest obsługiwany. Pamiętaj o zasadzie *Fail Loud* (`R-60`): nieobsługiwany kod akcji musi rzucać jawny wyjątek podczas testów, a nie zostać zignorowany.
+
+3. **Zaimplementuj brakujące handlery efektów (jeśli wymagane):**
+   - Nowe handlery dodawaj jako czyste, deterministyczne funkcje korzystające z `SeededRng` i emitujące odpowiednie `DomainEvent`.
+
+4. **Dodaj test scenariusza karty w `tests/Rejoltance.Kernel.Tests` (docelowo planowany `tests/Rejoltance.Cards.Tests`):**
+   - Napisz test sprawdzający: koszt Blood, legalne cele (`LegalActions` / `PendingInteraction`), główny efekt karty oraz przypadek brzegowy (np. brak legalnego celu → `noop` wg `R-62`).
+   - Uruchom `dotnet test` i upewnij się, że wszystkie testy przechodzą na zielono.

@@ -1,0 +1,93 @@
+<ac:structured-macro ac:name="info"><ac:rich-text-body><p><strong>Synchronizacja 1:1 z repozytorium Git:</strong> <code>docs/01-dokumentacja-systemowa/README.md</code> (commit <code>a2bf2a4</code>, data eksportu: <code>2026-11-02</code>)</p></ac:rich-text-body></ac:structured-macro>
+<p>W katalogu <code>01-dokumentacja-systemowa/</code> jest dokumentacja systemowa projektu RE:JOLTANCE. Podział dokumentów opiera się na klasyfikacji z opracowania AltexSoft.</p>
+<p>Pracujemy w podejściu Spec-Driven Development (SDD, czyli „najpierw specyfikacja, potem kod”). Dla SDD najważniejsze są tu dwa dokumenty:</p>
+<ol><li><strong>Wymagania produktu — PRD (<code>01-prd-wymagania-produktu.md</code>)</strong> (<code>01-prd-wymagania-produktu.md</code>). PRD (Product Requirements Document) odpowiada na pytanie <strong>co i dlaczego</strong> budujemy. Etap SDD: <em>Specyfikacja</em>.</li><li><strong>Dokument architektury systemu — SAD (<code>05-sad-architektura-systemu.md</code>)</strong> (<code>05-sad-architektura-systemu.md</code>) razem ze <strong>Stosem technologicznym (<code>06-stos-technologiczny.md</code>)</strong> (<code>06-stos-technologiczny.md</code>). SAD (Software Architecture Document) odpowiada na pytanie <strong>jak i czym</strong> budujemy. Etap SDD: <em>Planowanie</em>.</li></ol>
+<hr />
+<h2>Zawartość sekcji (układ 1:1 z Confluence)</h2>
+<table><thead><tr>
+<th><p>Nr</p></th>
+<th><p>Plik / katalog</p></th>
+<th><p>Typ dokumentacji (wg AltexSoft)</p></th>
+<th><p>Etap SDD</p></th>
+<th><p>Co zawiera</p></th>
+</tr></thead><tbody>
+<tr>
+<td><p><strong>1.1</strong></p></td>
+<td><p><strong><code>01-prd-wymagania-produktu.md</code></strong> (<code>01-prd-wymagania-produktu.md</code>)</p></td>
+<td><p>Dokument wymagań produktu (PRD)</p></td>
+<td><p>Specyfikacja</p></td>
+<td><p>Cele, role, persony, epiki E0–E6, historyjki z kryteriami <code>GIVEN/WHEN/THEN</code>, wymagania funkcjonalne i niefunkcjonalne (ISO 25010), elementy poza zakresem.</p></td>
+</tr>
+<tr>
+<td><p><strong>1.2</strong></p></td>
+<td><p><strong><code>02-specyfikacja-regul-gry.md</code></strong> (<code>02-specyfikacja-regul-gry.md</code>)</p></td>
+<td><p>Wymagania systemowe i reguły domenowe</p></td>
+<td><p>Specyfikacja</p></td>
+<td><p>Zasady gry opisane zwykłym językiem: 4 linie, zasób Blood, fazy rundy, słowa kluczowe, walka, warunki zwycięstwa.</p></td>
+</tr>
+<tr>
+<td><p><strong>1.3</strong></p></td>
+<td><p><strong><code>03-indeks-regul-r-nn.md</code></strong> (<code>03-indeks-regul-r-nn.md</code>)</p></td>
+<td><p>Macierz śledzenia wymagań</p></td>
+<td><p>Specyfikacja / Weryfikacja</p></td>
+<td><p>Łączy 55 reguł (<code>R-01..R-84</code>) z prototypem JS, specyfikacjami <code>openspec/specs/</code>, zadaniami z backlogu i testami xUnit.</p></td>
+</tr>
+<tr>
+<td><p><strong>1.4</strong></p></td>
+<td><p><strong><code>04-rozbieznosci-prototypu.md</code></strong> (<code>04-rozbieznosci-prototypu.md</code>)</p></td>
+<td><p>Notatka analityczna rozbieżności</p></td>
+<td><p>Specyfikacja</p></td>
+<td><p>20 rozbieżności i błędów prototypu JS (<code>D-01..D-20</code>) z propozycjami rozwiązań.</p></td>
+</tr>
+<tr>
+<td><p><strong>1.5</strong></p></td>
+<td><p><strong><code>05-sad-architektura-systemu.md</code></strong> (<code>05-sad-architektura-systemu.md</code>)</p></td>
+<td><p>Dokument architektury systemu (SAD)</p></td>
+<td><p>Planowanie</p></td>
+<td><p>Tło i ograniczenia, model C4 (poziomy 1–3), diagramy sekwencji, model danych, strategie techniczne, wdrożenie.</p></td>
+</tr>
+<tr>
+<td><p><strong>1.6</strong></p></td>
+<td><p><strong><code>06-stos-technologiczny.md</code></strong> (<code>06-stos-technologiczny.md</code>)</p></td>
+<td><p>Stos technologiczny i roadmapa IT</p></td>
+<td><p>Planowanie</p></td>
+<td><p>Technologie i wersje (.NET 10, SignalR, React 19, TypeScript, Vite, Aspire, SQLite/PostgreSQL), uzasadnienie wyborów, odrzucone alternatywy, roadmapa.</p></td>
+</tr>
+<tr>
+<td><p><strong>1.7</strong></p></td>
+<td><p><strong><code>07-decyzje-adr/</code></strong> (<code>07-decyzje-adr/README.md</code>)</p></td>
+<td><p>Rejestr decyzji architektonicznych (ADR)</p></td>
+<td><p>Planowanie</p></td>
+<td><p>Decyzje architektoniczne <code>ADR-0001..ADR-0011</code> zapisane według stałego szablonu.</p></td>
+</tr>
+<tr>
+<td><p><strong>1.8</strong></p></td>
+<td><p><strong><code>08-mapa-kodu-i-modulow.md</code></strong> (<code>08-mapa-kodu-i-modulow.md</code>)</p></td>
+<td><p>Przegląd dokumentacji kodu źródłowego</p></td>
+<td><p>Realizacja</p></td>
+<td><p>Struktura kodu, granice zależności między modułami, 5 zamrożonych kontraktów, „gdzie dodać nową funkcję”.</p></td>
+</tr>
+<tr>
+<td><p><strong>1.9</strong></p></td>
+<td><p><strong><code>09-kontrakty-i-api.md</code></strong> (<code>09-kontrakty-i-api.md</code>)</p></td>
+<td><p>Dokumentacja interfejsów API</p></td>
+<td><p>Planowanie / Realizacja</p></td>
+<td><p>Endpointy REST (<code>/api/*</code>), metody i zdarzenia huba SignalR (<code>/api/hubs/match</code>), schematy JSON.</p></td>
+</tr>
+<tr>
+<td><p><strong>1.10</strong></p></td>
+<td><p><strong><code>10-ux-design-i-przeplywy.md</code></strong> (<code>10-ux-design-i-przeplywy.md</code>)</p></td>
+<td><p>Dokumentacja projektowa UX i przewodnik stylu</p></td>
+<td><p>Planowanie</p></td>
+<td><p>Mapa ekranów, makieta planszy, przepływ gracza, przewodnik stylu z kontrastem WCAG 2.1 AA.</p></td>
+</tr>
+<tr>
+<td><p><strong>1.11</strong></p></td>
+<td><p><strong><code>11-strategia-testow-qa.md</code></strong> (<code>11-strategia-testow-qa.md</code>)</p></td>
+<td><p>Strategia zapewnienia jakości i testów (QA)</p></td>
+<td><p>Weryfikacja</p></td>
+<td><p>Piramida testów, nazwy testów <code>Rnn_...</code>, kryteria wejścia i wyjścia (EU6).</p></td>
+</tr>
+</tbody></table>
+<p>Skróty użyte w tabeli: ADR (Architecture Decision Record) to zapis jednej decyzji architektonicznej. C4 to model opisu architektury w czterech poziomach szczegółowości. QA (Quality Assurance) to zapewnienie jakości.</p>
+<h2>Podstrony w tej sekcji (Drzewo Confluence)</h2><ac:structured-macro ac:name="children"><ac:parameter ac:name="all">true</ac:parameter></ac:structured-macro>

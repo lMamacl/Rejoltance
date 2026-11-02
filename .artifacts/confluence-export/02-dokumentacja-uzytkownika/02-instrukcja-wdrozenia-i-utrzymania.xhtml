@@ -1,0 +1,118 @@
+<ac:structured-macro ac:name="info"><ac:rich-text-body><p><strong>Synchronizacja 1:1 z repozytorium Git:</strong> <code>docs/02-dokumentacja-uzytkownika/02-instrukcja-wdrozenia-i-utrzymania.md</code> (commit <code>a2bf2a4</code>, data eksportu: <code>2026-11-02</code>)</p></ac:rich-text-body></ac:structured-macro>
+<blockquote><p><strong>Źródło prawdy:</strong> repozytorium (<code>docs/02-dokumentacja-uzytkownika/02-instrukcja-wdrozenia-i-utrzymania.md</code>) · <strong>Kategoria dokumentacji:</strong> Dokumentacja produktowa — użytkownika (podręcznik administratora systemu) · <strong>Etap SDD:</strong> Wydanie · <strong>Wymóg uczelniany:</strong> EU5 / EU6 (efekty uczenia się)</p></blockquote>
+<p>Ten dokument jest dla administratora systemu i osoby z zespołu, która utrzymuje środowisko demonstracyjne i produkcyjne (właściciel epiku E6). Opisuje, jak zainstalować, skonfigurować i monitorować serwer RE:JOLTANCE, jak robić kopie zapasowe i jakich zasad bezpieczeństwa przestrzegać.</p>
+<p>Jeśli chcesz przygotować środowisko lokalne do programowania, zajrzyj do dokumentu <strong>0.1 Szybki start i instalacja środowiska</strong> (<code>../00-przewodnik-i-setup/01-szybki-start-i-instalacja.md</code>).</p>
+<hr />
+<h2>1. Wymagania sprzętowe i programowe serwera</h2>
+<table><thead><tr>
+<th><p>Parametr</p></th>
+<th><p>Minimum (środowisko demo, do 50 równoległych meczów)</p></th>
+<th><p>Zalecane</p></th>
+</tr></thead><tbody>
+<tr>
+<td><p><strong>Procesor (vCPU, wirtualny rdzeń)</strong></p></td>
+<td><p>1 vCPU (x86_64 lub ARM64)</p></td>
+<td><p>2 vCPU</p></td>
+</tr>
+<tr>
+<td><p><strong>Pamięć operacyjna (RAM)</strong></p></td>
+<td><p>512 MB RAM</p></td>
+<td><p>1 GB – 2 GB RAM</p></td>
+</tr>
+<tr>
+<td><p><strong>Dysk</strong></p></td>
+<td><p>2 GB wolnego miejsca (obraz kontenera, baza danych, logi)</p></td>
+<td><p>10 GB SSD</p></td>
+</tr>
+<tr>
+<td><p><strong>Środowisko uruchomieniowe</strong></p></td>
+<td><p>Docker 24+ lub Podman 5+ albo bezpośrednio ASP.NET Core Runtime 10.0</p></td>
+<td><p>Kontener OCI (Open Container Initiative) za serwerem pośredniczącym (reverse proxy) z obsługą WebSocket (WSS) i TLS 1.3</p></td>
+</tr>
+<tr>
+<td><p><strong>Baza danych</strong></p></td>
+<td><p>SQLite 3 (plik <code>.data/rejoltance.db</code>, jedna instancja)</p></td>
+<td><p>PostgreSQL 16+ (od Sprintu 4)</p></td>
+</tr>
+</tbody></table>
+<hr />
+<h2>2. Instalacja i wdrożenie</h2>
+<h3>2.1 Budowanie jednego pakietu wdrożeniowego</h3>
+<p>W konfiguracji produkcyjnej projekt <code>Rejoltance.AppHost</code> używa mechanizmu <code>PublishWithContainerFiles</code>. Dzięki niemu zbudowane pliki statyczne klienta React (<code>src/web/dist</code>) trafiają automatycznie do katalogu <code>wwwroot/</code> serwera <code>Rejoltance.Server</code>. Jeden proces ASP.NET Core obsługuje więc pliki statyczne SPA (single-page application), punkty końcowe <code>/api/*</code> i hub WebSocket <code>/api/hubs/match</code>.</p>
+<p>Pakiet możesz też zbudować ręcznie:</p>
+<ac:structured-macro ac:name="code"><ac:parameter ac:name="language">bash</ac:parameter><ac:plain-text-body><![CDATA[# 1. Zbudowanie klienta webowego
+npm --prefix src/web ci
+npm --prefix src/web run build
+
+# 2. Publikacja serwera ASP.NET Core do katalogu ./publish
+dotnet publish src/Rejoltance.Server/Rejoltance.Server.csproj -c Release -o ./publish
+
+# 3. Skopiowanie zbudowanego frontendu do katalogu wwwroot serwera
+cp -r src/web/dist/* ./publish/wwwroot/]]></ac:plain-text-body></ac:structured-macro>
+<h3>2.2 Uruchomienie serwera produkcyjnego</h3>
+<ac:structured-macro ac:name="code"><ac:parameter ac:name="language">bash</ac:parameter><ac:plain-text-body><![CDATA[cd ./publish
+ASPNETCORE_ENVIRONMENT=Production \
+ASPNETCORE_URLS="http://0.0.0.0:8080" \
+ConnectionStrings__rejoltance="Data Source=/var/lib/rejoltance/rejoltance.db" \
+dotnet Rejoltance.Server.dll]]></ac:plain-text-body></ac:structured-macro>
+<hr />
+<h2>3. Konfiguracja</h2>
+<p>Wszystkie parametry serwera przekazujesz przez zmienne środowiskowe (zgodnie z zasadami <em>12-Factor App</em>).</p>
+<table><thead><tr>
+<th><p>Zmienna środowiskowa</p></th>
+<th><p>Wartość domyślna (Dev)</p></th>
+<th><p>Do czego służy</p></th>
+</tr></thead><tbody>
+<tr>
+<td><p><code>ASPNETCORE_ENVIRONMENT</code></p></td>
+<td><p><code>Development</code></p></td>
+<td><p>Tryb pracy serwera (<code>Development</code>, <code>Staging</code>, <code>Production</code>). W trybie <code>Production</code> serwer nie pokazuje szczegółowych śladów stosu w komunikatach błędów.</p></td>
+</tr>
+<tr>
+<td><p><code>ASPNETCORE_URLS</code></p></td>
+<td><p>dynamiczny port Aspire</p></td>
+<td><p>Adresy IP i porty, na których nasłuchuje serwer Kestrel (w kontenerze: <code>http://0.0.0.0:8080</code>).</p></td>
+</tr>
+<tr>
+<td><p><code>ConnectionStrings__rejoltance</code></p></td>
+<td><p><code>Data Source=.data/rejoltance.db</code></p></td>
+<td><p>Ciąg połączenia (connection string) z bazą SQLite lub PostgreSQL (EF Core).</p></td>
+</tr>
+<tr>
+<td><p><code>OTEL_EXPORTER_OTLP_ENDPOINT</code></p></td>
+<td><p>endpoint panelu Aspire</p></td>
+<td><p>Adres kolektora OpenTelemetry, który odbiera logi, metryki i ślady wykonania.</p></td>
+</tr>
+</tbody></table>
+<hr />
+<h2>4. Monitorowanie i diagnostyka</h2>
+<p>Projekt <code>Rejoltance.ServiceDefaults</code> dodaje do serwera wbudowane punkty kontrolne:</p>
+<ol><li>**<code>GET /health</code> (sonda gotowości, <em>readiness</em>):** sprawdza, czy serwer jest gotowy i ma połączenie z bazą danych. Zwraca <code>200 OK</code> (<code>Healthy</code>) albo <code>503 Service Unavailable</code>.</li><li>**<code>GET /alive</code> (sonda żywotności, <em>liveness</em>):** potwierdza, że proces serwera odpowiada na żądania HTTP (<code>200 OK</code>).</li><li><strong><code>GET /api/info</code>:</strong> zwraca obiekt JSON z wersją wdrożenia i liczbą aktywnych meczów w pamięci (<code>activeMatches</code>).</li><li><strong>Telemetria OpenTelemetry:</strong> serwer eksportuje czas obsługi żądań HTTP, liczbę aktywnych połączeń WebSocket SignalR i logi strukturalne z identyfikatorami <code>matchId</code> i <code>seed</code>.</li></ol>
+<hr />
+<h2>5. Utrzymanie, kopie zapasowe i odtwarzanie po awarii</h2>
+<h3>5.1 Kopie zapasowe bazy danych</h3>
+<ul><li><strong>SQLite (Sprinty 0–3):</strong> kopia zapasowa to zarchiwizowany plik <code>.data/rejoltance.db</code>. Użyj polecenia <code>sqlite3 .data/rejoltance.db &quot;.backup &#x27;backup.db&#x27;&quot;</code>, które zachowuje spójność transakcyjną.</li><li><strong>PostgreSQL (od Sprintu 4):</strong> raz na dobę wykonuje się automatyczny zrzut bazy poleceniem <code>pg_dump -Fc rejoltance &gt; rejoltance_$(date +%F).dump</code>.</li></ul>
+<h3>5.2 Zasady bezpieczeństwa</h3>
+<ol><li><strong>Szyfrowanie transportu:</strong> w środowisku demonstracyjnym cały ruch HTTP i WebSocket (<code>wss://</code>) musi przechodzić przez TLS 1.2/1.3 (certyfikat Let&#x27;s Encrypt na serwerze pośredniczącym).</li><li><strong>Sekrety:</strong> hasła do bazy danych, klucze podpisujące ciasteczka sesji oraz tokeny <code>BITBUCKET_TOKEN</code> / <code>CONFLUENCE_PERSONAL_TOKEN</code> nigdy nie trafiają do repozytorium Git. Wstrzykujemy je tylko z magazynu sekretów hostingu albo z GitHub Actions Secrets (<code>NFR-42</code>, wymaganie niefunkcjonalne).</li><li><strong>Ochrona przed przeciążeniem:</strong> serwer ogranicza liczbę intencji wysyłanych przez jedno połączenie SignalR oraz liczbę prób logowania (<code>NFR-40</code>).</li></ol>
+<h3>5.3 Awarie i odtwarzanie systemu</h3>
+<table><thead><tr>
+<th><p>Scenariusz awarii</p></th>
+<th><p>Diagnoza</p></th>
+<th><p>Co zrobić</p></th>
+</tr></thead><tbody>
+<tr>
+<td><p><strong>Połączenia SignalR zrywają się po 30–60 s za reverse proxy (Nginx / Cloudflare)</strong></p></td>
+<td><p>Proxy ma domyślny limit bezczynności (timeout) połączenia WebSocket.</p></td>
+<td><p>W konfiguracji reverse proxy ustaw nagłówki <code>Upgrade: websocket</code>, <code>Connection: Upgrade</code> oraz <code>proxy_read_timeout 3600s;</code>.</p></td>
+</tr>
+<tr>
+<td><p><strong>Nagły wzrost zużycia RAM na serwerze</strong></p></td>
+<td><p>Niezamknięte sesje meczów w <code>MatchSessionManager</code>.</p></td>
+<td><p>Sprawdź wartość <code>activeMatches</code> pod adresem <code>/api/info</code>. W razie potrzeby zrestartuj kontener serwera, ale nie w trakcie sesji testowej z Radą Graczy.</p></td>
+</tr>
+<tr>
+<td><p><strong>Uszkodzona baza danych lub utracona instancja</strong></p></td>
+<td><p>Awaria dysku albo błąd migracji.</p></td>
+<td><p>Uruchom nowy kontener z ostatniego obrazu w GitHub Container Registry, przywróć ostatnią kopię zapasową bazy i sprawdź odpowiedź <code>GET /health</code>.</p></td>
+</tr>
+</tbody></table>

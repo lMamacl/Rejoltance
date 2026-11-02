@@ -1,35 +1,35 @@
 ---
 trigger: model_decision
-description: "Nazewnictwo gałęzi, commitów i PR oraz powiązanie z Jirą. Stosuj przy każdej operacji git."
+description: "Gałęzie Git (main, develop, typ/REJ-123-opis), zasady commitów i PR oraz synchronizacja backlogu (backlog.toml -> CSV do Jiry)."
 ---
 
-# Git i Jira
+# 50. Proces Git, Jira i organizacja pracy w Scrumie
 
-## Gałęzie
+> Szczegółowa instrukcja procesu: [`docs/00-przewodnik-i-setup/03-proces-pracy-i-git-scrum.md`](../../docs/00-przewodnik-i-setup/03-proces-pracy-i-git-scrum.md).
 
-| Gałąź | Rola | Kto pisze |
-|---|---|---|
-| `main` | stan po zakończonym sprincie (demo), tag `sprint-N` | tylko merge z `develop` przez PR na koniec sprintu |
-| `develop` | integracja bieżącego sprintu | tylko merge PR |
-| `feature/REJ-123-krotki-opis` | nowa funkcja | autor zadania |
-| `fix/REJ-123-…` · `docs/REJ-123-…` · `chore/REJ-123-…` · `spike/REJ-123-…` | poprawka · dokumentacja · narzędzia · prototyp badawczy | autor zadania |
+## 1. Model gałęzi Git (GitFlow dopasowany do sprintów)
 
-Regex sprawdzany w CI: `^(feature|fix|docs|chore|spike)/REJ-[0-9]+-[a-z0-9-]+$`
+- **`main`** — wyłącznie stabilne, przetestowane wydania na koniec sprintu oznaczone tagiem `sprint-N` (`sprint-1` .. `sprint-5`).
+- **`develop`** — główna gałąź integracyjna zespołu; każda gałąź zadaniowa startuje z `develop` i wraca do `develop` przez Pull Request.
+- **Gałęzie zadaniowe:** `<typ>/REJ-<numer>-<krotki-opis-kebab-case>`, np.:
+  - `feat/REJ-101-kolejnosc-graczy-i-start-rundy`
+  - `fix/REJ-114-obrazenia-splash-damage`
+  - `docs/REJ-002-uzupelnienie-dip`
+  - `test/REJ-203-testy-roznicowe-wyroczni`
 
-## Commity
+## 2. Konwencja wiadomości commitów i tytułów Pull Requestów
 
-`REJ-123: <czasownik w trybie rozkazującym, po angielsku>` — np. `REJ-123: add fatigue damage on empty deck`.
-Opcjonalnie prefiks Conventional Commits w treści PR, nie w commicie.
+Każdy commit i tytuł Pull Requesta jest walidowany w CI (`.github/workflows/pr-conventions.yml`) wg wzorca:
 
-## Pull Request
+```text
+<typ>(REJ-<numer>): <zwięzły opis zmiany po polsku lub angielsku>
+```
 
-- cel: `develop` (wyjątek: PR zamykający sprint `develop → main`);
-- ≥ 1 recenzent (dla kontraktów: recenzent z drugiej strony granicy);
-- tytuł `REJ-123: …`, opis z szablonu `.github/PULL_REQUEST_TEMPLATE.md`;
-- squash merge; gałąź usuwana po merge.
+Dozwolone typy: `feat`, `fix`, `docs`, `test`, `refactor`, `chore`, `ci`. Przykład: `feat(REJ-103): rozstrzyganie walki w 4 liniach (R-40..R-45)`.
 
-## Agent
+## 3. Zasady pracy z Jirą PB i plikiem `backlog.toml`
 
-- tworzy gałąź i commity lokalnie wg tych zasad;
-- `git push` tylko własnej gałęzi roboczej i tylko po zgodzie człowieka; nigdy `--force` na wspólne gałęzie;
-- nie merguje, nie zamyka zgłoszeń w Jirze, nie loguje czasu za człowieka.
+- **Jedno źródło prawdy dla backlogu w repozytorium:** [`docs/03-dokumentacja-procesowa/02-backlog/backlog.toml`](../../docs/03-dokumentacja-procesowa/02-backlog/backlog.toml).
+- Po każdej edycji `backlog.toml` lub kolumny *Story* w [`03-indeks-regul-r-nn.md`](../../docs/01-dokumentacja-systemowa/03-indeks-regul-r-nn.md) uruchom generator:
+  `python tools/backlog/gen_jira_csv.py` (nie edytuj ręcznie wygenerowanych plików `BACKLOG.md` ani `jira-*.csv`).
+- **Wymóg uczelniany EU4:** każde zadanie realizowane w sprincie musi mieć przypisanego wykonawcę, szacunek czasu (`Original Estimate ≤ 4 h` dla podzadań technicznych) oraz regularnie rejestrowany czas pracy (*Log Work*).

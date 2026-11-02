@@ -1,5 +1,5 @@
 name: Błąd
-description: Coś działa inaczej niż w regułach (docs/02-rules) lub psuje build/CI.
+description: Coś działa inaczej niż w regułach (docs/01-dokumentacja-systemowa/02-specyfikacja-regul-gry.md) lub psuje build/CI.
 labels: [bug]
 body:
   - type: input

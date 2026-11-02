@@ -1,0 +1,325 @@
+<ac:structured-macro ac:name="info"><ac:rich-text-body><p><strong>Synchronizacja 1:1 z repozytorium Git:</strong> <code>docs/01-dokumentacja-systemowa/01-prd-wymagania-produktu.md</code> (commit <code>a2bf2a4</code>, data eksportu: <code>2026-11-02</code>)</p></ac:rich-text-body></ac:structured-macro>
+<blockquote><p><strong>Źródło prawdy:</strong> repozytorium (<code>docs/01-dokumentacja-systemowa/01-prd-wymagania-produktu.md</code>) · <strong>Kategoria dokumentacji:</strong> Dokumentacja produktowa — systemowa (wymagania produktu, PRD) · <strong>Etap SDD:</strong> Specyfikacja · <strong>Wersja:</strong> 1.0 (2026-11-02)</p></blockquote>
+<p>Ten dokument to PRD (Product Requirements Document), czyli opis wymagań produktu dla gry RE:JOLTANCE. Układ rozdziałów pochodzi z klasyfikacji AltexSoft. Uwzględniamy też efekty uczenia się przedmiotu <em>Projekt zespołowy</em> (EU1–EU6). PRD opisuje produkt z perspektywy biznesu i gracza. Szczegółowe, wykonywalne specyfikacje są w katalogu <code>openspec/specs/</code>.</p>
+<p>SDD (Spec-Driven Development) to nasz sposób pracy: najpierw zapisujemy specyfikację, potem piszemy kod.</p>
+<hr />
+<h2>1. Role i odpowiedzialności</h2>
+<p>Pracujemy w Scrumie jako 6-osobowy zespół studencki. Zgodnie z sylabusem (EU1) każdy z nas jest właścicielem i autorem wymagań jednego epiku (<code>E1–E6</code>). Rolę Product Ownera pełnimy rotacyjnie, co sprint inna osoba (EU3, EU4).</p>
+<table><thead><tr>
+<th><p>Rola</p></th>
+<th><p>Osoba / jednostka</p></th>
+<th><p>Za co odpowiada</p></th>
+<th><p>Efekty uczenia się</p></th>
+</tr></thead><tbody>
+<tr>
+<td><p><strong>Scrum Master / opiekun dydaktyczny</strong></p></td>
+<td><p>Prowadzący zajęcia (<em>Politechnika Białostocka</em>)</p></td>
+<td><p>Nadzór nad metodyką, ocena przyrostów na <em>Sprint Review</em>, rozstrzyganie sporów o zakres sprintu, administracja Jira/Confluence/Bitbucket PB.</p></td>
+<td><p>Ocena EU1–EU7</p></td>
+</tr>
+<tr>
+<td><p><strong>Product Owner (rotacyjnie, co sprint)</strong></p></td>
+<td><p>Wyznaczony członek zespołu (harmonogram w DIP §6)</p></td>
+<td><p>Priorytety <em>Product Backlogu</em>, prowadzenie ceremonii (<em>Planning</em>, <em>Daily</em>, <em>Review</em>, <em>Retro</em>), wykres spalania (<em>Burndown Chart</em>), kontakt z Radą Graczy.</p></td>
+<td><p>EU3, EU4, EU5</p></td>
+</tr>
+<tr>
+<td><p><strong>Właściciel epiku E1 (silnik reguł — Kernel)</strong></p></td>
+<td><p>Członek zespołu #1 <em>(do wpisania po zatwierdzeniu #9)</em></p></td>
+<td><p>Wymagania i implementacja deterministycznego silnika reguł (<code>R-01..R-54</code>, <code>R-70..R-72</code>), projekcja widoku, testy jednostkowe reguł.</p></td>
+<td><p>EU1, EU2, EU5, EU6</p></td>
+</tr>
+<tr>
+<td><p><strong>Właściciel epiku E2 (karty i DSL efektów)</strong></p></td>
+<td><p>Członek zespołu #2 <em>(do wpisania po zatwierdzeniu #9)</em></p></td>
+<td><p>Katalog kart i talii (<code>cards.json</code>), walidator słownika DSL, obsługa efektów i wyzwalaczy kart (<code>R-60..R-69</code>).</p></td>
+<td><p>EU1, EU2, EU5, EU6</p></td>
+</tr>
+<tr>
+<td><p><strong>Właściciel epiku E3 (serwer i sieć SignalR)</strong></p></td>
+<td><p>Członek zespołu #3 <em>(do wpisania po zatwierdzeniu #9)</em></p></td>
+<td><p>Autorytatywny serwer meczu (<code>MatchHub</code>, <code>MatchSessionManager</code>), pokoje PvP, rozłączenia i powroty do meczu (<code>R-73</code>, <code>R-80..R-84</code>).</p></td>
+<td><p>EU1, EU2, EU5, EU6</p></td>
+</tr>
+<tr>
+<td><p><strong>Właściciel epiku E4 (klient webowy i UX)</strong></p></td>
+<td><p>Członek zespołu #4 <em>(do wpisania po zatwierdzeniu #9)</em></p></td>
+<td><p>Interfejs w React + TypeScript (<code>src/web</code>), plansza 4 linii, interakcje (<code>PendingInteraction</code>), animacje, podręcznik gracza.</p></td>
+<td><p>EU1, EU2, EU5, EU6</p></td>
+</tr>
+<tr>
+<td><p><strong>Właściciel epiku E5 (bot AI i symulator)</strong></p></td>
+<td><p>Członek zespołu #5 <em>(do wpisania po zatwierdzeniu #9)</em></p></td>
+<td><p>Wyrocznia referencyjna (testy różnicowe względem prototypu JS), heurystyczny bot AI do gry solo, symulator partii bot-vs-bot.</p></td>
+<td><p>EU1, EU2, EU5, EU6</p></td>
+</tr>
+<tr>
+<td><p><strong>Właściciel epiku E6 (platforma, dane i jakość)</strong></p></td>
+<td><p>Członek zespołu #6 <em>(do wpisania po zatwierdzeniu #9)</em></p></td>
+<td><p>Orkiestracja Aspire, konta graczy, kreator talii (<em>Deckbuilder</em>), migracja SQLite → PostgreSQL, CI/CD, testy E2E w Playwright, wersja demo.</p></td>
+<td><p>EU1, EU2, EU5, EU6</p></td>
+</tr>
+<tr>
+<td><p><strong>Rada Graczy Testowych (użytkownicy końcowi)</strong></p></td>
+<td><p>3 graczy spoza zespołu</p></td>
+<td><p>Walidacja wymagań, testy użyteczności, odbiór przyrostów na <em>Sprint Review</em>.</p></td>
+<td><p>Walidacja EU1 i EU2</p></td>
+</tr>
+</tbody></table>
+<p>DSL (Domain-Specific Language) to nasz mały język do opisu efektów kart w danych JSON. CI/CD to automatyczne budowanie, testowanie i wdrażanie. E2E (end-to-end) to testy całej aplikacji z perspektywy użytkownika.</p>
+<hr />
+<h2>2. Cele zespołu, cele biznesowe i dopasowanie strategiczne</h2>
+<h3>2.1 Tło projektu i problem do rozwiązania</h3>
+<p>RE:JOLTANCE to autorska gra karciana dla dwóch osób typu <em>lane battler</em>. Gracze walczą na 4 liniach, korzystają z odnawialnego zasobu <em>Blood</em>, mają talie po 30 kart, a bohater ma 20 punktów zdrowia. Przed naszym projektem powstały dwa prototypy:</p>
+<ol><li><strong>Wersja desktopowa (C# / Godot).</strong> Trzeba ją było zainstalować lokalnie. Nie miała gry przez internet.</li><li><strong>Prototyp przeglądarkowy w czystym JavaScripcie (<code>prototype/revibance</code>, v11).</strong> Ma pełny zestaw 69 kart kolekcjonerskich i 9 tokenów i działa w przeglądarce. Komunikacja sieciowa działa jednak Peer-to-Peer (PeerJS), bez serwera. Z tego wynikają problemy: - klient gościa widział identyfikatory, które zdradzały rękę i kolejność talii hosta (brak <em>Fog of War</em>, czyli ukrywania informacji przed przeciwnikiem), - serwer nie sprawdzał celów, więc klient mógł zmienić komunikat i poświęcić jednostkę przeciwnika, - kod był podatny na XSS (<code>innerHTML</code>), - losowość z <code>Math.random()</code> była niedeterministyczna, więc nie dało się odtworzyć powtórki (<em>replay</em>), - nie było żadnych testów automatycznych.</li></ol>
+<h3>2.2 Cel główny produktu i miary sukcesu</h3>
+<p>Budujemy webową wersję gry RE:JOLTANCE z autorytatywnym serwerem w .NET 10 i klientem w React + TypeScript. Gra ma być bezpieczna, deterministyczna i przetestowana. Gracz otwiera link w przeglądarce i od razu gra 1v1 albo trenuje z botem AI. Nie musi niczego instalować.</p>
+<table><thead><tr>
+<th><p>Wymiar celu</p></th>
+<th><p>Miara sukcesu (KPI / kryterium odbioru)</p></th>
+<th><p>Kiedy sprawdzamy</p></th>
+</tr></thead><tbody>
+<tr>
+<td><p><strong>Dostępność bez instalacji (Zero-Install)</strong></p></td>
+<td><p>Nowy gracz z Rady Graczy uruchamia mecz z botem lub z drugim graczem przez link i kończy pierwszą partię w <strong>≤ 15 minut</strong> bez naszej pomocy (NFR-20).</p></td>
+<td><p>Sprint Review S3 i S5</p></td>
+</tr>
+<tr>
+<td><p><strong>Uczciwość i bezpieczeństwo (Server Authority)</strong></p></td>
+<td><p><strong>0% wycieku ukrytych informacji</strong> w pakietach SignalR. Klient dostaje tylko projekcję <code>MatchView</code>, bez ręki i kolejności talii przeciwnika (R-80, R-81, NFR-41).</p></td>
+<td><p>Każdy sprint (testy <code>ProjectionTests</code>)</p></td>
+</tr>
+<tr>
+<td><p><strong>Poprawność i determinizm reguł</strong></p></td>
+<td><p><strong>100% zaimplementowanych reguł (<code>R-nn</code>)</strong> ma testy jednostkowe xUnit. Ten sam <code>seed</code> i ta sama lista intencji zawsze dają ten sam stan końcowy meczu (R-83, NFR-51).</p></td>
+<td><p>Każdy PR w GitHub Actions CI</p></td>
+</tr>
+<tr>
+<td><p><strong>Wydajność w czasie rzeczywistym</strong></p></td>
+<td><p>Serwer przetwarza intencję i rozsyła <code>MatchUpdated</code> w czasie <strong>p95 ≤ 200 ms</strong> przy 50 równoległych meczach (NFR-01).</p></td>
+<td><p>Sprint Review S4 i S5</p></td>
+</tr>
+</tbody></table>
+<p>KPI (Key Performance Indicator) to mierzalny wskaźnik sukcesu. NFR (Non-Functional Requirement) to wymaganie niefunkcjonalne, np. wydajność albo bezpieczeństwo. p95 oznacza, że 95% pomiarów mieści się w limicie.</p>
+<h3>2.3 Roadmapa strategiczna i fale wydań (W0–W3)</h3>
+<p>Mamy ograniczony czas: 6 osób × 5 h tygodniowo. Żeby na pewno dowieźć działający produkt, dzielimy zakres na cztery fale priorytetów. Granica między falami to <strong>linia cięcia</strong>: jeśli zabraknie czasu, tniemy od ostatniej fali.</p>
+<p><em>Diagram przepływu (Mermaid):</em></p>
+<ac:structured-macro ac:name="code"><ac:parameter ac:name="language">none</ac:parameter><ac:plain-text-body><![CDATA[flowchart LR
+  W0["Fala W0 (Sprint 0)<br/>Fundamenty i Kręgosłup<br/>Kontrakty, Setup, Mulligan, CI, SDD"] --> W1["Fala W1 (Sprinty 1–5, Semestr 1)<br/>MVP Grywalny Mecz<br/>Pełna runda, walka 4 linii, 12+ kart,<br/>pokoje 1v1, prosty bot, konta"]
+  W1 --> W2["Fala W2 (Semestr 2 — rdzeń)<br/>Pełna Gra<br/>Wszystkie 69 kart + 9 tokenów,<br/>Deckbuilder 30 kart, PostgreSQL, Replay"]
+  W2 --> W3["Fala W3 (Semestr 2 — dodatki)<br/>Rozszerzenia Opcjonalne<br/>Panel admina, statystyki balansu,<br/>zaawansowany bot beam-search"]]]></ac:plain-text-body></ac:structured-macro>
+<hr />
+<h2>3. Persony użytkowników i scenariusze użycia</h2>
+<p>Szablon person i mapy historyjek jest w <strong><code>05-szablony/szablon-ux-persona-scenariusz.md</code></strong> (<code>../05-szablony/szablon-ux-persona-scenariusz.md</code>). Poniżej są trzy główne persony. Opracowaliśmy je razem z użytkownikami końcowymi (EU1).</p>
+<table><thead><tr>
+<th><p>Persona</p></th>
+<th><p>Kim jest i jak gra</p></th>
+<th><p>Co mu przeszkadza (<em>pain points</em>)</p></th>
+<th><p>Co dostaje w RE:JOLTANCE</p></th>
+</tr></thead><tbody>
+<tr>
+<td><p><strong>1. Gracz okazjonalny (student WI PB)</strong></p></td>
+<td><p>Gra w 15-minutowych przerwach między zajęciami, na laptopie uczelnianym lub prywatnym.</p></td>
+<td><p>Instalowanie klienta gry, długie szukanie przeciwnika, skomplikowane ekrany konfiguracji.</p></td>
+<td><p>Wejście przez link w 5 sekund, gotowe talie startowe, szybki mecz z kolegą przez kod pokoju albo z botem.</p></td>
+</tr>
+<tr>
+<td><p><strong>2. Gracz turniejowy / taktyk</strong></p></td>
+<td><p>Zna gry karciane (<em>Magic</em>, <em>Runeterra</em>, <em>Inscryption</em>). Analizuje synergie kart i dokładne zasady.</p></td>
+<td><p>Niejasne interakcje słów kluczowych, oszukiwanie w prototypie P2P, błędy silnika przy długich łańcuchach efektów.</p></td>
+<td><p>Jednoznaczne, deterministyczne reguły (<code>R-nn</code>), podświetlanie tylko legalnych ruchów (<code>legalActions</code>), uczciwy serwer, pełny dziennik meczu.</p></td>
+</tr>
+<tr>
+<td><p><strong>3. Projektant balansu gry</strong></p></td>
+<td><p>Autorzy koncepcji RE:JOLTANCE, którzy rozwijają pulę kart i talii.</p></td>
+<td><p>Brak narzędzi, które szybko pokażą, czy nowa karta psuje balans albo zawiesza silnik.</p></td>
+<td><p>Karty jako dane JSON sprawdzane przy starcie (<code>ContentValidator</code>), symulator setek partii bot-vs-bot, deterministyczny replay z ziarna (<code>seed</code>).</p></td>
+</tr>
+</tbody></table>
+<hr />
+<h2>4. Zakres funkcjonalny: epiki, historyjki i kryteria akceptacji</h2>
+<p>Pełny rejestr historyjek i podzadań jest w pliku <strong><code>03-dokumentacja-procesowa/02-backlog/backlog.toml</code></strong> (<code>../03-dokumentacja-procesowa/02-backlog/backlog.toml</code>). Wygenerowane zestawienie znajdziesz w <strong><code>BACKLOG.md</code></strong> (<code>../03-dokumentacja-procesowa/02-backlog/BACKLOG.md</code>). Poniżej jest skrót 7 epików i kilka przykładowych historyjek z kryteriami w formacie <code>GIVEN / WHEN / THEN</code>.</p>
+<h3>Zestawienie epików</h3>
+<table><thead><tr>
+<th><p>ID</p></th>
+<th><p>Nazwa epiku</p></th>
+<th><p>Moduł w kodzie</p></th>
+<th><p>Liczba story (S1 / S2)</p></th>
+<th><p>Główny cel</p></th>
+</tr></thead><tbody>
+<tr>
+<td><p><strong>E0</strong></p></td>
+<td><p>Fundamenty i środowisko SDD</p></td>
+<td><p>Repo, <code>tools/</code>, <code>docs/</code></p></td>
+<td><p>4 story (Sprint 0)</p></td>
+<td><p>Działający szkielet Aspire, CI/CD, uzgodnienie rozbieżności reguł z Radą Graczy, import backlogu do Jiry.</p></td>
+</tr>
+<tr>
+<td><p><strong>E1</strong></p></td>
+<td><p>Silnik reguł gry (Kernel)</p></td>
+<td><p><code>src/Rejoltance.Kernel</code></p></td>
+<td><p>8 story</p></td>
+<td><p>Deterministyczny przebieg rundy, zagrywanie jednostek, walka na 4 liniach, słowa kluczowe, koniec meczu.</p></td>
+</tr>
+<tr>
+<td><p><strong>E2</strong></p></td>
+<td><p>Katalog kart i interpreter efektów (DSL)</p></td>
+<td><p><code>src/Rejoltance.Content</code>, <code>Kernel</code></p></td>
+<td><p>8 story</p></td>
+<td><p>Walidacja danych 78 kart, wyzwalacze (<code>OnPlayed</code>, <code>OnDeath</code>, <code>OnSacrificed</code>), wybór celów, akcje kart.</p></td>
+</tr>
+<tr>
+<td><p><strong>E3</strong></p></td>
+<td><p>Autorytatywny serwer i sieć czasu rzeczywistego</p></td>
+<td><p><code>src/Rejoltance.Server</code></p></td>
+<td><p>6 story</p></td>
+<td><p>Pokoje 1v1 przez SignalR, projekcja <code>MatchView</code> (<em>Fog of War</em>), zegar tury, rozłączenie i powrót gracza.</p></td>
+</tr>
+<tr>
+<td><p><strong>E4</strong></p></td>
+<td><p>Klient webowy i doświadczenie gracza (UI/UX)</p></td>
+<td><p><code>src/web</code></p></td>
+<td><p>7 story</p></td>
+<td><p>Plansza 4 linii, wachlarz ręki, podświetlanie <code>legalActions</code>, okna <code>PendingInteraction</code>, dziennik meczu, dźwięki, animacje.</p></td>
+</tr>
+<tr>
+<td><p><strong>E5</strong></p></td>
+<td><p>Bot AI, wyrocznia testowa i symulator</p></td>
+<td><p><code>src/Rejoltance.Sim</code> <em>(planowany)</em></p></td>
+<td><p>5 story</p></td>
+<td><p>Wyrocznia porównująca Kernel C# z prototypem JS, bot AI grający przez kontrakt <code>Intent</code>, symulator bot-vs-bot.</p></td>
+</tr>
+<tr>
+<td><p><strong>E6</strong></p></td>
+<td><p>Platforma, trwałość danych, QA i wdrożenie</p></td>
+<td><p><code>Server</code>, <code>AppHost</code>, <code>tests/</code></p></td>
+<td><p>9 story</p></td>
+<td><p>Testy E2E w Playwright, konta graczy (Identity), <em>Deckbuilder</em>, migracja na PostgreSQL, kontenery, demo, replay.</p></td>
+</tr>
+</tbody></table>
+<h3>Przykładowe historyjki z kryteriami akceptacji (<code>GIVEN / WHEN / THEN</code>)</h3>
+<ol><li><strong>Przygotowanie meczu i wybór kolejności (<code>E1-S01</code>, reguły: <code>R-04</code>, <code>R-10</code>, <code>R-11</code>):</strong> - <em>Jako</em> gracz rozpoczynający mecz <em>chcę</em> po mulliganie zadeklarować, czy wolę zaczynać jako pierwszy, czy jako drugi, <em>aby</em> przejść do pierwszej rundy z odnowionym zasobem Blood. - <strong>Kryterium 1:</strong> <code>GIVEN</code> obaj gracze zatwierdzili mulligan <code>WHEN</code> gracz 0 wybiera „pierwszy”, a gracz 1 wybiera „drugi” <code>THEN</code> rundę 1 zaczyna gracz 0 w kroku jednostek (<code>unitStep</code>), a obaj gracze mają <code>1/1 Blood</code>. - <strong>Kryterium 2:</strong> <code>GIVEN</code> obaj gracze wybrali tę samą kolejność <code>WHEN</code> obie deklaracje dotrą do serwera <code>THEN</code> gracza rozpoczynającego rundę 1 wyznacza deterministycznie <code>SeededRng</code> meczu.</li><li><strong>Automatyczna walka na 4 liniach (<code>E1-S03</code>, reguły: <code>R-30</code>, <code>R-32</code>, <code>R-33</code>, <code>R-50</code>, <code>R-70</code>, <code>R-71</code>):</strong> - <em>Jako</em> gracz <em>chcę</em>, żeby po kroku akcji walka rozstrzygnęła się sama od linii 0 do linii 3, <em>aby</em> jednostki stoczyły pojedynek i zadały obrażenia bohaterom. - <strong>Kryterium 1:</strong> <code>GIVEN</code> na linii 0 stoją naprzeciw siebie jednostki naziemne <code>3/2</code> i <code>2/3</code> <code>WHEN</code> linia 0 się rozstrzyga <code>THEN</code> obie uderzają jednocześnie, obie dostają śmiertelne obrażenia i trafiają na stosy kart odrzuconych. - <strong>Kryterium 2:</strong> <code>GIVEN</code> na linii 1 jednostka z <code>Flying</code> i atakiem <code>4</code> stoi naprzeciw jednostki naziemnej bez <code>Flying</code> <code>WHEN</code> linia 1 się rozstrzyga <code>THEN</code> jednostka latająca zadaje <code>4</code> obrażenia bezpośrednio bohaterowi przeciwnika.</li><li><strong>Mecz 1v1 w pokoju sieciowym z ochroną Fog of War (<code>E3-S01</code>, <code>E3-S02</code>, reguły: <code>R-80</code>, <code>R-81</code>, <code>R-82</code>):</strong> - <em>Jako</em> gracz <em>chcę</em> utworzyć pokój i przekazać kod drugiemu graczowi, <em>aby</em> rozegrać uczciwy pojedynek 1v1, w którym żaden z nas nie podejrzy kart przeciwnika. - <strong>Kryterium 1:</strong> <code>GIVEN</code> gracz A utworzył pokój i dostał kod <code>WHEN</code> gracz B wywołuje <code>JoinRoom(code)</code> <code>THEN</code> serwer uruchamia mecz, przypisuje graczy do miejsc <code>0</code> i <code>1</code> i wysyła każdemu jego własny widok <code>MatchView</code>. - <strong>Kryterium 2:</strong> <code>GIVEN</code> trwa mecz gracza 0 z graczem 1 <code>WHEN</code> serwer wysyła <code>MatchUpdated</code> do gracza 0 <code>THEN</code> pole <code>opponent</code> zawiera tylko liczbę kart w ręce i talii przeciwnika, bez identyfikatorów kart.</li></ol>
+<hr />
+<h2>5. Wymagania funkcjonalne</h2>
+<p>Wymagania funkcjonalne dzielimy na dwie grupy: reguły gry i funkcje platformy webowej.</p>
+<h3>5.1 Reguły mechaniki gry (<code>R-01..R-84</code>)</h3>
+<p>Mamy <strong>55 reguł domenowych</strong>. Każda jest formalnie zapisana w pliku <code>openspec/specs/&lt;obszar&gt;/spec.md</code>. CI sprawdza te pliki poleceniem <code>npx openspec validate --all --strict</code>. Te same reguły opisujemy zwykłym językiem w dokumencie <strong>1.2 Specyfikacja funkcjonalna zasad gry</strong> (<code>02-specyfikacja-regul-gry.md</code>). Zestawienie z testami jest w <strong>1.3 Indeks reguł R‑nn</strong> (<code>03-indeks-regul-r-nn.md</code>).</p>
+<table><thead><tr>
+<th><p>Zakres numerów</p></th>
+<th><p>Obszar</p></th>
+<th><p>Plik OpenSpec</p></th>
+<th><p>Liczba reguł</p></th>
+</tr></thead><tbody>
+<tr>
+<td><p><strong><code>R-01 .. R-04</code></strong></p></td>
+<td><p>Przygotowanie meczu, walidacja talii, mulligan, wybór kolejności</p></td>
+<td><p><code>openspec/specs/match-setup/spec.md</code></p></td>
+<td><p>4</p></td>
+</tr>
+<tr>
+<td><p><strong><code>R-10 .. R-15</code></strong></p></td>
+<td><p>Przebieg rundy, odnawianie Blood, kroki A/B, limit ręki, obrażenia Fatigue</p></td>
+<td><p><code>openspec/specs/round-flow/spec.md</code></p></td>
+<td><p>6</p></td>
+</tr>
+<tr>
+<td><p><strong><code>R-20 .. R-25</code></strong></p></td>
+<td><p>Zagrywanie jednostek i akcji, koszt, efekty w ręce, wybór celów</p></td>
+<td><p><code>openspec/specs/playing-cards/spec.md</code></p></td>
+<td><p>6</p></td>
+</tr>
+<tr>
+<td><p><strong><code>R-30 .. R-35</code></strong></p></td>
+<td><p>Walka na 4 liniach, efekty przed walką, Flying, Bonus Attack</p></td>
+<td><p><code>openspec/specs/combat/spec.md</code></p></td>
+<td><p>6</p></td>
+</tr>
+<tr>
+<td><p><strong><code>R-40 .. R-48</code></strong></p></td>
+<td><p>Słowa kluczowe i statusy (<code>Armored</code>, <code>Marked</code>, <code>Stunned</code>, <code>Burning</code>, <code>SplashDamage</code>, <code>Breakthrough</code>, <code>SoulGuard</code>, <code>Unkillable</code>)</p></td>
+<td><p><code>openspec/specs/keywords/spec.md</code></p></td>
+<td><p>9</p></td>
+</tr>
+<tr>
+<td><p><strong><code>R-50 .. R-54</code></strong></p></td>
+<td><p>Śmierć jednostek, poświęcenie (<code>Sacrifice</code>), wyciszenie (<code>Silence</code>), powrót do ręki, limit pętli reakcji</p></td>
+<td><p><code>openspec/specs/death-and-removal/spec.md</code></p></td>
+<td><p>5</p></td>
+</tr>
+<tr>
+<td><p><strong><code>R-60 .. R-69</code></strong></p></td>
+<td><p>Interpreter efektów kart (DSL): wyzwalacze, warunki, statystyki, dobieranie, tokeny, transformacja</p></td>
+<td><p><code>openspec/specs/card-effects/spec.md</code></p></td>
+<td><p>10</p></td>
+</tr>
+<tr>
+<td><p><strong><code>R-70 .. R-73</code></strong></p></td>
+<td><p>Koniec meczu: HP spada do 0, remis, poddanie się, walkower po rozłączeniu</p></td>
+<td><p><code>openspec/specs/match-end/spec.md</code></p></td>
+<td><p>4</p></td>
+</tr>
+<tr>
+<td><p><strong><code>R-80 .. R-84</code></strong></p></td>
+<td><p>Autorytet serwera, projekcja <em>Fog of War</em>, deterministyczny RNG, obsługa <code>PendingInteraction</code></p></td>
+<td><p><code>openspec/specs/server-authority/spec.md</code></p></td>
+<td><p>5</p></td>
+</tr>
+</tbody></table>
+<h3>5.2 Wymagania funkcjonalne platformy webowej</h3>
+<ol><li><strong>Piaskownica i trening z botem (<code>StartSandbox</code> / <code>StartBotMatch</code>).</strong> Gracz od razu uruchamia mecz testowy albo pojedynek z botem AI. Wybiera jedną z 5 gotowych talii startowych.</li><li><strong>Lobby i prywatne pokoje 1v1 (<code>CreateRoom</code> / <code>JoinRoom</code>).</strong> Gracz tworzy pokój z krótkim kodem i linkiem zapraszającym. System łączy dwóch graczy w parę.</li><li><strong>Odporność na chwilową utratę połączenia (<code>Reconnect</code>).</strong> Serwer trzyma sesję meczu przez 60 sekund od zerwania połączenia WebSocket. Po powrocie gracz dostaje pełny widok <code>MatchView</code>.</li><li><strong>Konta użytkowników i logowanie (od Sprintu 2).</strong> Rejestracja i logowanie działają na bezpiecznych ciasteczkach <code>HttpOnly</code> (ASP.NET Core Identity). Można też zagrać szybko jako gość.</li><li>**Kreator talii (<em>Deckbuilder</em>, fala W2).** Gracz tworzy, sprawdza (30 kart, maks. 3 kopie, bez tokenów) i zapisuje własne talie na swoim koncie.</li><li><strong>Historia meczów i deterministyczny replay (fala W2).</strong> Baza danych przechowuje ziarno losowości (<code>Seed</code>) i uporządkowaną listę intencji (<code>Intent[]</code>). Z tych danych odtwarzamy przebieg zakończonego meczu.</li></ol>
+<hr />
+<h2>6. Wymagania niefunkcjonalne (wg normy ISO/IEC 25010:2023)</h2>
+<p>Pełna specyfikacja 18 wymagań niefunkcjonalnych (NFR) ze scenariuszami testowymi jest w pliku <strong><code>openspec/specs/quality-attributes/spec.md</code></strong> (<code>../../openspec/specs/quality-attributes/spec.md</code>). Tabela poniżej to skrót najważniejszych parametrów.</p>
+<table><thead><tr>
+<th><p>Charakterystyka wg ISO/IEC 25010</p></th>
+<th><p>ID wymagania</p></th>
+<th><p>Wymóg mierzalny (metryka i próg)</p></th>
+</tr></thead><tbody>
+<tr>
+<td><p>**Wydajność (<em>Performance</em>)**</p></td>
+<td><p><code>NFR-01</code>, <code>NFR-02</code></p></td>
+<td><p>Obsługa ruchu na serwerze <strong>p95 ≤ 200 ms</strong> przy 50 równoległych meczach. Paczka startowa JS <strong>≤ 500 kB (gzip)</strong>, czas do interaktywności <strong>≤ 3 s</strong>.</p></td>
+</tr>
+<tr>
+<td><p>**Kompatybilność (<em>Compatibility</em>)**</p></td>
+<td><p><code>NFR-10</code>, <code>NFR-11</code></p></td>
+<td><p>Działa w 2 ostatnich wersjach Chrome, Edge, Firefox i Safari (od <code>1280×720</code>). Build zatrzymuje się, gdy kontrakt C# ↔ TS się nie zgadza.</p></td>
+</tr>
+<tr>
+<td><p>**Użyteczność i dostępność (<em>Usability</em>)**</p></td>
+<td><p><code>NFR-20..NFR-22</code></p></td>
+<td><p>Nowy gracz kończy pierwszy mecz w <strong>≤ 15 min</strong> bez pomocy. UI podświetla tylko legalne ruchy z <code>legalActions</code>. Obsługa z klawiatury i kontrast tekstu <strong>WCAG 2.1 AA (≥ 4.5:1)</strong>.</p></td>
+</tr>
+<tr>
+<td><p>**Niezawodność (<em>Reliability</em>)**</p></td>
+<td><p><code>NFR-30</code>, <code>NFR-31</code></p></td>
+<td><p>Instancja demo dostępna <strong>≥ 99%</strong> czasu w tygodniu przed <em>Sprint Review</em>. Błąd w jednym meczu nie wpływa na inne mecze. Powrót po rozłączeniu w ciągu <strong>60 s</strong> opisuje reguła <code>R-73</code>.</p></td>
+</tr>
+<tr>
+<td><p>**Bezpieczeństwo (<em>Security</em>)**</p></td>
+<td><p><code>NFR-40..NFR-42</code></p></td>
+<td><p>Żadna karta przeciwnika nie wycieka w danych sieciowych. Serwer sprawdza miejsce przy stole (<code>Seat</code>) i limituje żądania (≤ 10 intencji/s). Brak sekretów w repozytorium.</p></td>
+</tr>
+<tr>
+<td><p>**Utrzymywalność (<em>Maintainability</em>)**</p></td>
+<td><p><code>NFR-50..NFR-52</code></p></td>
+<td><p>Testy <code>NetArchTest</code> pilnują jednokierunkowych granic modułów. Pokrycie kodu <code>Rejoltance.Kernel</code> testami <strong>≥ 80%</strong>. Zero ostrzeżeń kompilatora w CI (<code>TreatWarningsAsErrors</code>).</p></td>
+</tr>
+<tr>
+<td><p>**Przenośność (<em>Portability</em>)**</p></td>
+<td><p><code>NFR-60</code>, <code>NFR-61</code></p></td>
+<td><p>Całe środowisko lokalne startuje jednym poleceniem, bez Dockera (Sprinty 0–3). Wersja demo/produkcyjna działa w jednym kontenerze OCI.</p></td>
+</tr>
+<tr>
+<td><p>**Bezpieczeństwo użytkownika (<em>Safety</em>)**</p></td>
+<td><p><code>NFR-70</code></p></td>
+<td><p>Żadne efekty świetlne nie migają częściej niż 3 razy na sekundę. Gra respektuje systemowe ustawienie <code>prefers-reduced-motion</code>.</p></td>
+</tr>
+</tbody></table>
+<hr />
+<h2>7. Interakcja użytkownika i projekt interfejsu</h2>
+<p>Mapę ekranów, układ planszy (<em>wireframe</em>), przepływy użytkownika i przewodnik stylu (<em>UI Style Guide</em>) opisuje dokument <strong>1.10 Projekt UX, przepływy i przewodnik stylu</strong> (<code>10-ux-design-i-przeplywy.md</code>). Działającym wzorem interakcji, grafiki i dźwięku jest prototyp w katalogu <strong><code>prototype/revibance/</code></strong> (<code>../../prototype/README.md</code>).</p>
+<hr />
+<h2>8. Poza zakresem projektu</h2>
+<p>Żeby zakres nie rozrastał się bez kontroli (<em>scope creep</em>), świadomie <strong>nie robimy</strong> tych rzeczy:</p>
+<ol><li><strong>Natywne aplikacje mobilne (iOS / Android) i pionowy układ dla smartfonów.</strong> Gra jest dla przeglądarek na komputerach, w orientacji poziomej (od <code>1280×720</code>).</li><li><strong>Mikropłatności, sklep z paczkami kart i waluty premium.</strong> Wszystkie karty są odblokowane dla każdego gracza w kreatorze talii.</li><li><strong>Architektura wieloserwerowa (klastry Kubernetes, szyna komunikatów Redis/RabbitMQ) w Semestrze 1.</strong> Zgodnie z Konstytucją (Art. VIII) budujemy modularny monolit. Aktywne mecze żyją w pamięci jednego procesu serwera.</li><li><strong>Czat tekstowy i głosowy w grze.</strong> Gracze rozmawiają przez zewnętrzne komunikatory (np. Discord). Dzięki temu nie musimy budować moderacji treści.</li><li><strong>Tryby dla więcej niż 2 graczy (2v2, Free-for-All).</strong> Silnik reguł <code>Rejoltance.Kernel</code> jest zaprojektowany pod pojedynek 1 na 1.</li></ol>

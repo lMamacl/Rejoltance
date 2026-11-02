@@ -1,0 +1,540 @@
+<ac:structured-macro ac:name="info"><ac:rich-text-body><p><strong>Synchronizacja 1:1 z repozytorium Git:</strong> <code>docs/01-dokumentacja-systemowa/03-indeks-regul-r-nn.md</code> (commit <code>a2bf2a4</code>, data eksportu: <code>2026-11-02</code>)</p></ac:rich-text-body></ac:structured-macro>
+<blockquote><p><strong>Źródło prawdy:</strong> repozytorium (<code>docs/01-dokumentacja-systemowa/03-indeks-regul-r-nn.md</code>) · <strong>Kategoria dokumentacji:</strong> Dokumentacja produktowa — systemowa (macierz śledzenia wymagań) · <strong>Etap SDD:</strong> Specyfikacja i weryfikacja.</p></blockquote>
+<p>Ta strona to macierz śledzenia: dla każdej reguły gry pokazuje, skąd pochodzi, gdzie jest opisana i czym ją testujemy. SDD (Spec-Driven Development) to nasz sposób pracy, w którym specyfikacja powstaje przed kodem.</p>
+<p>Każda reguła domenowa ma:</p>
+<ul><li>unikalny numer <code>R-nn</code>,</li><li>formalne wymaganie ze scenariuszami w <code>openspec/specs/&lt;obszar&gt;/spec.md</code>,</li><li>odwołanie do prototypu (<strong>ADR-0005</strong> (<code>07-decyzje-adr/0005-kanon-regul-prototyp-js.md</code>)),</li><li>test jednostkowy, którego nazwa zaczyna się od numeru reguły (<code>R14_…</code>),</li><li>powiązane zadanie w backlogu.</li></ul>
+<p>Test jednej reguły uruchomisz tak: <code>dotnet test --filter &quot;FullyQualifiedName~R14&quot;</code>.</p>
+<p>Wymagania niefunkcjonalne <code>NFR‑nn</code> (NFR, Non-Functional Requirement; norma ISO/IEC 25010) są w <code>openspec/specs/quality-attributes/spec.md</code>. Ich testy mają nazwy <code>NFRnn_…</code>.</p>
+<p>W numeracji celowo zostawiamy odstępy. Nowa reguła dostaje kolejny wolny numer w swoim obszarze (np. <code>R-16</code>). Istniejących numerów nigdy nie zmieniamy.</p>
+<p>Kolumna „Źródło” wskazuje funkcję w prototypie (<code>engine.js</code>, chyba że podano inny plik). Kolumna „Story” to zadanie w backlogu.</p>
+<p>Legenda statusu: ✅ zaimplementowane i przetestowane · 🟡 częściowo · ⏳ w backlogu · ❓ czeka na decyzję (<strong><code>04-rozbieznosci-prototypu.md</code></strong> (<code>04-rozbieznosci-prototypu.md</code>)).</p>
+<h2>R-0x Przygotowanie meczu — <code>openspec/specs/match-setup</code></h2>
+<table><thead><tr>
+<th><p>ID</p></th>
+<th><p>Reguła</p></th>
+<th><p>Źródło <code>engine.js</code></p></th>
+<th><p>Test</p></th>
+<th><p>Story</p></th>
+<th><p>Status</p></th>
+</tr></thead><tbody>
+<tr>
+<td><p>R-01</p></td>
+<td><p>Legalna talia: 30 kart, ≤ 3 kopie, bez tokenów</p></td>
+<td><p><code>ui.js</code> deck builder</p></td>
+<td><p><code>ContentTests.R01_*</code></p></td>
+<td><p>E6-S04</p></td>
+<td><p>✅ walidacja</p></td>
+</tr>
+<tr>
+<td><p>R-02</p></td>
+<td><p>Stan początkowy: 20 HP, 4 karty, bez wyzwalaczy</p></td>
+<td><p><code>newGame</code></p></td>
+<td><p><code>SetupRulesTests.R02_*</code></p></td>
+<td><p>—</p></td>
+<td><p>✅</p></td>
+</tr>
+<tr>
+<td><p>R-03</p></td>
+<td><p>Mulligan: dowolna liczba, zamienniki z góry, odrzucone wracają, tasowanie</p></td>
+<td><p><code>mulligan</code></p></td>
+<td><p><code>SetupRulesTests.R03_*</code></p></td>
+<td><p>—</p></td>
+<td><p>✅ ❓ D-02</p></td>
+</tr>
+<tr>
+<td><p>R-04</p></td>
+<td><p>Wybór kolejności; remis wyboru → losowanie z seeda</p></td>
+<td><p><code>decideStart</code></p></td>
+<td><p>—</p></td>
+<td><p>E1-S01</p></td>
+<td><p>⏳</p></td>
+</tr>
+</tbody></table>
+<h2>R-1x Przebieg rundy — <code>openspec/specs/round-flow</code></h2>
+<table><thead><tr>
+<th><p>ID</p></th>
+<th><p>Reguła</p></th>
+<th><p>Źródło</p></th>
+<th><p>Test</p></th>
+<th><p>Story</p></th>
+<th><p>Status</p></th>
+</tr></thead><tbody>
+<tr>
+<td><p>R-10</p></td>
+<td><p>Max Blood = min(10, runda), odnawiane; dobranie od rundy 2</p></td>
+<td><p><code>startRound</code></p></td>
+<td><p><code>SetupRulesTests.R10_*</code></p></td>
+<td><p>E1-S01</p></td>
+<td><p>🟡 formuła</p></td>
+</tr>
+<tr>
+<td><p>R-11</p></td>
+<td><p>Rozpoczynający naprzemiennie</p></td>
+<td><p><code>startRound</code></p></td>
+<td><p>—</p></td>
+<td><p>E1-S01</p></td>
+<td><p>⏳</p></td>
+</tr>
+<tr>
+<td><p>R-12</p></td>
+<td><p>Kroki: jednostki (A) → mieszany (B) → akcje (A) → walka</p></td>
+<td><p><code>setStep</code>, <code>nextStep</code></p></td>
+<td><p>—</p></td>
+<td><p>E1-S02</p></td>
+<td><p>⏳</p></td>
+</tr>
+<tr>
+<td><p>R-13</p></td>
+<td><p>Ręka ≤ 8; nadmiar na stos odrzuconych; wyzwalacze dobrania</p></td>
+<td><p><code>draw</code></p></td>
+<td><p><code>SetupRulesTests.R13_*</code></p></td>
+<td><p>E2-S04</p></td>
+<td><p>🟡 bez wyzwalaczy</p></td>
+</tr>
+<tr>
+<td><p>R-14</p></td>
+<td><p>Pusta talia: fatigue 1, 2, 3…; bez tasowania odrzuconych</p></td>
+<td><p><code>draw</code></p></td>
+<td><p><code>SetupRulesTests.R14_*</code></p></td>
+<td><p>—</p></td>
+<td><p>✅</p></td>
+</tr>
+<tr>
+<td><p>R-15</p></td>
+<td><p>Koniec rundy: Burning <code>max(0, 1 − pancerz)</code>, śmierć, zwycięstwo</p></td>
+<td><p><code>endRound</code></p></td>
+<td><p>—</p></td>
+<td><p>E1-S04</p></td>
+<td><p>⏳ ❓ D-08</p></td>
+</tr>
+</tbody></table>
+<h2>R-2x Zagrywanie kart — <code>openspec/specs/playing-cards</code></h2>
+<table><thead><tr>
+<th><p>ID</p></th>
+<th><p>Reguła</p></th>
+<th><p>Źródło</p></th>
+<th><p>Test</p></th>
+<th><p>Story</p></th>
+<th><p>Status</p></th>
+</tr></thead><tbody>
+<tr>
+<td><p>R-20</p></td>
+<td><p>Tylko aktywny gracz, typ wg kroku, koszt ≤ Blood</p></td>
+<td><p><code>canPlay</code></p></td>
+<td><p>—</p></td>
+<td><p>E1-S02</p></td>
+<td><p>⏳</p></td>
+</tr>
+<tr>
+<td><p>R-21</p></td>
+<td><p>Jednostka na wolny slot; buff globalny; <code>OnPlayed</code> własne → nasłuchujące</p></td>
+<td><p><code>play</code>, <code>place</code></p></td>
+<td><p>—</p></td>
+<td><p>E1-S02</p></td>
+<td><p>⏳</p></td>
+</tr>
+<tr>
+<td><p>R-22</p></td>
+<td><p>Akcja: cele dostępne; potem odrzucone / ręka przeciwnika; <code>OnFriendlyActionPlayed</code></p></td>
+<td><p><code>play</code></p></td>
+<td><p>—</p></td>
+<td><p>E2-S02</p></td>
+<td><p>⏳</p></td>
+</tr>
+<tr>
+<td><p>R-23</p></td>
+<td><p>Koszt: baza − Tea Maid + 6×Wyvern − obniżki, ≥ 0</p></td>
+<td><p><code>cost</code></p></td>
+<td><p>—</p></td>
+<td><p>E2-S06</p></td>
+<td><p>⏳ ❓ D-11</p></td>
+</tr>
+<tr>
+<td><p>R-24</p></td>
+<td><p>Efekty z ręki: obniżka, bonus ataku, przywołanie z ręki</p></td>
+<td><p><code>fireHand</code></p></td>
+<td><p>—</p></td>
+<td><p>E2-S06</p></td>
+<td><p>⏳</p></td>
+</tr>
+<tr>
+<td><p>R-25</p></td>
+<td><p>Wybór celów + walidacja na serwerze</p></td>
+<td><p><code>picks</code>, <code>apicks</code>, <code>req</code></p></td>
+<td><p>—</p></td>
+<td><p>E2-S02</p></td>
+<td><p>⏳ ❓ D-05</p></td>
+</tr>
+</tbody></table>
+<h2>R-3x Walka — <code>openspec/specs/combat</code></h2>
+<table><thead><tr>
+<th><p>ID</p></th>
+<th><p>Reguła</p></th>
+<th><p>Źródło</p></th>
+<th><p>Test</p></th>
+<th><p>Story</p></th>
+<th><p>Status</p></th>
+</tr></thead><tbody>
+<tr>
+<td><p>R-30</p></td>
+<td><p>Linie 0→3; przed walką → uderzenia → kolejka → śmierć → po walce</p></td>
+<td><p><code>lane</code></p></td>
+<td><p>—</p></td>
+<td><p>E1-S03</p></td>
+<td><p>⏳</p></td>
+</tr>
+<tr>
+<td><p>R-31</p></td>
+<td><p>Przed walką: gracz 0, potem 1; cel przez <code>PendingInteraction</code></p></td>
+<td><p><code>lane</code>, <code>preTargets</code></p></td>
+<td><p>—</p></td>
+<td><p>E1-S08</p></td>
+<td><p>⏳ ❓ D-10</p></td>
+</tr>
+<tr>
+<td><p>R-32</p></td>
+<td><p>Uderzenia jednoczesne; atak 0 nie uderza</p></td>
+<td><p><code>lane</code></p></td>
+<td><p>—</p></td>
+<td><p>E1-S03</p></td>
+<td><p>⏳</p></td>
+</tr>
+<tr>
+<td><p>R-33</p></td>
+<td><p>Ten sam status Flying → jednostka, inaczej bohater</p></td>
+<td><p><code>lane</code>, <code>strike</code></p></td>
+<td><p>—</p></td>
+<td><p>E1-S03</p></td>
+<td><p>⏳ ❓ D-07</p></td>
+</tr>
+<tr>
+<td><p>R-34</p></td>
+<td><p>Wyzwalacze z obrażeń w kolejce; tylko trafienia bezpośrednie</p></td>
+<td><p><code>dmg</code>, <code>later</code></p></td>
+<td><p>—</p></td>
+<td><p>E1-S07</p></td>
+<td><p>⏳</p></td>
+</tr>
+<tr>
+<td><p>R-35</p></td>
+<td><p>Bonus Attack: jednostronne uderzenie</p></td>
+<td><p><code>strike</code></p></td>
+<td><p>—</p></td>
+<td><p>E1-S07</p></td>
+<td><p>⏳</p></td>
+</tr>
+</tbody></table>
+<h2>R-4x Słowa kluczowe — <code>openspec/specs/keywords</code></h2>
+<table><thead><tr>
+<th><p>ID</p></th>
+<th><p>Reguła</p></th>
+<th><p>Źródło</p></th>
+<th><p>Test</p></th>
+<th><p>Story</p></th>
+<th><p>Status</p></th>
+</tr></thead><tbody>
+<tr>
+<td><p>R-40</p></td>
+<td><p>Armored(n) / Armor2: −n na trafienie, przed Marked</p></td>
+<td><p><code>dmg</code></p></td>
+<td><p>—</p></td>
+<td><p>E1-S04</p></td>
+<td><p>⏳</p></td>
+</tr>
+<tr>
+<td><p>R-41</p></td>
+<td><p>Marked: ×2 po pancerzu, nie dla Burning</p></td>
+<td><p><code>dmg</code></p></td>
+<td><p>—</p></td>
+<td><p>E1-S04</p></td>
+<td><p>⏳</p></td>
+</tr>
+<tr>
+<td><p>R-42</p></td>
+<td><p>Stunned: pomija najbliższe uderzenie, znika</p></td>
+<td><p><code>lane</code>, <code>strike</code></p></td>
+<td><p>—</p></td>
+<td><p>E1-S04</p></td>
+<td><p>⏳</p></td>
+</tr>
+<tr>
+<td><p>R-43</p></td>
+<td><p>Burning / BurnSource</p></td>
+<td><p><code>dmg</code>, <code>endRound</code></p></td>
+<td><p>—</p></td>
+<td><p>E1-S04</p></td>
+<td><p>⏳ ❓ D-09</p></td>
+</tr>
+<tr>
+<td><p>R-44</p></td>
+<td><p>SplashDamage(n): sąsiednie linie, nie przy Stunned</p></td>
+<td><p><code>splash</code></p></td>
+<td><p>—</p></td>
+<td><p>E1-S04</p></td>
+<td><p>⏳</p></td>
+</tr>
+<tr>
+<td><p>R-45</p></td>
+<td><p>Breakthrough: pełny atak w bohatera po trafieniu jednostki</p></td>
+<td><p><code>thru</code></p></td>
+<td><p>—</p></td>
+<td><p>E1-S04</p></td>
+<td><p>⏳ ❓ D-03</p></td>
+</tr>
+<tr>
+<td><p>R-46</p></td>
+<td><p>SoulGuard: raz, 1 HP; nie chroni przed Sacrifice; aura Survivalist</p></td>
+<td><p><code>resolve</code>, <code>aura</code></p></td>
+<td><p>—</p></td>
+<td><p>E1-S05</p></td>
+<td><p>⏳</p></td>
+</tr>
+<tr>
+<td><p>R-47</p></td>
+<td><p>Unkillable: efekty pośmiertne → ręka; pełna → odrzucone; token znika</p></td>
+<td><p><code>killUnit</code></p></td>
+<td><p>—</p></td>
+<td><p>E1-S05</p></td>
+<td><p>⏳</p></td>
+</tr>
+<tr>
+<td><p>R-48</p></td>
+<td><p><code>ApplyStatus</code> → <code>OnStatusApplied</code> u pozostałych jednostek</p></td>
+<td><p><code>status</code></p></td>
+<td><p>—</p></td>
+<td><p>E2-S03</p></td>
+<td><p>⏳</p></td>
+</tr>
+</tbody></table>
+<h2>R-5x Śmierć i usuwanie — <code>openspec/specs/death-and-removal</code></h2>
+<table><thead><tr>
+<th><p>ID</p></th>
+<th><p>Reguła</p></th>
+<th><p>Źródło</p></th>
+<th><p>Test</p></th>
+<th><p>Story</p></th>
+<th><p>Status</p></th>
+</tr></thead><tbody>
+<tr>
+<td><p>R-50</p></td>
+<td><p>Rozstrzygnięcie śmierci, kolejność wyzwalaczy</p></td>
+<td><p><code>resolve</code>, <code>killUnit</code></p></td>
+<td><p>—</p></td>
+<td><p>E1-S03</p></td>
+<td><p>⏳</p></td>
+</tr>
+<tr>
+<td><p>R-51</p></td>
+<td><p>Sacrifice: <code>OnSacrificed</code> → zniszczenie → <code>OnOtherUnitSacrificed</code></p></td>
+<td><p><code>sacrifice</code></p></td>
+<td><p>—</p></td>
+<td><p>E1-S05</p></td>
+<td><p>⏳</p></td>
+</tr>
+<tr>
+<td><p>R-52</p></td>
+<td><p>Silence: czyści słowa, statusy, modyfikacje, wyłącza zdolności</p></td>
+<td><p><code>act</code> Silence</p></td>
+<td><p>—</p></td>
+<td><p>E1-S06</p></td>
+<td><p>⏳</p></td>
+</tr>
+<tr>
+<td><p>R-53</p></td>
+<td><p>Powrót do ręki jako nowa karta</p></td>
+<td><p><code>act</code> ReturnToHand</p></td>
+<td><p>—</p></td>
+<td><p>E1-S06</p></td>
+<td><p>⏳ ❓ D-04</p></td>
+</tr>
+<tr>
+<td><p>R-54</p></td>
+<td><p>Jawny limit reakcji łańcuchowych, błąd z diagnostyką</p></td>
+<td><p><code>resolve</code> (30)</p></td>
+<td><p>—</p></td>
+<td><p>E1-S05</p></td>
+<td><p>⏳</p></td>
+</tr>
+</tbody></table>
+<h2>R-6x Efekty kart (DSL) — <code>openspec/specs/card-effects</code></h2>
+<table><thead><tr>
+<th><p>ID</p></th>
+<th><p>Reguła</p></th>
+<th><p>Źródło</p></th>
+<th><p>Test</p></th>
+<th><p>Story</p></th>
+<th><p>Status</p></th>
+</tr></thead><tbody>
+<tr>
+<td><p>R-60</p></td>
+<td><p>Wyzwalacz → strefa → warunek → akcje; <code>Choice</code> = jedna akcja</p></td>
+<td><p><code>fire</code></p></td>
+<td><p>—</p></td>
+<td><p>E2-S01</p></td>
+<td><p>⏳</p></td>
+</tr>
+<tr>
+<td><p>R-61</p></td>
+<td><p>DealDamage / LoseHealth / Heal / HealToFull</p></td>
+<td><p><code>act</code></p></td>
+<td><p>—</p></td>
+<td><p>E2-S03</p></td>
+<td><p>⏳</p></td>
+</tr>
+<tr>
+<td><p>R-62</p></td>
+<td><p>BuffStats / ModifyGlobalBuff / AbsorbStats</p></td>
+<td><p><code>act</code></p></td>
+<td><p>—</p></td>
+<td><p>E2-S03</p></td>
+<td><p>⏳</p></td>
+</tr>
+<tr>
+<td><p>R-63</p></td>
+<td><p>DrawCard / DrawFromDiscard / TutorCard / AddCardToHand / ShuffleDeck</p></td>
+<td><p><code>act</code></p></td>
+<td><p>—</p></td>
+<td><p>E2-S04</p></td>
+<td><p>⏳</p></td>
+</tr>
+<tr>
+<td><p>R-64</p></td>
+<td><p>MakeAUnit / MoveRight / DestroyUnit / ReturnToHand</p></td>
+<td><p><code>act</code></p></td>
+<td><p>—</p></td>
+<td><p>E2-S08</p></td>
+<td><p>⏳</p></td>
+</tr>
+<tr>
+<td><p>R-65</p></td>
+<td><p>AddResource ≤ 10</p></td>
+<td><p><code>act</code></p></td>
+<td><p>—</p></td>
+<td><p>E2-S04</p></td>
+<td><p>⏳</p></td>
+</tr>
+<tr>
+<td><p>R-66</p></td>
+<td><p>Warunki; wyzwalacze własne bez warunku</p></td>
+<td><p><code>cond</code>, <code>fire</code></p></td>
+<td><p>—</p></td>
+<td><p>E2-S01</p></td>
+<td><p>⏳</p></td>
+</tr>
+<tr>
+<td><p>R-67</p></td>
+<td><p>Pasywne (Tea Maid, Wyvern, Survivalist) w danych</p></td>
+<td><p><code>cost</code>, <code>aura</code></p></td>
+<td><p>—</p></td>
+<td><p>E2-S07</p></td>
+<td><p>⏳ ❓ D-11</p></td>
+</tr>
+<tr>
+<td><p>R-68</p></td>
+<td><p>Fail loud: nieznane słowo DSL / niezaimplementowana akcja</p></td>
+<td><p><code>tg</code> (<code>return []</code>)</p></td>
+<td><p><code>ContentTests.R68_*</code>, <code>SetupRulesTests.R68_*</code></p></td>
+<td><p>E2-S01</p></td>
+<td><p>🟡 ładowanie</p></td>
+</tr>
+<tr>
+<td><p>R-69</p></td>
+<td><p>Transform (z Partner)</p></td>
+<td><p><code>transformUnit</code></p></td>
+<td><p>—</p></td>
+<td><p>E2-S08</p></td>
+<td><p>⏳</p></td>
+</tr>
+</tbody></table>
+<h2>R-7x Koniec meczu — <code>openspec/specs/match-end</code></h2>
+<table><thead><tr>
+<th><p>ID</p></th>
+<th><p>Reguła</p></th>
+<th><p>Źródło</p></th>
+<th><p>Test</p></th>
+<th><p>Story</p></th>
+<th><p>Status</p></th>
+</tr></thead><tbody>
+<tr>
+<td><p>R-70</p></td>
+<td><p>HP ≤ 0 → przegrana, natychmiast, bez limitu rund</p></td>
+<td><p><code>chk</code></p></td>
+<td><p><code>SetupRulesTests.R70_*</code></p></td>
+<td><p>E1-S03</p></td>
+<td><p>🟡 fatigue</p></td>
+</tr>
+<tr>
+<td><p>R-71</p></td>
+<td><p>Jednoczesna śmierć bohaterów = remis</p></td>
+<td><p><code>chk</code></p></td>
+<td><p>—</p></td>
+<td><p>E1-S03</p></td>
+<td><p>🟡 ❓ D-01</p></td>
+</tr>
+<tr>
+<td><p>R-72</p></td>
+<td><p>Poddanie się</p></td>
+<td><p>UI</p></td>
+<td><p><code>SetupRulesTests.R72_*</code></p></td>
+<td><p>—</p></td>
+<td><p>✅</p></td>
+</tr>
+<tr>
+<td><p>R-73</p></td>
+<td><p>Rozłączenie: 60 s na powrót, potem walkower</p></td>
+<td><p><code>net.js</code> (brak)</p></td>
+<td><p>—</p></td>
+<td><p>E3-S05</p></td>
+<td><p>⏳</p></td>
+</tr>
+</tbody></table>
+<h2>R-8x Autorytet serwera — <code>openspec/specs/server-authority</code></h2>
+<table><thead><tr>
+<th><p>ID</p></th>
+<th><p>Reguła</p></th>
+<th><p>Źródło</p></th>
+<th><p>Test</p></th>
+<th><p>Story</p></th>
+<th><p>Status</p></th>
+</tr></thead><tbody>
+<tr>
+<td><p>R-80</p></td>
+<td><p>Fog of war: ręka i talia przeciwnika tylko jako liczby</p></td>
+<td><p>(prototyp łamie)</p></td>
+<td><p><code>ProjectionTests.R80_*</code></p></td>
+<td><p>—</p></td>
+<td><p>✅</p></td>
+</tr>
+<tr>
+<td><p>R-81</p></td>
+<td><p>Identyfikatory instancji nie zdradzają kolejności talii</p></td>
+<td><p>(prototyp łamie)</p></td>
+<td><p>— (konstrukcja <code>Draw</code>)</p></td>
+<td><p>E3-S02</p></td>
+<td><p>🟡</p></td>
+</tr>
+<tr>
+<td><p>R-82</p></td>
+<td><p>Walidacja intencji i miejsca; sekwencyjnie per mecz</p></td>
+<td><p>—</p></td>
+<td><p><code>ServerTests</code> (częściowo)</p></td>
+<td><p>E3-S02</p></td>
+<td><p>🟡</p></td>
+</tr>
+<tr>
+<td><p>R-83</p></td>
+<td><p>Determinizm: seed + intencje = ten sam stan</p></td>
+<td><p>(prototyp: <code>Math.random</code>)</p></td>
+<td><p><code>DeterminismTests.R83_*</code></p></td>
+<td><p>E5-S02</p></td>
+<td><p>✅</p></td>
+</tr>
+<tr>
+<td><p>R-84</p></td>
+<td><p>Decyzje przez <code>PendingInteraction</code>, bez losowania</p></td>
+<td><p>(prototyp: <code>botPick</code>)</p></td>
+<td><p><code>ProjectionTests.R84_*</code></p></td>
+<td><p>E1-S08</p></td>
+<td><p>🟡 mulligan</p></td>
+</tr>
+</tbody></table>

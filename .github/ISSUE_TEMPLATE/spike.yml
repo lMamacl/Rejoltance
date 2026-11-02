@@ -1,5 +1,5 @@
 name: Spike (badanie ≤ 2 h)
-description: Krótkie badanie technologii lub pytania technicznego, zakończone notatką w docs/08-research.
+description: Krótkie badanie technologii lub pytania technicznego, zakończone notatką w docs/03-dokumentacja-procesowa/04-badania-i-analizy.
 labels: [spike]
 body:
   - type: textarea
@@ -21,4 +21,4 @@ body:
     id: done
     attributes:
       label: Wynik (Definition of Done)
-      value: "Notatka docs/08-research/RRRR-MM-DD-<temat>.md z rekomendacją; ewentualnie szkic ADR."
+      value: "Notatka docs/03-dokumentacja-procesowa/04-badania-i-analizy/RRRR-MM-DD-<temat>.md z rekomendacją; ewentualnie szkic ADR."

@@ -1,0 +1,210 @@
+<ac:structured-macro ac:name="info"><ac:rich-text-body><p><strong>Synchronizacja 1:1 z repozytorium Git:</strong> <code>docs/03-dokumentacja-procesowa/04-badania-i-analizy/faza-1-porownanie.md</code> (commit <code>a2bf2a4</code>, data eksportu: <code>2026-11-02</code>)</p></ac:rich-text-body></ac:structured-macro>
+<p><strong>Data:</strong> 2026-10-27 · <strong>Autor:</strong> agent (Claude Code) na zlecenie zespołu · <strong>Status:</strong> do akceptacji</p>
+<p>Legenda: <strong>[V]</strong> zweryfikowane testem lub odczytem, <strong>[Z]</strong> założenie/wnioskowanie, <strong>[?]</strong> niezweryfikowane.</p>
+<p>Notatkę napisał agent AI, dlatego miejscami mówi w pierwszej osobie. SDD (Spec-Driven Development) to podejście „najpierw specyfikacja, potem kod”. CI (continuous integration) to automatyczne budowanie i testy przy każdej zmianie.</p>
+<hr />
+<h2>1. Środowisko testowe</h2>
+<table><thead><tr>
+<th><p>Element</p></th>
+<th><p>Wersja</p></th>
+<th><p>Jak</p></th>
+</tr></thead><tbody>
+<tr>
+<td><p>Windows 11 Pro</p></td>
+<td><p>10.0.26300</p></td>
+<td><p>[V]</p></td>
+</tr>
+<tr>
+<td><p>.NET SDK</p></td>
+<td><p>10.0.401</p></td>
+<td><p>[V] był zainstalowany</p></td>
+</tr>
+<tr>
+<td><p>Git</p></td>
+<td><p>2.56.0</p></td>
+<td><p>[V] doinstalowany (<code>winget install Git.Git</code>)</p></td>
+</tr>
+<tr>
+<td><p>Node.js</p></td>
+<td><p>24.22.1 LTS (npm 11.19)</p></td>
+<td><p>[V] doinstalowany (<code>winget install OpenJS.NodeJS.LTS</code>)</p></td>
+</tr>
+<tr>
+<td><p>uv</p></td>
+<td><p>0.13.6</p></td>
+<td><p>[V] doinstalowany (<code>winget install astral-sh.uv</code>)</p></td>
+</tr>
+<tr>
+<td><p>Spec Kit (<code>specify-cli</code>)</p></td>
+<td><p>1.2.4</p></td>
+<td><p>[V] <code>uv tool install --python 3.13 specify-cli==1.2.4</code></p></td>
+</tr>
+<tr>
+<td><p>OpenSpec (<code>@fission-ai/openspec</code>)</p></td>
+<td><p>1.15.0</p></td>
+<td><p>[V] <code>npm i -g @fission-ai/openspec</code></p></td>
+</tr>
+<tr>
+<td><p>Aspire templates</p></td>
+<td><p>13.6.4</p></td>
+<td><p>[V] <code>dotnet new install Aspire.ProjectTemplates</code></p></td>
+</tr>
+</tbody></table>
+<p>Wszystkie testy odbyły się w katalogu tymczasowym, poza repozytorium.</p>
+<hr />
+<h2>2. Spec‑driven development: Spec Kit vs OpenSpec vs „SDD‑lite”</h2>
+<h3>2.1 Spec Kit 1.2.4 — wyniki [V]</h3>
+<ul><li><code>specify init --here --integration agy --script ps</code> → 3,4 s, skrypty PowerShell działają bez WSL.</li><li><strong>Wiele narzędzi naraz:</strong> <code>claude</code>, <code>codex</code>, <code>gemini</code> są oznaczone <em>multi‑install safe</em> i instalują się obok siebie bez problemu. <strong><code>agy</code> (Antigravity) i <code>copilot</code> nie są</strong> — da się je dołożyć tylko z <code>--force</code>, a <code>specify integration status</code> zgłasza wtedy <code>ERROR unsafe-multi-install</code>.</li><li><code>agy</code> i <code>codex</code> zapisują <strong>te same pliki</strong> <code>.agents/skills/speckit-*</code> (różnica: prefiks wywołania <code>/speckit-…</code> vs <code>$speckit-…</code>) → kolizja zarządzanych plików.</li><li><code>copilot</code> zapisuje osobno do <code>.github/skills/</code> — faktycznie bez kolizji, mimo flagi.</li><li>Komplet 5 integracji: <strong>64 pliki, ~9 700 linii</strong> (10 skilli × 4 katalogi + 24 pliki <code>.specify/</code>).</li><li>Konstytucja: <code>.specify/memory/constitution.md</code> + szablony spec/plan/tasks/checklist (84/80/168/34 linii, po angielsku).</li><li><strong>Gałęzie:</strong> wersja 1.2.4 nie tworzy już gałęzi git sama; tworzy folder <code>specs/001-&lt;nazwa&gt;</code> i zapisuje wskaźnik w <code>.specify/feature.json</code> (w <code>.gitignore</code>). Przetestowane: na gałęzi <code>feature/REJ-12-mulligan</code> <code>setup-plan.ps1</code> poprawnie znajduje ficzer → <strong>nasz schemat nazw gałęzi z kluczem Jira działa</strong>.</li><li>Brak walidatora artefaktów do CI (jest <code>integration status</code>, ale nie walidacja treści speców) [V przez <code>--help</code>].</li><li>Pułapki instalacji na Windows:</li><li>z Pythonem 3.15 pakiet <code>pyyaml</code> nie ma gotowych wheeli i wymaga kompilatora C++ → <strong>instalować z <code>--python 3.13</code></strong> [V];</li><li>w tym środowisku uv wymagał przeniesienia katalogów cache (błąd „przeniesienie na inny dysk”) — to prawdopodobnie efekt piaskownicy agenta, nie typowego laptopa [Z].</li></ul>
+<h3>2.2 OpenSpec 1.15.0 — wyniki [V]</h3>
+<ul><li><code>openspec init --tools claude,antigravity,codex,github-copilot,gemini --language pl</code> → <strong>1,4 s, jednym poleceniem, bez konfliktów</strong>.</li><li>Komplet 5 narzędzi: <strong>52 pliki, ~7 800 linii</strong> (6 skilli + komendy/workflowy per narzędzie; Antigravity dostaje też <code>.agents/workflows/opsx-*.md</code>).</li><li><strong>Język:</strong> <code>--language pl</code> → artefakty po polsku, nagłówki strukturalne i SHALL/MUST po angielsku (zapisane w <code>openspec/config.yaml</code>).</li><li><strong>„Żywe” specyfikacje:</strong> <code>openspec/specs/&lt;capability&gt;/spec.md</code> (wymagania + <code>#### Scenario:</code>), zmiany jako delty w <code>openspec/changes/&lt;nazwa&gt;/</code>, a <code>archive</code> wciela je do specyfikacji. Pasuje do reguł gry R‑nn, które muszą być aktualne przez cały projekt.</li><li><strong>Walidacja w CI:</strong> <code>openspec validate --all</code> — przetestowane; poprawnie odrzuca zmianę bez delt i bez scenariuszy.</li><li>Nazwa zmiany dowolna, np. <code>rej-12-mulligan</code> → śledzalność z Jirą bez obejść.</li><li>Brak pojęcia „konstytucji” — zastępuje je <code>config.yaml</code> (<code>context</code>, <code>rules</code> per artefakt), który może wskazywać na nasz plik konstytucji.</li><li><strong>Telemetria domyślnie włączona</strong> → w <code>setup.ps1</code> / <code>.env.example</code> ustawiamy <code>OPENSPEC_TELEMETRY=0</code>.</li></ul>
+<h3>2.3 „SDD‑lite” (własne szablony + skille, bez CLI) [Z]</h3>
+<p>Najmniej zależności i pełna kontrola. Wady: brak walidacji, brak gotowych komend we wszystkich IDE, a każdą zmianę procesu utrzymujemy sami. Ma sens tylko jako plan awaryjny.</p>
+<h3>2.4 BMAD [Z — nie testowany]</h3>
+<p>Odrzucony na etapie analizy. BMAD symuluje cały zespół (Analyst, PM, Architect…). Przy 6 prawdziwych osobach z rolami Scrum to dublowanie ról i największy narzut.</p>
+<h3>2.5 Punktacja (skala 1–5, waga w nawiasie)</h3>
+<table><thead><tr>
+<th><p>Kryterium</p></th>
+<th><p>Spec Kit</p></th>
+<th><p>OpenSpec</p></th>
+<th><p>SDD‑lite</p></th>
+</tr></thead><tbody>
+<tr>
+<td><p>Próg wejścia dla studentów (3)</p></td>
+<td><p>3</p></td>
+<td><p>4</p></td>
+<td><p>4</p></td>
+</tr>
+<tr>
+<td><p>Wsparcie wielu IDE/agentów (3)</p></td>
+<td><p>3 — <code>agy</code>/<code>copilot</code> tylko z <code>--force</code></p></td>
+<td><p><strong>5</strong> — 5 narzędzi jednym poleceniem</p></td>
+<td><p>2</p></td>
+</tr>
+<tr>
+<td><p>Dopasowanie do Jiry i śledzalności (3)</p></td>
+<td><p>3 — <code>specs/001-…</code>, gałęzie dowolne</p></td>
+<td><p><strong>4</strong> — nazwa zmiany = klucz Jira, historia w <code>archive</code></p></td>
+<td><p>3</p></td>
+</tr>
+<tr>
+<td><p>Windows / PowerShell (2)</p></td>
+<td><p>4 — działa, ale pułapka z Pythonem 3.15</p></td>
+<td><p>5</p></td>
+<td><p>5</p></td>
+</tr>
+<tr>
+<td><p>Narzut artefaktów (2)</p></td>
+<td><p>3 — ~9,7 tys. linii, ciężkie szablony</p></td>
+<td><p>4 — ~7,8 tys. linii</p></td>
+<td><p>5</p></td>
+</tr>
+<tr>
+<td><p>Dojrzałość / utrzymanie (2)</p></td>
+<td><p><strong>5</strong> — GitHub, aktywny</p></td>
+<td><p>4</p></td>
+<td><p>2</p></td>
+</tr>
+<tr>
+<td><p>Koszt (1)</p></td>
+<td><p>5</p></td>
+<td><p>5</p></td>
+<td><p>5</p></td>
+</tr>
+<tr>
+<td><p><strong>Suma (maks. 80)</strong></p></td>
+<td><p><strong>55</strong></p></td>
+<td><p><strong>69</strong></p></td>
+<td><p><strong>55</strong></p></td>
+</tr>
+</tbody></table>
+<p>Dodatkowe argumenty spoza tabeli:</p>
+<ul><li><strong>Za Spec Kit:</strong> jawna konstytucja z bramkami (<code>/speckit-analyze</code>, <code>/speckit-checklist</code>), szablon <code>tasks.md</code> z kolejnością zadań — dobra „szkoła” dla zespołu.</li><li><strong>Za OpenSpec:</strong> walidacja w CI, żywa specyfikacja reguł, polski język artefaktów, czysta instalacja w 5 narzędziach.</li></ul>
+<h3>2.6 Czego nie sprawdziłem</h3>
+<p>Nie sprawdziłem pełnego przebiegu „propose → apply → archive” (OpenSpec) ani „specify → plan → tasks → implement” (Spec Kit) z udziałem agenta na prawdziwej funkcji (<em>feature</em>). Testy objęły instalację, strukturę plików, skrypty i CLI. Jakość generowanych specyfikacji zależy od modelu. Oceni ją zespół przy pierwszej funkcji.</p>
+<hr />
+<h2>3. Aspire + React/TS + SQLite</h2>
+<table><thead><tr>
+<th><p>Test</p></th>
+<th><p>Wynik</p></th>
+</tr></thead><tbody>
+<tr>
+<td><p><code>dotnet new aspire-ts-cs-starter -f net10.0</code> (Aspire 13.6.4)</p></td>
+<td><p>[V] 25 s; układ: <code>AppHost</code> + <code>Server</code> (ASP.NET Core, <code>/health</code>) + <code>frontend</code> (React 19, Vite 8, TS 5.9) przez <code>AddViteApp</code>; <code>PublishWithContainerFiles</code> wkłada build frontu do <code>wwwroot</code> serwera</p></td>
+</tr>
+<tr>
+<td><p><code>dotnet build</code> AppHost</p></td>
+<td><p>[V] 55 s na zimno, 10 s na ciepło, 0 ostrzeżeń</p></td>
+</tr>
+<tr>
+<td><p><code>npm ci</code> + <code>npm run build</code> frontendu</p></td>
+<td><p>[V] 8 s + 16 s</p></td>
+</tr>
+<tr>
+<td><p>Sam serwer <code>dotnet run</code> → <code>GET /health</code></p></td>
+<td><p>[V] <code>Healthy</code></p></td>
+</tr>
+<tr>
+<td><p><code>dotnet run --project AppHost</code> (bez Aspire CLI)</p></td>
+<td><p><strong>[?] niezweryfikowane na tym komputerze</strong> — patrz niżej</p></td>
+</tr>
+<tr>
+<td><p>Czy AppHost sam robi <code>npm install</code></p></td>
+<td><p>[?] nie dało się sprawdzić (AppHost nie wystartował)</p></td>
+</tr>
+<tr>
+<td><p>Działanie bez Dockera</p></td>
+<td><p>[Z] tak, dopóki nie dodamy kontenerów (Postgres); SQLite to plik</p></td>
+</tr>
+</tbody></table>
+<p><strong>Dlaczego AppHost nie wystartował? Były trzy problemy. Tylko jeden dotyczy całego zespołu:</strong></p>
+<ol><li><strong>Smart App Control (Windows 11) blokuje świeżo zbudowany, niepodpisany <code>AppHost.dll</code></strong> (<code>0x800711C7</code>, zdarzenia Code Integrity 3033/3077). Na tym komputerze ta funkcja jest włączona (<code>VerifiedAndReputablePolicyState = 1</code>). <strong>To dotyczy każdego w zespole, kto ma włączone Smart App Control.</strong> Wyłączenie jest w Ustawieniach Windows (Zabezpieczenia → Kontrola aplikacji i przeglądarki), ale ponownie włączyć da się dopiero po reinstalacji systemu — decyzja należy do właściciela komputera, ja tego nie zmieniam.</li><li><strong>Limit 260 znaków ścieżki (MAX_PATH):</strong> <code>dcp.exe</code> z pakietu NuGet nie uruchomił się z bardzo długiej ścieżki. W repo: zalecenie krótkiej ścieżki klonu (np. <code>C:\dev\Rejoltance</code>) i <code>git config --system core.longpaths true</code>.</li><li><strong>Certyfikat deweloperski HTTPS:</strong> pierwszy start pokazuje „Ufanie certyfikatom…” i wymaga jednorazowego <code>dotnet dev-certs https --trust</code> (okno systemowe — robi to użytkownik). <code>setup.ps1</code> będzie o to pytał wprost.</li></ol>
+<p><strong>Plan weryfikacji zastępczej:</strong> w Fazie 2 dodam test integracyjny <code>Aspire.Hosting.Testing</code>. Uruchomi on w GitHub Actions (Ubuntu) cały AppHost i sprawdzi <code>/health</code>. Wtedy to CI, a nie pojedynczy laptop, potwierdzi, że „jedno polecenie uruchamia całość”.</p>
+<hr />
+<h2>4. Jira PB — import CSV</h2>
+<ul><li>[V] Jira, Bitbucket DC 8.14.4 i Confluence 8.4.5 odpowiadają z publicznego internetu (strony logowania, LDAP).</li><li>[V] Przygotowane pliki testowe: <code>docs/03-dokumentacja-procesowa/02-backlog/test-import/</code> (1 epik, 1 story, 1 sub‑task) + instrukcja.</li><li>[?] Do sprawdzenia przez Ciebie importem: Epic Link po nazwie epiku, Parent Id dla sub‑tasków, format <code>Original Estimate</code> (zakładam sekundy: 14400 = 4 h), dostępność Story Points w schemacie „Pracownia projektowa”.</li><li>[V] Integracja agentów z Jirą/Confluence: serwer MCP (Model Context Protocol) <code>mcp-atlassian</code> obsługuje Server/DC przez Personal Access Token (PAT, Jira ≥ 8.14). Każdy trzyma token u siebie w zmiennej środowiskowej albo w lokalnym pliku <code>.env</code>, który git ignoruje. W repo jest tylko szablon. Dzięki temu token nie trafia do historii repozytorium. Domyślnie działa tryb tylko do odczytu.</li></ul>
+<hr />
+<h2>5. Rekomendacje</h2>
+<table><thead><tr>
+<th><p>Obszar</p></th>
+<th><p>Rekomendacja</p></th>
+<th><p>Uzasadnienie</p></th>
+</tr></thead><tbody>
+<tr>
+<td><p><strong>SDD</strong></p></td>
+<td><p><strong>OpenSpec 1.15 (przypięta wersja) + nasza konstytucja</strong> w <code>.agents/rules/00-konstytucja.md</code>, wskazana w <code>openspec/config.yaml</code></p></td>
+<td><p>najwyższa punktacja; czysta instalacja w 5 narzędziach; walidacja w CI; żywa specyfikacja reguł; polski język</p></td>
+</tr>
+<tr>
+<td><p>SDD — alternatywa</p></td>
+<td><p>Spec Kit 1.2.4 (<code>claude</code>+<code>codex</code>+<code>gemini</code> czysto, <code>agy</code>/<code>copilot</code> z <code>--force</code>)</p></td>
+<td><p>jeśli zespół woli formalne bramki i gotową konstytucję</p></td>
+</tr>
+<tr>
+<td><p><strong>Struktura repo</strong></p></td>
+<td><p>monorepo: <code>docs/</code> (PL, strefa projektowa) ⟂ <code>src/</code>+<code>tests/</code> (EN, kod) ⟂ <code>openspec/</code> (specyfikacje) ⟂ <code>prototype/</code> (referencja JS)</p></td>
+<td><p>jeden PR zmienia kontrakt C# i TS naraz</p></td>
+</tr>
+<tr>
+<td><p><strong>Gałęzie</strong></p></td>
+<td><p><code>main</code> (demo po sprincie, tag <code>sprint-N</code>) ← <code>develop</code> (integracja) ← <code>feature/REJ-123-krotki-opis</code> (także <code>fix/</code>, <code>docs/</code>, <code>chore/</code>, <code>spike/</code>); commit <code>REJ-123: …</code>; PR z ≥1 recenzentem</p></td>
+<td><p>model pi‑wo + klucz Jira (wymóg handbooka PO); bez <code>release/hotfix</code></p></td>
+</tr>
+<tr>
+<td><p><strong>Aspire</strong></p></td>
+<td><p>szablon <code>aspire-ts-cs-starter</code> jako baza; SQLite plikowo; Postgres w kontenerze za parametrem AppHost od S4</p></td>
+<td><p>zweryfikowany build; zero Dockera na start</p></td>
+</tr>
+<tr>
+<td><p><strong>Wymagania na laptopie</strong></p></td>
+<td><p>.NET 10 SDK, Node 24 LTS, Git (<code>core.longpaths</code>), uv (Python 3.13 dla narzędzi), opcjonalnie Aspire CLI; Docker dopiero od S4</p></td>
+<td><p>wynik testów</p></td>
+</tr>
+<tr>
+<td><p><strong>Ryzyka do komunikatu dla zespołu</strong></p></td>
+<td><p>Smart App Control, długie ścieżki/OneDrive, zaufanie certyfikatu dev</p></td>
+<td><p>wszystkie trzy wystąpiły w teście</p></td>
+</tr>
+</tbody></table>
+<hr />
+<h2>6. Decyzje do akceptacji (STOP Fazy 1)</h2>
+<ol><li>Narzędzie SDD: <strong>OpenSpec</strong> (rekomendacja) czy <strong>Spec Kit</strong>?</li><li>Akceptacja schematu gałęzi i commitów jak w tabeli.</li><li>Czy wyłączasz Smart App Control na tym komputerze (lub weryfikujemy AppHost na innym laptopie / w CI)?</li><li>Wynik testowego importu CSV (tabela w <code>docs/03-dokumentacja-procesowa/02-backlog/test-import/README.md</code>) — może poczekać do Fazy 3.</li></ol>

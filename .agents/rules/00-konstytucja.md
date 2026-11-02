@@ -1,74 +1,62 @@
 ---
 trigger: always_on
-description: "Konstytucja projektu Rejoltance: niezmienne zasady dla ludzi i agentów AI. Obowiązuje w każdej pracy w tym repozytorium."
+description: "Konstytucja projektu RE:JOLTANCE (11 artykułów): specyfikacja przed kodem, deterministyczny Kernel, zamrożone kontrakty, serwer autorytatywny, granice agentów AI i zasady języka."
 ---
 
-# Konstytucja Rejoltance
+# 00. Konstytucja Projektu RE:JOLTANCE
 
-Wersja 1.0 · przyjęta 2026-10-27 · zmiana tylko przez ADR (`docs/04-adr`) zaakceptowany przez 2 osoby z zespołu.
+Wersja 2.0 · proponowana 2026-11-02 (ADR-0012) · zastępuje wersję 1.0 z 2026-10-27 po akceptacji 2 osób z zespołu.
 
-Konstytucja ma pierwszeństwo przed każdą inną regułą, skillem, promptem i specyfikacją.
-Gdy cokolwiek jest z nią sprzeczne — zatrzymaj się i zgłoś konflikt człowiekowi.
+To nadrzędne zasady pracy dla zespołu i wszystkich agentów AI. Gdy prompt, skill albo specyfikacja jest z nimi sprzeczna, wygrywa konstytucja. Agent zatrzymuje się wtedy i zgłasza konflikt człowiekowi. Zmiana artykułu wymaga zatwierdzonego **ADR** i akceptacji 2 osób z zespołu.
 
-## Artykuł I — Reguły gry są źródłem prawdy
+## Artykuł I — Specyfikacja przed kodem (Spec-Driven Development)
 
-1. Kanonem zasad jest zachowanie prototypu `prototype/revibance` (v11), spisane w `docs/02-rules/` i w `openspec/specs/` jako reguły **R‑nn** (ADR-0005).
-2. Znane błędy prototypu nie są regułami — lista w `docs/02-rules/ROZBIEZNOSCI.md`; decyzje podejmuje zespół.
-3. Kod, który zmienia zachowanie gry bez reguły R‑nn i testu z tym numerem, jest błędem.
+Zachowanie gry lub systemu najpierw zapisujemy w `openspec/specs/` (albo jako propozycję w `openspec/changes/`) ze scenariuszami `GIVEN / WHEN / THEN`. Każde wymaganie ma numer reguły `R-nn` lub `NFR-nn`. Dopiero potem powstaje kod produkcyjny. Kanonem zasad gry jest prototyp JS `prototype/revibance` (v11, ADR-0005).
 
-## Artykuł II — Serwer jest autorytetem
+## Artykuł II — Czysty i deterministyczny silnik reguł (`Rejoltance.Kernel`)
 
-1. Pełny stan meczu (`MatchState`) istnieje tylko na serwerze. Klient dostaje wyłącznie `MatchView` z projekcji (fog of war).
-2. Klient wysyła tylko `Intent`. Serwer nigdy nie przyjmuje stanu od klienta.
-3. Legalność ruchu ma jedno źródło: `MatchEngine.LegalActions` — używa go UI, serwer i bot.
+`Rejoltance.Kernel` to czysty C# (`.NET 10`), zależny tylko od `Rejoltance.Contracts` i `Rejoltance.Content`. Nie używa plików, zegara systemowego, sieci, bazy danych, `System.Random` ani `Guid.NewGuid()`. Ten sam stan początkowy, ziarno `SeededRng` i lista intencji zawsze dają ten sam stan końcowy i te same zdarzenia `DomainEvent[]` (R-83).
 
-## Artykuł III — Kernel jest deterministyczny i czysty
+## Artykuł III — Karty jako dane (`Rejoltance.Content`)
 
-1. `Rejoltance.Kernel` nie używa sieci, plików, zegara ani `System.Random` (pilnuje `BannedSymbols.txt`).
-2. Losowość pochodzi z `SeededRng` przechowywanego w stanie. Replay = seed + uporządkowana lista intencji.
-3. Kernel nie blokuje się w oczekiwaniu na gracza — zadaje pytanie przez `PendingInteraction`.
+Definicje kart są w `src/Rejoltance.Content/cards.json`. Plik generuje `tools/content/extract_cards.py` z prototypu, a sprawdza go `ContentValidator`. Nowa karta zbudowana z istniejących akcji efektów nie wymaga zmian w pętli silnika.
 
-## Artykuł IV — Kontrakty są zamrożone
+## Artykuł IV — Zamrożone kontrakty komunikacyjne (`Rejoltance.Contracts`)
 
-1. Pięć kontraktów (`Intent`, `LegalAction`, `PendingInteraction`, `MatchView`, `DomainEvent`) zmienia się tylko przez ADR i PR z recenzentem „z drugiej strony granicy” (backend ↔ frontend).
-2. Zmiana kontraktu C# i TypeScript trafia w **jednym** PR; test `ContractSampleTests` + `contracts.test.ts` musi być zielony.
+Warstwy rozmawiają przez 5 typów DTO: `Intent`, `LegalAction`, `PendingInteraction`, `MatchView`, `DomainEvent`. Zmiana któregokolwiek z nich wymaga nowego **ADR** (`docs/01-dokumentacja-systemowa/07-decyzje-adr/`). Zmiana po stronie C# i TypeScript trafia w jednym PR, razem z aktualizacją próbek JSON w `ContractSampleTests` (ADR-0010).
 
-## Artykuł V — Najpierw test
+## Artykuł V — Autorytatywny serwer i ochrona ukrytych informacji
 
-1. Każda reguła gry ma test, którego nazwa zaczyna się od jej numeru (`R04_…`).
-2. Nie wolno osłabiać ani usuwać testu, żeby „przeszło”. Czerwony test to informacja, nie przeszkoda.
+Serwer (`Rejoltance.Server`) jest jedynym sędzią meczu. Odrzuca każdą intencję spoza `Kernel.LegalActions(state, player)`. Każdy gracz dostaje tylko swoją projekcję `Projection.ToView(state, viewer)`: bez kart na ręce przeciwnika, kolejności talii i ziarna RNG (R-80…R-82).
 
-## Artykuł VI — Głośna porażka
+## Artykuł VI — Jedna reguła `R-nn` = co najmniej jeden test automatyczny
 
-1. Nieznany element DSL karty, niezaimplementowana reguła, nielegalna intencja → wyjątek z czytelnym komunikatem.
-2. Zakaz cichych fallbacków (`return []`, losowy cel „gdy brak wyboru”, `catch {}` bez obsługi).
+Każda zaimplementowana reguła `R-nn` ma test o nazwie `Rnn_<opis_zachowania>` w `tests/Rejoltance.Kernel.Tests` (testy kart: w planowanym projekcie `tests/Rejoltance.Cards.Tests`). Kod bez testu nie spełnia *Definition of Done*. Nie wolno osłabiać ani usuwać testu tylko po to, żeby build przeszedł.
 
-## Artykuł VII — Pionowe plastry
+## Artykuł VII — Granice modułów wymuszane w CI
 
-1. Każdy epik kończy się czymś, co widać w przeglądarce.
-2. Nikt nie pracuje dłużej niż 3 dni w jednej warstwie bez integracji z resztą.
+Testy architektury (`tests/Rejoltance.Architecture.Tests`) blokują niedozwolone referencje między projektami. W każdym Pull Requeście muszą przejść: `dotnet build -warnaserror`, `npm run check` i `python tools/agents/sync_agents.py --check`.
 
-## Artykuł VIII — Prostota
+## Artykuł VIII — Małe, śledzone przyrosty
 
-1. Bez CQRS/Event Sourcingu, mikroserwisów, własnych frameworków „na zapas”.
-2. Nowa zależność (NuGet/npm) wymaga uzasadnienia w PR; zmiana stosu — ADR.
+Każda zmiana ma zadanie w Jirze (`REJ-123`). Powstaje na krótkiej gałęzi od `develop` (`typ/REJ-123-opis`), z commitami `REJ-123: …`. Zadanie dzielimy na podzadania o szacunku `≤ 4 h` (wymóg uczelniany EU4).
 
-## Artykuł IX — Śledzalność
+## Artykuł IX — Zakaz cichego zgadywania przez AI
 
-1. Każda zmiana ma klucz Jira: gałąź `typ/REJ-123-opis`, commit `REJ-123: …`, PR z linkiem do zgłoszenia.
-2. Ficzer ≥ 3 SP ma zmianę OpenSpec (`openspec/changes/rej-123-…`) z wymaganiami i scenariuszami.
-3. Wiedza, której nie ma w kodzie, teście, specyfikacji ani ADR — nie istnieje. Jira śledzi pracę, nie przechowuje wiedzy.
+Gdy wymaganie jest niejednoznaczne albo dotyczy otwartej pozycji w `docs/01-dokumentacja-systemowa/04-rozbieznosci-prototypu.md`, agent AI nie zgaduje. Wskazuje niepewność i prosi człowieka o decyzję.
 
-## Artykuł X — Człowiek decyduje
+## Artykuł X — Człowiek decyduje i odpowiada
+
+Każdy commit i Pull Request ma ludzkiego autora oraz recenzenta. Obaj rozumieją zmianę i odpowiadają za nią na przeglądzie sprintu.
 
 Agent AI:
 
-1. **nie** merguje PR, **nie** pushuje do `main` ani `develop`, **nie** tworzy tagów i wydań;
+1. **nie** merguje PR, **nie** pushuje do `main` ani `develop`, **nie** tworzy tagów ani wydań;
 2. **nie** czyta, nie zapisuje i nie przesyła sekretów (tokeny, hasła, `.env`);
-3. **nie** zmienia konstytucji, ADR o statusie *accepted* ani kontraktów bez wyraźnej zgody człowieka;
+3. **nie** zmienia konstytucji, zaakceptowanych ADR ani kontraktów bez wyraźnej zgody człowieka;
 4. przed zmianą wielu plików przedstawia plan i czeka na akceptację;
-5. raportuje uczciwie: co zrobił, jakie testy faktycznie uruchomił i z jakim wynikiem, czego nie zweryfikował.
+5. raportuje uczciwie: co zrobił, jakie testy uruchomił i z jakim wynikiem, czego nie sprawdził.
 
 ## Artykuł XI — Język
 
-Dokumentacja, specyfikacje i komunikacja zespołu — po polsku. Kod, identyfikatory, komentarze w kodzie, commity i tytuły PR — po angielsku.
+Dokumentacja, specyfikacje i komunikacja zespołu są po polsku, z polskimi znakami. Kod, identyfikatory, komentarze w kodzie, commity i tytuły PR są po angielsku.

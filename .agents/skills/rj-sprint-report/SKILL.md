@@ -1,23 +1,30 @@
 ---
 name: rj-sprint-report
-description: Prepares Sprint Review and Retrospective material - sprint goal status, demo script, estimate vs actual table from a Jira export, burndown notes and improvement actions. Use at the end of a sprint.
+description: "Przygotowuje dokumentację Przeglądu Sprintu i Retrospektywy: realizację celu sprintu, scenariusze demonstracji dla Rady Graczy, tabelę szacunków względem czasu rzeczywistego (EU4), podsumowanie QA (EU6) i wnioski."
 ---
 
-# Raport sprintu (Review + Retro)
+# Umiejętność: Przygotowanie raportu Sprint Review i Retrospektywy (`rj-sprint-report`)
 
-## Wejście
+## Kiedy używać tej procedury?
 
-Eksport CSV z Jiry dla sprintu (klucz, podsumowanie, przypisany, status, Original Estimate, Time Spent, SP), cel sprintu, notatki z daily.
+Uruchamiaj na koniec każdego sprintu (`S0..S5`) przed spotkaniem **Sprint Review** z prowadzącym i Radą Graczy Testowych (wymogi uczelniane **EU2**, **EU3**, **EU4**, **EU6**).
 
-## Kroki
+---
 
-1. Skopiuj `docs/06-scrum/szablon-review-retro.md` do `docs/06-scrum/sprinty/sprint-N/review-retro.md`.
-2. **Review:** cel sprintu (osiągnięty / częściowo / nie), lista ukończonych story z demo (kto pokazuje, kroki), feedback użytkowników.
-3. **Estymata vs rzeczywistość:** tabela klucz · zadanie · właściciel · estymata h · rzeczywiste h · Δ · przyczyna. Liczby tylko z eksportu.
-4. Metryki: velocity (SP ukończone), % godzin vs plan, zadania przeniesione do backlogu.
-5. **Retro:** co działało · co nie · max 3 akcje z właścicielem.
-6. Przypomnij PO: zrzut ekranu Burndown (godziny i zadania) z Jiry do Confluence.
+## Kroki wykonawcze (Krok po kroku)
 
-## Nie wolno
+1. **Odczytaj szablony podsumowania sprintu:**
+   - Protokół Review i Retro: `docs/03-dokumentacja-procesowa/03-scrum-i-spotkania/szablon-review-retro.md`,
+   - Raport QA i lista kontrolna: `docs/05-szablony/szablon-qa-raport-i-checklista.md`,
+   - Informacja o wydaniu: `docs/05-szablony/szablon-informacja-o-wydaniu.md`.
 
-Oceniać osób; zmyślać przyczyn odchyleń — pytaj właściciela zadania.
+2. **Zestaw realizację celu sprintu i scenariusz demonstracji na żywo:**
+   - Wypisz ukończone historyjki (`Resolved`/`Closed`) i przypisz każdą do autora, który prezentuje ją na żywo przed Radą Graczy Testowych.
+   - Zbierz opinie reprezentantów użytkowników końcowych i przekształć je w nowe zgłoszenia do Product Backlogu.
+
+3. **Przygotuj analizę estymacji i wykresu spalania (EU4):**
+   - Zestaw w tabeli: *Szacunek początkowy (Original Estimate)* vs *Rzeczywisty czas pracy (Time Spent / Log Work)* dla zadań sprintu.
+   - Wyjaśnij przyczyny ewentualnych odchyleń na wykresie *Burndown Chart*.
+
+4. **Sformułuj wnioski z Retrospektywy (Start / Stop / Continue):**
+   - Zapisz 1–3 konkretne usprawnienia procesowe z przypisanym właścicielem na kolejny sprint.

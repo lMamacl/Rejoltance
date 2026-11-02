@@ -1,23 +1,36 @@
 ---
 name: rj-backlog-to-jira
-description: Edits the single-source backlog (docs/05-backlog/backlog.toml) and regenerates the Jira Server/DC CSV import files (epics first, then stories and sub-tasks) plus the BACKLOG.md summary. Use when stories or tasks are added, split, moved between sprints or re-estimated.
+description: "Aktualizuje jedno źródło prawdy rejestru produktu (docs/03-dokumentacja-procesowa/02-backlog/backlog.toml), weryfikuje dwukierunkowe powiązania z regułami R-nn oraz regeneruje BACKLOG.md i pliki CSV do Jiry."
 ---
 
-# Backlog → CSV do Jiry
+# Umiejętność: Synchronizacja rejestru produktu i generowanie CSV do Jiry (`rj-backlog-to-jira`)
 
-Źródło prawdy: `docs/05-backlog/backlog.toml`. CSV i `BACKLOG.md` są generowane — nie edytuj ich ręcznie.
+## Kiedy używać tej procedury?
 
-## Kroki
+Uruchamiaj zawsze, gdy dodajesz, dzielisz, przenosisz lub przeszacowujesz historyjki użytkownika (`story`) i podzadania techniczne (`subtask`), albo gdy zmieniasz przypisanie reguł `R-nn` do historyjek.
 
-1. Edytuj TOML (`[[epic]]` → `[[epic.story]]` → `[[epic.story.task]]`):
-   - story: `title`, `as_a` / `i_want` / `so_that`, `acceptance` (każde kryterium z GIVEN, WHEN i THEN), `sp` (1, 2, 3, 5, 8, 13), `sprint`, `wave` (W0–W3), `rules` (R‑nn z `openspec/specs`);
-   - taski: `title`, `h` ≤ 4 — **albo** `estimate_h` na story (S3+ do refinementu), nie oba.
-2. `python tools/backlog/gen_jira_csv.py` → `jira-01-epics.csv`, `jira-02-issues.csv`, `BACKLOG.md`.
-3. Przeczytaj ostrzeżenia o pojemności sprintów (6 os. × 5 h/tydz.; bufor 10%). Przekroczenie pojemności = błąd — przenieś story albo podziel ją.
-4. Zmiana reguł w story → sprawdź kolumnę *Story* w `docs/02-rules/RULES-INDEX.md` (generator wykrywa niespójność).
-5. Import (robi człowiek z uprawnieniami): `docs/00-start/jira-import.md` — **najpierw epiki, potem reszta**.
-6. Po imporcie wpisz nadane klucze (`jira = "REJ-123"`) przy zaimportowanych pozycjach — kolejne generowanie je pominie.
+---
 
-## Nie wolno
+## Kroki wykonawcze (Krok po kroku)
 
-Importować do Jiry samodzielnie; zmieniać priorytetów ani sprintów bez PO.
+1. **Edytuj wyłącznie plik źródłowy `backlog.toml`:**
+   - Plik źródłowy znajduje się w: `docs/03-dokumentacja-procesowa/02-backlog/backlog.toml`.
+   - Nigdy nie edytuj ręcznie plików wygenerowanych (`BACKLOG.md`, `jira-01-epics.csv`, `jira-02-issues.csv`, `jira-03-links.csv`).
+
+2. **Pilnuj wymogów uczelnianych (EU1–EU4):**
+   - Każde podzadanie (`[[stories.subtasks]]`) musi mieć szacunek `hours <= 4` (twarda walidacja skryptu).
+   - Każda historyjka (`[[stories]]`) musi posiadać kryteria akceptacji w formacie `GIVEN ... WHEN ... THEN ...`.
+   - Suma godzin w sprincie `S1..S5` nie powinna przekraczać pojemności zespołu (`60 h`).
+
+3. **Zadbaj o dwukierunkową spójność z indeksem reguł (`03-indeks-regul-r-nn.md`):**
+   - Każda reguła wpisana w `rules = ["R-nn"]` przy historyjce w `backlog.toml` musi mieć ten sam klucz `Ex-Syy` wpisany w kolumnie *Story* w pliku `docs/01-dokumentacja-systemowa/03-indeks-regul-r-nn.md`.
+
+4. **Uruchom generator i walidator:**
+
+   ```bash
+   python tools/backlog/gen_jira_csv.py
+   python tools/backlog/gen_jira_csv.py --check
+   npm run lint:md
+   ```
+
+   Instrukcja importu wygenerowanych plików CSV do Jiry PB znajduje się w `docs/03-dokumentacja-procesowa/02-backlog/instrukcja-importu-jira.md`.

@@ -1,0 +1,343 @@
+<ac:structured-macro ac:name="info"><ac:rich-text-body><p><strong>Synchronizacja 1:1 z repozytorium Git:</strong> <code>docs/01-dokumentacja-systemowa/05-sad-architektura-systemu.md</code> (commit <code>a2bf2a4</code>, data eksportu: <code>2026-11-02</code>)</p></ac:rich-text-body></ac:structured-macro>
+<blockquote><p><strong>Źródło prawdy:</strong> repozytorium (<code>docs/01-dokumentacja-systemowa/05-sad-architektura-systemu.md</code>) · <strong>Kategoria dokumentacji:</strong> Dokumentacja produktowa — systemowa (architektura systemu, SAD) · <strong>Etap SDD:</strong> Planowanie · <strong>Struktura:</strong> AltexSoft SAD + arc42 + model C4 · <strong>Wersja:</strong> 1.1 (2026-11-02)</p></blockquote>
+<p>Ten dokument to SAD (Software Architecture Document), czyli opis architektury systemu RE:JOLTANCE. Znajdziesz tu podział na kontenery i moduły, kontrakty komunikacyjne, model danych, strategie przekrojowe i sposób wdrożenia. Układ opiera się na wytycznych AltexSoft oraz na dwóch szablonach: arc42 (struktura dokumentu architektury) i C4 (model diagramów w czterech poziomach szczegółowości: kontekst, kontenery, komponenty, kod).</p>
+<p>SDD (Spec-Driven Development) to nasz sposób pracy: specyfikacja powstaje przed kodem. SAD należy do etapu <em>Planowanie</em>.</p>
+<p>Biblioteki i ich wersje opisuje dokument <strong>1.6 Stos technologiczny i roadmapa IT</strong> (<code>06-stos-technologiczny.md</code>). Uzasadnienia pojedynczych decyzji są w rejestrze <strong>1.7 Decyzje architektoniczne (ADR)</strong> (<code>07-decyzje-adr/README.md</code>). ADR (Architecture Decision Record) to krótki zapis jednej decyzji architektonicznej.</p>
+<hr />
+<h2>1. Przegląd, tło i cele architektoniczne</h2>
+<h3>1.1 Cel dokumentu i kontekst problemu</h3>
+<p>Prototyp przeglądarkowy działał w modelu P2P (Peer-to-Peer, JavaScript / PeerJS). Był podatny na oszustwa i niedeterministyczny. Zastępujemy go aplikacją webową klient–serwer, w której:</p>
+<ol><li><strong>Serwer jest jedynym autorytetem stanu gry.</strong> Żaden klient nie widzi ukrytych informacji przeciwnika (<em>Fog of War</em>). Żaden klient nie może wykonać nielegalnego ruchu.</li><li><strong>Silnik reguł (<code>Rejoltance.Kernel</code>) jest deterministyczny i oddzielony od infrastruktury.</strong> Dzięki temu łatwo testujemy 55 reguł domenowych i uruchamiamy symulacje bot-vs-bot. Powtórkę meczu (<em>replay</em>) odtwarzamy z samego ziarna losowości (<code>Seed</code>) i listy intencji graczy.</li><li><strong>Sześć osób pracuje równolegle i nie blokuje się nawzajem.</strong> Pozwalają na to zamrożone kontrakty komunikacyjne i automatyczne testy granic architektonicznych.</li></ol>
+<h3>1.2 Najważniejsze cele jakościowe</h3>
+<p>Pełne drzewo wymagań jakościowych wg normy ISO/IEC 25010:2023 (<code>NFR-01..NFR-70</code>) jest w specyfikacji <strong><code>openspec/specs/quality-attributes/spec.md</code></strong> (<code>../../openspec/specs/quality-attributes/spec.md</code>). NFR (Non-Functional Requirement) to wymaganie niefunkcjonalne. Architekturę podporządkowaliśmy czterem priorytetom:</p>
+<table><thead><tr>
+<th><p>Priorytet</p></th>
+<th><p>Cel jakościowy</p></th>
+<th><p>Wymagania</p></th>
+<th><p>Jak architektura to realizuje</p></th>
+</tr></thead><tbody>
+<tr>
+<td><p><strong>1</strong></p></td>
+<td><p>Uczciwość rozgrywki i bezpieczeństwo stanu (<em>Server Authority &amp; Fog of War</em>)</p></td>
+<td><p><code>R-80..R-82</code>, <code>NFR-40..NFR-42</code></p></td>
+<td><p>Pełny stan <code>MatchState</code> nigdy nie opuszcza serwera. Klient dostaje tylko przefiltrowaną projekcję <code>MatchView</code> (<code>Projection.ToView</code>) i wysyła tylko intencje (<code>Intent</code>).</p></td>
+</tr>
+<tr>
+<td><p><strong>2</strong></p></td>
+<td><p>Determinizm i testowalność reguł (<em>Determinism &amp; Testability</em>)</p></td>
+<td><p><code>R-83</code>, <code>R-84</code>, <code>NFR-51</code></p></td>
+<td><p>Czysty reduktor <code>MatchEngine.Reduce</code>, deterministyczny generator <code>SeededRng</code> (SplitMix64) i zakaz <code>System.Random</code>, zegara oraz I/O. Zakaz pilnuje kompilator (<code>BannedSymbols.txt</code>).</p></td>
+</tr>
+<tr>
+<td><p><strong>3</strong></p></td>
+<td><p>Modułowość i równoległa praca zespołu (<em>Modularity</em>)</p></td>
+<td><p><code>NFR-11</code>, <code>NFR-50</code></p></td>
+<td><p>Modularny monolit z jednokierunkowym grafem zależności. <code>NetArchTest</code> (<code>BoundaryTests.cs</code>) sprawdza go w każdym PR. Zgodność kontraktów C# ↔ TS sprawdza próbka JSON.</p></td>
+</tr>
+<tr>
+<td><p><strong>4</strong></p></td>
+<td><p>Niski próg wejścia i łatwe uruchomienie (<em>Operability &amp; Portability</em>)</p></td>
+<td><p><code>NFR-20</code>, <code>NFR-60</code>, <code>NFR-61</code></p></td>
+<td><p>.NET Aspire (<code>AppHost</code>) uruchamia lokalnie serwer, klienta Vite i bazę SQLite jednym poleceniem. W pierwszych sprintach nie trzeba instalować Dockera.</p></td>
+</tr>
+</tbody></table>
+<hr />
+<h2>2. Podsumowanie wymagań i ograniczenia</h2>
+<h3>2.1 Zakres funkcjonalny z perspektywy architektury</h3>
+<p>System obsługuje cały cykl życia meczu karcianego 1 na 1 na czterech liniach:</p>
+<ul><li>ładuje i sprawdza katalog 78 kart (69 kolekcjonerskich + 9 tokenów) i 5 talii startowych z plików JSON wygenerowanych z prototypu,</li><li>zarządza sesjami meczowymi w pamięci serwera (piaskownica, gra z botem AI, pokoje 1v1 przez kod zaproszenia),</li><li>komunikuje się z klientem w obie strony w czasie rzeczywistym przez WebSocket (SignalR),</li><li>trwale przechowuje w relacyjnej bazie danych konta, własne talie i zapisy zakończonych meczów.</li></ul>
+<h3>2.2 Ograniczenia techniczne i organizacyjne</h3>
+<table><thead><tr>
+<th><p>Ograniczenie</p></th>
+<th><p>Opis</p></th>
+<th><p>Konsekwencja dla architektury</p></th>
+</tr></thead><tbody>
+<tr>
+<td><p><strong>Czas zespołu</strong></p></td>
+<td><p>6 studentów × ok. 5 h tygodniowo przez 5 dwutygodniowych sprintów w Semestrze 1.</p></td>
+<td><p>Rezygnujemy ze złożonych wzorców rozproszonych (mikroserwisy, zewnętrzny Event Store). Wybieramy prosty modularny monolit (<strong>ADR-0001</strong> (<code>07-decyzje-adr/0001-stos-technologiczny.md</code>), Konstytucja Art. VIII).</p></td>
+</tr>
+<tr>
+<td><p><strong>Infrastruktura uczelniana</strong></p></td>
+<td><p>Musimy korzystać z uczelnianych instancji Jira, Confluence i Bitbucket Data Center PB.</p></td>
+<td><p>Na co dzień pracujemy i uruchamiamy CI/CD na GitHubie, z automatycznym mirrorem do Bitbucket PB (<strong>ADR-0002</strong> (<code>07-decyzje-adr/0002-github-i-mirror-bitbucket.md</code>)). Struktura <code>docs/</code> odpowiada 1:1 drzewu Confluence (<strong>ADR-0011</strong> (<code>07-decyzje-adr/0011-dokumentacja-hybryda-repo-confluence.md</code>)).</p></td>
+</tr>
+<tr>
+<td><p><strong>Komputery studentów</strong></p></td>
+<td><p>Różne laptopy z Windows 11 (polityka Smart App Control, na części maszyn brak Dockera).</p></td>
+<td><p>W Sprintach 0–3 używamy bazy SQLite. Kontener PostgreSQL wchodzi dopiero od Sprintu 4 (<strong>ADR-0007</strong> (<code>07-decyzje-adr/0007-sqlite-potem-postgresql.md</code>)).</p></td>
+</tr>
+</tbody></table>
+<p>CI/CD (Continuous Integration / Continuous Delivery) to automatyczne budowanie, testowanie i wdrażanie kodu.</p>
+<hr />
+<h2>3. Architektura wysokopoziomowa (model C4 — poziom 1 i 2)</h2>
+<h3>3.1 Kontekst systemu (C4 poziom 1)</h3>
+<p>Diagram pokazuje system jako jedną całość oraz ludzi i systemy zewnętrzne, z którymi się komunikuje.</p>
+<p><em>Diagram przepływu (Mermaid):</em></p>
+<ac:structured-macro ac:name="code"><ac:parameter ac:name="language">none</ac:parameter><ac:plain-text-body><![CDATA[flowchart LR
+  P1["👤 Gracz 1 / Gracz 2<br/>(Przeglądarka internetowa)"] -- "Intencje gracza (Intent)<br/>Widok meczu (MatchView)<br/>[HTTPS + WebSocket SignalR]" --> SYS["🎮 System RE:JOLTANCE<br/>(Serwer ASP.NET Core + Klient React)"]
+  P2["👤 Rada Graczy Testowych<br/>(Użytkownicy końcowi EU1/EU2)"] -- "Sesje testowe i odbiór<br/>[HTTPS / WebSocket]" --> SYS
+  SYS -. "Telemetria OTLP<br/>(logi, metryki, ślady)" .-> DASH["📊 Panel .NET Aspire<br/>/ Monitoring"]
+  DEV["👥 Zespół (6 osób) + Agenci AI"] -- "Kod, testy, specyfikacje OpenSpec" --> GH["🐙 GitHub<br/>(Repozytorium, Actions CI, Pages)"]
+  GH -- "Automatyczny mirror<br/>(main, develop, tagi sprint-*)" --> BB["🪣 Bitbucket Data Center PB"]
+  GH -. "Publikacja prototypu JS" .-> GP["🌐 GitHub Pages<br/>(Prototyp referencyjny)"]
+  DEV -- "Backlog CSV, dokumentacja 1:1" --> ATL["🏛️ Jira + Confluence PB"]]]></ac:plain-text-body></ac:structured-macro>
+<h3>3.2 Kontenery i bloki (C4 poziom 2)</h3>
+<p>Serwer to modularny monolit: jeden proces podzielony na moduły z jasnymi granicami. W przeglądarce działa SPA (Single Page Application), czyli aplikacja, która nie przeładowuje strony.</p>
+<p><em>Diagram przepływu (Mermaid):</em></p>
+<ac:structured-macro ac:name="code"><ac:parameter ac:name="language">none</ac:parameter><ac:plain-text-body><![CDATA[flowchart TB
+  subgraph Browser["Przeglądarka Gracza"]
+    Web["Klient Webowy (src/web)<br/>React 19 + TypeScript 5.9 + Vite + Zustand<br/>Renderuje wyłącznie MatchView i emituje Intent"]
+  end
+
+  subgraph ServerProcess["Proces Serwera — Rejoltance.Server (ASP.NET Core 10)"]
+    Hub["MatchHub (SignalR)<br/>/api/hubs/match + Endpoints REST /api/*"]
+    Sess["MatchSessionManager<br/>Aktywne mecze w pamięci + SemaphoreSlim per mecz"]
+    Kernel["Rejoltance.Kernel<br/>MatchEngine (Reduce / LegalActions)<br/>Projection (Fog of War) · SeededRng"]
+    Content["Rejoltance.Content<br/>CardCatalog · ContentValidator · Vocabulary<br/>(wbudowane cards.json i decks.json)"]
+    Contracts["Rejoltance.Contracts<br/>5 zamrożonych kontraktów DTO<br/>(Intent, LegalAction, Pending, MatchView, DomainEvent)"]
+  end
+
+  Db[("Baza Danych (EF Core)<br/>SQLite (.data/rejoltance.db)<br/>→ PostgreSQL (od Sprintu 4)")]
+  AppHost["Rejoltance.AppHost (.NET Aspire)<br/>Orkiestracja lokalna, proxy i ServiceDefaults"]
+
+  Web -- "SendIntent / StartSandbox<br/>(WebSocket SignalR)" --> Hub
+  Hub -- "MatchUpdated(MatchView, DomainEvent[])" --> Web
+  Hub --> Sess
+  Sess --> Kernel
+  Kernel --> Content
+  Kernel --> Contracts
+  Content --> Contracts
+  Hub --> Db
+  AppHost -. "uruchamia i monitoruje" .-> ServerProcess
+  AppHost -. "uruchamia z proxy /api" .-> Web]]></ac:plain-text-body></ac:structured-macro>
+<hr />
+<h2>4. Szczegółowy projekt systemu (model C4 — poziom 3)</h2>
+<h3>4.1 Moduły i reguły zależności</h3>
+<p>Każdy moduł ma jasno określoną odpowiedzialność. Zależności mogą prowadzić <strong>tylko w dół tabeli</strong>: od prezentacji i transportu w stronę czystych kontraktów. Pilnują tego testy <code>tests/Rejoltance.Architecture.Tests/BoundaryTests.cs</code>.</p>
+<table><thead><tr>
+<th><p>Moduł / projekt</p></th>
+<th><p>Warstwa</p></th>
+<th><p>Odpowiedzialność i główne klasy</p></th>
+<th><p>Dozwolone zależności</p></th>
+<th><p>Właściciel (epik)</p></th>
+</tr></thead><tbody>
+<tr>
+<td><p><strong><code>src/web</code></strong></p></td>
+<td><p>Prezentacja (klient TS)</p></td>
+<td><p>Renderuje <code>MatchView</code>, podświetla dozwolone akcje z <code>legalActions</code>, obsługuje połączenie SignalR (<code>MatchTransport</code>) i stan lokalny (<code>Zustand</code>). <strong>Klient nie zawiera logiki reguł gry.</strong></p></td>
+<td><p>Kontrakt JSON (<code>src/web/src/contracts</code>)</p></td>
+<td><p>Epik E4</p></td>
+</tr>
+<tr>
+<td><p><strong><code>Rejoltance.AppHost</code></strong> i <strong><code>ServiceDefaults</code></strong></p></td>
+<td><p>Orkiestracja i telemetria</p></td>
+<td><p>Konfiguracja lokalnego środowiska .NET Aspire, OpenTelemetry (logi, metryki, ślady) i punktów kontrolnych <code>/health</code> oraz <code>/alive</code>.</p></td>
+<td><p><code>Rejoltance.Server</code></p></td>
+<td><p>Epik E6</p></td>
+</tr>
+<tr>
+<td><p><strong><code>Rejoltance.Server</code></strong></p></td>
+<td><p>Transport, sesje i trwałość</p></td>
+<td><p>Hub SignalR (<code>MatchHub</code>), sesje meczowe w pamięci z synchronizacją per mecz (<code>MatchSessionManager</code>), endpointy REST (<code>/api/cards</code>, <code>/api/decks</code>, <code>/api/info</code>), kontekst EF Core (<code>RejoltanceDb</code>).</p></td>
+<td><p><code>Kernel</code>, <code>Content</code>, <code>Contracts</code>, <code>ServiceDefaults</code></p></td>
+<td><p>Epik E3 / E6</p></td>
+</tr>
+<tr>
+<td><p><strong><code>Rejoltance.Sim</code></strong> <em>(planowany od S2)</em></p></td>
+<td><p>Sztuczna inteligencja i symulacje</p></td>
+<td><p>Polityki botów (<code>IBotPolicy</code>), symulator wielu gier bot-vs-bot, wyrocznia testów różnicowych względem prototypu JS.</p></td>
+<td><p><code>Kernel</code>, <code>Content</code>, <code>Contracts</code></p></td>
+<td><p>Epik E5</p></td>
+</tr>
+<tr>
+<td><p><strong><code>Rejoltance.Kernel</code></strong></p></td>
+<td><p>Czysta domena (silnik reguł)</p></td>
+<td><p>Niemutowalny stan meczu (<code>MatchState</code>), czysty reduktor <code>MatchEngine.Reduce(state, seat, intent)</code>, generator ruchów <code>MatchEngine.LegalActions</code>, projekcja <em>Fog of War</em> (<code>Projection.ToView</code>), deterministyczny <code>SeededRng</code>.</p></td>
+<td><p><code>Content</code>, <code>Contracts</code> <em>(zakaz I/O, zegara i <code>System.Random</code>)</em></p></td>
+<td><p>Epik E1</p></td>
+</tr>
+<tr>
+<td><p><strong><code>Rejoltance.Content</code></strong></p></td>
+<td><p>Dane domenowe i walidacja DSL</p></td>
+<td><p>Ładuje wbudowane <code>cards.json</code> i <code>decks.json</code> (<code>CardCatalog</code>). Zawiera słownik słów kluczowych, wyzwalaczy i akcji (<code>Vocabulary</code>) oraz walidator kart i talii (<code>ContentValidator</code>).</p></td>
+<td><p><code>Contracts</code></p></td>
+<td><p>Epik E2</p></td>
+</tr>
+<tr>
+<td><p><strong><code>Rejoltance.Contracts</code></strong></p></td>
+<td><p>Zamrożone kontrakty (DTO)</p></td>
+<td><p>Proste rekordy danych przesyłane przez sieć, bez logiki biznesowej. Sprawdza to test refleksyjny <code>Contracts_contain_no_logic_types</code>.</p></td>
+<td><p><strong>Brak zależności</strong></p></td>
+<td><p>Wspólny (backend + frontend)</p></td>
+</tr>
+</tbody></table>
+<p>DTO (Data Transfer Object) to obiekt, który tylko przenosi dane. DSL (Domain-Specific Language) to nasz mały język opisu efektów kart.</p>
+<h3>4.2 Pięć zamrożonych kontraktów komunikacyjnych</h3>
+<p>Klient webowy, bot AI, serwer i silnik reguł komunikują się wyłącznie przez pięć niemutowalnych struktur. Są zdefiniowane w <code>Rejoltance.Contracts</code>, a ich odpowiedniki w TypeScript są w <code>src/web/src/contracts/index.ts</code>:</p>
+<ol><li><strong><code>Intent</code> (klient / bot → serwer → Kernel).</strong> Jedyny sposób, w jaki gracz mówi, co chce zrobić (<code>MulliganIntent</code>, <code>ChooseOrderIntent</code>, <code>PlayCardIntent</code>, <code>EndStepIntent</code>, <code>AnswerPendingIntent</code>, <code>SurrenderIntent</code>).</li><li><strong><code>LegalAction</code> (Kernel → serwer → klient / bot).</strong> Lista ruchów dozwolonych w danej chwili, z poprawnymi celami i liniami. To <strong>jedyne źródło prawdy o legalności ruchu</strong>. Interfejs nigdy sam nie liczy, czy ruch jest legalny.</li><li><strong><code>PendingInteraction</code> (Kernel → serwer → klient / bot).</strong> Pytanie, które silnik zadaje graczowi, np. które karty wymienić w mulliganie albo jaki cel wybrać dla efektu. Dzięki temu Kernel nigdy nie blokuje wątku w oczekiwaniu na gracza.</li><li><strong><code>MatchView</code> (<code>Projection</code> w Kernelu → serwer → klient / bot).</strong> Przefiltrowany widok meczu dla jednego miejsca przy stole (<code>yourSeat</code>). Zawiera pełną rękę gracza. O przeciwniku (<code>OpponentView</code>) podaje tylko liczbę kart w ręce, w talii i na stosie odrzuconych (<em>Fog of War</em>).</li><li><strong><code>DomainEvent</code> (Kernel → <code>Projection</code> → serwer → klient).</strong> Uporządkowana lista faktów, które wydarzyły się po intencji (np. <code>CardDrawn</code>, <code>FatigueDamage</code>, <code>MatchFinished</code>). Klient na jej podstawie odtwarza animacje i dźwięki. Nie musi porównywać stanów (<em>diffing</em>).</li></ol>
+<h3>4.3 Widok wykonania — jeden ruch gracza</h3>
+<p>Diagram pokazuje, co dzieje się od kliknięcia karty do odświeżenia widoku u obu graczy.</p>
+<p><em>Diagram przepływu (Mermaid):</em></p>
+<ac:structured-macro ac:name="code"><ac:parameter ac:name="language">none</ac:parameter><ac:plain-text-body><![CDATA[sequenceDiagram
+  autonumber
+  participant UI as Klient Web (React/TS)
+  participant Hub as MatchHub (SignalR)
+  participant Mgr as MatchSessionManager
+  participant Eng as MatchEngine (Kernel)
+  participant Proj as Projection (Fog of War)
+
+  UI->>Hub: SendIntent(matchId, { type: "playCard", cardInstanceId: 4, lane: 1 })
+  Hub->>Mgr: ApplyAsync(matchId, callerSeat, intent)
+  Note over Mgr: Sekcja krytyczna: SemaphoreSlim per mecz
+  Mgr->>Eng: Reduce(currentState, callerSeat, intent)
+  alt Intencja jest legalna i wspierana
+    Eng-->>Mgr: (newState, domainEvents[])
+    Mgr->>Proj: ToView(newState, seat=0) / ToView(newState, seat=1)
+    Mgr->>Proj: ToViewerEvents(domainEvents, seat)
+    Proj-->>Mgr: Przefiltrowany MatchView + zanonimizowane DomainEvent[]
+    Mgr-->>Hub: Wynik redukcji
+    Hub-->>UI: MatchUpdated(view, events) + zwrot MatchView
+  else Ruch nielegalny lub reguła niezaimplementowana
+    Eng-->>Hub: IllegalIntentException / NotImplementedException
+    Hub-->>UI: HubException z czytelnym komunikatem błędu (stan meczu pozostaje nienaruszony)
+  end]]></ac:plain-text-body></ac:structured-macro>
+<h3>4.4 Dane i model trwałości</h3>
+<p>Oddzielamy <strong>ulotny stan trwającego meczu</strong> od <strong>danych trwałych</strong>:</p>
+<ul><li><strong>Trwające mecze (<code>MatchState</code>)</strong> są w pamięci serwera (<code>ConcurrentDictionary</code> w <code>MatchSessionManager</code>). Nie zapisujemy ich do bazy przy każdym kliknięciu, więc opóźnienia są minimalne.</li><li><strong>Dane trwałe (<code>RejoltanceDb</code> — Entity Framework Core)</strong> to konta użytkowników, zapisane talie i archiwum zakończonych meczów. Dla każdego meczu zapisujemy ziarno losowości (<code>Seed</code>) i listę intencji, żeby móc odtworzyć powtórkę (<em>replay</em>).</li></ul>
+<p><em>Diagram przepływu (Mermaid):</em></p>
+<ac:structured-macro ac:name="code"><ac:parameter ac:name="language">none</ac:parameter><ac:plain-text-body><![CDATA[erDiagram
+  USER ||--o{ DECK : "posiada (od S4)"
+  USER ||--o{ MATCH_PLAYER : "uczestniczy (od S4)"
+  MATCH_RECORD ||--|{ MATCH_PLAYER : "zapisuje graczy"
+
+  MATCH_RECORD {
+    int Id PK
+    string MatchId
+    ulong Seed
+    int WinnerSeat
+    string IntentsJson "Zapis intencji do Replayu"
+    datetime FinishedAt
+  }
+  USER {
+    string Id PK
+    string UserName
+    string PasswordHash
+  }
+  DECK {
+    int Id PK
+    string OwnerId FK
+    string Name
+    string CardsJson "Tablica 30 identyfikatorów kart"
+  }
+  MATCH_PLAYER {
+    int MatchId FK
+    string UserId FK
+    int Seat
+  }]]></ac:plain-text-body></ac:structured-macro>
+<hr />
+<h2>5. Strategie techniczne i koncepcje przekrojowe</h2>
+<table><thead><tr>
+<th><p>Zagadnienie</p></th>
+<th><p>Strategia i rozwiązanie</p></th>
+</tr></thead><tbody>
+<tr>
+<td><p><strong>Determinizm i odtwarzalność (replay)</strong></p></td>
+<td><p>Cała losowość w <code>Rejoltance.Kernel</code> pochodzi z niemutowalnej struktury <code>SeededRng</code> (algorytm <em>SplitMix64</em>). Jej stan (<code>State: ulong</code>) jest częścią <code>MatchState</code>. Użycie <code>System.Random</code>, <code>DateTime</code> lub <code>Guid.NewGuid()</code> w Kernelu kończy się błędem kompilacji. Pilnują tego analizator <code>Microsoft.CodeAnalysis.BannedApiAnalyzers</code> i plik <code>BannedSymbols.txt</code>.</p></td>
+</tr>
+<tr>
+<td><p>**Ochrona przed podglądaniem kart (<em>Fog of War</em>, R-80…R-82)**</p></td>
+<td><p>Talia przechowuje tylko definicje kart (<code>CardId</code>). Karta dostaje identyfikator egzemplarza (<code>InstanceId</code>) dopiero wtedy, gdy wychodzi z talii do ręki lub na planszę (<code>R-81</code>). Dzięki temu kolejność numerów <code>InstanceId</code> nie zdradza układu talii. <code>Projection.ToViewerEvents</code> zamienia identyfikatory kart dobieranych przez przeciwnika na <code>0</code>.</p></td>
+</tr>
+<tr>
+<td><p><strong>Współbieżność i izolacja meczów</strong></p></td>
+<td><p>Każda sesja w <code>MatchSessionManager</code> ma własny <code>SemaphoreSlim(1, 1)</code>. Żądania z różnych meczów wykonują się równolegle na wielu wątkach. Intencje w jednym meczu wykonują się ściśle po kolei. Wyjątek w jednym meczu jest przechwytywany i logowany z <code>matchId</code> i <code>seed</code>. Nie wpływa na inne mecze (<code>NFR-31</code>).</p></td>
+</tr>
+<tr>
+<td><p>**Zasada głośnej porażki (<em>fail loud</em>)**</p></td>
+<td><p>Zabraniamy cichego obchodzenia błędów, np. zwracania pustej tablicy celów albo losowania celu, gdy gracz go nie wybrał. Nieznane słowo w danych kart zatrzymuje start serwera wyjątkiem <code>ContentValidationException</code>. Niezaimplementowana akcja lub nielegalna intencja zwraca czytelny <code>HubException</code>.</p></td>
+</tr>
+<tr>
+<td><p><strong>Zgodność kontraktów C# ↔ TypeScript</strong></p></td>
+<td><p>Test integracyjny <code>ContractSampleTests</code> serializuje prawdziwy <code>MatchView</code> z Kernela C# do pliku <code>src/web/src/contracts/match-view.sample.json</code>. Test <code>contracts.test.ts</code> sprawdza zgodność tego pliku z typami TypeScript. Każda rozbieżność pól zatrzymuje potok CI (<strong>ADR-0010</strong> (<code>07-decyzje-adr/0010-kontrakt-csharp-ts-przez-probke.md</code>)).</p></td>
+</tr>
+<tr>
+<td><p>**Obserwowalność i telemetria (<em>observability</em>)**</p></td>
+<td><p>Projekt <code>Rejoltance.ServiceDefaults</code> konfiguruje <strong>OpenTelemetry</strong>: logi strukturalne, metryki czasu odpowiedzi HTTP/SignalR i ślady rozproszone widoczne w panelu .NET Aspire. Konfiguruje też punkty kontrolne <code>/health</code> i <code>/alive</code>.</p></td>
+</tr>
+</tbody></table>
+<hr />
+<h2>6. Infrastruktura i wdrożenie</h2>
+<p>System działa w trzech środowiskach. Dodatkowo publikujemy statycznie prototyp referencyjny.</p>
+<p><em>Diagram przepływu (Mermaid):</em></p>
+<ac:structured-macro ac:name="code"><ac:parameter ac:name="language">none</ac:parameter><ac:plain-text-body><![CDATA[flowchart LR
+  subgraph DevEnv["1. Środowisko Lokalne Dewelopera"]
+    AH["dotnet run --project AppHost"] --> S_Dev["Rejoltance.Server (Kestrel)"]
+    AH --> W_Dev["Vite Dev Server (React)"]
+    S_Dev --> SQLite[("SQLite (.data/rejoltance.db)")]
+  end
+
+  subgraph ProdEnv["2. Środowisko Demo / Produkcyjne (od S4/S5)"]
+    Browser["Przeglądarka Gracza"] -- "HTTPS / WSS (TLS 1.3)" --> Proxy["Reverse Proxy / Ingress"]
+    Proxy --> Container["Kontener OCI: Rejoltance.Server<br/>+ zbudowany klient w wwwroot/"]
+    Container --> PG[("PostgreSQL 16+")]
+  end]]></ac:plain-text-body></ac:structured-macro>
+<table><thead><tr>
+<th><p>Środowisko</p></th>
+<th><p>Jak działa</p></th>
+<th><p>Baza danych</p></th>
+<th><p>Do czego służy</p></th>
+</tr></thead><tbody>
+<tr>
+<td><p><strong>1. Lokalne środowisko deweloperskie</strong></p></td>
+<td><p><code>Rejoltance.AppHost</code> uruchamia natywnie serwer Kestrel i serwer deweloperski Vite z proxy <code>/api</code>.</p></td>
+<td><p>Plik SQLite <code>.data/rejoltance.db</code> (Sprinty 0–3) albo lokalny kontener PostgreSQL zarządzany przez Aspire (od Sprintu 4).</p></td>
+<td><p>Codzienne programowanie i ręczne testy nowych funkcji.</p></td>
+</tr>
+<tr>
+<td><p><strong>2. Środowisko CI (GitHub Actions)</strong></p></td>
+<td><p>Maszyny <code>ubuntu-latest</code> uruchamiają 3 równoległe zadania: <code>.NET build &amp; tests</code> (z testem integracyjnym <code>AppHostSmokeTests</code>), <code>Web lint, typecheck, tests, build</code> oraz <code>Specs, docs, agents, content</code>.</p></td>
+<td><p>Baza w pamięci albo tymczasowy plik SQLite na czas testów.</p></td>
+<td><p>Automatyczna bramka jakości dla każdego Pull Requesta i commita na <code>develop</code>/<code>main</code>.</p></td>
+</tr>
+<tr>
+<td><p><strong>3. Środowisko demonstracyjne (demo)</strong></p></td>
+<td><p>Jeden obraz kontenera budowany przez .NET (<code>PublishWithContainerFiles</code>). Serwer ASP.NET Core serwuje API/SignalR i statyczne pliki klienta React z <code>wwwroot/</code>.</p></td>
+<td><p>Zarządzana instancja lub kontener PostgreSQL 16+.</p></td>
+<td><p>Testy użyteczności z Radą Graczy i prezentacje na <em>Sprint Review</em>.</p></td>
+</tr>
+<tr>
+<td><p><strong>4. Hosting prototypu referencyjnego</strong></p></td>
+<td><p>Workflow <code>.github/workflows/prototype-pages.yml</code> publikuje katalog <code>prototype/revibance/</code> na <strong>GitHub Pages</strong>.</p></td>
+<td><p>Brak (aplikacja działa tylko w przeglądarce).</p></td>
+<td><p>Stały punkt odniesienia przy sprawdzaniu zasad gry v11.</p></td>
+</tr>
+</tbody></table>
+<hr />
+<h2>7. Ryzyka architektoniczne i dług techniczny</h2>
+<table><thead><tr>
+<th><p>Ryzyko lub dług techniczny</p></th>
+<th><p>Możliwy skutek</p></th>
+<th><p>Jak ograniczamy ryzyko</p></th>
+</tr></thead><tbody>
+<tr>
+<td><p><strong>Trwające mecze żyją tylko w pamięci jednego procesu serwera</strong></p></td>
+<td><p>Restart serwera przerywa trwające pojedynki.</p></td>
+<td><p>W projekcie uczelnianym to akceptowalne. Przebieg meczu odtworzymy deterministycznym replayem z zapisanego <code>Seed</code> i listy intencji (<code>E6-S07</code>).</p></td>
+</tr>
+<tr>
+<td><p><strong>Typy TypeScript utrzymujemy ręcznie, równolegle do rekordów C#</strong></p></td>
+<td><p>Łatwo o pomyłkę przy dodawaniu nowych zdarzeń i efektów.</p></td>
+<td><p>Chroni nas test próbki JSON w CI (<code>ContractSampleTests</code> + <code>contracts.test.ts</code>). Po Sprincie 2 wrócimy do decyzji <strong>ADR-0010</strong> (<code>07-decyzje-adr/0010-kontrakt-csharp-ts-przez-probke.md</code>) i rozważymy generator typów.</p></td>
+</tr>
+<tr>
+<td><p><strong>Prototyp JS ma na sztywno zakodowane efekty pasywne 3 kart (<code>Tea Maid</code>, <code>Wyvern</code>, <code>Survivalist</code>)</strong></p></td>
+<td><p>Nowych kart z efektami pasywnymi lub aurami nie da się dodać bez zmiany kodu silnika.</p></td>
+<td><p>W zadaniu <code>E2-S07</code> przeniesiemy efekty pasywne do schematu DSL w <code>cards.json</code> (rozbieżność <code>D-11</code>).</p></td>
+</tr>
+<tr>
+<td><p><strong>Smart App Control blokuje biblioteki DLL na części laptopów z Windows 11</strong></p></td>
+<td><p>Na niektórych komputerach nie da się uruchomić Aspire jednym poleceniem.</p></td>
+<td><p>Mamy skrypt diagnostyczny <code>tools/doctor.ps1</code>. Opisaliśmy też uruchamianie serwera i klienta w dwóch osobnych terminalach, bez DCP (Developer Control Plane — komponent Aspire, który uruchamia procesy) (<code>01-szybki-start-i-instalacja.md</code>).</p></td>
+</tr>
+</tbody></table>

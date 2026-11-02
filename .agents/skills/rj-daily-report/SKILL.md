@@ -1,22 +1,30 @@
 ---
 name: rj-daily-report
-description: Builds a Daily Scrum note from team members' updates (done / next / blockers with Jira keys) using the team template, ready to paste into Confluence. Use when the PO asks for a daily summary.
+description: "Buduje ustrukturyzowany raport ze spotkania Daily Scrum na podstawie statusów członków zespołu (zrobione, planowane, blokery, klucze Jira i zalogowany czas), gotowy do publikacji w Confluence PB."
 ---
 
-# Raport z Daily Scrum
+# Umiejętność: Tworzenie raportu Daily Scrum (`rj-daily-report`)
 
-## Wejście
+## Kiedy używać tej procedury?
 
-Wpisy członków zespołu (np. z kanału Discord/Teams): *zrobione · plan · blokery*, z kluczami Jira. Data, numer sprintu.
+Uruchamiaj podczas lub bezpośrednio po krótkim spotkaniu **Daily Scrum**, gdy Product Owner sprintu zbiera aktualizacje od 6 członków zespołu do publikacji w przestrzeni **Confluence PB**.
 
-## Kroki
+---
 
-1. Skopiuj `docs/06-scrum/szablon-daily.md` do `docs/06-scrum/sprinty/sprint-N/daily-RRRR-MM-DD.md`.
-2. Uzupełnij tabelę: osoba · zrobione · plan · blokery · klucze Jira. **Nie dopisuj nic, czego nie ma we wpisach.**
-3. Blokery → sekcja „Akcje” z właścicielem i terminem.
-4. Brak wpisu od osoby → „brak raportu” (nie zgaduj).
-5. Na końcu: lista kluczy Jira, których status trzeba zaktualizować na tablicy.
+## Kroki wykonawcze (Krok po kroku)
 
-## Wyjście
+1. **Odczytaj szablon notatki Daily Scrum:**
+   - Wzorzec znajduje się w `docs/03-dokumentacja-procesowa/03-scrum-i-spotkania/szablon-daily.md`.
 
-Plik notatki + tekst do wklejenia w Confluence.
+2. **Zbierz i uporządkuj wpisy każdego członka zespołu (6 osób):**
+   - Kążdy wpis powiąż z konkretnym kluczem zadania Jira (`REJ-123` / `Ex-Syy`):
+     - **Co zostało zrobione od ostatniego Daily** (wraz z zalogowanym czasem *Log Work* w Jirze),
+     - **Co zostanie zrobione do kolejnego Daily**,
+     - **Przeszkody i blokery (Impediments)** wymagające interwencji PO lub innego właściciela epiku.
+
+3. **Zweryfikuj postęp względem celu sprintu i wykresu Burndown (EU4):**
+   - Zaznacz, czy którekolwiek zadanie przekracza szacunek `4 h` i wymaga podziału.
+   - Przypomnij o codziennym logowaniu czasu pracy (*Log Work*), aby wykres spalania (*Burndown Chart*) w Jirze opadał równomiernie.
+
+4. **Wygeneruj gotową treść z nagłówkiem metadanych Confluence:**
+   - Na górze notatki dołącz blok metadanych zgodny z `docs/05-szablony/naglowek-strony-confluence.md` (`Etap SDD: Scrum`, `Źródło prawdy: Confluence PB`).

@@ -1,0 +1,108 @@
+<ac:structured-macro ac:name="info"><ac:rich-text-body><p><strong>Synchronizacja 1:1 z repozytorium Git:</strong> <code>docs/04-system-agentow-ai/01-architektura-i-konfiguracja-agentow.md</code> (commit <code>a2bf2a4</code>, data eksportu: <code>2026-11-02</code>)</p></ac:rich-text-body></ac:structured-macro>
+<blockquote><p><strong>Źródło prawdy:</strong> repozytorium (<code>docs/04-system-agentow-ai/01-architektura-i-konfiguracja-agentow.md</code>) · <strong>Kategoria dokumentacji:</strong> Dokumentacja procesowa — standardy inżynierii agentowej i narzędzi · <strong>Etap SDD:</strong> Fundamenty · <strong>Powiązana decyzja:</strong> <strong>ADR-0009</strong> (<code>../01-dokumentacja-systemowa/07-decyzje-adr/0009-kanon-agentow-i-adaptery.md</code>)</p></blockquote>
+<p>Sześć osób w zespole korzysta z różnych środowisk i asystentów AI: <strong>Claude Code</strong>, <strong>Antigravity</strong>, <strong>GitHub Copilot (VS Code)</strong>, <strong>Gemini CLI</strong>, <strong>OpenAI Codex</strong> oraz czatów w przeglądarce (<strong>ChatGPT</strong>, <strong>DeepSeek</strong>). Chcemy, żeby wszyscy agenci stosowali te same zasady architektury, te same konwencje nazw i ten sam proces SDD (Spec-Driven Development, czyli „najpierw specyfikacja, potem kod”). Dlatego mamy jedno źródło prawdy, katalog <code>.agents/</code>, i skrypt, który generuje z niego adaptery dla poszczególnych narzędzi.</p>
+<hr />
+<h2>1. Jak zbudowany jest system agentowy w repozytorium?</h2>
+<p><em>Diagram przepływu (Mermaid):</em></p>
+<ac:structured-macro ac:name="code"><ac:parameter ac:name="language">none</ac:parameter><ac:plain-text-body><![CDATA[flowchart TB
+  subgraph Canonical["JEDNO ŹRÓDŁO PRAWDY (Edytujesz wyłącznie tutaj)"]
+    AM["AGENTS.md<br/>(Główny manifest zasad dla ludzi i AI)"]
+    R[".agents/rules/*.md<br/>(8 reguł konstytucyjnych i jakościowych)"]
+    A[".agents/agents/rj-*.md<br/>(10 ról agentów z przypisanymi umiejętnościami)"]
+    S[".agents/skills/rj-*/SKILL.md<br/>(13 umiejętności zespołowych + 6 umiejętności OpenSpec)"]
+  end
+
+  Sync["Skrypt synchronizujący:<br/>python tools/agents/sync_agents.py<br/>(Walidacja + Generowanie + Kontrola w CI)"]
+
+  subgraph Adapters["ADAPTERY NARZĘDZIOWE (Generowane automatycznie — nie edytuj ręcznie)"]
+    AG["Antigravity & Codex<br/>Czytają natywnie .agents/ + .agents/workflows/"]
+    CL["Claude Code<br/>CLAUDE.md + .claude/agents/ + .claude/skills/"]
+    CP["GitHub Copilot (VS Code)<br/>.github/copilot-instructions.md<br/>+ .github/instructions/ + .github/agents/ + .github/skills/"]
+    GM["Gemini CLI<br/>GEMINI.md + .gemini/skills/"]
+  end
+
+  Canonical --> Sync
+  Sync --> AG
+  Sync --> CL
+  Sync --> CP
+  Sync --> GM]]></ac:plain-text-body></ac:structured-macro>
+<h3>Cztery filary katalogu <code>.agents/</code></h3>
+<table><thead><tr>
+<th><p>Katalog</p></th>
+<th><p>Co zawiera</p></th>
+<th><p>Jak to działa w praktyce?</p></th>
+</tr></thead><tbody>
+<tr>
+<td><p><strong><code>.agents/rules/</code></strong></p></td>
+<td><p>Konstytucja i reguły nadrzędne</p></td>
+<td><p>Osiem plików z granicami projektu. Trzy agent wczytuje zawsze: <code>00-konstytucja.md</code>, <code>10-prawda-i-niepewnosc.md</code> i <code>60-kontekst-i-tokeny.md</code>. Pozostałe wczytuje wtedy, gdy dotyczą zadania: <code>20-plan-i-zakres.md</code>, <code>30-architektura-i-kontrakty.md</code>, <code>40-kod-i-testy.md</code>, <code>50-git-i-jira.md</code> i <code>70-dokumentacja.md</code>.</p></td>
+</tr>
+<tr>
+<td><p><strong><code>.agents/agents/</code></strong></p></td>
+<td><p>Role agentów (subagenci)</p></td>
+<td><p>Dziesięć wyspecjalizowanych profili, np. <code>rj-architect</code>, <code>rj-backend-engineer</code>, <code>rj-qa-verifier</code>. Każdy profil określa grupę (<code>category</code>), dozwolone narzędzia (<code>tools</code>), wbudowane skille (<code>skills</code>), procedurę działania i listę zakazów.</p></td>
+</tr>
+<tr>
+<td><p><strong><code>.agents/skills/</code></strong></p></td>
+<td><p>Umiejętności (skille)</p></td>
+<td><p>Procedury krok po kroku zapisane w plikach <code>SKILL.md</code>. Gdy zlecasz zadanie (np. dodanie karty albo przygotowanie PR, czyli pull requesta), agent wczytuje pasujący skill i wykonuje go punkt po punkcie.</p></td>
+</tr>
+<tr>
+<td><p><strong><code>.agents/workflows/</code></strong></p></td>
+<td><p>Komendy ukośnikowe (<code>/rj-...</code>)</p></td>
+<td><p>Wygenerowane skróty. Pozwalają wywołać skill prosto z czatu w IDE, np. <code>/rj-start-feature</code>, <code>/rj-pr-ready</code> albo <code>/opsx:propose</code>.</p></td>
+</tr>
+</tbody></table>
+<hr />
+<h2>2. Jak uruchomić agentów w swoim IDE?</h2>
+<p>Po sklonowaniu repozytorium konfiguracje agentów są już gotowe i zapisane w repozytorium. Poza wybranym narzędziem AI nie musisz instalować żadnych wtyczek.</p>
+<table><thead><tr>
+<th><p>Twoje narzędzie AI</p></th>
+<th><p>Skąd bierze zasady projektu?</p></th>
+<th><p>Jak wywołać rolę agenta albo skill?</p></th>
+</tr></thead><tbody>
+<tr>
+<td><p><strong>Claude Code</strong></p></td>
+<td><p>Sam wczytuje <code>CLAUDE.md</code> (który wskazuje na <code>AGENTS.md</code>), subagentów z <code>.claude/agents/</code> i skille z <code>.claude/skills/</code>.</p></td>
+<td><p>- <strong>Skill / workflow:</strong> wpisz <code>/rj-start-feature</code> albo <code>/opsx:propose</code> w terminalu Claude.<br />- <strong>Rola subagenta:</strong> napisz <em>„Użyj subagenta <code>rj-qa-verifier</code> do sprawdzenia zmian na bieżącej gałęzi”</em>.</p></td>
+</tr>
+<tr>
+<td><p><strong>Antigravity</strong></p></td>
+<td><p>Wczytuje <code>AGENTS.md</code> i cały katalog <code>.agents/</code> (<code>rules</code>, <code>agents</code>, <code>skills</code>, <code>workflows</code>).</p></td>
+<td><p>- <strong>Rola agenta:</strong> wybierz rolę (np. <code>rj-orchestrator</code> albo <code>rj-backend-engineer</code>) z menu agentów.<br />- <strong>Skill / workflow:</strong> wpisz <code>/rj-add-card</code> albo <code>/opsx-propose</code>.</p></td>
+</tr>
+<tr>
+<td><p><strong>GitHub Copilot (VS Code)</strong></p></td>
+<td><p>Sam wczytuje <code>.github/copilot-instructions.md</code>, reguły z <code>.github/instructions/</code>, agentów z <code>.github/agents/</code> i skille z <code>.github/skills/</code>.</p></td>
+<td><p>- <strong>Rola agenta:</strong> w oknie Copilot Chat wybierz własnego agenta (np. <code>@rj-architect</code> albo <code>@rj-qa-verifier</code>).<br />- <strong>Skill:</strong> wpisz <code>/opsx-propose</code> albo poproś o wykonanie skilla <code>rj-pr-ready</code>.</p></td>
+</tr>
+<tr>
+<td><p><strong>Gemini CLI</strong></p></td>
+<td><p>Sam wczytuje <code>GEMINI.md</code> i skille z <code>.gemini/skills/</code>.</p></td>
+<td><p>- <strong>Skill:</strong> wpisz <code>/opsx:propose</code> albo podaj nazwę skilla, np. <code>rj-add-rule-test</code>.<br />- <strong>Rola:</strong> napisz <em>„Działaj zgodnie z rolą <code>.agents/agents/rj-backend-engineer.md</code>”</em>.</p></td>
+</tr>
+<tr>
+<td><p><strong>OpenAI Codex CLI</strong></p></td>
+<td><p>Wczytuje <code>AGENTS.md</code> i skille z <code>.agents/skills/</code>.</p></td>
+<td><p>- <strong>Skill:</strong> wywołaj <code>$openspec-propose</code> albo <code>$rj-start-feature</code>.</p></td>
+</tr>
+<tr>
+<td><p><strong>Czaty w przeglądarce (ChatGPT, DeepSeek)</strong></p></td>
+<td><p>Nie mają dostępu do plików na dysku.</p></td>
+<td><p>Stosuj <strong>protokół 3 plików</strong>: na początku rozmowy wklej treść <code>AGENTS.md</code>, <code>docs/01-dokumentacja-systemowa/08-mapa-kodu-i-modulow.md</code> i <code>README.md</code> modułu, w którym pracujesz.</p></td>
+</tr>
+</tbody></table>
+<hr />
+<h2>3. Połączenie agentów z Jirą PB i Confluence PB (serwer MCP)</h2>
+<p>W repozytorium jest skonfigurowany opcjonalny serwer <strong>MCP (Model Context Protocol)</strong> o nazwie <code>mcp-atlassian</code>. Konfiguracja leży w <code>.mcp.json</code> (dla Claude Code) i w <code>.vscode/mcp.json</code> (dla VS Code). Dzięki niemu agent AI może sam odczytać zadanie z uczelnianej Jiry PB albo stronę z Confluence PB, np. <em>„Przeczytaj zgłoszenie REJ-45 z Jiry i przygotuj propozycję OpenSpec”</em>.</p>
+<p>Serwer MCP domyślnie działa w trybie <strong>tylko do odczytu (<code>READ_ONLY_MODE=true</code>)</strong>. Powody są dwa: bezpieczeństwo i zasady oceniania (efekty EU2–EU4 ocenia się indywidualnie, więc zmiany w Jirze robi student, a nie agent).</p>
+<h3>Konfiguracja połączenia MCP krok po kroku</h3>
+<ol><li><strong>Zainstaluj menedżer narzędzi Pythona <code>uv</code>:</strong></li></ol>
+<ac:structured-macro ac:name="code"><ac:parameter ac:name="language">powershell</ac:parameter><ac:plain-text-body><![CDATA[   winget install astral-sh.uv]]></ac:plain-text-body></ac:structured-macro>
+<ol><li><strong>Wygeneruj osobiste tokeny dostępu (PAT, Personal Access Token):</strong> - Zaloguj się do <strong>Jiry PB</strong> (<code>https://devtools.wi.pb.edu.pl/jira</code>), kliknij swój awatar w prawym górnym rogu → <strong>Profile</strong> → <strong>Personal Access Tokens</strong> → <strong>Create token</strong>. Nadaj nazwę (np. <code>rejoltance-mcp</code>) i skopiuj wygenerowany ciąg znaków. - Zrób to samo w <strong>Confluence PB</strong> (<code>https://devtools.wi.pb.edu.pl/confluence</code>). - <strong>Pamiętaj:</strong> token PAT daje taki sam dostęp jak Twoje hasło uczelniane. Nigdy nie wklejaj go do plików śledzonych przez git ani do wiadomości na czacie.</li></ol>
+<ol><li><strong>Zapisz tokeny w zmiennych środowiskowych użytkownika Windows (PowerShell):</strong></li></ol>
+<ac:structured-macro ac:name="code"><ac:parameter ac:name="language">powershell</ac:parameter><ac:plain-text-body><![CDATA[   [Environment]::SetEnvironmentVariable("JIRA_PERSONAL_TOKEN", "TWOJ_TOKEN_JIRA", "User")
+   [Environment]::SetEnvironmentVariable("CONFLUENCE_PERSONAL_TOKEN", "TWOJ_TOKEN_CONFLUENCE", "User")]]></ac:plain-text-body></ac:structured-macro>
+<p>Możesz też skopiować <code>.env.example</code> do lokalnego pliku <code>.env</code> (git go ignoruje) i wczytać z niego zmienne do sesji terminala. Plik <code>.mcp.json</code> nie zawiera tokenów, tylko odwołania do zmiennych (<code>${JIRA_PERSONAL_TOKEN}</code>, <code>${CONFLUENCE_PERSONAL_TOKEN}</code>). VS Code (<code>.vscode/mcp.json</code>) przy pierwszym starcie serwera prosi o tokeny w ukrytym polu. Tak robimy, bo token wpisany do pliku lub komendy łatwo trafia do repozytorium albo do historii poleceń, a stamtąd do innych osób.</p>
+<p>Po ustawieniu zmiennych uruchom ponownie terminal i IDE.</p>
+<ol><li><strong>Sprawdź połączenie:</strong> - W <strong>Claude Code</strong> wpisz <code>/mcp</code> i sprawdź, czy serwer <code>atlassian-pb</code> ma status <code>connected</code>. - W <strong>VS Code</strong> otwórz paletę poleceń (<code>Ctrl+Shift+P</code>) → <code>MCP: List Servers</code> → uruchom <code>atlassian-pb</code>.</li></ol>
