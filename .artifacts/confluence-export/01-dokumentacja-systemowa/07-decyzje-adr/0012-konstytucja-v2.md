@@ -1,12 +1,12 @@
-<!-- CONFLUENCE 1:1 EXPORT | Source: docs/01-dokumentacja-systemowa/07-decyzje-adr/0012-konstytucja-v2.md @ a2bf2a4 (2026-11-02) -->
+<!-- CONFLUENCE 1:1 EXPORT | Source: docs/01-dokumentacja-systemowa/07-decyzje-adr/0012-konstytucja-v2.md @ ff9d179 (2026-11-02) -->
 # ADR-0012: Konstytucja v2 — nowy układ artykułów
 
 > **Źródło prawdy:** repozytorium (`docs/01-dokumentacja-systemowa/07-decyzje-adr/0012-konstytucja-v2.md`) · **Kategoria dokumentacji:** Decyzja architektoniczna (ADR) · **Etap SDD:** Fundamenty
 
-- **Status:** proponowana
+- **Status:** zaakceptowana
 - **Data:** 2026-11-02
 - **Autorzy:** Maciej Cyuńczyk (nowa wersja), Gabriel Ostaszewski (poprawki)
-- **Akceptacja:** *(2 osoby z zespołu, data — do uzupełnienia)*
+- **Akceptacja:** cały zespół (6 osób), rozmowa głosowa 2026-11-02; zgłosił Gabriel Ostaszewski
 - **Powiązane:** ADR-0003, `.agents/rules/00-konstytucja.md`
 
 ## Kontekst i problem
@@ -53,8 +53,8 @@ Zmiany względem wersji z reworku:
 
 ### Negatywne / ryzyka
 
-- Do czasu akceptacji 2 osób obowiązuje treść z repo, ale ze statusem „proponowana”.
+- Kolejna zmiana konstytucji znów wymaga ADR i akceptacji 2 osób.
 
 ### Do zrobienia
 
-- [ ] Akceptacja 2 osób z zespołu, zmiana statusu na „zaakceptowana”.
+- [x] Akceptacja zespołu (2026-11-02), zmiana statusu na „zaakceptowana”.

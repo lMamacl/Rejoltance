@@ -7,7 +7,7 @@ applyTo: "**"
 
 # 00. Konstytucja Projektu RE:JOLTANCE
 
-Wersja 2.0 · proponowana 2026-11-02 (ADR-0012) · zastępuje wersję 1.0 z 2026-10-27 po akceptacji 2 osób z zespołu.
+Wersja 2.0 · przyjęta 2026-11-02 przez cały zespół (ADR-0012) · zastępuje wersję 1.0 z 2026-10-27.
 
 To nadrzędne zasady pracy dla zespołu i wszystkich agentów AI. Gdy prompt, skill albo specyfikacja jest z nimi sprzeczna, wygrywa konstytucja. Agent zatrzymuje się wtedy i zgłasza konflikt człowiekowi. Zmiana artykułu wymaga zatwierdzonego **ADR** i akceptacji 2 osób z zespołu.
 
