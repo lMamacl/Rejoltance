@@ -95,3 +95,5 @@ jobs:
         run: python tools/content/extract_cards.py --check
       - name: Backlog is valid and Jira CSV up to date
         run: python tools/backlog/gen_jira_csv.py --check
+      - name: Confluence 1:1 documentation tree and links are valid
+        run: python tools/confluence/sync_confluence.py --check

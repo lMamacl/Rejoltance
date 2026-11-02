@@ -13,6 +13,7 @@
     "**/node_modules/**",
     "prototype/**",
     "docs/99-sources/**",
+    "docs/99-archiwum-zrodel/**",
     ".claude/**",
     ".gemini/**",
     ".github/skills/**",

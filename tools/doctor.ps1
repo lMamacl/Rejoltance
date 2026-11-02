@@ -54,7 +54,7 @@ if ($git) {
 
 try {
     $sac = (Get-ItemProperty 'HKLM:\SYSTEM\CurrentControlSet\Control\CI\Policy' -ErrorAction Stop).VerifiedAndReputablePolicyState
-    if ($sac -eq 1) { Warn "Smart App Control is ON. It can block freshly built .NET DLLs (error 0x800711C7). See docs/00-start/jak-zaczac.md#problemy" }
+    if ($sac -eq 1) { Warn "Smart App Control is ON. It can block freshly built .NET DLLs (error 0x800711C7). See docs/00-przewodnik-i-setup/01-szybki-start-i-instalacja.md" }
     elseif ($null -ne $sac) { Ok "Smart App Control is not enforcing" }
 } catch { }
 

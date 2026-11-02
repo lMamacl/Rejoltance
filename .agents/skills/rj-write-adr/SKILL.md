@@ -1,27 +1,37 @@
 ---
 name: rj-write-adr
-description: Drafts an Architecture Decision Record in docs/04-adr using the team template (context, options table, Y-statement decision, consequences). Use when a choice is hard to reverse or someone may later question it.
+description: "Tworzy zapis decyzji architektonicznej (ADR-NNNN) w docs/01-dokumentacja-systemowa/07-decyzje-adr/ według szablonu projektu (kontekst, tabela opcji, zdanie decyzyjne, konsekwencje) i aktualizuje indeks ADR."
 ---
 
-# Nowy ADR
+# Umiejętność: Tworzenie decyzji architektonicznej ADR (`rj-write-adr`)
 
-## Kiedy
+## Kiedy używać tej procedury?
 
-Zmiana stosu, kontraktu, granicy modułu, reguły procesu, zależności o dużym wpływie; „dlaczego tak?” padnie za miesiąc.
+Uruchamiaj, gdy zespół podejmuje istotną decyzję architektoniczną, technologiczną lub procesową — w szczególności przy każdej zmianie 5 zamrożonych kontraktów (`Rejoltance.Contracts`), dodaniu nowej zależności zewnętrznej lub zmianie granic modułów.
 
-## Kroki
+---
 
-1. Kolejny numer: najwyższy `docs/04-adr/NNNN-*.md` + 1. Plik `NNNN-krotki-tytul.md`.
-2. Skopiuj `docs/04-adr/0000-szablon.md`. Status: `proposed`.
-3. Wypełnij:
-   - **Kontekst** — problem i ograniczenia (fakty z repo z etykietami [V]/[Z]);
-   - **Opcje** — tabela min. 2 opcji: zalety, wady, koszt/ryzyko;
-   - **Decyzja** — zdanie Y: „W kontekście X, mierząc się z Y, wybieramy Z zamiast A, aby B, akceptując C.”;
-   - **Konsekwencje** — pozytywne, negatywne, co trzeba zrobić (zadania Jira);
-   - **Powiązania** — ADR‑y, zgłoszenia, zmiany OpenSpec.
-4. Dopisz wiersz w `docs/04-adr/README.md`.
-5. Status `accepted` ustawia człowiek po akceptacji 2 osób (konstytucja, art. X).
+## Kroki wykonawcze (Krok po kroku)
 
-## Nie wolno
+1. **Ustal kolejny wolny numer `NNNN`:**
+   - Sprawdź istniejące pliki w `docs/01-dokumentacja-systemowa/07-decyzje-adr/`.
+   - Odczytaj wzorzec z `docs/01-dokumentacja-systemowa/07-decyzje-adr/0000-szablon.md`.
 
-Zmieniać treści ADR `accepted` — tworzy się nowy, który go zastępuje (`supersedes`).
+2. **Utwórz plik `docs/01-dokumentacja-systemowa/07-decyzje-adr/NNNN-krotki-tytul.md`:**
+   - Ustaw początkowy status na `proposed` (zmiana na `accepted` następuje po akceptacji PR przez co najmniej 2 członków zespołu).
+   - Opisz **Kontekst i problem** bez przesądzania rozwiązania.
+   - Zestaw w tabeli co najmniej **2–3 rozważane opcje** (wraz z ich zaletami, wadami i ryzykiem).
+   - Sformułuj **Decyzję** w postaci zdania *Y-statement*:
+     *„W kontekście ⟨...⟩, mierząc się z ⟨...⟩, wybieramy ⟨opcja⟩ zamiast ⟨alternatywy⟩, aby osiągnąć ⟨korzyść⟩, akceptując ⟨kompromis⟩.”*
+   - Wypisz pozytywne i negatywne konsekwencje oraz konkretne zadania do wykonania.
+
+3. **Zaktualizuj rejestr ADR i powiązane dokumenty:**
+   - Dopisz nowy wiersz do tabeli w `docs/01-dokumentacja-systemowa/07-decyzje-adr/README.md`.
+   - Jeśli nowy ADR zastępuje wcześniejszą decyzję, w starym pliku ADR zmień jedynie linię statusu na `superseded by ADR-NNNN`.
+
+4. **Zweryfikuj formatowanie i linki:**
+
+   ```bash
+   npm run lint:md
+   python tools/confluence/sync_confluence.py --check
+   ```

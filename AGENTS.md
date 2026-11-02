@@ -1,91 +1,78 @@
-# AGENTS.md — zasady pracy w repozytorium Rejoltance
+# AGENTS.md — Punkt Wejścia dla Ludzi i Agentów AI (RE:JOLTANCE)
 
-Ten plik czytają wszyscy agenci AI (Claude Code, Antigravity, Codex, GitHub Copilot, Gemini) i ludzie.
-Jedno źródło prawdy: zasady są tutaj i w `.agents/`. Pliki w `.claude/`, `.github/agents|skills|instructions`, `.gemini/skills`
-są **generowane** (`python tools/agents/sync_agents.py`) — nie edytuj ich ręcznie.
+Ten plik jest odczytywany automatycznie przez wszystkie wspierane narzędzia AI (**Claude Code**, **GitHub Copilot**, **Cursor**, **Google Antigravity**, **Gemini CLI**, **OpenAI Codex**) oraz stanowi szybką mapę orientacyjną dla członków zespołu.
 
-## 1. Zanim cokolwiek zrobisz
+> **Pełny podręcznik inżynierii agentowej dla ludzi:** [`docs/04-system-agentow-ai/README.md`](docs/04-system-agentow-ai/README.md).
+> **Konstytucja projektu (nadrzędne prawo):** [`.agents/rules/00-konstytucja.md`](.agents/rules/00-konstytucja.md).
 
-1. Przeczytaj **konstytucję**: [`.agents/rules/00-konstytucja.md`](.agents/rules/00-konstytucja.md) — ma pierwszeństwo przed wszystkim.
-2. Mapa projektu: [`docs/03-architecture/MAP.md`](docs/03-architecture/MAP.md) — moduły, granice, „gdzie co dodać”; pełna architektura: `docs/03-architecture/SAD.md`,
-   wymagania niefunkcjonalne: `openspec/specs/quality-attributes`, mapa dokumentacji: `docs/00-start/mapa-dokumentacji.md`.
-3. README modułu, w którym pracujesz (`src/<moduł>/README.md`).
-4. Klucz Jira zadania (`REJ-123`). Bez niego nie zaczynaj zmian w kodzie.
+---
 
-## 2. Projekt w 6 zdaniach
+## 1. Czym jest ten projekt i jak jest zbudowany?
 
-- RE:JOLTANCE to dwuosobowa gra karciana typu *lane battler*: 4 linie, zasób Blood, talie 30 kart, 20 HP.
-- Kanon zasad: prototyp JS `prototype/revibance` (v11), spisany jako reguły R‑nn w `docs/02-rules/`.
-- Backend: C# .NET 10 — `Rejoltance.Kernel` (czyste, deterministyczne reguły), `Rejoltance.Server` (ASP.NET Core + SignalR).
-- Frontend: React + TypeScript + Vite w `src/web` — renderuje `MatchView`, wysyła `Intent`.
-- Uruchomienie: `aspire run` (lub `dotnet run --project src/Rejoltance.AppHost`) — serwer + web + SQLite, bez Dockera.
-- Praca: Scrum w Jirze PB, gałęzie `typ/REJ-123-opis`, PR do `develop`, spec‑driven development w OpenSpec.
+**RE:JOLTANCE** to sieciowa taktyczna gra karciana (*lane battler*: 4 linie walki, zasób Blood, talie po 30 kart), budowana przez 6-osobowy zespół w procesie **Spec-Driven Development (SDD)**.
 
-## 3. Najważniejsze zakazy (pełna lista w konstytucji)
-
-| Nie wolno | Dlaczego |
-|---|---|
-| `System.Random`, `DateTime.Now`, IO w `Rejoltance.Kernel` | determinizm i replay (build zablokuje) |
-| wysyłać `MatchState` do klienta / liczyć legalności w UI | fog of war, jedno źródło legalności |
-| cichy fallback (`return []`, losowy cel, pusty `catch`) | błędy mają być widoczne |
-| zmieniać kontrakt C# bez TS w tym samym PR | rozjazd klient–serwer |
-| edytować `cards.json` ręcznie | źródłem jest `prototype/revibance/cards.js` |
-| push do `main`/`develop`, merge, czytanie `.env`/tokenów | decyduje człowiek, sekrety nie dla agentów |
-| osłabiać lub usuwać testy | test to specyfikacja |
-
-## 4. Przepływ pracy (spec‑driven)
-
-```text
-Jira REJ-123 ─► rj-start-feature ─► (≥3 SP) /opsx:propose ─► akceptacja człowieka ─► /opsx:apply
-            ─► testy R-nn + kod ─► rj-pr-ready ─► PR do develop ─► recenzja człowieka ─► /opsx:archive
-```
-
-Komendy OpenSpec: Claude/Gemini `/opsx:propose|apply|archive|explore`, Antigravity/Copilot `/opsx-propose…`, Codex `$openspec-propose…`.
-
-## 5. Role agentów (`.agents/agents/`)
-
-| Grupa | Rola | Do czego |
+| Warstwa | Katalog | Kluczowe niezmienniki architektoniczne |
 |---|---|---|
-| Organizacja | `rj-orchestrator` | prowadzi zadanie od Jiry do PR, deleguje, pilnuje bramek |
-| Organizacja | `rj-scrum-assistant` | backlog → CSV, daily, review/retro, estymaty vs czas |
-| Specjalizacja | `rj-architect` | projekt zmiany, kontrakty, ADR |
-| Specjalizacja | `rj-researcher` | jedno pytanie techniczne, źródła z datą |
-| Specjalizacja | `rj-rules-expert` | prototyp JS → reguły R‑nn ze scenariuszami |
-| Realizacja | `rj-backend-engineer` | C#: Kernel, Content, Server |
-| Realizacja | `rj-frontend-engineer` | React/TS w `src/web` |
-| Realizacja | `rj-docs-writer` | dokumentacja PL, Confluence |
-| Weryfikacja | `rj-reviewer` | recenzja P0–P3, werdykt (tylko odczyt) |
-| Weryfikacja | `rj-security-reviewer` | oszustwa, fog of war, auth, sekrety (tylko odczyt) |
-| Weryfikacja | `rj-test-verifier` | uruchamia testy, pokrycie R‑nn |
+| **Kontrakty (DTO)** | `src/Rejoltance.Contracts` ↔ `src/web/src/contracts` | 5 zamrożonych typów (`Intent`, `LegalAction`, `PendingInteraction`, `MatchView`, `DomainEvent`). Zmiana wymaga **ADR** i aktualizacji testów próbek JSON (`ContractSampleTests`). |
+| **Katalog kart** | `src/Rejoltance.Content` | Dane 69 kart w `cards.json` generowane z `prototype/revibance/cards.js` (`tools/content/extract_cards.py`). Brak logiki gry. |
+| **Silnik reguł (Kernel)** | `src/Rejoltance.Kernel` | Czysty C# (`.NET 10`), zero I/O, zero zegara systemowego, zero `System.Random`. Wyłącznie deterministyczny `SeededRng`. |
+| **Serwer autorytatywny** | `src/Rejoltance.Server` | ASP.NET Core + SignalR (`/hubs/match`). Waliduje intencje przez `Kernel.LegalActions` i rozsyła spersonalizowany `MatchView` (*Fog of War* — `R-66`). |
+| **Klient webowy** | `src/web` | React 19 + TypeScript 5 + Vite. Renderuje wyłącznie `MatchView` i wysyła `Intent`. Nie liczy obrażeń ani reguł gry. |
+| **Specyfikacje SDD** | `openspec/specs/` | Żywe specyfikacje 55 reguł domenowych `R-nn` oraz 22 wymagań jakościowych `NFR-nn`. |
+| **Dokumentacja 1:1 Confluence** | `docs/` | Zorganizowana wg taksonomii AltexSoft i cyklu SDD (`00-przewodnik-i-setup` .. `05-szablony`). |
 
-## 6. Skille zespołu (`.agents/skills/`)
+---
 
-| Skill | Kiedy |
-|---|---|
-| `rj-start-feature` | początek każdego zadania |
-| `rj-add-card` | nowa/zmieniona karta |
-| `rj-add-rule-test` | reguła gry → test `Rnn_…` |
-| `rj-write-adr` | decyzja trudna do odwrócenia |
-| `rj-pr-ready` | przed PR |
-| `rj-daily-report` · `rj-sprint-report` | ceremonie Scrum |
-| `rj-backlog-to-jira` | zmiany w backlogu |
-| `rj-add-skill` · `rj-add-agent` | rozbudowa tego systemu |
+## 2. Kolejność lektury przed rozpoczęciem zadania
 
-Reguły (`.agents/rules/`): `00-konstytucja` (zawsze), `10-prawda-i-niepewnosc` (zawsze), `20-plan-i-zakres`,
-`30-granice-architektury`, `40-jakosc-kodu`, `50-git-i-jira`.
+1. **Konstytucja i reguły strażnicze:** [`.agents/rules/00-konstytucja.md`](.agents/rules/00-konstytucja.md) oraz właściwa reguła tematyczna z `.agents/rules/10..70-*.md`.
+2. **Wymagania i architektura (AltexSoft Core):** [`PRD`](docs/01-dokumentacja-systemowa/01-prd-wymagania-produktu.md), [`SAD`](docs/01-dokumentacja-systemowa/05-sad-architektura-systemu.md) oraz [`Mapa kodu`](docs/01-dokumentacja-systemowa/08-mapa-kodu-i-modulow.md).
+3. **Specyfikacja domeny zadania:** `openspec/specs/<domena>/spec.md` oraz [`Indeks reguł R-nn`](docs/01-dokumentacja-systemowa/03-indeks-regul-r-nn.md).
+4. **Kod docelowego modułu i jego `README.md`:** `src/<moduł>/README.md`.
 
-## 7. Komendy
+> **Zasada ochrony okna kontekstowego:** Nie wczytuj naraz całego pliku `prototype/revibance/engine.js` (~3500 linii) ani pełnego `cards.json`. Wyszukuj konkretne funkcje przez `grep` lub korzystaj z wyekstrahowanych reguł w `openspec/specs/`.
+
+---
+
+## 3. Przepływ pracy Spec-Driven Development (SDD)
+
+1. **Zadanie w Jirze i gałąź:** każde zadanie ma klucz `REJ-123` i gałąź `feat/REJ-123-krotki-opis` od `develop` (skill: `rj-start-feature`).
+2. **Specyfikacja przed kodem:**
+   - Zadanie `≥ 3 SP`, nowa reguła `R-nn` lub zmiana kontraktu → propozycja zmiany w `openspec/changes/rej-123-opis/` (`/opsx:propose`) i akceptacja człowieka przed implementacją.
+   - Zadanie `< 3 SP` z istniejącą specyfikacją → sprawdzenie scenariuszy `GIVEN/WHEN/THEN` w `openspec/specs/`.
+3. **Test przed lub równolegle z kodem:** każda reguła `R-nn` posiada test nazwany `Rnn_<zachowanie>` (skill: `rj-add-rule-test`).
+4. **Weryfikacja przed commitem:**
 
 ```bash
-dotnet build Rejoltance.slnx
-dotnet test Rejoltance.slnx --filter "Category!=Integration"   # szybkie testy
-npm --prefix src/web test                                       # testy klienta
-npm run check                                                   # OpenSpec + markdownlint
-python tools/agents/sync_agents.py --check                      # spójność adapterów agentów
-python tools/content/extract_cards.py --check                   # karty zgodne z prototypem
+dotnet build -warnaserror
+dotnet test
+npm run check
+python tools/agents/sync_agents.py --check
+python tools/backlog/gen_jira_csv.py --check
 ```
 
-## 8. Raport po pracy
+---
 
-Co zmieniłeś (ścieżki) · jakie komendy uruchomiłeś i z jakim wynikiem · czego nie sprawdziłeś · jakie decyzje czekają na człowieka.
-Twierdzenia oznaczaj [V] / [Z] / [?].
+## 4. Katalog 10 agentów AI i ich wbudowanych umiejętności
+
+Kanon konfiguracji znajduje się w `.agents/` i jest synchronizowany skryptem `python tools/agents/sync_agents.py` do `.claude/`, `.github/`, `.gemini/` oraz `.codex/`.
+
+| Grupa tematyczna | Agent (`.agents/agents/`) | Rola | Wbudowane skille (`.agents/skills/`) |
+|---|---|---|---|
+| **A. Orkiestracja i SDD** | `rj-orchestrator` | Główny koordynator SDD: dobiera agentów, pilnuje bramek specyfikacji | `rj-start-feature`, `rj-spec-guardian`, `rj-pr-ready`, `rj-add-agent`, `rj-add-skill` |
+| **A. Orkiestracja i SDD** | `rj-spec-analyst` | Analityk wymagań PRD, reguł `R-nn` i specyfikacji OpenSpec | `rj-spec-guardian`, `rj-start-feature`, `rj-oracle-diff` |
+| **A. Orkiestracja i SDD** | `rj-architect` | Strażnik SAD, granic warstw, 5 kontraktów i decyzji ADR | `rj-write-adr`, `rj-spec-guardian`, `rj-pr-ready` |
+| **B. Inżynieria Domeny** | `rj-rules-engineer` | Inżynier czystego silnika `Rejoltance.Kernel` (C#, determinizm) | `rj-add-rule-test`, `rj-oracle-diff`, `rj-pr-ready` |
+| **B. Inżynieria Domeny** | `rj-card-author` | Twórca kart i efektów DSL w `Rejoltance.Content` | `rj-add-card`, `rj-add-rule-test`, `rj-oracle-diff` |
+| **C. Inżynieria Aplikacji** | `rj-backend-engineer` | Inżynier `Rejoltance.Server` (SignalR, autoryzacja, Fog of War, baza) | `rj-pr-ready`, `rj-add-rule-test`, `rj-start-feature` |
+| **C. Inżynieria Aplikacji** | `rj-frontend-engineer` | Inżynier klienta `src/web` (React/TS, widok stołu, animacje) | `rj-pr-ready`, `rj-start-feature` |
+| **D. Jakość i Dokumentacja** | `rj-qa-verifier` | Niezależny audytor QA, testów `R-nn`, wyroczni i NFR | `rj-pr-ready`, `rj-oracle-diff`, `rj-add-rule-test`, `rj-spec-guardian` |
+| **D. Jakość i Dokumentacja** | `rj-scrum-jira` | Asystent procesu Scrum, Product Backlogu (`backlog.toml`) i Jiry | `rj-backlog-to-jira`, `rj-daily-report`, `rj-sprint-report`, `rj-start-feature`, `rj-sync-confluence` |
+| **D. Jakość i Dokumentacja** | `rj-docs-writer` | Redaktor dokumentacji technicznej (AltexSoft + Confluence 1:1) | `rj-sync-confluence`, `rj-write-adr`, `rj-spec-guardian` |
+
+---
+
+## 5. Granice autonomii agenta AI
+
+- **Zawsze pytaj człowieka przed:** zmianą 5 zamrożonych kontraktów, modyfikacją reguły ze statusem `❓` w [`04-rozbieznosci-prototypu.md`](docs/01-dokumentacja-systemowa/04-rozbieznosci-prototypu.md), dodaniem nowej zależności NuGet/npm, usunięciem testu lub operacją `git push` / `git reset`.
+- **Nigdy nie zgaduj po cichu:** jeśli wymaganie jest niejednoznaczne, wskaż brak i zaproponuj warianty wraz z ich konsekwencjami.

@@ -26,7 +26,7 @@ npm --prefix src/web test → 5 passed -->
 
 - [ ] gałąź `typ/REJ-___-opis`, commity `REJ-___: …`
 - [ ] testy dodane/zmienione, CI zielone
-- [ ] `docs/02-rules/RULES-INDEX.md` zaktualizowany (jeśli zmieniła się gra)
+- [ ] `docs/01-dokumentacja-systemowa/03-indeks-regul-r-nn.md` zaktualizowany (jeśli zmieniła się gra)
 - [ ] README modułu / dokumentacja aktualna
 - [ ] czas zalogowany w Jirze (Log Work)
 - [ ] pracował agent AI? → opisz, który i w czym; kod przejrzał człowiek
