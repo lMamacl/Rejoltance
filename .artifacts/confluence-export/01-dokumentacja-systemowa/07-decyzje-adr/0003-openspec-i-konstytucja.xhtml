@@ -1,7 +1,7 @@
-<ac:structured-macro ac:name="info"><ac:rich-text-body><p><strong>Synchronizacja 1:1 z repozytorium Git:</strong> <code>docs/01-dokumentacja-systemowa/07-decyzje-adr/0003-openspec-i-konstytucja.md</code> (commit <code>10829d3</code>, data eksportu: <code>2026-11-02</code>)</p></ac:rich-text-body></ac:structured-macro>
+<ac:structured-macro ac:name="info"><ac:rich-text-body><p><strong>Synchronizacja 1:1 z repozytorium Git:</strong> <code>docs/01-dokumentacja-systemowa/07-decyzje-adr/0003-openspec-i-konstytucja.md</code> (commit <code>a2bf2a4</code>, data eksportu: <code>2026-11-02</code>)</p></ac:rich-text-body></ac:structured-macro>
 <ul><li><strong>Status:</strong> zatwierdzona (2026-10-27, akceptacja Fazy 1)</li><li><strong>Data:</strong> 2026-10-27</li><li><strong>Powiązane:</strong> <strong><code>03-dokumentacja-procesowa/04-badania-i-analizy/faza-1-porownanie.md</code></strong> (<code>../../03-dokumentacja-procesowa/04-badania-i-analizy/faza-1-porownanie.md</code>), <code>.agents/rules/00-konstytucja.md</code>, <code>openspec/config.yaml</code></li></ul>
 <h2>Kontekst i problem</h2>
-<p>Zespół pracuje z kilkoma narzędziami AI naraz (Claude Code, Antigravity, Codex, Copilot, Gemini). Potrzebny jest jeden proces „specyfikacja → plan → zadania → kod”, który działa we wszystkich narzędziach, oraz trwałe zasady dla agentów.</p>
+<p>Zespół używa naraz kilku narzędzi AI (Claude Code, Antigravity, Codex, Copilot, Gemini). Potrzebujemy jednego procesu „specyfikacja → plan → zadania → kod”, który działa we wszystkich tych narzędziach. Potrzebujemy też trwałych zasad dla agentów.</p>
 <h2>Rozważane opcje</h2>
 <table><thead><tr>
 <th><p>Opcja</p></th>
@@ -11,13 +11,13 @@
 </tr></thead><tbody>
 <tr>
 <td><p>Spec Kit 1.2.4</p></td>
-<td><p>konstytucja i bramki jakości wbudowane, dojrzały</p></td>
+<td><p>wbudowana konstytucja i bramki jakości, dojrzały</p></td>
 <td><p><code>agy</code> i <code>copilot</code> nie są <em>multi‑install safe</em> (tylko <code>--force</code>, status ERROR); ~9,7 tys. linii szablonów</p></td>
 <td><p>55/80 pkt w teście</p></td>
 </tr>
 <tr>
 <td><p><strong>OpenSpec 1.15</strong></p></td>
-<td><p>5 narzędzi jednym poleceniem, <code>--language pl</code>, <code>validate</code> w CI, żywe specyfikacje</p></td>
+<td><p>5 narzędzi jednym poleceniem, <code>--language pl</code>, <code>validate</code> w CI (ciągłej integracji), żywe specyfikacje</p></td>
 <td><p>brak wbudowanej konstytucji; telemetria domyślnie włączona</p></td>
 <td><p>69/80 pkt</p></td>
 </tr>
@@ -32,6 +32,6 @@
 <p>W kontekście wielu narzędzi AI w jednym zespole, mierząc się z ryzykiem rozjazdu procesu, wybieramy **OpenSpec (przypięty w <code>package.json</code>) z własną konstytucją** w <code>.agents/rules/00-konstytucja.md</code> (wskazaną w <code>openspec/config.yaml</code>) zamiast Spec Kit, aby mieć czystą instalację we wszystkich narzędziach, walidację w CI i żywą specyfikację reguł gry, akceptując brak wbudowanych bramek (zastępują je reguły i agenci weryfikujący).</p>
 <h2>Konsekwencje</h2>
 <h3>Pozytywne</h3>
-<ul><li>Reguły gry żyją w <code>openspec/specs/</code> (55 wymagań, walidowane <code>--strict</code> w CI).</li><li>Ficzer ≥ 3 SP przechodzi przez <code>/opsx:propose</code> → akceptacja → <code>/opsx:apply</code> → <code>/opsx:archive</code>.</li></ul>
+<ul><li>Reguły gry żyją w <code>openspec/specs/</code> (55 wymagań, walidowanych w CI z flagą <code>--strict</code>).</li><li>Funkcja warta ≥ 3 SP (story points) przechodzi przez <code>/opsx:propose</code> → akceptacja → <code>/opsx:apply</code> → <code>/opsx:archive</code>.</li></ul>
 <h3>Negatywne / ryzyka</h3>
-<ul><li><code>OPENSPEC_TELEMETRY=0</code> trzeba ustawiać (jest w <code>.env.example</code>, CI, <code>.claude/settings.json</code>).</li><li>Aktualizacja OpenSpec = PR z <code>openspec update</code> i przeglądem zmian w skillach.</li></ul>
+<ul><li>Trzeba ustawiać <code>OPENSPEC_TELEMETRY=0</code>. Zmienna jest już w <code>.env.example</code>, w CI i w <code>.claude/settings.json</code>.</li><li>Aktualizacja OpenSpec wymaga PR (pull requesta) z <code>openspec update</code> i przeglądu zmian w skillach.</li></ul>

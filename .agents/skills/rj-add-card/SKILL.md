@@ -29,6 +29,6 @@ Uruchamiaj przy przenoszeniu karty z prototypu JS do silnika C# (np. kart z tali
 3. **Zaimplementuj brakujące handlery efektów (jeśli wymagane):**
    - Nowe handlery dodawaj jako czyste, deterministyczne funkcje korzystające z `SeededRng` i emitujące odpowiednie `DomainEvent`.
 
-4. **Dodaj test scenariusza karty w `tests/Rejoltance.Cards.Tests`:**
+4. **Dodaj test scenariusza karty w `tests/Rejoltance.Kernel.Tests` (docelowo planowany `tests/Rejoltance.Cards.Tests`):**
    - Napisz test sprawdzający: koszt Blood, legalne cele (`LegalActions` / `PendingInteraction`), główny efekt karty oraz przypadek brzegowy (np. brak legalnego celu → `noop` wg `R-62`).
    - Uruchom `dotnet test` i upewnij się, że wszystkie testy przechodzą na zielono.

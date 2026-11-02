@@ -1,6 +1,7 @@
-<ac:structured-macro ac:name="info"><ac:rich-text-body><p><strong>Synchronizacja 1:1 z repozytorium Git:</strong> <code>docs/01-dokumentacja-systemowa/08-mapa-kodu-i-modulow.md</code> (commit <code>10829d3</code>, data eksportu: <code>2026-11-02</code>)</p></ac:rich-text-body></ac:structured-macro>
-<blockquote><p><strong>Źródło prawdy:</strong> repozytorium (<code>docs/01-dokumentacja-systemowa/08-mapa-kodu-i-modulow.md</code>) · <strong>Kategoria dokumentacji:</strong> Dokumentacja produktowa — systemowa (Dokumentacja kodu źródłowego) · <strong>Etap SDD:</strong> Realizacja</p></blockquote>
-<p>Dokument stanowi praktyczny przewodnik nawigacyjny po kodzie źródłowym projektu <strong>RE:JOLTANCE</strong> dla członków zespołu oraz agentów AI. Przed rozpoczęciem modyfikacji dowolnego modułu przeczytaj niniejszą mapę oraz plik <code>README.md</code> znajdujący się bezpośrednio w katalogu danego modułu (<code>src/&lt;moduł&gt;/README.md</code>).</p>
+<ac:structured-macro ac:name="info"><ac:rich-text-body><p><strong>Synchronizacja 1:1 z repozytorium Git:</strong> <code>docs/01-dokumentacja-systemowa/08-mapa-kodu-i-modulow.md</code> (commit <code>a2bf2a4</code>, data eksportu: <code>2026-11-02</code>)</p></ac:rich-text-body></ac:structured-macro>
+<blockquote><p><strong>Źródło prawdy:</strong> repozytorium (<code>docs/01-dokumentacja-systemowa/08-mapa-kodu-i-modulow.md</code>) · <strong>Kategoria dokumentacji:</strong> Dokumentacja produktowa — systemowa (dokumentacja kodu źródłowego) · <strong>Etap SDD:</strong> Realizacja</p></blockquote>
+<p>Ta mapa pomaga ci poruszać się po kodzie RE:JOLTANCE. Jest dla członków zespołu i dla agentów AI. Zanim zmienisz jakiś moduł, przeczytaj tę mapę i plik <code>README.md</code> w katalogu modułu (<code>src/&lt;moduł&gt;/README.md</code>).</p>
+<p>SDD (Spec-Driven Development) to nasz sposób pracy: najpierw specyfikacja, potem kod. Ta strona należy do etapu <em>Realizacja</em>.</p>
 <hr />
 <h2>1. Architektura warstwowa i kierunek zależności</h2>
 <ac:structured-macro ac:name="code"><ac:parameter ac:name="language">none</ac:parameter><ac:plain-text-body><![CDATA[┌──────────────────────────────────────────────────────────────────────┐
@@ -24,7 +25,7 @@
 │ Intent, LegalAction, PendingInteraction, MatchView, DomainEvent      │    (Zero logiki biznesowej)
 └──────────────────────────────────────────────────────────────────────┘
   Orkiestracja: Rejoltance.AppHost (.NET Aspire) + Rejoltance.ServiceDefaults (OpenTelemetry, Health)]]></ac:plain-text-body></ac:structured-macro>
-<blockquote><p><strong>Żelazna reguła zależności:</strong> Zależności między projektami prowadzą wyłącznie <strong>z góry na dół</strong>. Projekt położony niżej nigdy nie może odwoływać się do projektu położonego wyżej. Zasada ta jest automatycznie sprawdzana przy każdym uruchomieniu <code>dotnet test</code> przez zestaw testów <code>tests/Rejoltance.Architecture.Tests/BoundaryTests.cs</code>.</p></blockquote>
+<blockquote><p><strong>Reguła zależności:</strong> zależności między projektami prowadzą tylko <strong>z góry na dół</strong>. Projekt niżej nigdy nie odwołuje się do projektu wyżej. Sprawdzają to testy <code>tests/Rejoltance.Architecture.Tests/BoundaryTests.cs</code> przy każdym <code>dotnet test</code>.</p></blockquote>
 <hr />
 <h2>2. Katalog modułów w <code>src/</code> oraz <code>tests/</code></h2>
 <table><thead><tr>
@@ -35,31 +36,31 @@
 </tr></thead><tbody>
 <tr>
 <td><p><strong><code>src/Rejoltance.Contracts/</code></strong> (<code>../../src/Rejoltance.Contracts/README.md</code>)</p></td>
-<td><p>Definicje 5 kontraktów komunikacyjnych (DTO) wymienianych między serwerem, klientem i botem.</p></td>
+<td><p>5 kontraktów komunikacyjnych (DTO, Data Transfer Object — obiekt przenoszący dane), którymi wymieniają się serwer, klient i bot.</p></td>
 <td><p><code>Intents.cs</code>, <code>MatchView.cs</code>, <code>Events.cs</code></p></td>
 <td><p>Wspólny (Backend + Frontend)</p></td>
 </tr>
 <tr>
 <td><p><strong><code>src/Rejoltance.Content/</code></strong> (<code>../../src/Rejoltance.Content/README.md</code>)</p></td>
-<td><p>Wbudowany katalog 78 kart i 5 talii startowych oraz walidator słownika DSL.</p></td>
+<td><p>Wbudowany katalog 78 kart i 5 talii startowych. Walidator słownika DSL (Domain-Specific Language — nasz język opisu efektów kart).</p></td>
 <td><p><code>CardCatalog.cs</code>, <code>CardDefinition.cs</code>, <code>Vocabulary.cs</code>, <code>ContentValidator.cs</code>, <code>Data/cards.json</code></p></td>
 <td><p>Właściciel Epiku E2</p></td>
 </tr>
 <tr>
 <td><p><strong><code>src/Rejoltance.Kernel/</code></strong> (<code>../../src/Rejoltance.Kernel/README.md</code>)</p></td>
-<td><p>Czysty, deterministyczny silnik reguł gry, projekcja <em>Fog of War</em> oraz generator losowy oparty na ziarnie.</p></td>
+<td><p>Czysty, deterministyczny silnik reguł gry. Projekcja <em>Fog of War</em> (ukrywanie informacji przed przeciwnikiem, R-80…R-82). Generator losowy oparty na ziarnie.</p></td>
 <td><p><code>MatchEngine.cs</code>, <code>MatchState.cs</code>, <code>Projection.cs</code>, <code>SeededRng.cs</code>, <code>BannedSymbols.txt</code></p></td>
 <td><p>Właściciel Epiku E1</p></td>
 </tr>
 <tr>
 <td><p><strong><code>src/Rejoltance.Server/</code></strong> (<code>../../src/Rejoltance.Server/README.md</code>)</p></td>
-<td><p>Autorytatywny serwer HTTP/SignalR, menedżer aktywnych sesji meczowych w pamięci oraz baza EF Core.</p></td>
+<td><p>Autorytatywny serwer HTTP/SignalR. Menedżer trwających meczów w pamięci. Baza EF Core.</p></td>
 <td><p><code>Program.cs</code>, <code>Matches/MatchHub.cs</code>, <code>Matches/MatchSessionManager.cs</code>, <code>Data/RejoltanceDb.cs</code></p></td>
 <td><p>Właściciele Epików E3 i E6</p></td>
 </tr>
 <tr>
 <td><p><strong><code>src/Rejoltance.AppHost/</code></strong> (<code>../../src/Rejoltance.AppHost/README.md</code>)</p></td>
-<td><p>Projekt orkiestratora .NET Aspire uruchamiający serwer i klienta webowego jednym poleceniem.</p></td>
+<td><p>Orkiestrator .NET Aspire. Uruchamia serwer i klienta webowego jednym poleceniem.</p></td>
 <td><p><code>AppHost.cs</code></p></td>
 <td><p>Właściciel Epiku E6</p></td>
 </tr>
@@ -77,40 +78,41 @@
 </tr>
 <tr>
 <td><p><strong><code>tests/</code></strong> (<code>../../tests/README.md</code>)</p></td>
-<td><p>Zestawy testów jednostkowych, architektonicznych, serwerowych i integracyjnych xUnit.</p></td>
+<td><p>Testy xUnit: jednostkowe, architektoniczne, serwerowe i integracyjne. Projekt <code>Rejoltance.Cards.Tests</code> jest planowany, jeszcze nie istnieje.</p></td>
 <td><p><code>Rejoltance.Kernel.Tests</code>, <code>Rejoltance.Architecture.Tests</code>, <code>Rejoltance.Server.Tests</code>, <code>Rejoltance.AppHost.Tests</code></p></td>
 <td><p>Cały zespół (EU6)</p></td>
 </tr>
 </tbody></table>
 <hr />
-<h2>3. Przewodnik praktyczny: „Gdzie dodać nową funkcjonalność?”</h2>
+<h2>3. Przewodnik praktyczny: „Gdzie dodać nową funkcję?”</h2>
+<p>Tabela podpowiada, które pliki zmienić w typowych zadaniach. Ostatnia kolumna wskazuje skill agenta AI, który prowadzi przez dane zadanie. Kartami zajmuje się agent <code>rj-card-author</code>, a regułami w Kernelu — <code>rj-rules-engineer</code>.</p>
 <table><thead><tr>
-<th><p>Co chcesz zrealizować?</p></th>
-<th><p>Które pliki należy zmodyfikować?</p></th>
-<th><p>Poziom ryzyka</p></th>
+<th><p>Co chcesz zrobić?</p></th>
+<th><p>Które pliki zmienić?</p></th>
+<th><p>Ryzyko</p></th>
 <th><p>Zalecany skill agenta AI</p></th>
 </tr></thead><tbody>
 <tr>
-<td><p><strong>Dodać nową kartę lub zmienić statystyki istniejącej karty</strong> (przy użyciu istniejących słów DSL)</p></td>
+<td><p><strong>Dodać nową kartę lub zmienić statystyki istniejącej</strong> (z istniejących słów DSL)</p></td>
 <td><p>1. Zmodyfikuj <code>prototype/revibance/cards.js</code><br />2. Uruchom <code>python tools/content/extract_cards.py</code><br />3. Uruchom testy <code>ContentTests</code></p></td>
 <td><p>Niski</p></td>
 <td><p><strong><code>rj-add-card</code></strong> (<code>../04-system-agentow-ai/02-katalog-rol-i-wbudowanych-skilli.md</code>)</p></td>
 </tr>
 <tr>
-<td><p><strong>Dodać nowe słowo kluczowe, wyzwalacz lub akcję do języka DSL kart</strong></p></td>
+<td><p><strong>Dodać do DSL nowe słowo kluczowe, wyzwalacz lub akcję</strong></p></td>
 <td><p>1. Dopisz regułę <code>R-nn</code> w <code>openspec/specs/</code><br />2. Dodaj słowo do <code>src/Rejoltance.Content/Vocabulary.cs</code><br />3. Zaimplementuj obsługę w <code>Rejoltance.Kernel</code><br />4. Napisz test <code>Rnn_...</code> w <code>Rejoltance.Kernel.Tests</code></p></td>
 <td><p>Średni</p></td>
 <td><p><strong><code>rj-add-rule-test</code></strong> (<code>../04-system-agentow-ai/02-katalog-rol-i-wbudowanych-skilli.md</code>)</p></td>
 </tr>
 <tr>
 <td><p><strong>Zaimplementować lub zmienić regułę mechaniki gry (<code>R-nn</code>)</strong></p></td>
-<td><p>1. Napisz test jednostkowy <code>Rnn_...</code> w <code>tests/Rejoltance.Kernel.Tests/</code><br />2. Zaimplementuj logikę w <code>src/Rejoltance.Kernel/MatchEngine.cs</code> (lub wydzielonej klasie pomocniczej w Kernelu)<br />3. Zaktualizuj status w <code>03-indeks-regul-r-nn.md</code></p></td>
+<td><p>1. Napisz test jednostkowy <code>Rnn_...</code> w <code>tests/Rejoltance.Kernel.Tests/</code><br />2. Zaimplementuj logikę w <code>src/Rejoltance.Kernel/MatchEngine.cs</code> (albo w osobnej klasie pomocniczej w Kernelu)<br />3. Zaktualizuj status w <code>03-indeks-regul-r-nn.md</code></p></td>
 <td><p>Średni</p></td>
 <td><p><strong><code>rj-add-rule-test</code></strong> (<code>../04-system-agentow-ai/02-katalog-rol-i-wbudowanych-skilli.md</code>)</p></td>
 </tr>
 <tr>
-<td><p><strong>Zmodyfikować strukturę widoku <code>MatchView</code>, intencji <code>Intent</code> lub zdarzenia <code>DomainEvent</code></strong></p></td>
-<td><p>1. Utwórz decyzję ADR (<code>07-decyzje-adr/</code>)<br />2. Zmień rekord w <code>src/Rejoltance.Contracts/</code> oraz <code>Projection.cs</code><br />3. Zaktualizuj typ w <code>src/web/src/contracts/index.ts</code><br />4. Odśwież próbkę <code>UPDATE_CONTRACT_SAMPLES=1 dotnet test</code> — <strong>wszystko w jednym PR!</strong></p></td>
+<td><p><strong>Zmienić strukturę <code>MatchView</code>, <code>Intent</code> lub <code>DomainEvent</code></strong></p></td>
+<td><p>1. Zapisz decyzję w ADR (Architecture Decision Record, <code>07-decyzje-adr/</code>)<br />2. Zmień rekord w <code>src/Rejoltance.Contracts/</code> oraz <code>Projection.cs</code><br />3. Zaktualizuj typ w <code>src/web/src/contracts/index.ts</code><br />4. Odśwież próbkę <code>UPDATE_CONTRACT_SAMPLES=1 dotnet test</code> — <strong>wszystko w jednym PR!</strong></p></td>
 <td><p><strong>Wysoki</strong> <em>(zmiana zamrożonego kontraktu)</em></p></td>
 <td><p><strong><code>rj-write-adr</code></strong> (<code>../04-system-agentow-ai/02-katalog-rol-i-wbudowanych-skilli.md</code>)</p></td>
 </tr>
@@ -121,7 +123,7 @@
 <td><p>—</p></td>
 </tr>
 <tr>
-<td><p><strong>Dodać lub rozbudować komponent interfejsu użytkownika</strong></p></td>
+<td><p><strong>Dodać lub rozbudować komponent UI</strong></p></td>
 <td><p>1. Napisz test komponentu w <code>src/web/src/**/*.test.tsx</code> (na sztucznym transporcie)<br />2. Zaimplementuj komponent w <code>src/web/src/components/</code></p></td>
 <td><p>Niski</p></td>
 <td><p>—</p></td>
@@ -134,31 +136,31 @@
 </tr>
 </tbody></table>
 <hr />
-<h2>4. Aktualny stan implementacji modułów (Stan po Sprincie 0)</h2>
+<h2>4. Aktualny stan implementacji (po Sprincie 0)</h2>
 <table><thead><tr>
-<th><p>Obszar funkcjonalny</p></th>
-<th><p>Status implementacji w kodzie</p></th>
-<th><p>Pokrycie testami automatycznymi</p></th>
+<th><p>Obszar</p></th>
+<th><p>Stan w kodzie</p></th>
+<th><p>Testy automatyczne</p></th>
 </tr></thead><tbody>
 <tr>
 <td><p><strong>Start meczu, tasowanie z seeda, dobieranie, mulligan, obrażenia Fatigue, limit ręki (8 kart), poddanie się, projekcja Fog of War</strong></p></td>
 <td><p><strong>Zaimplementowane w <code>Rejoltance.Kernel</code></strong></p></td>
-<td><p>Zweryfikowane testami jednostkowymi (<code>R-01</code>, <code>R-02</code>, <code>R-03</code>, <code>R-10</code>, <code>R-13</code>, <code>R-14</code>, <code>R-68</code>, <code>R-70</code>, <code>R-72</code>, <code>R-80</code>, <code>R-83</code>, <code>R-84</code>).</p></td>
+<td><p>Testy jednostkowe (<code>R-01</code>, <code>R-02</code>, <code>R-03</code>, <code>R-10</code>, <code>R-13</code>, <code>R-14</code>, <code>R-68</code>, <code>R-70</code>, <code>R-72</code>, <code>R-80</code>, <code>R-83</code>, <code>R-84</code>).</p></td>
 </tr>
 <tr>
 <td><p><strong>Walidacja katalogu 78 kart i 5 talii startowych względem słownika DSL</strong></p></td>
 <td><p><strong>Zaimplementowane w <code>Rejoltance.Content</code></strong></p></td>
-<td><p>Zweryfikowane w <code>ContentTests.cs</code>.</p></td>
+<td><p><code>ContentTests.cs</code>.</p></td>
 </tr>
 <tr>
 <td><p><strong>Tryb piaskownicy w przeglądarce przez SignalR (<code>StartSandbox</code>, <code>SendIntent</code>)</strong></p></td>
 <td><p><strong>Zaimplementowane w <code>Server</code> i <code>src/web</code></strong></p></td>
-<td><p>Zweryfikowane w <code>ServerTests.cs</code>, <code>AppHostSmokeTests.cs</code> oraz testach Vitest.</p></td>
+<td><p><code>ServerTests.cs</code>, <code>AppHostSmokeTests.cs</code> i testy Vitest.</p></td>
 </tr>
 <tr>
 <td><p><strong>Kroki rundy (<code>unitStep</code>, <code>mixedStep</code>, <code>actionStep</code>), zagrywanie jednostek, walka na 4 liniach, efekty kart DSL</strong></p></td>
-<td><p><strong>Zaplanowane w backlogu (<code>E1</code>, <code>E2</code>)</strong> — obecnie rzucają czytelny wyjątek <code>NotImplementedException</code>.</p></td>
-<td><p>Specyfikacje <code>GIVEN/WHEN/THEN</code> gotowe w <code>openspec/specs/</code>.</p></td>
+<td><p><strong>Zaplanowane w backlogu (<code>E1</code>, <code>E2</code>).</strong> Na razie rzucają czytelny wyjątek <code>NotImplementedException</code>.</p></td>
+<td><p>Specyfikacje <code>GIVEN/WHEN/THEN</code> są gotowe w <code>openspec/specs/</code>.</p></td>
 </tr>
 <tr>
 <td><p><strong>Pokoje 1v1 PvP, bot AI, konta użytkowników, Deckbuilder</strong></p></td>

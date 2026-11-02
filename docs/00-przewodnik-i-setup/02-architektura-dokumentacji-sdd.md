@@ -1,14 +1,25 @@
 # 0.2 Architektura dokumentacji pod Spec-Driven Development (SDD) i mapowanie Confluence
 
-> **Źródło prawdy:** repozytorium (`docs/00-przewodnik-i-setup/02-architektura-dokumentacji-sdd.md`) · **Kategoria dokumentacji:** Dokumentacja procesowa — Standardy i architektura dokumentacji · **Etap SDD:** Fundamenty i organizacja · **Powiązane decyzje:** [ADR-0003](../01-dokumentacja-systemowa/07-decyzje-adr/0003-openspec-i-konstytucja.md), [ADR-0011](../01-dokumentacja-systemowa/07-decyzje-adr/0011-dokumentacja-hybryda-repo-confluence.md)
+> **Źródło prawdy:** repozytorium (`docs/00-przewodnik-i-setup/02-architektura-dokumentacji-sdd.md`) · **Kategoria dokumentacji:** dokumentacja procesowa — standardy i architektura dokumentacji · **Etap SDD:** Fundamenty i organizacja · **Powiązane decyzje:** [ADR-0003](../01-dokumentacja-systemowa/07-decyzje-adr/0003-openspec-i-konstytucja.md), [ADR-0011](../01-dokumentacja-systemowa/07-decyzje-adr/0011-dokumentacja-hybryda-repo-confluence.md)
 
-Niniejszy dokument stanowi realizację zadania projektowego polegającego na zaprojektowaniu spójnej struktury dokumentacji w systemie **Atlassian Confluence** oraz w repozytorium Git pod dalsze prace z wykorzystaniem metodyki **Spec-Driven Development (SDD)**, z pełnym uwzględnieniem taksonomii dokumentacji technicznej opisanej w opracowaniu AltexSoft (*[Technical Documentation in Software Development: Types, Best Practices, and Tools](https://www.altexsoft.com/blog/technical-documentation-in-software-development-types-best-practices-and-tools/)*).
+Ten dokument realizuje Zadanie 01. Projektujemy w nim strukturę dokumentacji w **Atlassian Confluence** i w repozytorium Git. Struktura ma wspierać dalszą pracę metodą **Spec-Driven Development (SDD)**, czyli „najpierw specyfikacja, potem kod”.
+
+Opieramy się na klasyfikacji dokumentacji technicznej z artykułu AltexSoft: *[Technical Documentation in Software Development: Types, Best Practices, and Tools](https://www.altexsoft.com/blog/technical-documentation-in-software-development-types-best-practices-and-tools/)*.
+
+Skróty używane w tym dokumencie:
+
+- **PRD** (Product Requirements Document) — dokument wymagań produktu.
+- **SAD** (Software Architecture Document) — dokument architektury systemu.
+- **ADR** (Architecture Decision Record) — zapis pojedynczej decyzji architektonicznej.
+- **TDD** (Technical Design Document) — projekt techniczny konkretnej zmiany.
+- **NFR** (Non-Functional Requirement) — wymaganie niefunkcjonalne (jakościowe).
+- **PB** — Politechnika Białostocka. „Confluence PB” i „Jira PB” to instancje uczelniane.
 
 ---
 
-## 1. Założenia metodyki Spec-Driven Development (SDD) w projekcie RE:JOLTANCE
+## 1. Założenia SDD w projekcie RE:JOLTANCE
 
-W tradycyjnych projektach studenckich dokumentacja bywa tworzona post-factum („na zaliczenie”), przez co szybko traci aktualność i nie wspiera zespołu w podejmowaniu decyzji projektowych. W podejściu **Spec-Driven Development (SDD)** wspieranym przez agentów AI odwracamy tę zależność: **dokumentacja jest wykonywalnym kontraktem wyprzedzającym implementację**.
+W projektach studenckich dokumentację często pisze się na końcu, „na zaliczenie”. Taka dokumentacja szybko się dezaktualizuje i nie pomaga w decyzjach. W SDD, wspieranym przez agentów AI, odwracamy tę kolejność. **Dokumentacja to kontrakt, który powstaje przed implementacją i da się go sprawdzić.**
 
 ```mermaid
 flowchart LR
@@ -21,70 +32,70 @@ flowchart LR
   R -. "Feedback od Rady Graczy (Sprint Review)" .-> S
 ```
 
-### Pięć żelaznych zasad naszej dokumentacji
+### Pięć zasad naszej dokumentacji
 
-1. **Najpierw specyfikacja, potem kod:** Żadne zadanie zmieniające reguły gry, kontrakty komunikacyjne ani funkcjonalność o rozmiarze ≥ 3 Story Points nie może wejść w fazę kodowania bez zatwierdzonej specyfikacji (wymagania i scenariusze `GIVEN / WHEN / THEN`).
-2. **Układ 1:1 między repozytorium (`docs/`) a Confluence:** Struktura katalogów w `docs/` odpowiada dokładnie strukturze stron nadrzędnych i podstron w przestrzeni Confluence PB. Eliminuje to chaos organizacyjny i pozwala przenosić dokumentację z repozytorium do Confluence w sposób zautomatyzowany (`python tools/confluence/sync_confluence.py`).
-3. **Jednoznaczne źródło prawdy (Single Source of Truth):**
-   - **Repozytorium Git (`docs/` oraz `openspec/`)** jest źródłem prawdy dla całej dokumentacji sterującej wytwarzaniem oprogramowania (PRD, reguły gry, SAD, stos technologiczny, ADR, API, UX, strategia testów, konfiguracja agentów AI). Każda zmiana przechodzi przez Pull Request i walidację w CI (`npm run check`).
-   - **Confluence PB** zawiera pełne drzewo dokumentacji (w tym zsynchronizowane kopie dokumentów z repozytorium opatrzone nagłówkiem wersji) oraz jest natywnym miejscem edycji dla żywych protokołów i raportów tworzonych podczas spotkań (raporty z testów sprintu, protokoły Sprint Review, notatki z Daily Scrum).
-   - **Jira PB** służy do operacyjnego śledzenia zadań, rejestrowania czasu pracy (*Log Work*) i generowania wykresów spalania (*Burndown Chart*).
-4. **Pełna śledzalność (Traceability End-to-End):** Każde wymaganie analityczne posiada unikalny identyfikator (`R-01..R-84` dla reguł funkcjonalnych gry, `NFR-01..NFR-70` dla wymagań jakościowych ISO/IEC 25010), który łączy dokument **PRD** → specyfikację **OpenSpec** → zadanie w **Jirze (`REJ-123`)** → automatyczny test jednostkowy/integracyjny (`R14_...`) → raport testowy w **Confluence**.
-5. **Język przyjazny ludziom i precyzyjny dla agentów AI:** Dokumenty piszemy czystą, profesjonalną polszczyzną inżynierską, unikając żargonu skrótowego, a wymagania behawioralne formułujemy w ustrukturyzowanym formacie scenariuszowym (`GIVEN / WHEN / THEN`), który jest jednocześnie czytelny dla człowieka i jednoznacznie interpretowalny przez modele językowe.
+1. **Najpierw specyfikacja, potem kod.** Niektóre zadania wymagają zatwierdzonej specyfikacji przed kodowaniem. Dotyczy to zmian reguł gry, zmian kontraktów komunikacyjnych i funkcjonalności o rozmiarze ≥ 3 Story Points (SP, punkty oszacowania). Specyfikacja zawiera wymagania i scenariusze `GIVEN / WHEN / THEN`.
+2. **Układ 1:1 między `docs/` a Confluence.** Katalogi w `docs/` odpowiadają stronom nadrzędnym i podstronom w przestrzeni Confluence PB. Wiadomo więc, gdzie co leży. Dokumentację przenosi do Confluence skrypt `python tools/confluence/sync_confluence.py`.
+3. **Jedno źródło prawdy dla każdego typu treści (Single Source of Truth):**
+   - **Repozytorium Git (`docs/` i `openspec/`)** to źródło prawdy dla dokumentacji, która steruje tworzeniem oprogramowania. Należą tu: PRD, reguły gry, SAD, stos technologiczny, ADR, API, UX, strategia testów i konfiguracja agentów AI. Każda zmiana przechodzi przez Pull Request i walidację w CI (`npm run check`).
+   - **Confluence PB** zawiera całe drzewo dokumentacji. Są tam kopie dokumentów z repozytorium z nagłówkiem wersji. Confluence to też miejsce edycji „żywych” protokołów i raportów ze spotkań: raportów z testów sprintu, protokołów Sprint Review i notatek z Daily Scrum.
+   - **Jira PB** służy do śledzenia zadań, rejestrowania czasu pracy (*Log Work*) i wykresów spalania (*Burndown Chart*).
+4. **Śledzalność od wymagania do testu (traceability).** Każde wymaganie ma unikalny identyfikator. Reguły gry mają numery `R-01..R-84`. Wymagania jakościowe według ISO/IEC 25010 mają numery `NFR-01..NFR-70`. Identyfikator łączy kolejne ogniwa: **PRD** → specyfikacja **OpenSpec** → zadanie w **Jirze (`REJ-123`)** → test automatyczny (`R14_...`) → raport testowy w **Confluence**.
+5. **Język zrozumiały dla ludzi i precyzyjny dla agentów AI.** Piszemy prostą polszczyzną techniczną i unikamy niewyjaśnionych skrótów. Wymagania dotyczące zachowania zapisujemy jako scenariusze `GIVEN / WHEN / THEN`. Człowiek łatwo je czyta, a model językowy interpretuje jednoznacznie.
 
 ---
 
-## 2. Analiza porównawcza dwóch wariantów organizacji dokumentacji
+## 2. Porównanie dwóch wariantów organizacji dokumentacji
 
-Podczas projektowania architektury dokumentacji dla projektu **RE:JOLTANCE** przeanalizowaliśmy dwa główne modele strukturyzacji drzewa w repozytorium i w Confluence:
+Rozważyliśmy dwa sposoby układania drzewa w repozytorium i w Confluence:
 
-- **Wariant A (Taksonomia AltexSoft z wbudowanym przepływem SDD):** Podział najwyższego poziomu według klasyfikacji typów dokumentacji technicznej z artykułu AltexSoft (*Product: System Documentation*, *Product: User Documentation*, *Process Documentation*), uzupełniony o dedykowany moduł *Inżynierii Agentowej* oraz *Bibliotekę Szablonów*, gdzie każdy dokument ma jawnie przypisany etap SDD.
-- **Wariant B (Chronologiczny układ według faz cyklu SDD):** Podział najwyższego poziomu według kolejnych kroków procesu SDD (*1. Fundamenty*, *2. Specyfikacja/Analiza*, *3. Plan/Architektura*, *4. Realizacja*, *5. Weryfikacja/Jakość*, *6. Wydania*, *7. Proces Scrum*).
+- **Wariant A — taksonomia AltexSoft z przepływem SDD.** Najwyższy poziom dzielimy według typów dokumentacji z artykułu AltexSoft: *Product: System Documentation*, *Product: User Documentation*, *Process Documentation*. Dodajemy moduł o pracy z agentami AI i bibliotekę szablonów. Każdy dokument ma jawnie przypisany etap SDD.
+- **Wariant B — układ chronologiczny według faz SDD.** Najwyższy poziom dzielimy według kroków procesu: *1. Fundamenty*, *2. Specyfikacja/Analiza*, *3. Plan/Architektura*, *4. Realizacja*, *5. Weryfikacja/Jakość*, *6. Wydania*, *7. Proces Scrum*.
 
-### Zestawienie porównawcze w kontekście naszego projektu
+### Zestawienie dla naszego projektu
 
-| Kryterium oceny (w kontekście projektu PB, 6 osób, SDD + AI) | Wariant A: Układ wg taksonomii AltexSoft + SDD *(Wybrany)* | Wariant B: Układ wg faz czasowych SDD *(Odrzucony po audycie)* |
+| Kryterium (projekt PB, 6 osób, SDD + AI) | Wariant A: taksonomia AltexSoft + SDD *(wybrany)* | Wariant B: fazy SDD *(odrzucony po audycie)* |
 |---|---|---|
-| **1. Zgodność z wymaganiami prowadzącego (Zadanie 01)** | **Bardzo wysoka (10/10).** Prowadzący wprost wymaga oparcia struktury o sekcję *"Types of technical documentation"* z artykułu AltexSoft, z **PRD** i **SAD** jako głównymi dokumentami oraz pozostałymi typami jako szablonami. W Wariancie A prowadzący po otwarciu Confluence lub `docs/` od razu widzi dokładnie tę klasyfikację. | **Średnia (6/10).** Dokumenty z klasyfikacji AltexSoft są rozproszone po 7 gałęziach procesowych. Aby sprawdzić, czy zespół uwzględnił wszystkie typy z artykułu, trzeba posługiwać się dodatkową tabelą mapującą. |
-| **2. Spójność tematyczna i brak rozproszenia (Ergonomia dla ludzi)** | **Bardzo wysoka (9/10).** Każdy artefakt ma jedno naturalne miejsce wynikające z tego, **czym jest** (np. cała dokumentacja systemowa w `01-dokumentacja-systemowa/`, wszystkie szablony w `05-szablony/`, cała wiedza o agentach w `04-system-agentow-ai/`). | **Niska (4/10).** Dokumentacja tej samej dziedziny ulega sztucznemu rozbiciu pomiędzy fazy czasu — np. UX trafia do trzech różnych miejsc (persony w fazie 2, mapa ekranów w fazie 3, testy użyteczności w fazie 5), a roadmapy do trzech innych. |
-| **3. Łatwość utrzymania przez 6-osobowy zespół studencki** | **Bardzo wysoka (9/10).** Sześć czytelnych katalogów nadrzędnych. Student odpowiedzialny za dany epik (EU1) lub dokumentację modułu (EU5) wie dokładnie, gdzie pracować, bez przekopywania się przez 35 drobnych podstron. | **Niska (5/10).** W poprzedniej iteracji repozytorium próba połączenia 12 katalogów roboczych z 7-etapowym drzewem Confluence doprowadziła do sytuacji, w której nikt nie wiedział, gdzie szukać plików. |
-| **4. Praca z agentami AI i narzędziami SDD (OpenSpec)** | **Bardzo wysoka (10/10).** Agenci mają stałe, deterministyczne ścieżki do wymagań (`01-dokumentacja-systemowa/`), reguł wykonywalnych (`openspec/specs/`) oraz własnych procedur (`04-system-agentow-ai/` i `.agents/`). | **Dobra (7/10).** Agenci radzą sobie ze ścieżkami, jeśli są one wpisane w regułach, ale ludzie sprawdzający pracę agentów gubią się w rozproszonych katalogach. |
-| **5. Synchronizacja Repo ↔ Confluence (1:1)** | **W pełni automatyczna (10/10).** Drzewo katalogów w `docs/` i drzewo stron w Confluence są identyczne 1:1. Jeden skrypt (`sync_confluence.py`) eksportuje i waliduje całą przestrzeń. | **Utrudniona (5/10).** Wymaga utrzymywania ręcznej tablicy przekierowań między strukturą plików w repozytorium a strukturą stron na wiki. |
+| **1. Zgodność z wymaganiami prowadzącego (Zadanie 01)** | **Bardzo wysoka (10/10).** Prowadzący wymaga struktury opartej na sekcji *"Types of technical documentation"* z artykułu AltexSoft. PRD i SAD mają być głównymi dokumentami, a pozostałe typy szablonami. W wariancie A prowadzący widzi tę klasyfikację od razu w Confluence i w `docs/`. | **Średnia (6/10).** Typy dokumentów z AltexSoft są rozrzucone po 7 gałęziach procesu. Żeby sprawdzić pokrycie wszystkich typów, potrzebna jest dodatkowa tabela mapująca. |
+| **2. Spójność tematyczna (wygoda dla ludzi)** | **Bardzo wysoka (9/10).** Każdy dokument ma jedno naturalne miejsce, wynikające z tego, czym jest. Dokumentacja systemowa leży w `01-dokumentacja-systemowa/`, szablony w `05-szablony/`, wiedza o agentach w `04-system-agentow-ai/`. | **Niska (4/10).** Jedna dziedzina rozpada się na kilka faz. Na przykład UX trafia w trzy miejsca: persony w fazie 2, mapa ekranów w fazie 3, testy użyteczności w fazie 5. Podobnie roadmapy. |
+| **3. Łatwość utrzymania przez 6-osobowy zespół** | **Bardzo wysoka (9/10).** Jest sześć czytelnych katalogów nadrzędnych. Osoba odpowiedzialna za epik (EU1) albo dokumentację modułu (EU5) wie, gdzie pracować. Nie musi przeszukiwać 35 drobnych podstron. | **Niska (5/10).** W poprzedniej wersji repozytorium łączyliśmy 12 katalogów roboczych z 7-etapowym drzewem Confluence. Nikt nie wiedział, gdzie szukać plików. |
+| **4. Praca z agentami AI i OpenSpec** | **Bardzo wysoka (10/10).** Agenci mają stałe ścieżki: wymagania w `01-dokumentacja-systemowa/`, reguły wykonywalne w `openspec/specs/`, własne procedury w `04-system-agentow-ai/` i `.agents/`. | **Dobra (7/10).** Agenci radzą sobie ze ścieżkami wpisanymi w reguły. Ludzie sprawdzający ich pracę gubią się jednak w rozproszonych katalogach. |
+| **5. Synchronizacja repozytorium ↔ Confluence (1:1)** | **Automatyczna (10/10).** Drzewo `docs/` i drzewo stron w Confluence są identyczne. Jeden skrypt (`sync_confluence.py`) eksportuje i waliduje całą przestrzeń. | **Utrudniona (5/10).** Trzeba ręcznie utrzymywać tabelę przekierowań między plikami w repozytorium a stronami w wiki. |
 
-**Wniosek architektoniczny:** Wybieramy **Wariant A (Układ 1:1 wg taksonomii AltexSoft zintegrowany z cyklem SDD)**. Jako strukturę folderów i drzewa Confluence przyjmujemy przejrzysty podział z artykułu AltexSoft, natomiast każdy dokument posiada w nagłówku i w tabeli nawigacyjnej **jawnie przypisaną fazę SDD** (`Constitution`, `Specify`, `Plan`, `Tasks`, `Implement`, `Verify`, `Release`). Daje to 100% zgodności z poleceniem prowadzącego przy zachowaniu pełnej dyscypliny procesu Spec-Driven Development.
+**Wniosek:** wybieramy **wariant A**, czyli układ 1:1 według taksonomii AltexSoft połączony z cyklem SDD. Foldery i drzewo Confluence dzielimy tak jak w artykule AltexSoft. Każdy dokument ma w nagłówku i w tabeli nawigacyjnej przypisaną fazę SDD (`Constitution`, `Specify`, `Plan`, `Tasks`, `Implement`, `Verify`, `Release`). Spełniamy w ten sposób w 100% polecenie prowadzącego i zachowujemy dyscyplinę procesu SDD.
 
 ---
 
-## 3. Pełne pokrycie typów dokumentacji wg AltexSoft w naszej strukturze
+## 3. Pokrycie typów dokumentacji według AltexSoft
 
-Poniższa tabela pokazuje, w jaki sposób każdy typ dokumentacji wymieniony w sekcji *"Types of technical documentation"* artykułu AltexSoft został odwzorowany w naszej architekturze (wraz z podziałem na **pełne opracowania dla PRD i SAD** oraz **szablony i specyfikacje dla pozostałych typów**):
+Tabela pokazuje, gdzie w naszej strukturze znajduje się każdy typ z sekcji *"Types of technical documentation"* artykułu AltexSoft. PRD i SAD mają pełne opracowania. Pozostałe typy mają szablony lub specyfikacje.
 
-| Kategoria AltexSoft | Typ dokumentacji (wg artykułu AltexSoft) | Status w projekcie RE:JOLTANCE | Ścieżka w repozytorium (`docs/`) / Miejsce w Confluence | Etap SDD |
+| Kategoria AltexSoft | Typ dokumentacji (wg AltexSoft) | Stan w RE:JOLTANCE | Ścieżka w `docs/` / miejsce w Confluence | Etap SDD |
 |---|---|---|---|---|
-| **Product: System** | **Product Requirements Document (PRD)** | **Pełny dokument analityczny** + szablon | [`01-dokumentacja-systemowa/01-prd-wymagania-produktu.md`](../01-dokumentacja-systemowa/01-prd-wymagania-produktu.md) (+ szablon [`05-szablony/szablon-prd.md`](../05-szablony/szablon-prd.md)) | `Specify` |
-| **Product: System** | **Functional & Non-Functional Requirements (SRS / Rules)** | **Pełna specyfikacja (55 reguł R‑nn + 19 NFR)** | [`01-dokumentacja-systemowa/02-specyfikacja-regul-gry.md`](../01-dokumentacja-systemowa/02-specyfikacja-regul-gry.md), [`03-indeks-regul-r-nn.md`](../01-dokumentacja-systemowa/03-indeks-regul-r-nn.md) oraz `openspec/specs/*` | `Specify` |
-| **Product: System** | **UX Design: Personas, Scenarios & Story Maps** | **Opracowane w PRD/DIP** + szablon | [`01-dokumentacja-systemowa/01-prd-wymagania-produktu.md`](../01-dokumentacja-systemowa/01-prd-wymagania-produktu.md) §3 + szablon [`05-szablony/szablon-ux-persona-scenariusz.md`](../05-szablony/szablon-ux-persona-scenariusz.md) | `Specify` |
-| **Product: System** | **UX Design: Site Map, User Flows, Wireframes, UI Style Guide, Prototype** | **Pełny dokument UX** + działający prototyp JS | [`01-dokumentacja-systemowa/10-ux-design-i-przeplywy.md`](../01-dokumentacja-systemowa/10-ux-design-i-przeplywy.md) oraz `prototype/revibance/` | `Plan` |
-| **Product: System** | **UX Design: Usability Testing Reports** | **Szablon gotowy do użycia na Sprint Review** | [`05-szablony/szablon-ux-test-uzytecznosci.md`](../05-szablony/szablon-ux-test-uzytecznosci.md) | `Verify` |
-| **Product: System** | **Software Architecture Document (SAD)** | **Pełny dokument architektoniczny (AltexSoft + arc42 + C4)** + szablon | [`01-dokumentacja-systemowa/05-sad-architektura-systemu.md`](../01-dokumentacja-systemowa/05-sad-architektura-systemu.md), [`06-stos-technologiczny.md`](../01-dokumentacja-systemowa/06-stos-technologiczny.md), [`07-decyzje-adr/`](../01-dokumentacja-systemowa/07-decyzje-adr/README.md) (+ szablon [`05-szablony/szablon-sad.md`](../05-szablony/szablon-sad.md)) | `Plan` |
-| **Product: System** | **Technical Design Document (TDD)** | **Szablon TDD** + zmiany `openspec/changes/*/design.md` | [`05-szablony/szablon-tdd.md`](../05-szablony/szablon-tdd.md) oraz `openspec/changes/<id>/design.md` | `Plan` / `Tasks` |
-| **Product: System** | **Source Code Documentation** | **Mapa modułów** + karty `src/*/README.md` + szablon | [`01-dokumentacja-systemowa/08-mapa-kodu-i-modulow.md`](../01-dokumentacja-systemowa/08-mapa-kodu-i-modulow.md), `src/*/README.md` (+ szablon [`05-szablony/szablon-karta-modulu.md`](../05-szablony/szablon-karta-modulu.md)) | `Implement` |
-| **Product: System** | **Quality Assurance (QA): Test Strategy, Test Plan, Test Cases, Checklists** | **Pełna Strategia Testów** + szablony planu i raportu QA | [`01-dokumentacja-systemowa/11-strategia-testow-qa.md`](../01-dokumentacja-systemowa/11-strategia-testow-qa.md) + szablony [`szablon-qa-plan-testow.md`](../05-szablony/szablon-qa-plan-testow.md), [`szablon-qa-raport-i-checklista.md`](../05-szablony/szablon-qa-raport-i-checklista.md) | `Verify` |
-| **Product: System** | **API Documentation** | **Pełna specyfikacja kontraktów REST i SignalR** | [`01-dokumentacja-systemowa/09-kontrakty-i-api.md`](../01-dokumentacja-systemowa/09-kontrakty-i-api.md) | `Plan` / `Implement` |
-| **Product: User** | **End-User Documentation (Quick Start, Manual, Troubleshooting, FAQ)** | **Podręcznik gracza** + szablon | [`02-dokumentacja-uzytkownika/01-podrecznik-gracza.md`](../02-dokumentacja-uzytkownika/01-podrecznik-gracza.md) (+ szablon [`05-szablony/szablon-podrecznik-gracza.md`](../05-szablony/szablon-podrecznik-gracza.md)) | `Release` |
-| **Product: User** | **System Administrator Documentation (Installation, Config, Security, Backup)** | **Instrukcja wdrożenia i utrzymania** + szablon | [`02-dokumentacja-uzytkownika/02-instrukcja-wdrozenia-i-utrzymania.md`](../02-dokumentacja-uzytkownika/02-instrukcja-wdrozenia-i-utrzymania.md) (+ szablon [`05-szablony/szablon-instrukcja-wdrozenia-admin.md`](../05-szablony/szablon-instrukcja-wdrozenia-admin.md)) | `Release` |
-| **Process** | **Agile Product Roadmaps (Strategic, Technology, Release Plan)** | **Opracowane w PRD, Stosie Technologicznym i Backlogu** | [`01-prd-wymagania-produktu.md`](../01-dokumentacja-systemowa/01-prd-wymagania-produktu.md) §2, [`06-stos-technologiczny.md`](../01-dokumentacja-systemowa/06-stos-technologiczny.md) §3, [`03-dokumentacja-procesowa/02-backlog/BACKLOG.md`](../03-dokumentacja-procesowa/02-backlog/BACKLOG.md) | `Constitution` / `Plan` |
-| **Process** | **Product & Sprint Backlogs** | **Pełny Backlog (TOML + CSV do Jiry)** | [`03-dokumentacja-procesowa/02-backlog/`](../03-dokumentacja-procesowa/02-backlog/README.md) | `Tasks` |
-| **Process** | **Standards (Coding, Testing, Git, AI Governance)** | **Pełny zestaw standardów i konstytucja** | [`00-przewodnik-i-setup/03-proces-pracy-i-git-scrum.md`](03-proces-pracy-i-git-scrum.md), [`04-system-agentow-ai/`](../04-system-agentow-ai/README.md), `.agents/rules/` | `Constitution` |
-| **Process** | **Plans, Estimates, Schedules & Project Charter (DIP)** | **Pełny Dokument Inicjujący Projekt (DIP)** | [`03-dokumentacja-procesowa/01-dip-dokument-inicjujacy.md`](../03-dokumentacja-procesowa/01-dip-dokument-inicjujacy.md) | `Constitution` / `Specify` |
-| **Process** | **Working Papers (Spikes, Technical Comparisons, Discrepancy Notes)** | **Pełne analizy techniczne i rozbieżności** | [`03-dokumentacja-procesowa/04-badania-i-analizy/`](../03-dokumentacja-procesowa/04-badania-i-analizy/README.md), [`01-dokumentacja-systemowa/04-rozbieznosci-prototypu.md`](../01-dokumentacja-systemowa/04-rozbieznosci-prototypu.md) | `Plan` |
-| **Process** | **Reports, Metrics (Burndown, Velocity), Release Checklists & Meeting Notes** | **Szablony Scrum, Release Notes i agenda spotkań** | [`03-dokumentacja-procesowa/03-scrum-i-spotkania/`](../03-dokumentacja-procesowa/03-scrum-i-spotkania/README.md), [`05-szablony/szablon-informacja-o-wydaniu.md`](../05-szablony/szablon-informacja-o-wydaniu.md) | `Verify` / `Release` |
+| **Product: System** | Product Requirements Document (PRD) | Pełny dokument analityczny + szablon | [`01-dokumentacja-systemowa/01-prd-wymagania-produktu.md`](../01-dokumentacja-systemowa/01-prd-wymagania-produktu.md) (+ szablon [`05-szablony/szablon-prd.md`](../05-szablony/szablon-prd.md)) | `Specify` |
+| **Product: System** | Functional & Non-Functional Requirements (SRS / Rules) | Pełna specyfikacja (55 reguł R‑nn + 18 NFR) | [`01-dokumentacja-systemowa/02-specyfikacja-regul-gry.md`](../01-dokumentacja-systemowa/02-specyfikacja-regul-gry.md), [`03-indeks-regul-r-nn.md`](../01-dokumentacja-systemowa/03-indeks-regul-r-nn.md) oraz `openspec/specs/*` | `Specify` |
+| **Product: System** | UX Design: Personas, Scenarios & Story Maps | Opisane w PRD i DIP + szablon | [`01-dokumentacja-systemowa/01-prd-wymagania-produktu.md`](../01-dokumentacja-systemowa/01-prd-wymagania-produktu.md) §3 + szablon [`05-szablony/szablon-ux-persona-scenariusz.md`](../05-szablony/szablon-ux-persona-scenariusz.md) | `Specify` |
+| **Product: System** | UX Design: Site Map, User Flows, Wireframes, UI Style Guide, Prototype | Pełny dokument UX + działający prototyp JS | [`01-dokumentacja-systemowa/10-ux-design-i-przeplywy.md`](../01-dokumentacja-systemowa/10-ux-design-i-przeplywy.md) oraz `prototype/revibance/` | `Plan` |
+| **Product: System** | UX Design: Usability Testing Reports | Szablon do użycia na Sprint Review | [`05-szablony/szablon-ux-test-uzytecznosci.md`](../05-szablony/szablon-ux-test-uzytecznosci.md) | `Verify` |
+| **Product: System** | Software Architecture Document (SAD) | Pełny dokument architektury (AltexSoft + arc42 + C4) + szablon | [`01-dokumentacja-systemowa/05-sad-architektura-systemu.md`](../01-dokumentacja-systemowa/05-sad-architektura-systemu.md), [`06-stos-technologiczny.md`](../01-dokumentacja-systemowa/06-stos-technologiczny.md), [`07-decyzje-adr/`](../01-dokumentacja-systemowa/07-decyzje-adr/README.md) (+ szablon [`05-szablony/szablon-sad.md`](../05-szablony/szablon-sad.md)) | `Plan` |
+| **Product: System** | Technical Design Document (TDD) | Szablon TDD + pliki `openspec/changes/*/design.md` | [`05-szablony/szablon-tdd.md`](../05-szablony/szablon-tdd.md) oraz `openspec/changes/<id>/design.md` | `Plan` / `Tasks` |
+| **Product: System** | Source Code Documentation | Mapa modułów + karty `src/*/README.md` + szablon | [`01-dokumentacja-systemowa/08-mapa-kodu-i-modulow.md`](../01-dokumentacja-systemowa/08-mapa-kodu-i-modulow.md), `src/*/README.md` (+ szablon [`05-szablony/szablon-karta-modulu.md`](../05-szablony/szablon-karta-modulu.md)) | `Implement` |
+| **Product: System** | Quality Assurance (QA): Test Strategy, Test Plan, Test Cases, Checklists | Pełna strategia testów + szablony planu i raportu QA | [`01-dokumentacja-systemowa/11-strategia-testow-qa.md`](../01-dokumentacja-systemowa/11-strategia-testow-qa.md) + szablony [`szablon-qa-plan-testow.md`](../05-szablony/szablon-qa-plan-testow.md), [`szablon-qa-raport-i-checklista.md`](../05-szablony/szablon-qa-raport-i-checklista.md) | `Verify` |
+| **Product: System** | API Documentation | Pełna specyfikacja kontraktów REST i SignalR | [`01-dokumentacja-systemowa/09-kontrakty-i-api.md`](../01-dokumentacja-systemowa/09-kontrakty-i-api.md) | `Plan` / `Implement` |
+| **Product: User** | End-User Documentation (Quick Start, Manual, Troubleshooting, FAQ) | Podręcznik gracza + szablon | [`02-dokumentacja-uzytkownika/01-podrecznik-gracza.md`](../02-dokumentacja-uzytkownika/01-podrecznik-gracza.md) (+ szablon [`05-szablony/szablon-podrecznik-gracza.md`](../05-szablony/szablon-podrecznik-gracza.md)) | `Release` |
+| **Product: User** | System Administrator Documentation (Installation, Config, Security, Backup) | Instrukcja wdrożenia i utrzymania + szablon | [`02-dokumentacja-uzytkownika/02-instrukcja-wdrozenia-i-utrzymania.md`](../02-dokumentacja-uzytkownika/02-instrukcja-wdrozenia-i-utrzymania.md) (+ szablon [`05-szablony/szablon-instrukcja-wdrozenia-admin.md`](../05-szablony/szablon-instrukcja-wdrozenia-admin.md)) | `Release` |
+| **Process** | Agile Product Roadmaps (Strategic, Technology, Release Plan) | Opisane w PRD, stosie technologicznym i backlogu | [`01-prd-wymagania-produktu.md`](../01-dokumentacja-systemowa/01-prd-wymagania-produktu.md) §2, [`06-stos-technologiczny.md`](../01-dokumentacja-systemowa/06-stos-technologiczny.md) §3, [`03-dokumentacja-procesowa/02-backlog/BACKLOG.md`](../03-dokumentacja-procesowa/02-backlog/BACKLOG.md) | `Constitution` / `Plan` |
+| **Process** | Product & Sprint Backlogs | Pełny backlog (TOML + CSV do Jiry) | [`03-dokumentacja-procesowa/02-backlog/`](../03-dokumentacja-procesowa/02-backlog/README.md) | `Tasks` |
+| **Process** | Standards (Coding, Testing, Git, AI Governance) | Standardy i konstytucja projektu | [`00-przewodnik-i-setup/03-proces-pracy-i-git-scrum.md`](03-proces-pracy-i-git-scrum.md), [`04-system-agentow-ai/`](../04-system-agentow-ai/README.md), `.agents/rules/` | `Constitution` |
+| **Process** | Plans, Estimates, Schedules & Project Charter (DIP) | Dokument Inicjujący Projekt (DIP) | [`03-dokumentacja-procesowa/01-dip-dokument-inicjujacy.md`](../03-dokumentacja-procesowa/01-dip-dokument-inicjujacy.md) | `Constitution` / `Specify` |
+| **Process** | Working Papers (Spikes, Technical Comparisons, Discrepancy Notes) | Analizy techniczne i rejestr rozbieżności | [`03-dokumentacja-procesowa/04-badania-i-analizy/`](../03-dokumentacja-procesowa/04-badania-i-analizy/README.md), [`01-dokumentacja-systemowa/04-rozbieznosci-prototypu.md`](../01-dokumentacja-systemowa/04-rozbieznosci-prototypu.md) | `Plan` |
+| **Process** | Reports, Metrics (Burndown, Velocity), Release Checklists & Meeting Notes | Szablony Scrum, informacji o wydaniu i agendy spotkań | [`03-dokumentacja-procesowa/03-scrum-i-spotkania/`](../03-dokumentacja-procesowa/03-scrum-i-spotkania/README.md), [`05-szablony/szablon-informacja-o-wydaniu.md`](../05-szablony/szablon-informacja-o-wydaniu.md) | `Verify` / `Release` |
 
 ---
 
-## 4. Drzewo stron w Confluence (Struktura 1:1 z katalogiem `docs/`)
+## 4. Drzewo stron w Confluence (1:1 z katalogiem `docs/`)
 
-Poniższe drzewo przedstawia dokładny układ przestrzeni projektowej w **Confluence PB**, który w relacji **1:1** odpowiada katalogom i plikom w folderze `docs/`:
+Poniżej widać układ przestrzeni projektu w **Confluence PB**. Każda strona odpowiada katalogowi lub plikowi w `docs/`:
 
 ```text
 RE:JOLTANCE — Strona Główna Przestrzeni (docs/README.md)
@@ -142,24 +153,26 @@ RE:JOLTANCE — Strona Główna Przestrzeni (docs/README.md)
     └── 5.12 Szablon Informacji o Wydaniu — Release Notes (szablon-informacja-o-wydaniu.md)
 ```
 
+Drzewo powyżej nie pokazuje jeszcze strony 0.7 (plan wdrożenia i migracji). Ta strona leży w tej samej sekcji: [`07-plan-wdrozenia-i-migracji.md`](07-plan-wdrozenia-i-migracji.md).
+
 ---
 
-## 5. Mechanizm synchronizacji: Repozytorium Git → Confluence (`sync_confluence.py`)
+## 5. Synchronizacja: repozytorium Git → Confluence (`sync_confluence.py`)
 
-Aby wyeliminować ręczne formatowanie i rozjeżdżanie się wersji pomiędzy repozytorium a przestrzenią Confluence PB, w projekcie przygotowano narzędzie `tools/confluence/sync_confluence.py` oraz powiązany skill agentowy `rj-sync-confluence`.
+Nie chcemy ręcznie formatować stron ani pilnować, czy wersje w repozytorium i w Confluence PB się zgadzają. Dlatego przygotowaliśmy narzędzie `tools/confluence/sync_confluence.py` i skill agentowy `rj-sync-confluence`.
 
-### Jak działa proces przenoszenia dokumentacji z repozytorium do Confluence?
+### Jak przenosimy dokumentację do Confluence?
 
-1. **Walidacja spójności drzewa (`--check`):**
-   Polecenie `python tools/confluence/sync_confluence.py --check` weryfikuje, czy wszystkie strony zdefiniowane w strukturze docelowej istnieją w katalogu `docs/`, posiadają poprawny format Markdown oraz nie zawierają uszkodzonych odnośników. Krok ten jest automatycznie wykonywany w potoku CI.
-2. **Generowanie paczki eksportowej dla Confluence (`--export`):**
-   Polecenie `python tools/confluence/sync_confluence.py` buduje gotowe do publikacji pliki w katalogu `.artifacts/confluence-export/` (ignorowanym przez Git), automatycznie dołączając do każdego dokumentu ustandaryzowany **Nagłówek Metadanych Confluence**:
+1. **Sprawdzenie drzewa (`--check`).**
+   Polecenie `python tools/confluence/sync_confluence.py --check` sprawdza trzy rzeczy. Czy każda strona ze struktury docelowej istnieje w `docs/`. Czy ma poprawny Markdown. Czy nie zawiera zepsutych linków. CI uruchamia ten krok automatycznie.
+2. **Paczka eksportowa (`--export`).**
+   Polecenie `python tools/confluence/sync_confluence.py` buduje pliki gotowe do publikacji w katalogu `.artifacts/confluence-export/`. Git ignoruje ten katalog. Skrypt dodaje do każdego dokumentu jednolity **nagłówek metadanych Confluence**:
 
    ```text
    Źródło prawdy: Repozytorium Git — docs/01-dokumentacja-systemowa/05-sad-architektura-systemu.md (gałąź develop)
    Kategoria AltexSoft: Product: System Documentation (SAD) · Etap SDD: Plan · Status: Zatwierdzony
    ```
 
-3. **Publikacja w Confluence PB (ręczna lub przez REST API):**
-   - **Tryb ręczny (bez tokena):** Otwórz wygenerowany plik z `.artifacts/confluence-export/`, skopiuj jego zawartość i w edytorze Confluence PB wybierz *Wstaw (Insert) → Znaczniki (Markup) → Markdown*.
-   - **Tryb automatyczny (z tokenem PAT):** Po ustawieniu zmiennych środowiskowych `CONFLUENCE_URL`, `CONFLUENCE_SPACE_KEY` oraz `CONFLUENCE_PERSONAL_TOKEN` polecenie `python tools/confluence/sync_confluence.py --publish` automatycznie tworzy lub aktualizuje drzewo stron przez REST API Confluence Server/Data Center 8.4.
+3. **Publikacja w Confluence PB (ręczna albo przez REST API).**
+   - **Tryb ręczny (bez tokena):** otwórz plik z `.artifacts/confluence-export/` i skopiuj jego treść. W edytorze Confluence PB wybierz *Wstaw (Insert) → Znaczniki (Markup) → Markdown*.
+   - **Tryb automatyczny (z tokenem PAT, Personal Access Token):** ustaw zmienne środowiskowe `CONFLUENCE_URL`, `CONFLUENCE_SPACE_KEY` i `CONFLUENCE_PERSONAL_TOKEN`. Potem uruchom `python tools/confluence/sync_confluence.py --publish`. Skrypt utworzy lub zaktualizuje drzewo stron przez REST API Confluence Server/Data Center 8.4.

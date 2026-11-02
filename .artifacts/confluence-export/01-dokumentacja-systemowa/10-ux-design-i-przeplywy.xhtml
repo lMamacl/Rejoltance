@@ -1,7 +1,9 @@
-<ac:structured-macro ac:name="info"><ac:rich-text-body><p><strong>Synchronizacja 1:1 z repozytorium Git:</strong> <code>docs/01-dokumentacja-systemowa/10-ux-design-i-przeplywy.md</code> (commit <code>10829d3</code>, data eksportu: <code>2026-11-02</code>)</p></ac:rich-text-body></ac:structured-macro>
-<blockquote><p><strong>Źródło prawdy:</strong> repozytorium (<code>docs/01-dokumentacja-systemowa/10-ux-design-i-przeplywy.md</code>) · <strong>Kategoria dokumentacji:</strong> Dokumentacja produktowa — systemowa (Projekt UX i przewodnik stylu) · <strong>Etap SDD:</strong> Planowanie</p></blockquote>
-<p>Niniejszy dokument opisuje architekturę informacji, mapę ekranów, szkielet układu planszy (<em>wireframe</em>), kluczowe przepływy użytkownika (<em>User Flows</em>) oraz przewodnik stylu wizualnego (<em>UI Style Guide</em>) dla klienta webowego <strong>RE:JOLTANCE</strong> (<code>src/web</code>). Działającym prototypem referencyjnym dla interakcji oraz zasobów audiowizualnych jest aplikacja w katalogu <strong><code>prototype/revibance/</code></strong> (<code>../../prototype/README.md</code>).</p>
-<p>Szablony do dokumentowania badań z użytkownikami znajdują się w katalogu <strong><code>05-szablony/</code></strong> (<code>../05-szablony/README.md</code>):</p>
+<ac:structured-macro ac:name="info"><ac:rich-text-body><p><strong>Synchronizacja 1:1 z repozytorium Git:</strong> <code>docs/01-dokumentacja-systemowa/10-ux-design-i-przeplywy.md</code> (commit <code>a2bf2a4</code>, data eksportu: <code>2026-11-02</code>)</p></ac:rich-text-body></ac:structured-macro>
+<blockquote><p><strong>Źródło prawdy:</strong> repozytorium (<code>docs/01-dokumentacja-systemowa/10-ux-design-i-przeplywy.md</code>) · <strong>Kategoria dokumentacji:</strong> Dokumentacja produktowa — systemowa (projekt UX i przewodnik stylu) · <strong>Etap SDD:</strong> Planowanie</p></blockquote>
+<p>Ten dokument opisuje UX (User Experience, czyli doświadczenie użytkownika) klienta webowego RE:JOLTANCE (<code>src/web</code>). Znajdziesz tu:</p>
+<ul><li>architekturę informacji i mapę ekranów,</li><li>szkielet układu planszy (<em>wireframe</em>),</li><li>najważniejsze przepływy użytkownika (<em>user flows</em>),</li><li>przewodnik stylu wizualnego (<em>UI style guide</em>).</li></ul>
+<p>Wzorem interakcji, grafiki i dźwięku jest działający prototyp w katalogu <strong><code>prototype/revibance/</code></strong> (<code>../../prototype/README.md</code>). SDD (Spec-Driven Development) to nasz sposób pracy: najpierw specyfikacja, potem kod.</p>
+<p>Szablony do opisu badań z użytkownikami są w katalogu <strong><code>05-szablony/</code></strong> (<code>../05-szablony/README.md</code>):</p>
 <ul><li><strong><code>szablon-ux-persona-scenariusz.md</code></strong> (<code>../05-szablony/szablon-ux-persona-scenariusz.md</code>) — persony, scenariusze i mapa historyjek użytkownika,</li><li><strong><code>szablon-ux-test-uzytecznosci.md</code></strong> (<code>../05-szablony/szablon-ux-test-uzytecznosci.md</code>) — raport z sesji testów użyteczności z Radą Graczy.</li></ul>
 <hr />
 <h2>1. Architektura informacji i mapa ekranów</h2>
@@ -23,17 +25,17 @@
   Board --> Zoom["Podgląd karty + Glosariusz słów kluczowych"]
   Board --> EndScreen["Ekran 7: Podsumowanie meczu (Wynik · Rewanż · Powrót do menu)"]
   EndScreen --> Menu]]></ac:plain-text-body></ac:structured-macro>
-<h3>Zestawienie ekranów i powiązanych zadań w backlogu</h3>
+<h3>Ekrany i powiązane zadania w backlogu</h3>
 <table><thead><tr>
-<th><p>Ekran / Widok</p></th>
+<th><p>Ekran / widok</p></th>
 <th><p>Odpowiednik w prototypie (<code>index.html</code>)</p></th>
-<th><p>Status w kliencie React (<code>src/web</code>)</p></th>
-<th><p>Powiązane zadanie (Jira / Backlog)</p></th>
+<th><p>Stan w kliencie React (<code>src/web</code>)</p></th>
+<th><p>Zadanie (Jira / backlog)</p></th>
 </tr></thead><tbody>
 <tr>
 <td><p><strong>Menu główne</strong></p></td>
 <td><p><code>#menu</code></p></td>
-<td><p>W backlogu (obecnie bezpośredni start piaskownicy)</p></td>
+<td><p>W backlogu (na razie gra startuje od razu w piaskownicy)</p></td>
 <td><p><code>E4-S07</code></p></td>
 </tr>
 <tr>
@@ -57,13 +59,13 @@
 <tr>
 <td><p><strong>Plansza meczowa (4 linie, HP, Blood, ręka)</strong></p></td>
 <td><p><code>#game</code></p></td>
-<td><p><strong>Zaimplementowany szkielet w <code>src/web</code></strong></p></td>
+<td><p>Szkielet zaimplementowany w <code>src/web</code></p></td>
 <td><p><code>E4-S01</code>, <code>E4-S02</code></p></td>
 </tr>
 <tr>
 <td><p><strong>Nakładki wyboru (<code>PendingInteraction</code>)</strong></p></td>
 <td><p><code>#mul</code></p></td>
-<td><p><strong>Zaimplementowany mulligan</strong>, pozostałe w backlogu</p></td>
+<td><p>Mulligan zaimplementowany, reszta w backlogu</p></td>
 <td><p><code>E4-S03</code></p></td>
 </tr>
 <tr>
@@ -81,7 +83,7 @@
 <tr>
 <td><p><strong>Koniec meczu i potwierdzenie poddania</strong></p></td>
 <td><p><code>#ov</code>, <code>#modal</code></p></td>
-<td><p><strong>Zaimplementowane poddanie i wynik</strong></p></td>
+<td><p>Poddanie i wynik zaimplementowane</p></td>
 <td><p><code>E4-S06</code></p></td>
 </tr>
 <tr>
@@ -93,7 +95,7 @@
 </tbody></table>
 <hr />
 <h2>2. Makieta układu ekranu rozgrywki</h2>
-<p>Ekran rozgrywki zaprojektowano w proporcjach panoramicznych (<code>16:9</code>, rozdzielczość bazowa <code>1920×1080</code> skalowana responsywnie do okna przeglądarki od <code>1280×720</code>):</p>
+<p>Ekran rozgrywki ma proporcje panoramiczne <code>16:9</code>. Bazowa rozdzielczość to <code>1920×1080</code>. Widok skaluje się do okna przeglądarki od <code>1280×720</code>:</p>
 <ac:structured-macro ac:name="code"><ac:parameter ac:name="language">none</ac:parameter><ac:plain-text-body><![CDATA[┌──────────────────────────────────────────────────────────────────────────────────┐
 │ [Poddaj mecz]    Faza: Krok Jednostek (Twój ruch)     [Dziennik] [⚙]    Runda 3  │
 │ Ostatnie zdarzenia: [Dobrano kartę] [Zagrano: Iron Hound -> Linia 1]             │
@@ -116,9 +118,9 @@
 │             ╰─────────╯ ╰─────────╯ ╰─────────╯ ╰─────────╯ ╰─────────╯          │
 └──────────────────────────────────────────────────────────────────────────────────┘]]></ac:plain-text-body></ac:structured-macro>
 <h3>Zasady interakcji i ergonomii (<code>NFR-21</code>, <code>NFR-22</code>)</h3>
-<ol><li><strong>Podświetlanie wyłącznie legalnych ruchów (<code>legalActions</code>):</strong> Po wybraniu karty z ręki interfejs podświetla wyłącznie te sloty linii i cele, które znajdują się w tablicy <code>view.legalActions</code> przesłanej przez serwer. Próba zagrania karty zbyt drogiej wyświetla czytelny komunikat w języku polskim (np. <em>„Niewystarczająca ilość Blood”</em>).</li><li><strong>Obsługa za pomocą myszy i klawiatury:</strong> - Klawisze <code>1–8</code> wybierają odpowiednią kartę z ręki gracza. - Klawisze strzałek / <code>1–4</code> pozwalają wskazać linię lub cel. - Klawisz <code>Enter</code> lub <code>Spacja</code> zatwierdza wybór lub kończy bieżący krok (<code>endStep</code>). - Klawisz <code>Escape</code> lub prawy przycisk myszy anuluje bieżące zaznaczenie karty.</li></ol>
+<ol><li><strong>Podświetlamy tylko legalne ruchy (<code>legalActions</code>).</strong> Gdy wybierzesz kartę z ręki, interfejs podświetla tylko te sloty i cele, które są w tablicy <code>view.legalActions</code> od serwera. Gdy spróbujesz zagrać za drogą kartę, zobaczysz czytelny komunikat po polsku (np. <em>„Niewystarczająca ilość Blood”</em>).</li><li><strong>Obsługa myszą i klawiaturą:</strong> - Klawisze <code>1–8</code> wybierają kartę z ręki. - Strzałki lub <code>1–4</code> wskazują linię albo cel. - <code>Enter</code> lub <code>Spacja</code> zatwierdza wybór albo kończy bieżący krok (<code>endStep</code>). - <code>Escape</code> lub prawy przycisk myszy anuluje zaznaczenie karty.</li></ol>
 <hr />
-<h2>3. Przepływ użytkownika: Rozpoczęcie pojedynku 1v1 przez link</h2>
+<h2>3. Przepływ użytkownika: rozpoczęcie pojedynku 1v1 przez link</h2>
 <p><em>Diagram przepływu (Mermaid):</em></p>
 <ac:structured-macro ac:name="code"><ac:parameter ac:name="language">none</ac:parameter><ac:plain-text-body><![CDATA[sequenceDiagram
   autonumber
@@ -142,19 +144,20 @@
   S-->>UI: MatchUpdated (Runda 1, faza: unitStep, Blood: 1/1)]]></ac:plain-text-body></ac:structured-macro>
 <hr />
 <h2>4. Przewodnik stylu wizualnego</h2>
-<p>Oprawa wizualna gry utrzymana jest w mrocznej, kontrastowej stylistyce <em>dark tactical pixel-art</em>, przeniesionej bezpośrednio z prototypu <code>prototype/revibance/style.css</code>.</p>
-<h3>4.1 Paleta barw i weryfikacja kontrastu WCAG 2.1 AA (<code>NFR-22</code>)</h3>
+<p>Gra ma mroczną, kontrastową stylistykę <em>dark tactical pixel-art</em>. Przenosimy ją wprost z prototypu <code>prototype/revibance/style.css</code>.</p>
+<h3>4.1 Paleta barw i kontrast WCAG 2.1 AA (<code>NFR-22</code>)</h3>
+<p>WCAG (Web Content Accessibility Guidelines) to standard dostępności stron. Poziom AA wymaga kontrastu tekstu co najmniej 4.5:1. NFR to wymaganie niefunkcjonalne (Non-Functional Requirement).</p>
 <table><thead><tr>
 <th><p>Token CSS</p></th>
 <th><p>Wartość HEX</p></th>
-<th><p>Zastosowanie w interfejsie</p></th>
-<th><p>Współczynnik kontrastu względem tła <code>#050505</code></p></th>
+<th><p>Gdzie używamy</p></th>
+<th><p>Kontrast względem tła <code>#050505</code></p></th>
 <th><p>Status WCAG 2.1</p></th>
 </tr></thead><tbody>
 <tr>
 <td><p><code>--bg</code></p></td>
 <td><p><code>#050505</code></p></td>
-<td><p>Główne tło planszy i ekranów aplikacji.</p></td>
+<td><p>Główne tło planszy i ekranów.</p></td>
 <td><p>—</p></td>
 <td><p>Tło bazowe</p></td>
 </tr>
@@ -182,7 +185,7 @@
 <tr>
 <td><p><code>--red</code></p></td>
 <td><p><code>#c4161c</code></p></td>
-<td><p>Akcent kolorystyczny zasobu <em>Blood</em>, obrażeń i zagrożenia.</p></td>
+<td><p>Akcent dla zasobu <em>Blood</em>, obrażeń i zagrożenia.</p></td>
 <td><p><code>3.4 : 1</code></p></td>
 <td><p>Dozwolony dla dużych napisów (≥ 24 px) i ikon z etykietą</p></td>
 </tr>
@@ -191,8 +194,8 @@
 <td><p><code>#3a3a3a</code></p></td>
 <td><p>Tło nieaktywnych przycisków i niedostępnych akcji.</p></td>
 <td><p><code>1.8 : 1</code></p></td>
-<td><p>Wyłącznie dla elementów wyłączonych (<code>disabled</code>)</p></td>
+<td><p>Tylko dla elementów wyłączonych (<code>disabled</code>)</p></td>
 </tr>
 </tbody></table>
 <h3>4.2 Typografia, grafika i udźwiękowienie</h3>
-<ul><li><strong>Zestawy czcionek (<code>prototype/revibance/fonts/</code>):</strong> Styl pikselowy (<em>Pixelify Sans</em>, <em>Silkscreen</em>, <em>DotGothic16</em>, <em>Jersey 15</em>) oraz czytelny styl klasyczny (<em>Cinzel</em> dla nagłówków + <em>Alegreya Sans</em> dla opisów kart), przełączane w ustawieniach dostępności.</li><li><strong>Zasoby kart (<code>prototype/revibance/img/</code>):</strong> Ilustracje kart w formacie WebP (<code>1.webp</code> .. <code>69.webp</code>, tokeny <code>900.webp</code> .. <code>908.webp</code>), rewers karty <code>back.webp</code> oraz ramka awersu <code>CardFront.png</code>.</li><li><strong>Bezpieczeństwo wizualne (<code>NFR-70</code>):</strong> Wszystkie animacje uderzeń i podpaleń są pozbawione błysków przekraczających 3 Hz oraz automatycznie skracane przy wykryciu flagi systemowej <code>@media (prefers-reduced-motion: reduce)</code>.</li></ul>
+<ul><li><strong>Czcionki (<code>prototype/revibance/fonts/</code>).</strong> Mamy dwa style do wyboru w ustawieniach dostępności. Styl pikselowy: <em>Pixelify Sans</em>, <em>Silkscreen</em>, <em>DotGothic16</em>, <em>Jersey 15</em>. Czytelny styl klasyczny: <em>Cinzel</em> dla nagłówków i <em>Alegreya Sans</em> dla opisów kart.</li><li><strong>Grafiki kart (<code>prototype/revibance/img/</code>).</strong> Ilustracje kart w formacie WebP (<code>1.webp</code> .. <code>69.webp</code>, tokeny <code>900.webp</code> .. <code>908.webp</code>), rewers karty <code>back.webp</code> i ramka awersu <code>CardFront.png</code>.</li><li><strong>Bezpieczeństwo wizualne (<code>NFR-70</code>).</strong> Animacje uderzeń i podpaleń nie mają błysków częstszych niż 3 Hz. Gra skraca je automatycznie, gdy system ustawia <code>@media (prefers-reduced-motion: reduce)</code>.</li></ul>

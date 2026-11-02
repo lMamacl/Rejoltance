@@ -1,88 +1,88 @@
-<!-- CONFLUENCE 1:1 EXPORT | Source: docs/02-dokumentacja-uzytkownika/01-podrecznik-gracza.md @ 10829d3 (2026-11-02) -->
+<!-- CONFLUENCE 1:1 EXPORT | Source: docs/02-dokumentacja-uzytkownika/01-podrecznik-gracza.md @ a2bf2a4 (2026-11-02) -->
 # 2.1 Podręcznik gracza i przewodnik szybkiego startu — RE:JOLTANCE
 
-> **Źródło prawdy:** repozytorium (`docs/02-dokumentacja-uzytkownika/01-podrecznik-gracza.md`) · **Kategoria dokumentacji:** Dokumentacja produktowa — użytkownika (Podręcznik użytkownika końcowego) · **Etap SDD:** Wydanie · **Wymóg uczelniany:** EU5
+> **Źródło prawdy:** repozytorium (`docs/02-dokumentacja-uzytkownika/01-podrecznik-gracza.md`) · **Kategoria dokumentacji:** Dokumentacja produktowa — użytkownika (podręcznik użytkownika końcowego) · **Etap SDD:** Wydanie · **Wymóg uczelniany:** EU5 (efekt uczenia się)
 
-Niniejszy podręcznik jest przeznaczony dla graczy oraz członków Rady Graczy Testowych. Pozwala w mniej niż 5 minut poznać zasady gry **RE:JOLTANCE**, rozpocząć pojedynek w przeglądarce i rozwiązać ewentualne problemy techniczne. Pełna specyfikacja wszystkich 55 reguł turniejowych znajduje się w dokumencie **[1.2 Specyfikacja funkcjonalna zasad gry](../01-dokumentacja-systemowa/02-specyfikacja-regul-gry.md)**.
+Ten podręcznik jest dla graczy i członków Rady Graczy Testowych. W mniej niż 5 minut poznasz zasady gry RE:JOLTANCE, zaczniesz pojedynek w przeglądarce i poradzisz sobie z typowymi problemami. Wszystkie 55 reguł turniejowych opisuje dokument [1.2 Specyfikacja funkcjonalna zasad gry](../01-dokumentacja-systemowa/02-specyfikacja-regul-gry.md).
 
 ---
 
 ## 1. Szybki start w 60 sekund
 
-1. **Otwórz grę w przeglądarce:** Wejdź na udostępniony adres serwera demonstracyjnego (lub lokalny adres zasobu `web` z panelu .NET Aspire). Nie musisz niczego pobierać ani instalować.
-2. **Wybierz tryb rozgrywki:**
-   - **Trening / Piaskownica (`Start Sandbox`):** Natychmiast uruchamia pojedynek testowy z wybranymi taliami startowymi.
-   - **Gra z kolegą (Lobby 1v1):** Utwórz pokój, skopiuj wygenerowany kod pokoju lub link i wyślij go znajomemu na komunikatorze.
-   - **Gra z Botem AI:** Wybierz jedną z 5 talii startowych i zmierz się z komputerowym przeciwnikiem.
-3. **Wymień karty startowe (Mulligan):** Na początku meczu otrzymujesz **4 karty**. Kliknij karty, które chcesz wymienić na inne z talii, a następnie kliknij **Zatwierdź Mulligan**.
-4. **Wybierz kolejność:** Zadeklaruj, czy wolisz rozpoczynać pierwszą rundę jako pierwszy gracz (Gracz A), czy jako drugi (Gracz B).
+1. **Otwórz grę w przeglądarce.** Wejdź na adres serwera demonstracyjnego, który dostaniesz od zespołu. Jeśli grasz lokalnie, użyj adresu zasobu `web` z panelu .NET Aspire. Nie musisz niczego pobierać ani instalować.
+2. **Wybierz tryb gry:**
+   - **Trening, czyli piaskownica (`Start Sandbox`):** od razu uruchamia pojedynek testowy z wybranymi taliami startowymi.
+   - **Gra ze znajomym (lobby 1v1):** utwórz pokój, skopiuj kod pokoju albo link i wyślij go znajomemu.
+   - **Gra z botem AI:** wybierz jedną z 5 talii startowych i zagraj z komputerem.
+3. **Wymień karty startowe (mulligan).** Na początku meczu dostajesz 4 karty. Kliknij te, które chcesz wymienić na inne z talii. Potem kliknij **Zatwierdź Mulligan**.
+4. **Wybierz kolejność.** Zdecyduj, czy chcesz zacząć pierwszą rundę jako pierwszy gracz (Gracz A), czy jako drugi (Gracz B).
 
 ---
 
-## 2. Zasady rozgrywki w pigułce
+## 2. Zasady gry w pigułce
 
-### 2.1 Cel gry i układ planszy
+### 2.1 Cel gry i plansza
 
-- Każdy z dwóch graczy steruje bohaterem posiadającym **20 punktów zdrowia (HP)** oraz talią złożoną z **30 kart**.
-- Plansza składa się z **4 linii walki** (oznaczonych od `0` do `3` od lewej do prawej). W każdej linii znajduje się po jednym miejscu na jednostkę dla każdego gracza.
-- **Warunek zwycięstwa:** Wygrywasz natychmiast, gdy sprowadzisz punkty zdrowia wrogiego bohatera do **0 lub mniej**.
+- Każdy z dwóch graczy ma bohatera z **20 punktami zdrowia** (HP, od ang. *health points*) i talię **30 kart**.
+- Plansza ma **4 linie walki**, ponumerowane od `0` do `3` od lewej do prawej. W każdej linii każdy gracz ma jedno miejsce na jednostkę.
+- **Jak wygrać:** wygrywasz od razu, gdy zdrowie bohatera przeciwnika spadnie do **0 lub mniej**.
 
-### 2.2 Zasób Blood (Krew)
+### 2.2 Zasób Blood (krew)
 
-- Zagrywanie kart kosztuje punkty zasobu **Blood** (widoczne w czerwonym kółku na karcie).
-- Na początku każdej rundy Twój zasób Blood odnawia się do wartości równej numerowi bieżącej rundy (maksymalnie do **10 Blood**). Niewykorzystany zasób z poprzedniej rundy nie przechodzi na kolejną.
+- Zagranie karty kosztuje punkty **Blood**. Koszt widzisz w czerwonym kółku na karcie.
+- Na początku każdej rundy twój Blood odnawia się do wartości równej numerowi rundy (najwyżej **10 Blood**). Niewydany Blood nie przechodzi na następną rundę.
 
-### 2.3 Cztery kroki każdej rundy
+### 2.3 Cztery kroki rundy
 
-W każdej rundzie jeden z graczy pełni rolę **Gracza A (rozpoczynającego)**, a drugi **Gracza B**. W kolejnej rundzie role te zamieniają się miejscami. Runda przebiega zawsze w czterech krokach:
+W każdej rundzie jeden gracz jest Graczem A (zaczyna), a drugi Graczem B. W następnej rundzie role się zamieniają. Każda runda ma zawsze cztery kroki:
 
-| Krok rundy | Kto wykonuje ruch? | Jakie karty można zagrać? |
+| Krok rundy | Kto gra? | Co możesz zagrać? |
 |---|---|---|
-| **1. Krok Jednostek (`unitStep`)** | Gracz A | Wyłącznie karty **Jednostek (`Unit`)** na wolne linie po swojej stronie. |
-| **2. Krok Mieszany (`mixedStep`)** | Gracz B | Zarówno karty **Jednostek (`Unit`)**, jak i karty **Akcji (`Spell`)**. |
-| **3. Krok Akcji (`actionStep`)** | Gracz A | Wyłącznie karty **Akcji (`Spell`)** — odpowiedź taktyczna przed walką. |
-| **4. Faza Walki (`combat`)** | Automatyczna | Jednostki walczą ze sobą po kolei na liniach **od lewej do prawej (`0 → 1 → 2 → 3`)**. |
+| **1. Krok jednostek (`unitStep`)** | Gracz A | Tylko karty jednostek (`Unit`), na wolne linie po swojej stronie. |
+| **2. Krok mieszany (`mixedStep`)** | Gracz B | Karty jednostek (`Unit`) i karty akcji (`Spell`). |
+| **3. Krok akcji (`actionStep`)** | Gracz A | Tylko karty akcji (`Spell`). To taktyczna odpowiedź przed walką. |
+| **4. Faza walki (`combat`)** | Gra sama | Jednostki walczą po kolei na liniach od lewej do prawej (`0 → 1 → 2 → 3`). |
 
 ### 2.4 Jak działa walka na linii?
 
-1. Jeśli naprzeciw Twojej jednostki nie ma wrogiej jednostki (lub Twoja jednostka ma cechę **Flying**, a przeciwnik nie), uderzenie trafia **bezpośrednio w bohatera przeciwnika**.
+1. Jeśli naprzeciw twojej jednostki nie ma wrogiej jednostki, twoja jednostka uderza **prosto w bohatera przeciwnika**. Tak samo jest, gdy twoja jednostka ma cechę **Flying**, a jednostka przeciwnika jej nie ma.
 2. Jeśli naprzeciw siebie stoją dwie jednostki o tym samym statusie latania, **uderzają się jednocześnie** wartością swojego ataku.
 
 ### 2.5 Najważniejsze słowa kluczowe na kartach
 
-| Słowo kluczowe / Status | Co oznacza w trakcie gry? |
+| Słowo kluczowe / status | Co robi w grze? |
 |---|---|
-| **Flying** | Jednostka latająca przelatuje nad jednostką naziemną i uderza bezpośrednio w bohatera przeciwnika. |
-| **Armored (n) / Armor2** | Zmniejsza obrażenia z każdego otrzymanego uderzenia o `n` (lub o `2` dla `Armor2`). |
-| **Marked** | Jednostka naznaczona otrzymuje **podwójne obrażenia** (po uwzględnieniu pancerza). |
-| **Stunned** | Jednostka ogłuszona pomija swoje najbliższe uderzenie, po czym status ogłuszenia znika. |
-| **Burning / BurnSource** | Jednostka podpalona traci **1 HP na koniec każdej rundy**. Jednostka z `BurnSource` podpala każdy trafiony cel. |
-| **SplashDamage (n)** | Podczas ataku zadaje `n` obrażeń wrogim jednostkom stojącym na sąsiednich liniach (z lewej i z prawej). |
-| **Breakthrough** | Po uderzeniu we wrogą jednostkę zadaje dodatkowo pełną wartość swojego ataku bohaterowi przeciwnika. |
-| **SoulGuard** | Chroni jednostkę przed śmiercią jeden raz (zostawia ją przy życiu z **1 HP**). Nie chroni przed poświęceniem (`Sacrifice`). |
-| **Unkillable** | Gdy jednostka zginie na planszy, zamiast pozostać na stosie odrzuconych wraca do ręki właściciela. |
+| **Flying** | Jednostka latająca przelatuje nad jednostką naziemną i uderza prosto w bohatera przeciwnika. |
+| **Armored (n) / Armor2** | Zmniejsza obrażenia z każdego otrzymanego uderzenia o `n` (przy `Armor2` o `2`). |
+| **Marked** | Naznaczona jednostka dostaje **podwójne obrażenia** (liczone po odjęciu pancerza). |
+| **Stunned** | Ogłuszona jednostka pomija swoje najbliższe uderzenie. Potem ogłuszenie znika. |
+| **Burning / BurnSource** | Podpalona jednostka traci **1 HP na koniec każdej rundy**. Jednostka z `BurnSource` podpala każdy cel, który trafi. |
+| **SplashDamage (n)** | Podczas ataku zadaje `n` obrażeń wrogim jednostkom na sąsiednich liniach (z lewej i z prawej). |
+| **Breakthrough** | Po uderzeniu we wrogą jednostkę zadaje dodatkowo bohaterowi przeciwnika obrażenia równe pełnej wartości swojego ataku. |
+| **SoulGuard** | Raz chroni jednostkę przed śmiercią i zostawia ją przy życiu z **1 HP**. Nie chroni przed poświęceniem (`Sacrifice`). |
+| **Unkillable** | Gdy jednostka zginie na planszy, wraca do ręki właściciela zamiast zostać na stosie kart odrzuconych. |
 
 ---
 
 ## 3. Sterowanie i skróty klawiszowe
 
-| Czynność w grze | Obsługa myszą | Obsługa klawiaturą |
+| Co chcesz zrobić | Mysz | Klawiatura |
 |---|---|---|
-| Wybór karty z ręki | Kliknij kartę w wachlarzu ręki | Klawisze numeryczne `1` – `8` |
-| Zagranie jednostki na linię | Kliknij podświetlony slot linii (`0–3`) | Strzałki lewo/prawo + `Enter` |
-| Wskazanie celu akcji / umiejętności | Kliknij podświetloną jednostkę lub bohatera | Strzałki + `Enter` |
-| Zakończenie bieżącego kroku | Kliknij przycisk **Zakończ krok** | `Spacja` lub `Enter` (gdy żadna karta nie jest wybrana) |
-| Anulowanie wyboru karty | Prawy przycisk myszy | `Escape` |
-| Podgląd dziennika rozgrywki | Kliknij przycisk **Log / Dziennik** | Klawisz `L` |
+| Wybrać kartę z ręki | Kliknij kartę w wachlarzu ręki | Klawisze cyfr `1` – `8` |
+| Zagrać jednostkę na linię | Kliknij podświetlone miejsce na linii (`0–3`) | Strzałki w lewo/prawo + `Enter` |
+| Wskazać cel akcji lub umiejętności | Kliknij podświetloną jednostkę albo bohatera | Strzałki + `Enter` |
+| Zakończyć bieżący krok | Kliknij przycisk **Zakończ krok** | `Spacja` lub `Enter` (gdy nie masz wybranej karty) |
+| Anulować wybór karty | Prawy przycisk myszy | `Escape` |
+| Otworzyć dziennik gry | Kliknij przycisk **Log / Dziennik** | Klawisz `L` |
 
 ---
 
 ## 4. Najczęściej zadawane pytania (FAQ) i rozwiązywanie problemów
 
-| Pytanie / Objaw problemu | Wyjaśnienie i sposób rozwiązania |
+| Pytanie lub problem | Wyjaśnienie i rozwiązanie |
 |---|---|
-| **Dlaczego nie mogę zagrać wybranej karty z ręki?** | Sprawdź trzy warunki: (1) czy masz wystarczającą ilość zasobu *Blood*, (2) czy obecny krok rundy pozwala na ten typ karty (np. w *Kroku Akcji* nie można wystawiać jednostek), (3) czy dla karty akcji istnieje na planszy wymagany cel. Interfejs podświetla wyłącznie dozwolone zagrania. |
-| **Dlaczego moja nowo dobrana karta od razu spłonęła?** | Ręka gracza mieści maksymalnie **8 kart** (`R-13`). Każda kolejna dobrana karta powyżej tego limitu jest automatycznie odrzucana na stos kart odrzuconych. |
-| **Co się dzieje, gdy skończą mi się karty w talii?** | W grze nie tasuje się stosu odrzuconych z powrotem do talii. Każda próba dobrania karty z pustej talii zadaje bohaterowi narastające obrażenia **Fatigue** (`1`, potem `2`, potem `3` itd. — `R-14`). |
-| **Przeglądarka straciła połączenie z serwerem w trakcie meczu** | Odśwież stronę lub poczekaj na automatyczne wznowienie połączenia SignalR. Serwer utrzymuje stan Twojego meczu przez **60 sekund** (`R-73`) i po powrocie odtworzy dokładny widok planszy. |
-| **Gra wyświetla komunikat o obróceniu ekranu** | Interfejs planszy wymaga orientacji poziomej (minimum `1280×720`). Zmaksymalizuj okno przeglądarki na komputerze. |
+| **Dlaczego nie mogę zagrać karty z ręki?** | Sprawdź trzy rzeczy: (1) czy masz dość *Blood*, (2) czy w tym kroku rundy wolno zagrać ten typ karty (np. w kroku akcji nie wystawisz jednostki), (3) czy karta akcji ma na planszy wymagany cel. Gra podświetla tylko dozwolone zagrania. |
+| **Dlaczego nowo dobrana karta od razu spłonęła?** | W ręce mieścisz najwyżej **8 kart** (reguła `R-13`). Każda karta dobrana ponad ten limit od razu trafia na stos kart odrzuconych. |
+| **Co się dzieje, gdy skończą mi się karty w talii?** | Stos kart odrzuconych nie wraca do talii. Każda próba dobrania karty z pustej talii zadaje twojemu bohaterowi rosnące obrażenia **Fatigue** (zmęczenie): `1`, potem `2`, potem `3` itd. (reguła `R-14`). |
+| **Gra straciła połączenie z serwerem w trakcie meczu** | Odśwież stronę albo poczekaj, aż gra sama wznowi połączenie (SignalR). Serwer trzyma twój mecz przez **60 sekund** (reguła `R-73`). Po powrocie zobaczysz dokładnie tę samą planszę. |
+| **Gra prosi o obrócenie ekranu** | Plansza wymaga orientacji poziomej i okna o rozmiarze co najmniej `1280×720`. Na komputerze zmaksymalizuj okno przeglądarki. |

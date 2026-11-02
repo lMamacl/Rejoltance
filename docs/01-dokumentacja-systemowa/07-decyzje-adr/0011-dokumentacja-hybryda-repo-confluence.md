@@ -6,9 +6,11 @@
 
 ## Kontekst i problem
 
-Prowadzący oczekuje struktury dokumentacji w **Confluence PB**, obejmującej analizę wymagań, stos technologiczny i architekturę, pod spec‑driven development (SDD). [V]
-W SDD specyfikacja steruje pracą ludzi i agentów AI: musi być wersjonowana razem z kodem, przeglądana w PR i walidowana w CI (`openspec validate`). [V]
-Confluence dobrze służy do współpracy, prezentacji i oceny, ale agent nie wykona procesu SDD na stronie wiki, a kopie ręczne się rozjeżdżają. [Z]
+Prowadzący oczekuje struktury dokumentacji w **Confluence PB**. Ma ona obejmować analizę wymagań, stos technologiczny i architekturę
+i wspierać spec‑driven development (SDD, pracę sterowaną specyfikacją). [V]
+W SDD specyfikacja steruje pracą ludzi i agentów AI. Musi więc być wersjonowana razem z kodem, przeglądana w PR (pull requeście)
+i walidowana w CI, czyli ciągłej integracji (`openspec validate`). [V]
+Confluence dobrze służy do współpracy, prezentacji i oceny. Agent nie wykona jednak procesu SDD na stronie wiki, a ręczne kopie się rozjeżdżają. [Z]
 
 ## Rozważane opcje
 
@@ -16,7 +18,7 @@ Confluence dobrze służy do współpracy, prezentacji i oceny, ale agent nie wy
 |---|---|---|---|
 | Wszystko w Confluence | jedno miejsce, wygodne dla prowadzącego | specyfikacji nie da się walidować ani przeglądać w PR; agenci czytają nieaktualne kopie | rozjazd specyfikacji i kodu |
 | Wszystko w repo | jedno źródło, wersjonowanie | Confluence pusty → nie spełnia wymagań przedmiotu (EU5/EU6) | ryzyko oceny |
-| **Hybryda z jasnym podziałem** | SDD działa na repo; Confluence ma pełne drzewo, mapę i dokumenty ludzkie | trzeba pilnować publikacji kopii | proces publikacji + banner „źródło” |
+| **Hybryda z jasnym podziałem** | SDD działa na repo; Confluence ma pełne drzewo, mapę i dokumenty dla ludzi | trzeba pilnować publikacji kopii | proces publikacji + banner „źródło” |
 
 ## Decyzja
 
@@ -30,13 +32,13 @@ aby specyfikacje były wykonywalne i weryfikowalne, a prowadzący widział kompl
 
 ### Pozytywne
 
-- Każda strona w Confluence ma nagłówek „Źródło prawdy: repo / Confluence” — wiadomo, gdzie poprawiać.
-- Agent AI czyta aktualne specyfikacje z repo; ludzie przeglądają je w Confluence.
+- Każda strona w Confluence ma nagłówek „Źródło prawdy: repo / Confluence”, więc wiadomo, gdzie poprawiać.
+- Agent AI czyta aktualne specyfikacje z repo, a ludzie przeglądają je w Confluence.
 
 ### Negatywne / ryzyka
 
-- Kopie w Confluence mogą się zestarzeć → w Definition of Done: „strona w Confluence zaktualizowana”; datę i commit źródła podajemy w nagłówku strony.
-- Jeśli prowadzący wymaga edycji wyłącznie w Confluence — nowy ADR zastępujący ten.
+- Kopie w Confluence mogą się zestarzeć. Dlatego w Definition of Done jest punkt „strona w Confluence zaktualizowana”, a datę i commit źródła podajemy w nagłówku strony.
+- Jeśli prowadzący wymaga edycji wyłącznie w Confluence, piszemy nowy ADR, który zastąpi ten.
 
 ### Do zrobienia
 

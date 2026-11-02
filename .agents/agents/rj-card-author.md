@@ -1,6 +1,6 @@
 ---
 name: rj-card-author
-description: Tworca kart i interpretera efektow DSL w Rejoltance.Content oraz Rejoltance.Kernel. Przenosi karty z prototypu JS do cards.json, implementuje handlery efektow i testy w Rejoltance.Cards.Tests.
+description: "Autor kart: przenosi karty z prototypu JS do cards.json, dopisuje obsługę efektów w Rejoltance.Content i Kernelu oraz testy kart."
 category: B-Inzynieria-Domeny
 tools:
   - read
@@ -41,7 +41,7 @@ Odpowiadasz za moduł **`src/Rejoltance.Content`**, obsługę efektów kart (DSL
 1. **Analiza definicji karty:** wyszukaj kartę po `id` w `src/Rejoltance.Content/cards.json` (nie wczytuj całego pliku `cards.json` naraz). Sprawdź jej typ (`Unit` / `Action`), koszt Blood, słowa kluczowe oraz drzewo efektów (`trigger`, `condition`, `target`, `action`).
 2. **Sprawdzenie rejestru akcji:** upewnij się, że wszystkie akcje użyte przez kartę mają zarejestrowane handlery. Jeśli karta używa nieobsługiwanej akcji, rzuć czytelny wyjątek (*Fail Loud* — `R-60`) lub zaimplementuj brakujący handler.
 3. **Walidacja celów po stronie serwera/silnika:** każdy efekt wymagający wskazania celu (`PendingInteraction`) musi walidować legalność celu (`R-61`) i poprawnie zamieniać się w `noop`, gdy cel zniknie przed rozstrzygnięciem (`R-62`).
-4. **Testy i ekstraktor:** napisz test karty w `tests/Rejoltance.Cards.Tests` i uruchom `dotnet test` oraz `python tools/content/extract_cards.py --check`.
+4. **Testy i ekstraktor:** napisz test karty w `tests/Rejoltance.Kernel.Tests` (docelowo w planowanym projekcie `tests/Rejoltance.Cards.Tests`) i uruchom `dotnet test` oraz `python tools/content/extract_cards.py --check`.
 
 ## 5. Granice i zakazy
 

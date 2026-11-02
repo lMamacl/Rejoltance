@@ -1,7 +1,7 @@
-<ac:structured-macro ac:name="info"><ac:rich-text-body><p><strong>Synchronizacja 1:1 z repozytorium Git:</strong> <code>docs/01-dokumentacja-systemowa/07-decyzje-adr/0007-sqlite-potem-postgresql.md</code> (commit <code>10829d3</code>, data eksportu: <code>2026-11-02</code>)</p></ac:rich-text-body></ac:structured-macro>
+<ac:structured-macro ac:name="info"><ac:rich-text-body><p><strong>Synchronizacja 1:1 z repozytorium Git:</strong> <code>docs/01-dokumentacja-systemowa/07-decyzje-adr/0007-sqlite-potem-postgresql.md</code> (commit <code>a2bf2a4</code>, data eksportu: <code>2026-11-02</code>)</p></ac:rich-text-body></ac:structured-macro>
 <ul><li><strong>Status:</strong> zatwierdzona (2026-10-27)</li><li><strong>Data:</strong> 2026-10-27</li><li><strong>Powiązane:</strong> <code>RejoltanceDb.cs</code>, <code>AppHost.cs</code>, E6-S04, pytanie otwarte #10</li></ul>
 <h2>Kontekst i problem</h2>
-<p>Do Sprintu 2 baza jest prawie niepotrzebna (mecze żyją w pamięci). PostgreSQL w Aspire wymaga Dockera/Podmana na każdym laptopie. [V]</p>
+<p>Do Sprintu 2 baza danych jest prawie niepotrzebna, bo mecze żyją w pamięci. PostgreSQL w Aspire wymaga Dockera lub Podmana na każdym laptopie. [V]</p>
 <h2>Rozważane opcje</h2>
 <table><thead><tr>
 <th><p>Opcja</p></th>
@@ -12,13 +12,13 @@
 <tr>
 <td><p>PostgreSQL od razu</p></td>
 <td><p>zgodność z produkcją</p></td>
-<td><p>Docker u 6 osób od dnia 1</p></td>
+<td><p>Docker u 6 osób od pierwszego dnia</p></td>
 <td><p>blokada startu</p></td>
 </tr>
 <tr>
 <td><p><strong>SQLite → PostgreSQL</strong></p></td>
 <td><p>zero instalacji; EF Core ukrywa różnice</p></td>
-<td><p>dwa dostawcy do przetestowania</p></td>
+<td><p>dwóch dostawców do przetestowania</p></td>
 <td><p>migracje trzeba sprawdzić na obu</p></td>
 </tr>
 <tr>
@@ -34,4 +34,4 @@
 <h3>Pozytywne</h3>
 <ul><li><code>dotnet run --project src/Rejoltance.AppHost</code> działa bez Dockera (zweryfikowane).</li></ul>
 <h3>Negatywne / ryzyka</h3>
-<ul><li>Do S4 każdy musi mieć Docker/Podman albo korzystać z SQLite lokalnie (#10).</li><li>Unikać funkcji specyficznych dla jednego silnika (np. typy JSON) bez testu na obu.</li></ul>
+<ul><li>Do S4 (Sprintu 4) każdy musi mieć Docker lub Podman albo korzystać lokalnie z SQLite (#10).</li><li>Unikamy funkcji specyficznych dla jednego silnika bazy (np. typów JSON), jeśli nie przetestowaliśmy ich na obu.</li></ul>

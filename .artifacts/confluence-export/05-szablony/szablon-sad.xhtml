@@ -1,13 +1,14 @@
-<ac:structured-macro ac:name="info"><ac:rich-text-body><p><strong>Synchronizacja 1:1 z repozytorium Git:</strong> <code>docs/05-szablony/szablon-sad.md</code> (commit <code>10829d3</code>, data eksportu: <code>2026-11-02</code>)</p></ac:rich-text-body></ac:structured-macro>
+<ac:structured-macro ac:name="info"><ac:rich-text-body><p><strong>Synchronizacja 1:1 z repozytorium Git:</strong> <code>docs/05-szablony/szablon-sad.md</code> (commit <code>a2bf2a4</code>, data eksportu: <code>2026-11-02</code>)</p></ac:rich-text-body></ac:structured-macro>
 <blockquote><p><strong>Źródło prawdy:</strong> <code>&lt;Repozytorium&gt;</code> · <strong>Kategoria AltexSoft:</strong> Product: System Documentation — Software Architecture Document (SAD) · <strong>Etap SDD:</strong> Plan (<code>Plan</code>)<br /><em>Wypełniony dokument dla projektu RE:JOLTANCE znajduje się w: <strong><code>01-dokumentacja-systemowa/05-sad-architektura-systemu.md</code></strong> (<code>../01-dokumentacja-systemowa/05-sad-architektura-systemu.md</code>).</em></p></blockquote>
+<p>Wypełnij sekcje i zastąp pola w nawiasach <code>&lt;...&gt;</code>. SDD to spec-driven development (praca sterowana specyfikacją), C4 — model opisu architektury na czterech poziomach szczegółowości, NFR — wymaganie niefunkcjonalne, ADR — zapis decyzji architektonicznej.</p>
 <hr />
 <h2>1. Przegląd, tło i cele architektoniczne (Overview and Background)</h2>
-<ul><li><strong>Cel systemu i kontekst problemu:</strong> <code>&lt;Krótki opis problemu architektonicznego&gt;</code></li><li><strong>Kluczowe cele jakościowe (Top 3–5 wg ISO/IEC 25010):</strong></li></ul>
+<ul><li><strong>Cel systemu i kontekst problemu:</strong> <code>&lt;Krótki opis problemu architektonicznego&gt;</code></li><li><strong>Najważniejsze cele jakościowe (top 3–5 wg ISO/IEC 25010):</strong></li></ul>
 <table><thead><tr>
 <th><p>Priorytet</p></th>
 <th><p>Cel jakościowy</p></th>
 <th><p>Powiązane wymagania (<code>NFR-nn</code>)</p></th>
-<th><p>Założenie architektoniczne realizujące cel</p></th>
+<th><p>Założenie architektoniczne, które realizuje cel</p></th>
 </tr></thead><tbody>
 <tr>
 <td><p>1</p></td>
@@ -17,14 +18,14 @@
 </tr>
 </tbody></table>
 <h2>2. Podsumowanie wymagań i ograniczenia</h2>
-<ul><li><strong>Główne wymagania funkcjonalne determinujące architekturę:</strong> <code>&lt;Lista&gt;</code></li><li><strong>Ograniczenia techniczne, organizacyjne i licencyjne:</strong> <code>&lt;Tabela ograniczeń i ich skutków&gt;</code></li></ul>
+<ul><li><strong>Główne wymagania funkcjonalne, które kształtują architekturę:</strong> <code>&lt;Lista&gt;</code></li><li><strong>Ograniczenia techniczne, organizacyjne i licencyjne:</strong> <code>&lt;Tabela ograniczeń i ich skutków&gt;</code></li></ul>
 <h2>3. Architektura wysokopoziomowa (High-Level Architecture — C4 Poziom 1 i 2)</h2>
-<ul><li><strong>Diagram Kontekstu Systemu (C4 Level 1):</strong> <code>&lt;Diagram Mermaid pokazujący użytkowników i systemy zewnętrzne&gt;</code></li><li><strong>Diagram Kontenerów (C4 Level 2):</strong> <code>&lt;Diagram Mermaid pokazujący aplikację kliencką, serwer, bazę danych i protokoły komunikacji&gt;</code></li></ul>
+<ul><li><strong>Diagram kontekstu systemu (C4 Level 1):</strong> <code>&lt;Diagram Mermaid pokazujący użytkowników i systemy zewnętrzne&gt;</code></li><li><strong>Diagram kontenerów (C4 Level 2):</strong> <code>&lt;Diagram Mermaid pokazujący aplikację kliencką, serwer, bazę danych i protokoły komunikacji&gt;</code></li></ul>
 <h2>4. Szczegółowy projekt systemu (Detailed System Design — C4 Poziom 3)</h2>
 <ul><li><strong>Podział na moduły i reguły zależności:</strong> <code>&lt;Tabela modułów, ich odpowiedzialności i dozwolonych kierunków zależności&gt;</code></li><li><strong>Kontrakty komunikacyjne i specyfikacja API:</strong> <code>&lt;Opis głównych DTO i odnośnik do dokumentacji API&gt;</code></li><li><strong>Widok wykonania (Runtime View):</strong> <code>&lt;Diagramy sekwencji dla najważniejszych przebiegów&gt;</code></li><li><strong>Architektura danych (Data Architecture):</strong> <code>&lt;Diagram ERD i zasady trwałości danych&gt;</code></li></ul>
 <h2>5. Strategie techniczne i koncepcje przekrojowe (Technical Strategies and Solutions)</h2>
 <table><thead><tr>
-<th><p>Zagadnienie przekrojowe (Bezpieczeństwo, Współbieżność, Determinizm, Obsługa błędów, Telemetria)</p></th>
+<th><p>Zagadnienie przekrojowe (bezpieczeństwo, współbieżność, determinizm, obsługa błędów, telemetria)</p></th>
 <th><p>Zastosowane rozwiązanie techniczne</p></th>
 </tr></thead><tbody>
 <tr>
@@ -33,6 +34,6 @@
 </tr>
 </tbody></table>
 <h2>6. Infrastruktura i architektura wdrożenia</h2>
-<ul><li><strong>Środowiska uruchomieniowe (Lokalne, CI, Demo/Produkcja):</strong> <code>&lt;Tabela i diagram wdrożenia&gt;</code></li><li><strong>Wymagania sieciowe i sprzętowe:</strong> <code>&lt;Specyfikacja&gt;</code></li></ul>
+<ul><li><strong>Środowiska uruchomieniowe (lokalne, CI, demo/produkcja):</strong> <code>&lt;Tabela i diagram wdrożenia&gt;</code></li><li><strong>Wymagania sieciowe i sprzętowe:</strong> <code>&lt;Specyfikacja&gt;</code></li></ul>
 <h2>7. Decyzje architektoniczne (ADR) oraz ryzyka i dług techniczny</h2>
 <ul><li><strong>Odnośnik do rejestru ADR:</strong> <strong><code>07-decyzje-adr/</code></strong> (<code>../01-dokumentacja-systemowa/07-decyzje-adr/README.md</code>)</li><li><strong>Tabela ryzyk architektonicznych i długu technicznego:</strong> <code>&lt;Ryzyko → Skutek → Plan mitygacji&gt;</code></li></ul>

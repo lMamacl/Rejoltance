@@ -1,6 +1,7 @@
-<ac:structured-macro ac:name="info"><ac:rich-text-body><p><strong>Synchronizacja 1:1 z repozytorium Git:</strong> <code>docs/00-przewodnik-i-setup/04-sciaga-komend.md</code> (commit <code>10829d3</code>, data eksportu: <code>2026-11-02</code>)</p></ac:rich-text-body></ac:structured-macro>
-<blockquote><p><strong>Źródło prawdy:</strong> repozytorium (<code>docs/00-przewodnik-i-setup/04-sciaga-komend.md</code>) · <strong>Kategoria dokumentacji:</strong> Ściąga deweloperska · <strong>Etap SDD:</strong> Realizacja i weryfikacja</p></blockquote>
-<p>Zestawienie najważniejszych poleceń używanych w codziennej pracy nad projektem <strong>RE:JOLTANCE</strong>. Wszystkie komendy należy uruchamiać z głównego katalogu repozytorium (o ile nie zaznaczono inaczej).</p>
+<ac:structured-macro ac:name="info"><ac:rich-text-body><p><strong>Synchronizacja 1:1 z repozytorium Git:</strong> <code>docs/00-przewodnik-i-setup/04-sciaga-komend.md</code> (commit <code>a2bf2a4</code>, data eksportu: <code>2026-11-02</code>)</p></ac:rich-text-body></ac:structured-macro>
+<blockquote><p><strong>Źródło prawdy:</strong> repozytorium (<code>docs/00-przewodnik-i-setup/04-sciaga-komend.md</code>) · <strong>Kategoria dokumentacji:</strong> ściąga deweloperska · <strong>Etap SDD:</strong> Realizacja i weryfikacja</p></blockquote>
+<p>Tu zebraliśmy najważniejsze polecenia z codziennej pracy nad <strong>RE:JOLTANCE</strong>. Uruchamiaj je z głównego katalogu repozytorium, chyba że w wierszu podano inaczej.</p>
+<p>SDD (Spec-Driven Development) to nasza metoda pracy: najpierw specyfikacja, potem kod. CI (Continuous Integration) to automatyczne sprawdzanie zmian na GitHubie.</p>
 <hr />
 <h2>1. Konfiguracja i uruchamianie aplikacji</h2>
 <table><thead><tr>
@@ -16,23 +17,23 @@
 <td><p><code>bash tools/setup.sh</code></p></td>
 </tr>
 <tr>
-<td><p>Diagnostyka środowiska (bez wprowadzania zmian w systemie)</p></td>
+<td><p>Diagnostyka środowiska (nic nie zmienia w systemie)</p></td>
 <td><p><code>powershell -ExecutionPolicy Bypass -File tools/doctor.ps1</code></p></td>
 </tr>
 <tr>
-<td><p>Uruchomienie całej aplikacji (serwer + klient web + panel Aspire)</p></td>
-<td><p><code>dotnet run --project src/Rejoltance.AppHost</code> <em>(lub <code>aspire run</code>)</em></p></td>
+<td><p>Cała aplikacja (serwer + klient web + panel Aspire)</p></td>
+<td><p><code>dotnet run --project src/Rejoltance.AppHost</code> <em>(albo <code>aspire run</code>)</em></p></td>
 </tr>
 <tr>
-<td><p>Uruchomienie samego serwera gry (ASP.NET Core + SignalR)</p></td>
+<td><p>Sam serwer gry (ASP.NET Core + SignalR)</p></td>
 <td><p><code>dotnet run --project src/Rejoltance.Server</code></p></td>
 </tr>
 <tr>
-<td><p>Uruchomienie samego klienta webowego (w katalogu <code>src/web</code>)</p></td>
+<td><p>Sam klient webowy (w katalogu <code>src/web</code>)</p></td>
 <td><p><code>SERVER_HTTP=http://localhost:5000 npm run dev</code></p></td>
 </tr>
 <tr>
-<td><p>Uruchomienie referencyjnego prototypu JS w przeglądarce</p></td>
+<td><p>Prototyp referencyjny JS w przeglądarce</p></td>
 <td><p><code>npx serve prototype/revibance</code></p></td>
 </tr>
 </tbody></table>
@@ -51,11 +52,11 @@
 <td><p><code>dotnet test Rejoltance.slnx --filter &quot;Category!=Integration&quot;</code></p></td>
 </tr>
 <tr>
-<td><p>Uruchomienie testu konkretnej reguły gry (np. <code>R-14</code>)</p></td>
+<td><p>Test jednej reguły gry (np. <code>R-14</code>)</p></td>
 <td><p><code>dotnet test Rejoltance.slnx --filter &quot;FullyQualifiedName~R14&quot;</code></p></td>
 </tr>
 <tr>
-<td><p>Pełny test dymny (smoke test) całej aplikacji z Aspire AppHost</p></td>
+<td><p>Test dymny (smoke test) całej aplikacji z Aspire AppHost</p></td>
 <td><p><code>dotnet test tests/Rejoltance.AppHost.Tests</code></p></td>
 </tr>
 <tr>
@@ -67,11 +68,11 @@
 <td><p><code>npm --prefix src/web test</code></p></td>
 </tr>
 <tr>
-<td><p>Kontrola typów TypeScript, linter ESLint i build produkcyjny klienta</p></td>
+<td><p>Kontrola typów TypeScript, ESLint i build produkcyjny klienta</p></td>
 <td><p><code>npm --prefix src/web run typecheck &amp;&amp; npm --prefix src/web run lint &amp;&amp; npm --prefix src/web run build</code></p></td>
 </tr>
 <tr>
-<td><p><strong>Walidacja wszystkich specyfikacji OpenSpec oraz lintera Markdown</strong></p></td>
+<td><p>Walidacja specyfikacji OpenSpec i lintera Markdown</p></td>
 <td><p><code>npm run check</code></p></td>
 </tr>
 <tr>
@@ -80,14 +81,15 @@
 </tr>
 </tbody></table>
 <hr />
-<h2>3. Skrypty narzędziowe i automatyzacja (<code>tools/</code>)</h2>
+<h2>3. Skrypty narzędziowe (<code>tools/</code>)</h2>
+<p>Każdy skrypt ma dwa tryby. Bez flagi generuje pliki. Z flagą <code>--check</code> tylko sprawdza, czy pliki są aktualne. Tego trybu używa CI.</p>
 <table><thead><tr>
 <th><p>Cel</p></th>
-<th><p>Polecenie regenerujące pliki</p></th>
-<th><p>Polecenie sprawdzające w CI (<code>--check</code>)</p></th>
+<th><p>Generowanie plików</p></th>
+<th><p>Sprawdzenie w CI (<code>--check</code>)</p></th>
 </tr></thead><tbody>
 <tr>
-<td><p>Synchronizacja definicji agentów, reguł i skilli z <code>.agents/</code> do adapterów IDE</p></td>
+<td><p>Synchronizacja agentów, reguł i skilli z <code>.agents/</code> do adapterów IDE</p></td>
 <td><p><code>python tools/agents/sync_agents.py</code></p></td>
 <td><p><code>python tools/agents/sync_agents.py --check</code></p></td>
 </tr>
@@ -97,18 +99,19 @@
 <td><p><code>python tools/content/extract_cards.py --check</code></p></td>
 </tr>
 <tr>
-<td><p>Generowanie plików importu CSV do Jiry oraz podsumowania <code>BACKLOG.md</code> z <code>backlog.toml</code></p></td>
+<td><p>Pliki importu CSV do Jiry i podsumowanie <code>BACKLOG.md</code> z <code>backlog.toml</code></p></td>
 <td><p><code>python tools/backlog/gen_jira_csv.py</code></p></td>
 <td><p><code>python tools/backlog/gen_jira_csv.py --check</code></p></td>
 </tr>
 <tr>
-<td><p>Walidacja i eksport drzewa dokumentacji <code>docs/</code> do formatu Confluence</p></td>
+<td><p>Walidacja i eksport drzewa <code>docs/</code> do Confluence</p></td>
 <td><p><code>python tools/confluence/sync_confluence.py</code></p></td>
 <td><p><code>python tools/confluence/sync_confluence.py --check</code></p></td>
 </tr>
 </tbody></table>
 <hr />
-<h2>4. Praca ze specyfikacjami OpenSpec (Spec-Driven Development)</h2>
+<h2>4. Praca ze specyfikacjami OpenSpec</h2>
+<p>Ta sama komenda ma inną składnię w różnych narzędziach AI:</p>
 <table><thead><tr>
 <th><p>Etap SDD</p></th>
 <th><p>Claude Code / Gemini CLI</p></th>
@@ -122,7 +125,7 @@
 <td><p><code>$openspec-explore</code></p></td>
 </tr>
 <tr>
-<td><p><strong>2. Propozycja specyfikacji zmiany</strong></p></td>
+<td><p><strong>2. Propozycja zmiany w specyfikacji</strong></p></td>
 <td><p><code>/opsx:propose REJ-123 opis</code></p></td>
 <td><p><code>/opsx-propose REJ-123 opis</code></p></td>
 <td><p><code>$openspec-propose REJ-123 opis</code></p></td>
@@ -134,7 +137,7 @@
 <td><p><code>$openspec-update-change</code></p></td>
 </tr>
 <tr>
-<td><p><strong>4. Implementacja wg <code>tasks.md</code></strong></p></td>
+<td><p><strong>4. Implementacja według <code>tasks.md</code></strong></p></td>
 <td><p><code>/opsx:apply</code></p></td>
 <td><p><code>/opsx-apply</code></p></td>
 <td><p><code>$openspec-apply-change</code></p></td>
@@ -153,65 +156,66 @@
 </tr>
 </tbody></table>
 <hr />
-<h2>5. Szybka mapa skilli zespołowych (<code>.agents/skills/</code>)</h2>
+<h2>5. Skille zespołu (<code>.agents/skills/</code>)</h2>
+<p>Skill to opisana krok po kroku procedura, którą wykonuje agent albo człowiek. Kolumna „Agenci” pokazuje role, które mają dany skill w swojej konfiguracji (<code>.agents/agents/</code>).</p>
 <table><thead><tr>
 <th><p>Skill (<code>/nazwa</code>)</p></th>
-<th><p>Przeznaczenie</p></th>
-<th><p>Główny agent korzystający ze skilla</p></th>
+<th><p>Do czego służy</p></th>
+<th><p>Agenci</p></th>
 </tr></thead><tbody>
 <tr>
 <td><p><code>rj-start-feature</code></p></td>
-<td><p>Rozpoczęcie pracy nad zadaniem Jira (gałąź + inicjacja zmiany OpenSpec)</p></td>
+<td><p>Start pracy nad zadaniem z Jiry: gałąź i nowa zmiana OpenSpec.</p></td>
 <td><p><code>rj-orchestrator</code></p></td>
 </tr>
 <tr>
 <td><p><code>rj-add-rule-test</code></p></td>
-<td><p>Przełożenie reguły gry z prototypu na wymaganie <code>R-nn</code> i test xUnit</p></td>
-<td><p><code>rj-rules-expert</code>, <code>rj-backend-engineer</code>, <code>rj-test-verifier</code></p></td>
+<td><p>Przeniesienie reguły gry z prototypu na wymaganie <code>R-nn</code> i test xUnit.</p></td>
+<td><p><code>rj-rules-engineer</code>, <code>rj-backend-engineer</code>, <code>rj-qa-verifier</code></p></td>
 </tr>
 <tr>
 <td><p><code>rj-add-card</code></p></td>
-<td><p>Dodanie lub modyfikacja karty w prototypie i regeneracja katalogu JSON</p></td>
-<td><p><code>rj-rules-expert</code>, <code>rj-backend-engineer</code></p></td>
+<td><p>Dodanie lub zmiana karty w prototypie i ponowne wygenerowanie katalogu JSON.</p></td>
+<td><p><code>rj-card-author</code></p></td>
 </tr>
 <tr>
 <td><p><code>rj-write-adr</code></p></td>
-<td><p>Utworzenie nowego dokumentu decyzji architektonicznej (ADR) wg szablonu</p></td>
+<td><p>Nowy zapis decyzji architektonicznej (ADR, Architecture Decision Record) według szablonu.</p></td>
 <td><p><code>rj-architect</code>, <code>rj-docs-writer</code></p></td>
 </tr>
 <tr>
 <td><p><code>rj-pr-ready</code></p></td>
-<td><p>Kompleksowa weryfikacja buildu, testów, specyfikacji i opisu przed PR</p></td>
-<td><p><code>rj-orchestrator</code>, <code>rj-reviewer</code>, <code>rj-test-verifier</code></p></td>
+<td><p>Sprawdzenie buildu, testów, specyfikacji i opisu przed Pull Requestem (PR).</p></td>
+<td><p><code>rj-orchestrator</code>, <code>rj-qa-verifier</code></p></td>
 </tr>
 <tr>
 <td><p><code>rj-sync-confluence</code></p></td>
-<td><p>Walidacja struktury <code>docs/</code> i wygenerowanie paczki stron do Confluence PB</p></td>
-<td><p><code>rj-docs-writer</code></p></td>
+<td><p>Walidacja struktury <code>docs/</code> i paczka stron do Confluence PB (Politechniki Białostockiej).</p></td>
+<td><p><code>rj-docs-writer</code>, <code>rj-scrum-jira</code></p></td>
 </tr>
 <tr>
 <td><p><code>rj-backlog-to-jira</code></p></td>
-<td><p>Aktualizacja <code>backlog.toml</code> i wygenerowanie plików CSV do importu w Jirze</p></td>
-<td><p><code>rj-scrum-assistant</code></p></td>
+<td><p>Aktualizacja <code>backlog.toml</code> i pliki CSV do importu w Jirze.</p></td>
+<td><p><code>rj-scrum-jira</code></p></td>
 </tr>
 <tr>
 <td><p><code>rj-daily-report</code></p></td>
-<td><p>Przygotowanie ustrukturyzowanej notatki ze spotkania Daily Scrum</p></td>
-<td><p><code>rj-scrum-assistant</code></p></td>
+<td><p>Notatka ze spotkania Daily Scrum.</p></td>
+<td><p><code>rj-scrum-jira</code></p></td>
 </tr>
 <tr>
 <td><p><code>rj-sprint-report</code></p></td>
-<td><p>Przygotowanie raportu Sprint Review, Retrospektywy i analizy estymat</p></td>
-<td><p><code>rj-scrum-assistant</code></p></td>
+<td><p>Raport z Sprint Review, Retrospektywy i analiza estymat.</p></td>
+<td><p><code>rj-scrum-jira</code></p></td>
 </tr>
 <tr>
 <td><p><code>rj-add-skill</code></p></td>
-<td><p>Utworzenie nowego skilla w <code>.agents/skills/</code> i synchronizacja adapterów</p></td>
-<td><p><code>rj-docs-writer</code></p></td>
+<td><p>Nowy skill w <code>.agents/skills/</code> i synchronizacja adapterów.</p></td>
+<td><p><code>rj-orchestrator</code></p></td>
 </tr>
 <tr>
 <td><p><code>rj-add-agent</code></p></td>
-<td><p>Utworzenie nowej roli agenta w <code>.agents/agents/</code> i synchronizacja adapterów</p></td>
-<td><p><code>rj-docs-writer</code></p></td>
+<td><p>Nowa rola agenta w <code>.agents/agents/</code> i synchronizacja adapterów.</p></td>
+<td><p><code>rj-orchestrator</code></p></td>
 </tr>
 </tbody></table>

@@ -1,8 +1,8 @@
-<ac:structured-macro ac:name="info"><ac:rich-text-body><p><strong>Synchronizacja 1:1 z repozytorium Git:</strong> <code>docs/04-system-agentow-ai/02-katalog-rol-i-wbudowanych-skilli.md</code> (commit <code>10829d3</code>, data eksportu: <code>2026-11-02</code>)</p></ac:rich-text-body></ac:structured-macro>
-<blockquote><p><strong>Źródło prawdy:</strong> Repozytorium (<code>docs/04-system-agentow-ai/02-katalog-rol-i-wbudowanych-skilli.md</code>) · <strong>Kategoria dokumentacji:</strong> Dokumentacja procesowa — Katalog ról i umiejętności AI · <strong>Etap SDD:</strong> Cały cykl SDD</p></blockquote>
-<p>W projekcie <strong>RE:JOLTANCE</strong> zdefiniowano <strong>10 wyspecjalizowanych ról agentów AI</strong> (w katalogu <code>.agents/agents/</code>) oraz <strong>13 zespołowych skilli proceduralnych <code>rj-*</code> + 6 skilli OpenSpec</strong> (w katalogu <code>.agents/skills/</code>). Aby system był przejrzysty dla ludzi i bezpieczny w działaniu, role zostały podzielone na <strong>4 grupy tematyczne odpowiadające etapom procesu SDD i warstwom architektury</strong>, a każdemu agentowi przypisano jawny zestaw wbudowanych skilli (<code>skills:</code>) oraz minimalny zestaw narzędzi (zasada <em>Least Privilege</em>).</p>
+<ac:structured-macro ac:name="info"><ac:rich-text-body><p><strong>Synchronizacja 1:1 z repozytorium Git:</strong> <code>docs/04-system-agentow-ai/02-katalog-rol-i-wbudowanych-skilli.md</code> (commit <code>a2bf2a4</code>, data eksportu: <code>2026-11-02</code>)</p></ac:rich-text-body></ac:structured-macro>
+<blockquote><p><strong>Źródło prawdy:</strong> repozytorium (<code>docs/04-system-agentow-ai/02-katalog-rol-i-wbudowanych-skilli.md</code>) · <strong>Kategoria dokumentacji:</strong> Dokumentacja procesowa — katalog ról i umiejętności AI · <strong>Etap SDD:</strong> cały cykl SDD</p></blockquote>
+<p>W projekcie <strong>RE:JOLTANCE</strong> mamy <strong>10 ról agentów AI</strong> (katalog <code>.agents/agents/</code>) oraz <strong>19 skilli</strong>: 13 zespołowych <code>rj-*</code> i 6 skilli OpenSpec (katalog <code>.agents/skills/</code>). Skill to zapisana procedura krok po kroku, którą agent wykonuje na żądanie. Role dzielimy na <strong>4 grupy</strong>, które odpowiadają etapom procesu SDD (Spec-Driven Development) i warstwom architektury. Każdy agent ma jawną listę wbudowanych skilli (<code>skills:</code>) i tylko te narzędzia, których naprawdę potrzebuje (zasada najmniejszych uprawnień, <em>least privilege</em>).</p>
 <hr />
-<h2>1. Przepływ współpracy między rolami agentów a człowiekiem</h2>
+<h2>1. Jak role współpracują ze sobą i z człowiekiem</h2>
 <p><em>Diagram przepływu (Mermaid):</em></p>
 <ac:structured-macro ac:name="code"><ac:parameter ac:name="language">none</ac:parameter><ac:plain-text-body><![CDATA[flowchart LR
   Human(["👤 Człowiek<br/>(Deweloper / PO)"]) --> Orch["Grupa A: Orkiestracja i SDD<br/>rj-orchestrator<br/>rj-spec-analyst<br/>rj-architect"]
@@ -13,219 +13,221 @@
   App --> Ver
   Ver -- "Raport gotowości PR" --> Gate2{{"🛑 Code Review i Merge<br/>przez Człowieka"}}]]></ac:plain-text-body></ac:structured-macro>
 <hr />
-<h2>2. Cztery grupy ról agentów i ich wbudowane umiejętności</h2>
+<h2>2. Cztery grupy ról i ich wbudowane skille</h2>
+<p>Wszystkie role mają narzędzia <code>read</code>, <code>search</code>, <code>execute</code> i <code>todo</code>. Różnią się narzędziem <code>edit</code> (zapis plików) i <code>agent</code> (przekazywanie pracy innym agentom). Opis „edycja X” w tabelach mówi, za jakie pliki rola odpowiada. Samo narzędzie <code>edit</code> nie ogranicza zapisu do tych katalogów.</p>
 <h3>Grupa A: Orkiestracja i Spec-Driven Development (<code>A-Orkiestracja-i-SDD</code>)</h3>
-<p>Agenci odpowiedzialni za inicjalizację zadań, etap <strong><code>Specify</code></strong> (PRD, reguły <code>R-nn</code>, scenariusze <code>GIVEN/WHEN/THEN</code>) oraz etap <strong><code>Plan</code></strong> (SAD, kontrakty, decyzje ADR).</p>
+<p>Ci agenci przyjmują zadania i prowadzą dwa pierwsze etapy SDD: <strong><code>Specify</code></strong> (PRD, czyli dokument wymagań produktu, reguły <code>R-nn</code>, scenariusze <code>GIVEN/WHEN/THEN</code>) i <strong><code>Plan</code></strong> (SAD, czyli dokument architektury, kontrakty, decyzje ADR).</p>
 <table><thead><tr>
 <th><p>Rola agenta</p></th>
-<th><p>Odpowiedzialność w projekcie</p></th>
-<th><p>Uprawnienia narzędziowe</p></th>
+<th><p>Za co odpowiada</p></th>
+<th><p>Narzędzia</p></th>
 <th><p>Wbudowane skille (<code>skills</code>)</p></th>
 </tr></thead><tbody>
 <tr>
-<td><p><strong><code>rj-orchestrator</code></strong><br /><em>(Główny Koordynator SDD)</em></p></td>
-<td><p>Przyjmuje zadanie z kluczem Jira (<code>REJ-123</code>), sprawdza bramki OpenSpec, dzieli pracę na podzadania <code>≤ 4 h</code>, deleguje kroki do specjalistów i wymusza niezależną weryfikację końcową.</p></td>
-<td><p>Odczyt, wyszukiwanie, uruchamianie komend, delegowanie (<code>agent</code>). <strong>Brak edycji kodu.</strong></p></td>
+<td><p><strong><code>rj-orchestrator</code></strong><br /><em>(koordynator SDD)</em></p></td>
+<td><p>Przyjmuje zadanie z kluczem Jira (<code>REJ-123</code>), sprawdza bramki OpenSpec, dzieli pracę na podzadania <code>≤ 4 h</code>, przekazuje kroki specjalistom i na końcu wymaga niezależnej weryfikacji.</p></td>
+<td><p>Odczyt, wyszukiwanie, uruchamianie komend, delegowanie (<code>agent</code>). <strong>Nie edytuje kodu.</strong></p></td>
 <td><p><code>rj-start-feature</code>, <code>rj-spec-guardian</code>, <code>rj-pr-ready</code>, <code>rj-add-agent</code>, <code>rj-add-skill</code></p></td>
 </tr>
 <tr>
-<td><p><strong><code>rj-spec-analyst</code></strong><br /><em>(Analityk Wymagań PRD i OpenSpec)</em></p></td>
-<td><p>Przekształca potrzeby użytkownika i zachowanie prototypu JS v11 w scenariusze <code>GIVEN/WHEN/THEN</code> w <code>openspec/specs/</code> oraz utrzymuje <code>03-indeks-regul-r-nn.md</code> i <code>04-rozbieznosci-prototypu.md</code>.</p></td>
-<td><p>Odczyt, edycja specyfikacji i dokumentacji wymagań, uruchamianie walidatorów.</p></td>
+<td><p><strong><code>rj-spec-analyst</code></strong><br /><em>(analityk wymagań PRD i OpenSpec)</em></p></td>
+<td><p>Zamienia potrzeby użytkownika i zachowanie prototypu JS v11 na scenariusze <code>GIVEN/WHEN/THEN</code> w <code>openspec/specs/</code>. Utrzymuje <code>03-indeks-regul-r-nn.md</code> i <code>04-rozbieznosci-prototypu.md</code>.</p></td>
+<td><p>Odczyt, edycja specyfikacji i dokumentów wymagań, uruchamianie walidatorów.</p></td>
 <td><p><code>rj-spec-guardian</code>, <code>rj-start-feature</code>, <code>rj-oracle-diff</code></p></td>
 </tr>
 <tr>
-<td><p><strong><code>rj-architect</code></strong><br /><em>(Architekt Systemu SAD i Kontraktów)</em></p></td>
-<td><p>Pilnuje granic 5 modułów, chroni 5 zamrożonych kontraktów w <code>Rejoltance.Contracts</code>, opracowuje projekty techniczne (<code>design.md</code> / TDD) oraz przygotowuje decyzje <code>ADR-NNNN</code>.</p></td>
+<td><p><strong><code>rj-architect</code></strong><br /><em>(architekt systemu i kontraktów)</em></p></td>
+<td><p>Pilnuje granic 5 modułów i chroni 5 zamrożonych kontraktów w <code>Rejoltance.Contracts</code>. Pisze projekty techniczne (<code>design.md</code>, TDD, czyli Technical Design Document) i przygotowuje decyzje <code>ADR-NNNN</code>.</p></td>
 <td><p>Odczyt, edycja projektów technicznych i ADR, uruchamianie testów architektury i kontraktów.</p></td>
 <td><p><code>rj-write-adr</code>, <code>rj-spec-guardian</code>, <code>rj-pr-ready</code></p></td>
 </tr>
 </tbody></table>
 <hr />
-<h3>Grupa B: Inżynieria Domeny Gry (<code>B-Inzynieria-Domeny</code>)</h3>
-<p>Agenci realizujący logikę gry karcianej na etapie <strong><code>Implement</code></strong> zgodnie z zasadą <em>Test-First</em> i rygorem determinizmu.</p>
+<h3>Grupa B: Inżynieria domeny gry (<code>B-Inzynieria-Domeny</code>)</h3>
+<p>Ci agenci piszą logikę gry na etapie <strong><code>Implement</code></strong>. Najpierw powstaje test, potem kod (<em>test-first</em>), a silnik musi być deterministyczny.</p>
 <table><thead><tr>
 <th><p>Rola agenta</p></th>
-<th><p>Odpowiedzialność w projekcie</p></th>
-<th><p>Uprawnienia narzędziowe</p></th>
+<th><p>Za co odpowiada</p></th>
+<th><p>Narzędzia</p></th>
 <th><p>Wbudowane skille (<code>skills</code>)</p></th>
 </tr></thead><tbody>
 <tr>
-<td><p><strong><code>rj-rules-engineer</code></strong><br /><em>(Inżynier Silnika <code>Rejoltance.Kernel</code>)</em></p></td>
-<td><p>Implementuje czysty, deterministyczny silnik reguł w C# (<code>Kernel.Apply</code>, <code>LegalActions</code>, 4 kroki rundy, walka w 4 liniach, słowa kluczowe) oraz testy jednostkowe <code>Rnn_</code> (Epik E1).</p></td>
+<td><p><strong><code>rj-rules-engineer</code></strong><br /><em>(inżynier silnika <code>Rejoltance.Kernel</code>)</em></p></td>
+<td><p>Implementuje czysty, deterministyczny silnik reguł w C# (<code>Kernel.Apply</code>, <code>LegalActions</code>, 4 kroki rundy, walka w 4 liniach, słowa kluczowe) i testy jednostkowe <code>Rnn_</code> (epik E1).</p></td>
 <td><p>Odczyt, edycja <code>Rejoltance.Kernel</code> i <code>Rejoltance.Kernel.Tests</code>, uruchamianie <code>dotnet test</code>.</p></td>
 <td><p><code>rj-add-rule-test</code>, <code>rj-oracle-diff</code>, <code>rj-pr-ready</code></p></td>
 </tr>
 <tr>
-<td><p><strong><code>rj-card-author</code></strong><br /><em>(Twórca Kart i Efektów DSL <code>Rejoltance.Content</code>)</em></p></td>
-<td><p>Przenosi karty z prototypu JS do <code>cards.json</code>, implementuje handlery efektów DSL (wyzwalacze, warunki, selektory celów, akcje) oraz testy w <code>Rejoltance.Cards.Tests</code> (Epik E2).</p></td>
+<td><p><strong><code>rj-card-author</code></strong><br /><em>(twórca kart i efektów DSL w <code>Rejoltance.Content</code>)</em></p></td>
+<td><p>Przenosi karty z prototypu JS do <code>cards.json</code>. Implementuje handlery efektów DSL (języka opisu efektów: wyzwalacze, warunki, selektory celów, akcje) i testy kart w planowanym projekcie <code>Rejoltance.Cards.Tests</code> (epik E2).</p></td>
 <td><p>Odczyt, edycja <code>Rejoltance.Content</code>, handlerów efektów i testów kart, uruchamianie ekstraktora i testów.</p></td>
 <td><p><code>rj-add-card</code>, <code>rj-add-rule-test</code>, <code>rj-oracle-diff</code></p></td>
 </tr>
 </tbody></table>
+<blockquote><p>Projekt <code>tests/Rejoltance.Cards.Tests</code> jeszcze nie istnieje. Do czasu jego utworzenia testy katalogu kart są w <code>tests/Rejoltance.Kernel.Tests</code> (<code>ContentTests</code>).</p></blockquote>
 <hr />
-<h3>Grupa C: Inżynieria Aplikacji Sieciowej i Webowej (<code>C-Inzynieria-Aplikacji</code>)</h3>
-<p>Agenci budujący warstwę serwerową czasu rzeczywistego oraz klienta przeglądarkowego.</p>
+<h3>Grupa C: Inżynieria aplikacji sieciowej i webowej (<code>C-Inzynieria-Aplikacji</code>)</h3>
+<p>Ci agenci budują serwer czasu rzeczywistego i klienta w przeglądarce.</p>
 <table><thead><tr>
 <th><p>Rola agenta</p></th>
-<th><p>Odpowiedzialność w projekcie</p></th>
-<th><p>Uprawnienia narzędziowe</p></th>
+<th><p>Za co odpowiada</p></th>
+<th><p>Narzędzia</p></th>
 <th><p>Wbudowane skille (<code>skills</code>)</p></th>
 </tr></thead><tbody>
 <tr>
-<td><p><strong><code>rj-backend-engineer</code></strong><br /><em>(Inżynier Serwera <code>Rejoltance.Server</code>)</em></p></td>
-<td><p>Buduje autorytatywny serwer ASP.NET Core + SignalR (<code>MatchHub</code>), pokoje PvP, projekcję <em>Fog of War</em> (<code>R-66</code>), autoryzację i warstwę bazy danych EF Core (Epiki E3 i E6).</p></td>
-<td><p>Odczyt, edycja <code>Rejoltance.Server</code>, <code>AppHost</code> i <code>Rejoltance.Host.Tests</code>, uruchamianie <code>dotnet test</code>.</p></td>
+<td><p><strong><code>rj-backend-engineer</code></strong><br /><em>(inżynier serwera <code>Rejoltance.Server</code>)</em></p></td>
+<td><p>Buduje autorytatywny serwer ASP.NET Core + SignalR (<code>MatchHub</code>), pokoje PvP, projekcję <em>Fog of War</em> (ukrywanie informacji przed przeciwnikiem, <code>R-66</code>), autoryzację i warstwę bazy danych EF Core (epiki E3 i E6).</p></td>
+<td><p>Odczyt, edycja <code>Rejoltance.Server</code>, <code>Rejoltance.AppHost</code> i ich testów (<code>Rejoltance.Server.Tests</code>, <code>Rejoltance.AppHost.Tests</code>), uruchamianie <code>dotnet test</code>.</p></td>
 <td><p><code>rj-pr-ready</code>, <code>rj-add-rule-test</code>, <code>rj-start-feature</code></p></td>
 </tr>
 <tr>
-<td><p><strong><code>rj-frontend-engineer</code></strong><br /><em>(Inżynier Klienta <code>src/web</code>)</em></p></td>
-<td><p>Buduje interfejs React 19 + TypeScript 5 + Vite: widok planszy 2×2, ręki, podświetlanie ruchów z <code>legalActions</code>, kolejkę animacji <code>DomainEvent[]</code> oraz testy Vitest/Playwright (Epik E4).</p></td>
+<td><p><strong><code>rj-frontend-engineer</code></strong><br /><em>(inżynier klienta <code>src/web</code>)</em></p></td>
+<td><p>Buduje interfejs w React 19 + TypeScript 5 + Vite: planszę 2×2, rękę, podświetlanie ruchów z <code>legalActions</code>, kolejkę animacji <code>DomainEvent[]</code> oraz testy Vitest i Playwright (epik E4).</p></td>
 <td><p>Odczyt, edycja <code>src/web</code> i <code>tests/e2e</code>, uruchamianie <code>npm test</code>, <code>typecheck</code> i <code>build</code>.</p></td>
 <td><p><code>rj-pr-ready</code>, <code>rj-start-feature</code></p></td>
 </tr>
 </tbody></table>
 <hr />
-<h3>Grupa D: Weryfikacja Jakości, Proces Scrum i Dokumentacja (<code>D-Jakosc-i-Dokumentacja</code>)</h3>
-<p>Agenci odpowiadający za etap <strong><code>Verify</code></strong> oraz <strong><code>Release</code></strong>, zarządzanie Product Backlogiem w Jirze oraz utrzymanie dokumentacji 1:1 z Confluence PB.</p>
+<h3>Grupa D: Jakość, proces Scrum i dokumentacja (<code>D-Jakosc-i-Dokumentacja</code>)</h3>
+<p>Ci agenci prowadzą etapy <strong><code>Verify</code></strong> i <strong><code>Release</code></strong>, pomagają zarządzać Product Backlogiem w Jirze i utrzymują dokumentację w układzie 1:1 z Confluence PB.</p>
 <table><thead><tr>
 <th><p>Rola agenta</p></th>
-<th><p>Odpowiedzialność w projekcie</p></th>
-<th><p>Uprawnienia narzędziowe</p></th>
+<th><p>Za co odpowiada</p></th>
+<th><p>Narzędzia</p></th>
 <th><p>Wbudowane skille (<code>skills</code>)</p></th>
 </tr></thead><tbody>
 <tr>
-<td><p><strong><code>rj-qa-verifier</code></strong><br /><em>(Niezależny Audytor Jakości QA)</em></p></td>
-<td><p>Przeprowadza obiektywny audyt jakości: uruchamia pełny zestaw testów C#/TS, weryfikuje pokrycie reguł <code>R-nn</code> i wymagań <code>NFR-nn</code>, sprawdza zgodność z wyrocznią JS i brak wycieku danych w <code>MatchView</code>.</p></td>
-<td><p><strong>Wyłącznie odczyt i uruchamianie testów (<code>brak edit</code>)</strong> — gwarantuje niezależność audytu.</p></td>
+<td><p><strong><code>rj-qa-verifier</code></strong><br /><em>(niezależny audytor jakości QA)</em></p></td>
+<td><p>Sprawdza jakość: uruchamia wszystkie testy C# i TS, weryfikuje pokrycie reguł <code>R-nn</code> i wymagań niefunkcjonalnych <code>NFR-nn</code>, porównuje wyniki z wyrocznią JS (prototypem) i sprawdza, czy <code>MatchView</code> nie ujawnia ukrytych danych.</p></td>
+<td><p><strong>Tylko odczyt i uruchamianie testów (bez <code>edit</code>).</strong> Dzięki temu audyt jest niezależny: agent nie poprawia po cichu sprawdzanego kodu.</p></td>
 <td><p><code>rj-pr-ready</code>, <code>rj-oracle-diff</code>, <code>rj-add-rule-test</code>, <code>rj-spec-guardian</code></p></td>
 </tr>
 <tr>
-<td><p><strong><code>rj-scrum-jira</code></strong><br /><em>(Asystent Scruma, Backlogu i Jiry)</em></p></td>
-<td><p>Wspiera Product Ownera sprintu: utrzymuje <code>backlog.toml</code>, pilnuje limitu zadań <code>≤ 4 h</code> (EU4), generuje pliki CSV do Jiry oraz przygotowuje raporty <em>Daily Scrum</em> i <em>Sprint Review/Retro</em>.</p></td>
+<td><p><strong><code>rj-scrum-jira</code></strong><br /><em>(asystent Scruma, backlogu i Jiry)</em></p></td>
+<td><p>Wspiera PO (Product Ownera) sprintu: utrzymuje <code>backlog.toml</code>, pilnuje limitu zadań <code>≤ 4 h</code> (EU4), generuje pliki CSV do Jiry i przygotowuje raporty <em>Daily Scrum</em> oraz <em>Sprint Review/Retro</em>.</p></td>
 <td><p>Odczyt, edycja <code>03-dokumentacja-procesowa/</code>, uruchamianie generatora Jiry.</p></td>
 <td><p><code>rj-backlog-to-jira</code>, <code>rj-daily-report</code>, <code>rj-sprint-report</code>, <code>rj-start-feature</code>, <code>rj-sync-confluence</code></p></td>
 </tr>
 <tr>
-<td><p><strong><code>rj-docs-writer</code></strong><br /><em>(Redaktor Dokumentacji AltexSoft i Confluence)</em></p></td>
-<td><p>Utrzymuje drzewo <code>docs/</code> w układzie 1:1 z Confluence PB (PRD, SAD, podręczniki, karty modułów EU5, szablony) i dba o naturalny, czytelny styl języka polskiego.</p></td>
+<td><p><strong><code>rj-docs-writer</code></strong><br /><em>(redaktor dokumentacji AltexSoft i Confluence)</em></p></td>
+<td><p>Utrzymuje drzewo <code>docs/</code> w układzie 1:1 z Confluence PB (PRD, SAD, podręczniki, karty modułów EU5, szablony) i dba o naturalny, czytelny polski.</p></td>
 <td><p>Odczyt, edycja plików <code>.md</code> w <code>docs/</code> i <code>src/*/README.md</code>, uruchamianie lintera i eksportera Confluence.</p></td>
 <td><p><code>rj-sync-confluence</code>, <code>rj-write-adr</code>, <code>rj-spec-guardian</code></p></td>
 </tr>
 </tbody></table>
 <hr />
-<h2>3. Kompletny katalog umiejętności (<code>.agents/skills/</code>)</h2>
-<h3>A. Zespołowe umiejętności inżynierskie i procesowe (<code>rj-*</code>)</h3>
+<h2>3. Katalog skilli (<code>.agents/skills/</code>)</h2>
+<h3>A. Zespołowe skille inżynierskie i procesowe (<code>rj-*</code>)</h3>
 <table><thead><tr>
 <th><p>Nazwa skilla</p></th>
 <th><p>Etap SDD</p></th>
-<th><p>Przeznaczenie i artefakt wyjściowy</p></th>
+<th><p>Do czego służy i co powstaje</p></th>
 </tr></thead><tbody>
 <tr>
 <td><p><strong><code>rj-start-feature</code></strong></p></td>
 <td><p><code>Specify</code> / <code>Plan</code></p></td>
-<td><p>Weryfikacja zadania Jira, powiązanych reguł <code>R-nn</code> i rozbieżności <code>D-nn</code>, utworzenie gałęzi <code>typ/REJ-123-opis</code> od <code>develop</code> oraz otwarcie zmiany OpenSpec dla zadań ≥ 3 SP.</p></td>
+<td><p>Sprawdza zadanie w Jirze, powiązane reguły <code>R-nn</code> i rozbieżności <code>D-nn</code>. Tworzy gałąź <code>typ/REJ-123-opis</code> od <code>develop</code>, a dla zadań ≥ 3 SP (story points) otwiera zmianę OpenSpec.</p></td>
 </tr>
 <tr>
 <td><p><strong><code>rj-spec-guardian</code></strong></p></td>
 <td><p><code>Specify</code> / <code>Verify</code></p></td>
-<td><p>Audyt dwukierunkowej spójności pomiędzy <code>openspec/specs/</code>, <code>03-indeks-regul-r-nn.md</code>, <code>04-rozbieznosci-prototypu.md</code> i <code>backlog.toml</code>.</p></td>
+<td><p>Sprawdza spójność w obie strony między <code>openspec/specs/</code>, <code>03-indeks-regul-r-nn.md</code>, <code>04-rozbieznosci-prototypu.md</code> i <code>backlog.toml</code>.</p></td>
 </tr>
 <tr>
 <td><p><strong><code>rj-write-adr</code></strong></p></td>
 <td><p><code>Plan</code></p></td>
-<td><p>Utworzenie nowego rekordu decyzji architektonicznej <code>ADR-NNNN</code> w <code>07-decyzje-adr/</code> wg szablonu i aktualizacja rejestru ADR.</p></td>
+<td><p>Tworzy nowy rekord decyzji architektonicznej <code>ADR-NNNN</code> w <code>07-decyzje-adr/</code> według szablonu i aktualizuje rejestr ADR.</p></td>
 </tr>
 <tr>
 <td><p><strong><code>rj-add-rule-test</code></strong></p></td>
 <td><p><code>Tasks</code> / <code>Implement</code></p></td>
-<td><p>Przekształcenie reguły <code>R-nn</code> w deterministyczny test xUnit <code>Rnn_&lt;zachowanie&gt;</code> i aktualizacja macierzy śledzenia.</p></td>
+<td><p>Zamienia regułę <code>R-nn</code> w deterministyczny test xUnit <code>Rnn_&lt;zachowanie&gt;</code> i aktualizuje macierz śledzenia.</p></td>
 </tr>
 <tr>
 <td><p><strong><code>rj-add-card</code></strong></p></td>
 <td><p><code>Implement</code></p></td>
-<td><p>Przeniesienie lub dodanie karty z prototypu JS do <code>cards.json</code>, weryfikacja handlerów efektów DSL i dodanie testu w <code>Rejoltance.Cards.Tests</code>.</p></td>
+<td><p>Przenosi lub dodaje kartę z prototypu JS do <code>cards.json</code>, sprawdza handlery efektów DSL i dodaje test karty (docelowo w planowanym projekcie <code>Rejoltance.Cards.Tests</code>).</p></td>
 </tr>
 <tr>
 <td><p><strong><code>rj-oracle-diff</code></strong></p></td>
 <td><p><code>Implement</code> / <code>Verify</code></p></td>
-<td><p>Porównanie rozstrzygania reguły w <code>Rejoltance.Kernel</code> z referencyjnym silnikiem <code>prototype/revibance/engine.js</code> (v11).</p></td>
+<td><p>Porównuje rozstrzygnięcie reguły w <code>Rejoltance.Kernel</code> z silnikiem referencyjnym <code>prototype/revibance/engine.js</code> (v11).</p></td>
 </tr>
 <tr>
 <td><p><strong><code>rj-pr-ready</code></strong></p></td>
 <td><p><code>Verify</code></p></td>
-<td><p>Lista kontrolna przed otwarciem PR: <code>dotnet build -warnaserror</code>, <code>dotnet test</code>, testy web, <code>npm run check</code>, walidatory Pythona i szkic opisu PR.</p></td>
+<td><p>Lista kontrolna przed otwarciem PR (pull requesta): <code>dotnet build -warnaserror</code>, <code>dotnet test</code>, testy web, <code>npm run check</code>, walidatory w Pythonie i szkic opisu PR.</p></td>
 </tr>
 <tr>
 <td><p><strong><code>rj-backlog-to-jira</code></strong></p></td>
 <td><p><code>Tasks</code></p></td>
-<td><p>Edycja <code>backlog.toml</code>, weryfikacja limitu podzadań <code>≤ 4 h</code> (EU4) i wygenerowanie <code>BACKLOG.md</code> oraz plików CSV do importu w Jirze PB.</p></td>
+<td><p>Edytuje <code>backlog.toml</code>, sprawdza limit podzadań <code>≤ 4 h</code> (EU4) i generuje <code>BACKLOG.md</code> oraz pliki CSV do importu w Jirze PB.</p></td>
 </tr>
 <tr>
 <td><p><strong><code>rj-daily-report</code></strong></p></td>
 <td><p><code>Scrum</code></p></td>
-<td><p>Złożenie raportu <em>Daily Scrum</em> z aktualizacji 6 członków zespołu wg szablonu, gotowego do wklejenia w Confluence PB.</p></td>
+<td><p>Składa raport <em>Daily Scrum</em> z aktualizacji 6 osób według szablonu, gotowy do wklejenia w Confluence PB.</p></td>
 </tr>
 <tr>
 <td><p><strong><code>rj-sprint-report</code></strong></p></td>
 <td><p><code>Verify</code> / <code>Release</code></p></td>
-<td><p>Przygotowanie protokołu <em>Sprint Review &amp; Retrospective</em> z tabelą szacunków vs wykonanie (EU4) i podsumowaniem QA (EU6).</p></td>
+<td><p>Przygotowuje protokół <em>Sprint Review &amp; Retrospective</em> z tabelą „szacunek a wykonanie” (EU4) i podsumowaniem QA (EU6).</p></td>
 </tr>
 <tr>
 <td><p><strong><code>rj-sync-confluence</code></strong></p></td>
 <td><p><code>Release</code></p></td>
-<td><p>Walidacja drzewa <code>docs/</code> (taksonomia AltexSoft + nagłówki metadanych + linki) i wygenerowanie paczki eksportowej 1:1 do Confluence PB.</p></td>
+<td><p>Sprawdza drzewo <code>docs/</code> (taksonomia AltexSoft, nagłówki metadanych, linki) i generuje paczkę eksportu 1:1 do Confluence PB.</p></td>
 </tr>
 <tr>
 <td><p><strong><code>rj-add-agent</code></strong></p></td>
 <td><p><code>Constitution</code></p></td>
-<td><p>Utworzenie lub aktualizacja roli agenta w <code>.agents/agents/rj-*.md</code> i regeneracja adapterów IDE przez <code>sync_agents.py</code>.</p></td>
+<td><p>Tworzy lub aktualizuje rolę agenta w <code>.agents/agents/rj-*.md</code> i odświeża adaptery IDE przez <code>sync_agents.py</code>.</p></td>
 </tr>
 <tr>
 <td><p><strong><code>rj-add-skill</code></strong></p></td>
 <td><p><code>Constitution</code></p></td>
-<td><p>Utworzenie nowego skilla w <code>.agents/skills/rj-*/SKILL.md</code> i wygenerowanie adapterów dla Claude Code, Copilot, Gemini i Antigravity.</p></td>
+<td><p>Tworzy nowy skill w <code>.agents/skills/rj-*/SKILL.md</code> i generuje adaptery dla Claude Code, Copilot, Gemini i Antigravity.</p></td>
 </tr>
 </tbody></table>
-<h3>B. Umiejętności narzędzia OpenSpec CLI (<code>openspec-*</code>)</h3>
+<h3>B. Skille narzędzia OpenSpec CLI (<code>openspec-*</code>)</h3>
 <table><thead><tr>
 <th><p>Nazwa skilla</p></th>
 <th><p>Komenda ukośnikowa</p></th>
-<th><p>Przeznaczenie w cyklu życia zmiany</p></th>
+<th><p>Do czego służy w cyklu życia zmiany</p></th>
 </tr></thead><tbody>
 <tr>
 <td><p><code>openspec-explore</code></p></td>
 <td><p><code>/opsx:explore</code></p></td>
-<td><p>Badanie problemu i wariantów rozwiązania przed utworzeniem formalnej propozycji zmiany.</p></td>
+<td><p>Badasz problem i warianty rozwiązania, zanim napiszesz formalną propozycję zmiany.</p></td>
 </tr>
 <tr>
 <td><p><code>openspec-propose</code></p></td>
 <td><p><code>/opsx:propose</code></p></td>
-<td><p>Utworzenie propozycji zmiany w <code>openspec/changes/&lt;id&gt;/</code> (<code>proposal.md</code>, <code>specs/</code>, <code>design.md</code>, <code>tasks.md</code>).</p></td>
+<td><p>Tworzysz propozycję zmiany w <code>openspec/changes/&lt;id&gt;/</code> (<code>proposal.md</code>, <code>specs/</code>, <code>design.md</code>, <code>tasks.md</code>).</p></td>
 </tr>
 <tr>
 <td><p><code>openspec-update-change</code></p></td>
 <td><p><code>/opsx:update</code></p></td>
-<td><p>Aktualizacja otwartej propozycji zmiany po uwagach z recenzji zespołu.</p></td>
+<td><p>Aktualizujesz otwartą propozycję po uwagach z recenzji zespołu.</p></td>
 </tr>
 <tr>
 <td><p><code>openspec-apply-change</code></p></td>
 <td><p><code>/opsx:apply</code></p></td>
-<td><p>Krokowa realizacja zadań z zaakceptowanego pliku <code>tasks.md</code>.</p></td>
+<td><p>Realizujesz po kolei zadania z zaakceptowanego pliku <code>tasks.md</code>.</p></td>
 </tr>
 <tr>
 <td><p><code>openspec-sync-specs</code></p></td>
 <td><p><code>/opsx:sync</code></p></td>
-<td><p>Synchronizacja delt wymagań ze specyfikacją główną w <code>openspec/specs/</code>.</p></td>
+<td><p>Przenosisz delty wymagań do głównej specyfikacji w <code>openspec/specs/</code>.</p></td>
 </tr>
 <tr>
 <td><p><code>openspec-archive-change</code></p></td>
 <td><p><code>/opsx:archive</code></p></td>
-<td><p>Archiwizacja wdrożonej zmiany po połączeniu Pull Requesta do <code>develop</code>.</p></td>
+<td><p>Archiwizujesz wdrożoną zmianę po scaleniu pull requesta do <code>develop</code>.</p></td>
 </tr>
 </tbody></table>
 <hr />
-<h2>4. Macierz zbiorcza: Rola agenta ↔ Wbudowane umiejętności</h2>
+<h2>4. Macierz zbiorcza: rola agenta ↔ wbudowane skille</h2>
 <table><thead><tr>
 <th><p>Skill ↓ \ Agent →</p></th>
 <th><p><code>orchestrator</code></p></th>

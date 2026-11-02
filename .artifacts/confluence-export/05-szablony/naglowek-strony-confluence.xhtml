@@ -1,5 +1,6 @@
-<ac:structured-macro ac:name="info"><ac:rich-text-body><p><strong>Synchronizacja 1:1 z repozytorium Git:</strong> <code>docs/05-szablony/naglowek-strony-confluence.md</code> (commit <code>10829d3</code>, data eksportu: <code>2026-11-02</code>)</p></ac:rich-text-body></ac:structured-macro>
-<p>Każda strona w przestrzeni projektowej <strong>Confluence PB</strong> zaczyna się od ujednoliconego bloku informacyjnego (makro informacyjne lub blok cytatu na górze strony). Blok ten jednoznacznie wskazuje czytelnikowi, gdzie znajduje się źródło prawdy dokumentu, kto za niego odpowiada oraz do którego etapu procesu <strong>Spec-Driven Development (SDD)</strong> i kategorii dokumentacji należy dana strona.</p>
+<ac:structured-macro ac:name="info"><ac:rich-text-body><p><strong>Synchronizacja 1:1 z repozytorium Git:</strong> <code>docs/05-szablony/naglowek-strony-confluence.md</code> (commit <code>a2bf2a4</code>, data eksportu: <code>2026-11-02</code>)</p></ac:rich-text-body></ac:structured-macro>
+<p>Każda strona w przestrzeni projektu w Confluence PB zaczyna się od takiego samego bloku informacyjnego (makro informacyjne albo cytat na górze strony). Z tego bloku czytelnik dowiaduje się:</p>
+<ul><li>gdzie jest źródło prawdy dokumentu, czyli miejsce, w którym go poprawiamy,</li><li>kto za dokument odpowiada,</li><li>do którego etapu SDD (spec-driven development, pracy sterowanej specyfikacją) i do jakiej kategorii dokumentacji należy strona.</li></ul>
 <hr />
 <h2>Wzór nagłówka dla stron synchronizowanych z repozytorium Git</h2>
 <ac:structured-macro ac:name="code"><ac:parameter ac:name="language">markdown</ac:parameter><ac:plain-text-body><![CDATA[> **Źródło prawdy:** Repozytorium Git — `<ścieżka w docs/>` (gałąź `develop` @ `<commit>`, `<RRRR-MM-DD>`)
@@ -11,6 +12,6 @@
 > **Kategoria dokumentacji:** `<Typ dokumentu>` · **Etap SDD:** `<Weryfikacja | Wydanie | Scrum>`
 > **Właściciel dokumentu:** `<Imię i nazwisko>` · **Data aktualizacji:** `<RRRR-MM-DD>` · **Jira:** `<REJ-...>`]]></ac:plain-text-body></ac:structured-macro>
 <hr />
-<h2>Standardowe etykiety stron w Confluence PB</h2>
-<p>W celu łatwego filtrowania stron na wiki każda strona powinna posiadać co najmniej dwie etykiety:</p>
+<h2>Etykiety stron w Confluence PB</h2>
+<p>Żeby łatwo filtrować strony na wiki, każda strona ma co najmniej dwie etykiety:</p>
 <ol><li><strong>Etykietę źródła prawdy:</strong> <code>zrodlo-repo</code> albo <code>zrodlo-confluence</code>.</li><li><strong>Etykietę etapu SDD:</strong> <code>sdd-fundamenty</code>, <code>sdd-specyfikacja</code>, <code>sdd-plan</code>, <code>sdd-zadania</code>, <code>sdd-realizacja</code>, <code>sdd-weryfikacja</code>, <code>sdd-wydanie</code> lub <code>scrum</code>.</li></ol>

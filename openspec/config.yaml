@@ -15,7 +15,7 @@ context: |
   Podręcznik systemu agentów AI i SDD: docs/04-system-agentow-ai/README.md
 
   Stos technologiczny (ADR-0001):
-  - Backend: .NET 10, C# 13, ASP.NET Core, SignalR (/hubs/match), EF Core (SQLite w S0-S3 -> PostgreSQL od S4), .NET Aspire 13, xUnit.
+  - Backend: .NET 10, C# 13, ASP.NET Core, SignalR (/api/hubs/match), EF Core (SQLite w S0-S3 -> PostgreSQL od S4), .NET Aspire 13, xUnit.
   - Frontend: React 19, TypeScript 5, Vite 6, Vitest, Playwright.
   - Wyrocznia referencyjna: prototype/revibance/engine.js (v11, kanon zasad wg ADR-0005).
 
@@ -23,7 +23,7 @@ context: |
   - Rejoltance.Contracts: 5 zamrożonych kontraktów (Intent, LegalAction, PendingInteraction, MatchView, DomainEvent). Zmiana wymaga ADR.
   - Rejoltance.Content: dane kart z cards.json i walidacja schematu (zależy wyłącznie od Contracts).
   - Rejoltance.Kernel: czysty, deterministyczny silnik reguł (zależy od Contracts i Content; zero I/O, zegara, sieci, bazy i System.Random).
-  - Rejoltance.Server: autorytatywny serwer czasu rzeczywistego, projekcja Fog of War (R-66), trwałość danych.
+  - Rejoltance.Server: autorytatywny serwer czasu rzeczywistego, projekcja Fog of War (R-80…R-82), trwałość danych.
   - src/web: klient przeglądarkowy — renderuje wyłącznie MatchView i wysyła Intent; nigdy nie oblicza reguł gry po stronie przeglądarki.
 
 rules:

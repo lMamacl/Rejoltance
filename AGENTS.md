@@ -16,9 +16,9 @@ Ten plik jest odczytywany automatycznie przez wszystkie wspierane narzędzia AI 
 | **Kontrakty (DTO)** | `src/Rejoltance.Contracts` ↔ `src/web/src/contracts` | 5 zamrożonych typów (`Intent`, `LegalAction`, `PendingInteraction`, `MatchView`, `DomainEvent`). Zmiana wymaga **ADR** i aktualizacji testów próbek JSON (`ContractSampleTests`). |
 | **Katalog kart** | `src/Rejoltance.Content` | Dane 69 kart w `cards.json` generowane z `prototype/revibance/cards.js` (`tools/content/extract_cards.py`). Brak logiki gry. |
 | **Silnik reguł (Kernel)** | `src/Rejoltance.Kernel` | Czysty C# (`.NET 10`), zero I/O, zero zegara systemowego, zero `System.Random`. Wyłącznie deterministyczny `SeededRng`. |
-| **Serwer autorytatywny** | `src/Rejoltance.Server` | ASP.NET Core + SignalR (`/hubs/match`). Waliduje intencje przez `Kernel.LegalActions` i rozsyła spersonalizowany `MatchView` (*Fog of War* — `R-66`). |
+| **Serwer autorytatywny** | `src/Rejoltance.Server` | ASP.NET Core + SignalR (`/api/hubs/match`). Waliduje intencje przez `Kernel.LegalActions` i rozsyła spersonalizowany `MatchView` (*Fog of War* — `R-80…R-82`). |
 | **Klient webowy** | `src/web` | React 19 + TypeScript 5 + Vite. Renderuje wyłącznie `MatchView` i wysyła `Intent`. Nie liczy obrażeń ani reguł gry. |
-| **Specyfikacje SDD** | `openspec/specs/` | Żywe specyfikacje 55 reguł domenowych `R-nn` oraz 22 wymagań jakościowych `NFR-nn`. |
+| **Specyfikacje SDD** | `openspec/specs/` | Żywe specyfikacje 55 reguł domenowych `R-nn` oraz 18 wymagań jakościowych `NFR-nn`. |
 | **Dokumentacja 1:1 Confluence** | `docs/` | Zorganizowana wg taksonomii AltexSoft i cyklu SDD (`00-przewodnik-i-setup` .. `05-szablony`). |
 
 ---
@@ -36,7 +36,7 @@ Ten plik jest odczytywany automatycznie przez wszystkie wspierane narzędzia AI 
 
 ## 3. Przepływ pracy Spec-Driven Development (SDD)
 
-1. **Zadanie w Jirze i gałąź:** każde zadanie ma klucz `REJ-123` i gałąź `feat/REJ-123-krotki-opis` od `develop` (skill: `rj-start-feature`).
+1. **Zadanie w Jirze i gałąź:** każde zadanie ma klucz `REJ-123` i gałąź `feature/REJ-123-krotki-opis` (albo `fix/`, `docs/`, `chore/`, `spike/`) od `develop` (skill: `rj-start-feature`).
 2. **Specyfikacja przed kodem:**
    - Zadanie `≥ 3 SP`, nowa reguła `R-nn` lub zmiana kontraktu → propozycja zmiany w `openspec/changes/rej-123-opis/` (`/opsx:propose`) i akceptacja człowieka przed implementacją.
    - Zadanie `< 3 SP` z istniejącą specyfikacją → sprawdzenie scenariuszy `GIVEN/WHEN/THEN` w `openspec/specs/`.
@@ -55,7 +55,7 @@ python tools/backlog/gen_jira_csv.py --check
 
 ## 4. Katalog 10 agentów AI i ich wbudowanych umiejętności
 
-Kanon konfiguracji znajduje się w `.agents/` i jest synchronizowany skryptem `python tools/agents/sync_agents.py` do `.claude/`, `.github/`, `.gemini/` oraz `.codex/`.
+Kanon konfiguracji znajduje się w `.agents/` i jest synchronizowany skryptem `python tools/agents/sync_agents.py` do `.claude/`, `.github/` i `.gemini/` (Codex i Antigravity czytają `.agents/` bezpośrednio).
 
 | Grupa tematyczna | Agent (`.agents/agents/`) | Rola | Wbudowane skille (`.agents/skills/`) |
 |---|---|---|---|
@@ -75,4 +75,5 @@ Kanon konfiguracji znajduje się w `.agents/` i jest synchronizowany skryptem `p
 ## 5. Granice autonomii agenta AI
 
 - **Zawsze pytaj człowieka przed:** zmianą 5 zamrożonych kontraktów, modyfikacją reguły ze statusem `❓` w [`04-rozbieznosci-prototypu.md`](docs/01-dokumentacja-systemowa/04-rozbieznosci-prototypu.md), dodaniem nowej zależności NuGet/npm, usunięciem testu lub operacją `git push` / `git reset`.
+- **Nigdy (konstytucja, art. X):** nie merguj PR, nie pushuj do `main` ani `develop`, nie twórz tagów i wydań, nie czytaj ani nie przesyłaj sekretów (tokeny, hasła, `.env`). Merge robi człowiek.
 - **Nigdy nie zgaduj po cichu:** jeśli wymaganie jest niejednoznaczne, wskaż brak i zaproponuj warianty wraz z ich konsekwencjami.

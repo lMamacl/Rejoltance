@@ -6,8 +6,8 @@
 
 ## Kontekst i problem
 
-Sześć osób, sześć modułów. Praca warstwami („każdy robi swoją warstwę do tygodnia 8”) kończy się integracją, która nie działa,
-bo kontrakty były zgadywane. `REJOLTANCE-ANALIZA.md`, część 6. [V]
+Mamy sześć osób i sześć modułów. Praca warstwami („każdy robi swoją warstwę do tygodnia 8”) kończy się integracją, która nie działa,
+bo kontrakty były zgadywane (`REJOLTANCE-ANALIZA.md`, część 6). [V]
 
 ## Rozważane opcje
 
@@ -26,9 +26,9 @@ akceptując, że UI na początku będzie surowe, a bez fake transportu i próbek
 
 ### Pozytywne
 
-- Sprint Review zawsze ma demo (wymóg EU4/EU5).
+- Sprint Review zawsze ma demo (wymóg EU4/EU5, czyli efektów uczenia się).
 - Frontend pracuje na `match-view.sample.json` i fake transporcie, bez czekania na serwer.
 
 ### Negatywne / ryzyka
 
-- Nikt nie może pracować > 3 dni w jednej warstwie bez integracji (art. VII) — pilnuje PO sprintu.
+- Nikt nie może pracować dłużej niż 3 dni w jednej warstwie bez integracji (art. VII). Pilnuje tego PO (Product Owner) sprintu.

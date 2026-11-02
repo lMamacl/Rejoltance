@@ -1,7 +1,7 @@
-<ac:structured-macro ac:name="info"><ac:rich-text-body><p><strong>Synchronizacja 1:1 z repozytorium Git:</strong> <code>docs/01-dokumentacja-systemowa/07-decyzje-adr/0008-spine-first-pionowe-plastry.md</code> (commit <code>10829d3</code>, data eksportu: <code>2026-11-02</code>)</p></ac:rich-text-body></ac:structured-macro>
+<ac:structured-macro ac:name="info"><ac:rich-text-body><p><strong>Synchronizacja 1:1 z repozytorium Git:</strong> <code>docs/01-dokumentacja-systemowa/07-decyzje-adr/0008-spine-first-pionowe-plastry.md</code> (commit <code>a2bf2a4</code>, data eksportu: <code>2026-11-02</code>)</p></ac:rich-text-body></ac:structured-macro>
 <ul><li><strong>Status:</strong> proponowana (do akceptacji na spotkaniu startowym)</li><li><strong>Data:</strong> 2026-10-27</li><li><strong>Powiązane:</strong> konstytucja art. VII, backlog (fale W0–W3)</li></ul>
 <h2>Kontekst i problem</h2>
-<p>Sześć osób, sześć modułów. Praca warstwami („każdy robi swoją warstwę do tygodnia 8”) kończy się integracją, która nie działa, bo kontrakty były zgadywane. <code>REJOLTANCE-ANALIZA.md</code>, część 6. [V]</p>
+<p>Mamy sześć osób i sześć modułów. Praca warstwami („każdy robi swoją warstwę do tygodnia 8”) kończy się integracją, która nie działa, bo kontrakty były zgadywane (<code>REJOLTANCE-ANALIZA.md</code>, część 6). [V]</p>
 <h2>Rozważane opcje</h2>
 <table><thead><tr>
 <th><p>Opcja</p></th>
@@ -26,6 +26,6 @@
 <p>W kontekście 6 osób pracujących równolegle, wybieramy **kręgosłup end‑to‑end (kontrakty → Kernel → projekcja → hub → klient; jest od Sprintu 0) i potem plastry pionowe — każda story kończy się czymś widocznym w przeglądarce** zamiast pracy warstwami, aby wykrywać błędy kontraktów, gdy są tanie, akceptując, że UI na początku będzie surowe, a bez fake transportu i próbek kontraktu frontend czekałby na backend.</p>
 <h2>Konsekwencje</h2>
 <h3>Pozytywne</h3>
-<ul><li>Sprint Review zawsze ma demo (wymóg EU4/EU5).</li><li>Frontend pracuje na <code>match-view.sample.json</code> i fake transporcie, bez czekania na serwer.</li></ul>
+<ul><li>Sprint Review zawsze ma demo (wymóg EU4/EU5, czyli efektów uczenia się).</li><li>Frontend pracuje na <code>match-view.sample.json</code> i fake transporcie, bez czekania na serwer.</li></ul>
 <h3>Negatywne / ryzyka</h3>
-<ul><li>Nikt nie może pracować &gt; 3 dni w jednej warstwie bez integracji (art. VII) — pilnuje PO sprintu.</li></ul>
+<ul><li>Nikt nie może pracować dłużej niż 3 dni w jednej warstwie bez integracji (art. VII). Pilnuje tego PO (Product Owner) sprintu.</li></ul>

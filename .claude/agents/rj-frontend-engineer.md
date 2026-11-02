@@ -1,6 +1,6 @@
 ---
 name: rj-frontend-engineer
-description: "Inzynier klienta przegladarkowego React 19 + TypeScript 5 + Vite (src/web). Buduje widok planszy 2x2, reke gracza, podswietlanie legalActions, kolejke animacji DomainEvent i integracje SignalR."
+description: "Programista klienta w przeglądarce (React 19 + TypeScript + Vite, src/web): plansza, ręka gracza, podświetlanie dozwolonych ruchów, animacje i połączenie SignalR."
 tools: Read, Glob, Write, Edit, Grep, Bash
 ---
 

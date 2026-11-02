@@ -6,8 +6,9 @@
 
 ## Kontekst i problem
 
-Mamy trzy źródła zasad, które się różnią: `RE_JOLTANCE.md` (spisana specyfikacja), stary C# i prototyp JS v11 (najnowszy, grywalny, z kartami 61–69). [V]
-Zespół zna grę z prototypu; to on jest wdrożony i pokazywany.
+Mamy trzy źródła zasad i każde mówi coś innego: `RE_JOLTANCE.md` (spisana specyfikacja), stary kod C# i prototyp JS (JavaScript) v11.
+Prototyp jest najnowszy, grywalny i ma karty 61–69. [V]
+Zespół zna grę z prototypu. To prototyp jest wdrożony i to jego pokazujemy.
 
 ## Rozważane opcje
 
@@ -26,9 +27,9 @@ w [`04-rozbieznosci-prototypu.md`](../04-rozbieznosci-prototypu.md) i rozstrzygn
 
 ### Pozytywne
 
-- `cards.json` generowany z prototypu; CI wykrywa rozjazd (`extract_cards.py --check`).
-- Prototyp służy jako wyrocznia do testów różnicowych (E5-S04).
+- `cards.json` generujemy z prototypu. CI (ciągła integracja) wykrywa rozjazd (`extract_cards.py --check`).
+- Prototyp służy jako wyrocznia w testach różnicowych (E5-S04).
 
 ### Negatywne / ryzyka
 
-- 20 pozycji D‑nn do rozstrzygnięcia (E0-S04); do tego czasu reguły sporne mają status ❓.
+- Mamy 20 pozycji D‑nn (rozbieżności prototypu) do rozstrzygnięcia (E0-S04). Do tego czasu sporne reguły mają status ❓.

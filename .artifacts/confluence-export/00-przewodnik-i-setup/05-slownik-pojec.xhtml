@@ -1,174 +1,175 @@
-<ac:structured-macro ac:name="info"><ac:rich-text-body><p><strong>Synchronizacja 1:1 z repozytorium Git:</strong> <code>docs/00-przewodnik-i-setup/05-slownik-pojec.md</code> (commit <code>10829d3</code>, data eksportu: <code>2026-11-02</code>)</p></ac:rich-text-body></ac:structured-macro>
-<blockquote><p><strong>Źródło prawdy:</strong> repozytorium (<code>docs/00-przewodnik-i-setup/05-slownik-pojec.md</code>) · <strong>Kategoria dokumentacji:</strong> Słownik pojęć systemowych i procesowych · <strong>Etap SDD:</strong> Fundamenty</p></blockquote>
-<p>Niniejszy słownik definiuje ujednoliconą terminologię używaną w dokumentacji analitycznej (PRD), architektonicznej (SAD), specyfikacjach OpenSpec oraz kodzie źródłowym projektu <strong>RE:JOLTANCE</strong>. W dokumentacji polskojęzycznej nazwy własne mechanik, typów i kontraktów z kodu zapisujemy w oryginale (np. <code>MatchView</code>, <code>Intent</code>, <code>Blood</code>, <code>SoulGuard</code>).</p>
+<ac:structured-macro ac:name="info"><ac:rich-text-body><p><strong>Synchronizacja 1:1 z repozytorium Git:</strong> <code>docs/00-przewodnik-i-setup/05-slownik-pojec.md</code> (commit <code>a2bf2a4</code>, data eksportu: <code>2026-11-02</code>)</p></ac:rich-text-body></ac:structured-macro>
+<blockquote><p><strong>Źródło prawdy:</strong> repozytorium (<code>docs/00-przewodnik-i-setup/05-slownik-pojec.md</code>) · <strong>Kategoria dokumentacji:</strong> słownik pojęć systemowych i procesowych · <strong>Etap SDD:</strong> Fundamenty</p></blockquote>
+<p>Słownik ujednolica pojęcia, których używamy w <strong>RE:JOLTANCE</strong>: w wymaganiach produktu (PRD), w architekturze (SAD), w specyfikacjach OpenSpec i w kodzie. Skróty PRD, SAD i SDD (Spec-Driven Development, czyli „najpierw specyfikacja, potem kod”) wyjaśniamy w sekcji 2.</p>
+<p>Nazwy mechanik, typów i kontraktów z kodu zapisujemy w oryginale, także w polskim tekście (np. <code>MatchView</code>, <code>Intent</code>, <code>Blood</code>, <code>SoulGuard</code>).</p>
 <hr />
-<h2>1. Pojęcia domenowe (Mechanika gry RE:JOLTANCE)</h2>
+<h2>1. Pojęcia domenowe (mechanika gry)</h2>
 <table><thead><tr>
 <th><p>Pojęcie</p></th>
-<th><p>Definicja domenowa</p></th>
+<th><p>Definicja</p></th>
 <th><p>Powiązane reguły</p></th>
 </tr></thead><tbody>
 <tr>
 <td><p><strong>Lane battler</strong></p></td>
-<td><p>Gatunek taktycznej gry karcianej, w której jednostki rozmieszczane są na przeciwległych torach (liniach) i ścierają się bezpośrednio z jednostką stojącą naprzeciwko lub z bohaterem przeciwnika.</p></td>
+<td><p>Gatunek taktycznej gry karcianej. Jednostki stoją na przeciwległych torach (liniach). Walczą z jednostką naprzeciwko albo z bohaterem przeciwnika.</p></td>
 <td><p>R-21, R-30</p></td>
 </tr>
 <tr>
 <td><p><strong>Linia (<code>Lane</code>)</strong></p></td>
-<td><p>Jedna z czterech kolumn planszy (indeksowanych od <code>0</code> do <code>3</code> od lewej do prawej). W każdej linii znajduje się dokładnie jedno miejsce (slot) na jednostkę dla każdego z dwóch graczy.</p></td>
+<td><p>Jedna z czterech kolumn planszy, numerowanych od <code>0</code> do <code>3</code> od lewej. W każdej linii każdy z dwóch graczy ma dokładnie jedno miejsce (slot) na jednostkę.</p></td>
 <td><p>R-21, R-30</p></td>
 </tr>
 <tr>
 <td><p><strong>Bohater (<code>Hero</code>)</strong></p></td>
-<td><p>Reprezentacja gracza w meczu. Każdy bohater rozpoczyna pojedynek z pulą <strong>20 punktów zdrowia (HP)</strong>. Spadek HP bohatera do 0 lub poniżej oznacza natychmiastową porażkę.</p></td>
+<td><p>Postać reprezentująca gracza w meczu. Zaczyna z <strong>20 punktami zdrowia (HP)</strong>. Gdy HP spadnie do 0 lub niżej, gracz od razu przegrywa.</p></td>
 <td><p>R-02, R-70</p></td>
 </tr>
 <tr>
 <td><p><strong>Blood (Krew)</strong></p></td>
-<td><p>Podstawowy zasób służący do opłacania kosztu zagrywanych kart. Na początku rundy <em>n</em> zasób każdego gracza jest odnawiany do wartości <code>min(n, 10)</code>. Niewykorzystany zasób z poprzedniej rundy przepada.</p></td>
+<td><p>Podstawowy zasób, którym płacisz za karty. Na początku rundy <em>n</em> każdy gracz ma go <code>min(n, 10)</code>. Niewykorzystany zasób z poprzedniej rundy przepada.</p></td>
 <td><p>R-10, R-23, R-65</p></td>
 </tr>
 <tr>
 <td><p><strong>Jednostka (<code>Unit</code>)</strong></p></td>
-<td><p>Karta umieszczana na wolnym slocie własnej linii. Posiada koszt w Blood, siłę ataku (<code>Attack</code>), punkty zdrowia (<code>Health</code>), opcjonalny podtyp plemienny, słowa kluczowe oraz zdolności wyzwalane.</p></td>
+<td><p>Karta, którą kładziesz na wolny slot własnej linii. Ma koszt w Blood, atak (<code>Attack</code>) i zdrowie (<code>Health</code>). Może mieć podtyp plemienny, słowa kluczowe i zdolności wyzwalane.</p></td>
 <td><p>R-20, R-21</p></td>
 </tr>
 <tr>
 <td><p><strong>Akcja / Czar (<code>Spell</code> / <code>Action</code>)</strong></p></td>
-<td><p>Karta jednorazowego użytku, która po opłaceniu kosztu wykonuje natychmiastowy efekt i trafia na stos kart odrzuconych (lub do ręki przeciwnika w przypadku kart typu „prezent”).</p></td>
+<td><p>Karta jednorazowa. Po opłaceniu kosztu od razu wykonuje efekt. Potem trafia na stos kart odrzuconych. Karta typu „prezent” trafia zamiast tego do ręki przeciwnika.</p></td>
 <td><p>R-20, R-22</p></td>
 </tr>
 <tr>
 <td><p><strong>Token (<code>Token</code>)</strong></p></td>
-<td><p>Karta generowana dynamicznie w trakcie meczu przez efekty innych kart (identyfikatory <code>Id &gt;= 900</code>). Tokeny nie mogą wchodzić w skład początkowej talii gracza, a po usunięciu z planszy znikają z gry.</p></td>
+<td><p>Karta tworzona w trakcie meczu przez efekty innych kart (identyfikatory <code>Id &gt;= 900</code>). Tokenów nie ma w talii startowej. Po usunięciu z planszy znikają z gry.</p></td>
 <td><p>R-01, R-47, R-64</p></td>
 </tr>
 <tr>
 <td><p><strong>Mulligan</strong></p></td>
-<td><p>Faza początkowej wymiany kart przed pierwszą rundą. Każdy gracz może wskazać dowolną liczbę kart z 4-kartowej ręki startowej, dobrać tyle samo nowych kart z wierzchu talii, a wymienione karty wtasować z powrotem do talii.</p></td>
+<td><p>Wymiana kart przed pierwszą rundą. Ręka startowa ma 4 karty. Wybierasz dowolną ich liczbę i dobierasz tyle samo nowych z wierzchu talii. Wymienione karty wtasowujesz z powrotem do talii.</p></td>
 <td><p>R-03</p></td>
 </tr>
 <tr>
 <td><p><strong>Gracz A / Gracz B</strong></p></td>
-<td><p>Oznaczenie ról w bieżącej rundzie: <strong>Gracz A</strong> to gracz rozpoczynający daną rundę, natomiast <strong>Gracz B</strong> to drugi gracz. Role te zmieniają się naprzemiennie z każdą kolejną rundą.</p></td>
+<td><p>Role w bieżącej rundzie. <strong>Gracz A</strong> zaczyna rundę, <strong>Gracz B</strong> to drugi gracz. Role zamieniają się co rundę.</p></td>
 <td><p>R-04, R-11, R-12</p></td>
 </tr>
 <tr>
 <td><p><strong>Kroki rundy (<code>Steps</code>)</strong></p></td>
-<td><p>Cztery sekwencyjne fazy każdej rundy: (1) <em>Krok jednostek Gracza A</em>, (2) <em>Krok mieszany Gracza B</em> (jednostki i akcje), (3) <em>Krok akcji Gracza A</em>, (4) <em>Automatyczna faza walki</em> na liniach <code>0 → 3</code>.</p></td>
+<td><p>Każda runda ma cztery kroki po kolei: (1) <em>krok jednostek Gracza A</em>, (2) <em>krok mieszany Gracza B</em> (jednostki i akcje), (3) <em>krok akcji Gracza A</em>, (4) <em>automatyczna walka</em> na liniach <code>0 → 3</code>.</p></td>
 <td><p>R-12, R-30</p></td>
 </tr>
 <tr>
 <td><p><strong>Fatigue (Wyczerpanie)</strong></p></td>
-<td><p>Narastające obrażenia zadawane bohaterowi przy każdej próbie dobrania karty z pustej talii (pierwsza próba zadaje 1 obrażenie, druga 2, trzecia 3 itd.). Stos odrzuconych nie jest tasowany z powrotem do talii.</p></td>
+<td><p>Obrażenia dla bohatera za każdą próbę dobrania karty z pustej talii. Rosną z każdą próbą: pierwsza zadaje 1, druga 2, trzecia 3 itd. Stosu odrzuconych nie tasujemy z powrotem do talii.</p></td>
 <td><p>R-14</p></td>
 </tr>
 <tr>
 <td><p><strong>Słowo kluczowe (<code>Keyword</code>)</strong></p></td>
-<td><p>Wrodzona lub nadana właściwość modyfikująca zasady walki i przetrwania jednostki: <code>Flying</code>, <code>Armored(n)</code>, <code>Armor2</code>, <code>SplashDamage(n)</code>, <code>Breakthrough</code>, <code>BurnSource</code>, <code>SoulGuard</code>, <code>Unkillable</code>.</p></td>
+<td><p>Wrodzona lub nadana cecha, która zmienia zasady walki i przetrwania jednostki: <code>Flying</code>, <code>Armored(n)</code>, <code>Armor2</code>, <code>SplashDamage(n)</code>, <code>Breakthrough</code>, <code>BurnSource</code>, <code>SoulGuard</code>, <code>Unkillable</code>.</p></td>
 <td><p>R-33, R-40..R-47</p></td>
 </tr>
 <tr>
 <td><p><strong>Status (<code>Status</code>)</strong></p></td>
-<td><p>Stan czasowy nakładany na jednostkę w trakcie gry: <code>Marked</code> (podwaja otrzymywane obrażenia po pancerzu), <code>Stunned</code> (jednostka pomija swoje najbliższe uderzenie), <code>Burning</code> (1 obrażenie na koniec rundy).</p></td>
+<td><p>Czasowy stan jednostki. <code>Marked</code> podwaja obrażenia otrzymane po pancerzu. <code>Stunned</code> sprawia, że jednostka pomija najbliższe uderzenie. <code>Burning</code> zadaje 1 obrażenie na koniec rundy.</p></td>
 <td><p>R-15, R-41..R-43, R-48</p></td>
 </tr>
 <tr>
 <td><p><strong>Sacrifice (Poświęcenie)</strong></p></td>
-<td><p>Celowe zniszczenie własnej jednostki jako koszt lub efekt karty. Omija ochronę <code>SoulGuard</code> i uruchamia wyzwalacze <code>OnSacrificed</code> oraz <code>OnOtherUnitSacrificed</code>.</p></td>
+<td><p>Celowe zniszczenie własnej jednostki jako koszt albo efekt karty. Omija ochronę <code>SoulGuard</code>. Uruchamia wyzwalacze <code>OnSacrificed</code> i <code>OnOtherUnitSacrificed</code>.</p></td>
 <td><p>R-46, R-51</p></td>
 </tr>
 <tr>
 <td><p><strong>Silence (Wyciszenie)</strong></p></td>
-<td><p>Efekt usuwający z jednostki wszystkie słowa kluczowe, nałożone statusy, modyfikatory statystyk oraz wyłączający jej zdolności specjalne.</p></td>
+<td><p>Efekt, który zdejmuje z jednostki słowa kluczowe, statusy i modyfikatory statystyk. Wyłącza też jej zdolności specjalne.</p></td>
 <td><p>R-52</p></td>
 </tr>
 </tbody></table>
 <hr />
-<h2>2. Pojęcia architektoniczne, techniczne i procesowe (SDD)</h2>
+<h2>2. Pojęcia architektoniczne, techniczne i procesowe</h2>
 <table><thead><tr>
 <th><p>Pojęcie</p></th>
-<th><p>Definicja inżynierska</p></th>
+<th><p>Definicja</p></th>
 <th><p>Miejsce w projekcie</p></th>
 </tr></thead><tbody>
 <tr>
 <td><p><strong>SDD (Spec-Driven Development)</strong></p></td>
-<td><p>Metodyka wytwarzania oprogramowania, w której formalna, wykonywalna specyfikacja wymagań i architektury powstaje przed kodem i steruje pracą programistów oraz agentów AI.</p></td>
+<td><p>Metoda pracy, w której formalna, wykonywalna specyfikacja wymagań i architektury powstaje przed kodem. Ta specyfikacja steruje pracą programistów i agentów AI.</p></td>
 <td><p><code>openspec/</code>, <code>docs/</code></p></td>
 </tr>
 <tr>
 <td><p><strong>OpenSpec</strong></p></td>
-<td><p>Narzędzie CLI i standard specyfikacji używany w projekcie do zarządzania żywymi wymaganiami (<code>openspec/specs/</code>) oraz propozycjami zmian (<code>openspec/changes/</code>).</p></td>
+<td><p>Narzędzie CLI i format specyfikacji. Przechowuje aktualne wymagania (<code>openspec/specs/</code>) i propozycje zmian (<code>openspec/changes/</code>).</p></td>
 <td><p><code>openspec/config.yaml</code></p></td>
 </tr>
 <tr>
 <td><p><strong>PRD (Product Requirements Document)</strong></p></td>
-<td><p>Dokument wymagań produktu definiujący cel biznesowy, persony użytkowników, zakres funkcjonalny, historyjki użytkownika i kryteria akceptacji.</p></td>
+<td><p>Dokument wymagań produktu. Opisuje cel biznesowy, persony, zakres funkcjonalny, historyjki użytkownika i kryteria akceptacji.</p></td>
 <td><p><code>docs/01-dokumentacja-systemowa/01-prd-wymagania-produktu.md</code></p></td>
 </tr>
 <tr>
 <td><p><strong>SAD (Software Architecture Document)</strong></p></td>
-<td><p>Dokument architektury oprogramowania opisujący strukturę wysokopoziomową (C4), komponenty, strategie przekrojowe, model danych i architekturę wdrożenia.</p></td>
+<td><p>Dokument architektury. Opisuje strukturę systemu (C4), komponenty, rozwiązania przekrojowe, model danych i wdrożenie.</p></td>
 <td><p><code>docs/01-dokumentacja-systemowa/05-sad-architektura-systemu.md</code></p></td>
 </tr>
 <tr>
 <td><p><strong>TDD (Technical Design Document)</strong></p></td>
-<td><p>Niskopoziomowy projekt techniczny pojedynczej funkcjonalności lub zmiany, łączący architekturę SAD z konkretnymi klasami i algorytmami w kodzie.</p></td>
+<td><p>Szczegółowy projekt techniczny jednej funkcjonalności lub zmiany. Łączy architekturę z SAD z konkretnymi klasami i algorytmami. Uwaga: w opisie procesu skrót TDD oznacza też Test-Driven Development.</p></td>
 <td><p><code>openspec/changes/&lt;id&gt;/design.md</code>, <code>05-szablony/szablon-tdd.md</code></p></td>
 </tr>
 <tr>
 <td><p><strong>ADR (Architecture Decision Record)</strong></p></td>
-<td><p>Krótki, wersjonowany dokument rejestrujący istotną decyzję architektoniczną wraz z rozważanymi alternatywami, uzasadnieniem (w formacie Y-statement) i konsekwencjami.</p></td>
+<td><p>Krótki, wersjonowany zapis ważnej decyzji architektonicznej. Zawiera rozważone alternatywy, uzasadnienie (w formacie Y-statement) i konsekwencje.</p></td>
 <td><p><code>docs/01-dokumentacja-systemowa/07-decyzje-adr/</code></p></td>
 </tr>
 <tr>
 <td><p><strong>R‑nn / NFR‑nn</strong></p></td>
-<td><p>Unikalne identyfikatory wymagań funkcjonalnych reguł gry (<code>R-01..R-84</code>) oraz wymagań niefunkcjonalnych wg normy ISO/IEC 25010 (<code>NFR-01..NFR-70</code>).</p></td>
+<td><p>Identyfikatory wymagań. <code>R-01..R-84</code> to wymagania funkcjonalne (reguły gry). <code>NFR-01..NFR-70</code> to wymagania niefunkcjonalne (NFR, Non-Functional Requirements) według normy ISO/IEC 25010.</p></td>
 <td><p><code>03-indeks-regul-r-nn.md</code>, <code>openspec/specs/</code></p></td>
 </tr>
 <tr>
 <td><p><strong>Kernel (<code>Rejoltance.Kernel</code>)</strong></p></td>
-<td><p>Czysty, deterministyczny moduł silnika reguł w C# pozbawiony operacji wejścia/wyjścia, zegara systemowego i niedeterministycznej losowości.</p></td>
+<td><p>Silnik reguł w C#. Jest czysty i deterministyczny: nie używa wejścia/wyjścia, zegara systemowego ani niedeterministycznej losowości.</p></td>
 <td><p><code>src/Rejoltance.Kernel/</code></p></td>
 </tr>
 <tr>
 <td><p><strong><code>Intent</code></strong></p></td>
-<td><p>Kontrakt reprezentujący intencję gracza (np. zagranie karty, zakończenie kroku, wybór celu) wysyłaną z klienta do autorytatywnego serwera.</p></td>
+<td><p>Kontrakt opisujący intencję gracza, np. zagranie karty, zakończenie kroku, wybór celu. Klient wysyła go do serwera, który rozstrzyga o wszystkim (serwer autorytatywny).</p></td>
 <td><p><code>src/Rejoltance.Contracts/Intents.cs</code></p></td>
 </tr>
 <tr>
 <td><p><strong><code>MatchView</code></strong></p></td>
-<td><p>Projekcja stanu meczu przygotowana przez serwer dla konkretnego miejsca przy stole (<code>Seat</code>), ukrywająca zawartość ręki i kolejność talii przeciwnika (<em>Fog of War</em>).</p></td>
+<td><p>Widok stanu meczu, który serwer przygotowuje dla jednego miejsca przy stole (<code>Seat</code>). Ukrywa rękę przeciwnika i kolejność jego talii (<em>Fog of War</em>).</p></td>
 <td><p><code>src/Rejoltance.Contracts/MatchView.cs</code></p></td>
 </tr>
 <tr>
 <td><p><strong><code>LegalAction</code></strong></p></td>
-<td><p>Wyliczony przez Kernel dozwolony ruch w bieżącym stanie meczu. Stanowi jedyne źródło prawdy o legalności zagrań dla interfejsu użytkownika, serwera i bota.</p></td>
+<td><p>Dozwolony ruch w bieżącym stanie meczu, wyliczony przez Kernel. To jedyne źródło prawdy o legalności zagrań dla interfejsu, serwera i bota.</p></td>
 <td><p><code>src/Rejoltance.Contracts/</code></p></td>
 </tr>
 <tr>
 <td><p><strong><code>PendingInteraction</code></strong></p></td>
-<td><p>Struktura opisująca pytanie silnika do gracza (np. wybór kart do mulliganu lub wskazanie celu efektu), dzięki której Kernel pozostaje czystą funkcją bez blokowania wątków.</p></td>
+<td><p>Pytanie silnika do gracza, np. o karty do mulliganu albo o cel efektu. Dzięki niemu Kernel pozostaje czystą funkcją i nie blokuje wątków.</p></td>
 <td><p><code>src/Rejoltance.Contracts/</code></p></td>
 </tr>
 <tr>
 <td><p><strong><code>DomainEvent</code></strong></p></td>
-<td><p>Zdarzenie domenowe wyemitowane podczas przejścia stanu w Kernelu (np. dobranie karty, zadanie obrażeń), wykorzystywane przez klienta do odtwarzania animacji.</p></td>
+<td><p>Zdarzenie domenowe emitowane przy zmianie stanu w Kernelu, np. dobranie karty albo zadanie obrażeń. Klient odtwarza na jego podstawie animacje.</p></td>
 <td><p><code>src/Rejoltance.Contracts/Events.cs</code></p></td>
 </tr>
 <tr>
-<td><p><strong>Rola Agenta (<code>Agent Role</code>)</strong></p></td>
-<td><p>Wyspecjalizowany profil agenta AI w <code>.agents/agents/</code> posiadający ściśle określony zakres odpowiedzialności, zestaw dozwolonych narzędzi oraz przypisane skille.</p></td>
+<td><p><strong>Rola agenta (<code>Agent Role</code>)</strong></p></td>
+<td><p>Profil agenta AI w <code>.agents/agents/</code>. Określa zakres odpowiedzialności, dozwolone narzędzia i przypisane skille.</p></td>
 <td><p><code>.agents/agents/</code>, <code>docs/04-system-agentow-ai/</code></p></td>
 </tr>
 <tr>
 <td><p><strong>Skill (<code>Agent Skill</code>)</strong></p></td>
-<td><p>Powtarzalna instrukcja proceduralna w <code>.agents/skills/&lt;nazwa&gt;/SKILL.md</code>, którą agent (lub człowiek) wykonuje krok po kroku przy realizacji określonego typu zadania.</p></td>
+<td><p>Powtarzalna procedura w <code>.agents/skills/&lt;nazwa&gt;/SKILL.md</code>. Agent albo człowiek wykonuje ją krok po kroku przy danym typie zadania.</p></td>
 <td><p><code>.agents/skills/</code>, <code>docs/04-system-agentow-ai/</code></p></td>
 </tr>
 <tr>
 <td><p><strong>Fala (<code>Wave W0–W3</code>)</strong></p></td>
-<td><p>Poziom priorytetyzacji zakresu projektu używany do wyznaczenia linii cięcia: <code>W0</code> (fundamenty), <code>W1</code> (MVP na Semestr 1), <code>W2</code> (pełna gra na Semestr 2), <code>W3</code> (rozszerzenia opcjonalne).</p></td>
+<td><p>Poziom priorytetu, którym wyznaczamy linię cięcia zakresu. <code>W0</code> to fundamenty. <code>W1</code> to MVP (Minimum Viable Product, najmniejsza grywalna wersja) na Semestr 1. <code>W2</code> to pełna gra na Semestr 2. <code>W3</code> to opcjonalne rozszerzenia.</p></td>
 <td><p><code>docs/03-dokumentacja-procesowa/02-backlog/</code></p></td>
 </tr>
 </tbody></table>

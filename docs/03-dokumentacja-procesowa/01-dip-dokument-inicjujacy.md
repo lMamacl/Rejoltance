@@ -1,8 +1,10 @@
 # Dokument Inicjujący Projekt (DIP) — RE:JOLTANCE
 
-> Wymóg zaliczenia (semestr 1): DIP nie jest oceniany liczbowo, ale jego brak = ocena niedostateczna.
-> **Każdy student jest autorem jednego epiku (EU1)** — sekcja 4. Wersja do oceny: kopia w Confluence PB.
+> Wymóg zaliczenia (semestr 1): DIP nie dostaje oceny liczbowej, ale bez niego dostajemy ocenę niedostateczną.
+> **Każdy student jest autorem jednego epiku (EU1)** — sekcja 4. Do oceny idzie kopia w Confluence PB.
 > Pola `⟨…⟩` uzupełnia zespół na spotkaniu startowym (pytania otwarte #1, #2, #9).
+>
+> Skróty: EU1–EU7 to efekty uczenia się, z których rozlicza nas uczelnia. PO to Product Owner (właściciel produktu), SP to story points (punktowa wycena historyjki), ADR to zapis decyzji architektonicznej (Architecture Decision Record).
 
 ## Metadane
 
@@ -20,19 +22,19 @@
 
 ### 1.1 Problem
 
-RE:JOLTANCE to autorska gra karciana zespołu (lane battler: 4 linie, zasób Blood, talie po 30 kart). Istnieją dwie wersje:
-desktopowa (Godot/C#) — wymagająca instalacji i bez gry sieciowej — oraz prototyp przeglądarkowy w JS, w którym gra P2P jest podatna na oszustwa
-(podgląd ręki przeciwnika, nielegalne cele, XSS), a silnik nie ma determinizmu ani testów ([`04-badania-i-analizy/faza-0-analiza.md`](04-badania-i-analizy/faza-0-analiza.md)).
-Gracz nie może więc bezpiecznie zagrać z kolegą online ani zaufać, że zasady działają poprawnie.
+RE:JOLTANCE to autorska gra karciana zespołu (*lane battler*: 4 linie, zasób Blood, talie po 30 kart). Istnieją dwie wersje.
+Wersja desktopowa (Godot/C#) wymaga instalacji i nie ma gry sieciowej. Prototyp przeglądarkowy w JS ma grę P2P (peer-to-peer, bez serwera), która jest podatna na oszustwa:
+podgląd ręki przeciwnika, nielegalne cele, XSS (wstrzyknięcie skryptu do strony). Silnik prototypu nie jest deterministyczny i nie ma testów ([`04-badania-i-analizy/faza-0-analiza.md`](04-badania-i-analizy/faza-0-analiza.md)).
+Gracz nie może więc bezpiecznie zagrać z kolegą online ani mieć pewności, że zasady działają poprawnie.
 
 ### 1.2 Cel i wartość
 
-Celem dwusemestralnego projektu jest gra webowa, w którą:
+Celem projektu (dwa semestry) jest gra webowa, w której:
 
-- można zagrać z drugą osobą przez link lub z botem, bez instalacji (przeglądarka, także na laptopach w sali);
-- serwer jest jedynym sędzią — ręka przeciwnika i kolejność talii są niewidoczne, każdy ruch jest walidowany;
+- grasz z drugą osobą przez link albo z botem, bez instalacji (w przeglądarce, także na laptopach w sali);
+- serwer jest jedynym sędzią: nie widzisz ręki przeciwnika ani kolejności talii, a serwer sprawdza każdy ruch;
 - zasady są spisane jako 55 testowalnych reguł R‑nn i pokryte testami automatycznymi (EU6);
-- każdy mecz da się odtworzyć z seeda i listy ruchów (powtórki, analiza balansu).
+- każdy mecz da się odtworzyć z ziarna losowania (*seed*) i listy ruchów (powtórki, analiza balansu).
 
 ### 1.3 Ograniczenia i założenia
 
@@ -40,7 +42,7 @@ Celem dwusemestralnego projektu jest gra webowa, w którą:
 - Narzędzia uczelni: Jira, Confluence, Bitbucket PB; kod i CI na GitHubie (ADR-0002).
 - Czas: 6 osób × ok. 5 h tygodniowo; Sprint 0 (1 tydzień) + 5 sprintów dwutygodniowych w semestrze 1.
 - Kanon zasad: prototyp JS v11 (ADR-0005); sporne miejsca w [`01-dokumentacja-systemowa/04-rozbieznosci-prototypu.md`](../01-dokumentacja-systemowa/04-rozbieznosci-prototypu.md).
-- Praca wspierana agentami AI wg konstytucji projektu (`.agents/rules/00-konstytucja.md`) — decyzje i odpowiedzialność po stronie ludzi.
+- Pracujemy z pomocą agentów AI według konstytucji projektu (`.agents/rules/00-konstytucja.md`). Decyzje podejmują i odpowiadają za nie ludzie.
 
 ## 2. Użytkownik końcowy i pętla walidacji (EU1, EU2)
 
@@ -63,7 +65,7 @@ Reprezentanci: rada graczy testowych — 3 osoby spoza zespołu ⟨imiona⟩ (st
 
 ## 3. Wizja architektoniczna
 
-Modularny monolit z granicami wymuszanymi testami architektury (`tests/Rejoltance.Architecture.Tests`). Szczegóły: [`01-dokumentacja-systemowa/05-sad-architektura-systemu.md`](../01-dokumentacja-systemowa/05-sad-architektura-systemu.md) oraz [`08-mapa-kodu-i-modulow.md`](../01-dokumentacja-systemowa/08-mapa-kodu-i-modulow.md).
+Budujemy modularny monolit: jedną aplikację podzieloną na moduły, których granic pilnują testy architektury (`tests/Rejoltance.Architecture.Tests`). Szczegóły: [`01-dokumentacja-systemowa/05-sad-architektura-systemu.md`](../01-dokumentacja-systemowa/05-sad-architektura-systemu.md) oraz [`08-mapa-kodu-i-modulow.md`](../01-dokumentacja-systemowa/08-mapa-kodu-i-modulow.md).
 
 ```text
 src/web (React/TS)  ── Intent ──►  Rejoltance.Server (SignalR, sesje, API, baza)
@@ -75,13 +77,13 @@ src/web (React/TS)  ── Intent ──►  Rejoltance.Server (SignalR, sesje, 
                              Rejoltance.Content (karty jako dane) → Rejoltance.Contracts (5 kontraktów)
 ```
 
-- **Kontrakty zamrożone:** `Intent`, `LegalAction`, `PendingInteraction`, `MatchView`, `DomainEvent`; zmiana = ADR (konstytucja, art. IV).
-- **Izolacja:** każdy epik ma własny moduł/katalog i właściciela (CODEOWNERS); własność ≠ wyłączność.
-- **Trwałość:** tylko konta, talie i zakończone mecze; mecze w toku w pamięci serwera.
+- **Kontrakty zamrożone:** `Intent`, `LegalAction`, `PendingInteraction`, `MatchView`, `DomainEvent`. Każda zmiana wymaga ADR (konstytucja, art. IV).
+- **Izolacja:** każdy epik ma własny moduł lub katalog i właściciela (CODEOWNERS). Własność nie oznacza wyłączności.
+- **Trwałość:** w bazie zapisujemy tylko konta, talie i zakończone mecze. Mecze w toku są w pamięci serwera.
 
 ## 4. Epiki (EU1)
 
-> Pełne historyjki, kryteria i szacunki: [`02-backlog/backlog.toml`](02-backlog/backlog.toml) → [`02-backlog/BACKLOG.md`](02-backlog/BACKLOG.md). Poniżej po 3 kluczowe historyjki epiku w semestrze 1.
+> Wszystkie historyjki, kryteria i szacunki: [`02-backlog/backlog.toml`](02-backlog/backlog.toml) → [`02-backlog/BACKLOG.md`](02-backlog/BACKLOG.md). Poniżej po 3 najważniejsze historyjki każdego epiku w semestrze 1. Kryteria akceptacji zapisujemy w formacie *GIVEN* (stan początkowy) *WHEN* (akcja) *THEN* (oczekiwany wynik).
 
 ### Epik 1: Silnik reguł (Kernel)
 
@@ -98,7 +100,7 @@ src/web (React/TS)  ── Intent ──►  Rejoltance.Server (SignalR, sesje, 
 ### Epik 2: Interpreter efektów kart (DSL)
 
 - **Autor (EU1):** ⟨student 2⟩ · **Klucz Jira:** ⟨REJ-…⟩ · **Moduł:** `src/Rejoltance.Content` + handlery efektów
-- **Zakres:** rejestr akcji, wyzwalacze, warunki, wybór i walidacja celów, koszt, talia MVP 12 kart (R-2x, R-6x).
+- **Zakres:** rejestr akcji, wyzwalacze, warunki, wybór i walidacja celów, koszt, talia MVP (Minimum Viable Product, najmniejsza grywalna wersja) z 12 kart (R-2x, R-6x).
 - **Historyjki:**
   - `E2-S01` Jako twórca kart chcę, żeby efekt był wykonywany z danych przez rejestr handlerów, aby nowa karta nie wymagała zmiany silnika.
     *GIVEN* akcja bez handlera *WHEN* efekt się uruchamia *THEN* rzucany jest wyjątek z nazwą akcji.
@@ -134,7 +136,7 @@ src/web (React/TS)  ── Intent ──►  Rejoltance.Server (SignalR, sesje, 
 ### Epik 5: Bot AI i symulator
 
 - **Autor (EU1):** ⟨student 5⟩ · **Klucz Jira:** ⟨REJ-…⟩ · **Moduł:** `tools/oracle`, `src/Rejoltance.Sim` (powstanie)
-- **Zakres:** wyrocznia z prototypu, testy różnicowe, bot na `LegalActions`, symulator headless, tryb gry z botem.
+- **Zakres:** wyrocznia z prototypu (silnik JS jako wzorzec poprawnych wyników), testy różnicowe, bot na `LegalActions`, symulator bez interfejsu (*headless*), tryb gry z botem.
 - **Historyjki:**
   - `E5-S01` Jako inżynier reguł chcę uruchomić silnik prototypu w Node z seedem, aby mieć wzorcowe wyniki.
     *GIVEN* ten sam seed *WHEN* uruchamiam dwa razy *THEN* wyniki są identyczne.
@@ -146,7 +148,7 @@ src/web (React/TS)  ── Intent ──►  Rejoltance.Server (SignalR, sesje, 
 ### Epik 6: Platforma — konta, dane, wdrożenie, jakość
 
 - **Autor (EU1):** ⟨student 6⟩ · **Klucz Jira:** ⟨REJ-…⟩ · **Moduł:** CI/CD, `tests/`, baza, konta
-- **Zakres:** CI i testy E2E, konta graczy, PostgreSQL, wdrożenie demo, dokumentacja w Confluence (EU5/EU6).
+- **Zakres:** CI (automatyczne budowanie i testy) i testy E2E (end-to-end, całej aplikacji), konta graczy, PostgreSQL, wdrożenie demo, dokumentacja w Confluence (EU5/EU6).
 - **Historyjki:**
   - `E6-S01` Jako zespół chcę zielone CI z testem E2E, aby każdy PR był automatycznie sprawdzony.
     *GIVEN* uruchomiony AppHost *WHEN* Playwright otwiera klienta *THEN* startuje sandbox i wykonuje mulligan.
@@ -155,7 +157,7 @@ src/web (React/TS)  ── Intent ──►  Rejoltance.Server (SignalR, sesje, 
   - `E6-S05` Jako gracz testowy chcę wejść na adres i zagrać bez instalacji, aby testować grę między zajęciami.
     *GIVEN* obraz kontenera z CI *WHEN* wdrażam na hosting *THEN* gra działa pod adresem HTTPS.
 
-Epik wspólny **E0 Fundamenty i proces** (narzędzia, DIP, ceremonie, rada graczy) nie ma jednego autora — odpowiada PO danego sprintu.
+Epik wspólny **E0 Fundamenty i proces** (narzędzia, DIP, ceremonie, rada graczy) nie ma jednego autora. Odpowiada za niego PO danego sprintu.
 
 ## 5. Harmonogram semestru 1 (EU4)
 
@@ -174,7 +176,7 @@ Szczegóły i linia cięcia: [`02-backlog/BACKLOG.md`](02-backlog/BACKLOG.md).
 
 ### 6.1 Rotacja roli Product Ownera
 
-Każdy student jest PO w co najmniej jednym sprincie. Sprintów jest 6 (S0–S5) na 6 osób ⟨do potwierdzenia z prowadzącym, czy S0 się liczy — #2⟩.
+Każdy student jest PO w co najmniej jednym sprincie. Mamy 6 sprintów (S0–S5) i 6 osób ⟨do potwierdzenia z prowadzącym, czy S0 się liczy — #2⟩.
 
 | Sprint | PO | Akcent |
 |---|---|---|
@@ -186,6 +188,8 @@ Każdy student jest PO w co najmniej jednym sprincie. Sprintów jest 6 (S0–S5)
 | S5 | ⟨student⟩ | stabilizacja, dokumentacja, demo i turniej |
 
 ### 6.2 RACI
+
+Macierz RACI mówi, kto przy danej czynności: **R** (*Responsible*) wykonuje pracę, **A** (*Accountable*) odpowiada za wynik, **C** (*Consulted*) jest pytany o zdanie, **I** (*Informed*) jest informowany.
 
 | Aktywność | PO sprintu | Autor epiku | Zespół | Prowadzący |
 |---|:---:|:---:|:---:|:---:|
@@ -217,11 +221,11 @@ Każdy student jest PO w co najmniej jednym sprincie. Sprintów jest 6 (S0–S5)
 
 ### 8.1 Kryteria Gotowości (DoR)
 
-Zadanie wchodzi do sprintu, gdy: ma kryteria `GIVEN / WHEN / THEN` · podzadanie ≤ 4 h · wykonawca potwierdził szacunek na spotkaniu planującym ·
-zależności są gotowe lub zamockowane (atrapa transportu, próbka kontraktu) · historyjka ≥ 3 SP ma zaakceptowaną zmianę OpenSpec.
+DoR (*Definition of Ready*) mówi, kiedy zadanie może wejść do sprintu. Zadanie wchodzi do sprintu, gdy: ma kryteria `GIVEN / WHEN / THEN` · podzadanie ≤ 4 h · wykonawca potwierdził szacunek na spotkaniu planującym ·
+zależności są gotowe lub zastąpione atrapą (atrapa transportu, próbka kontraktu) · historyjka ≥ 3 SP ma zaakceptowaną zmianę OpenSpec.
 
 ### 8.2 Kryteria Ukończenia (DoD)
 
-Zadanie przechodzi do stanu *Rozwiązane*, gdy: kod znajduje się na gałęzi `typ/REJ-123-opis` · CI jest zielone (kompilacja bez ostrzeżeń, testy, lintery) ·
-napisano testy dla logiki (reguły: test `Rnn_…`) · Pull Request został zaakceptowany przez ≥ 1 inną osobę · dokumentacja modułu została zaktualizowana (repozytorium + Confluence) ·
-czas został zarejestrowany w Jirze · zmiana została pokazana na środowisku deweloperskim i sprawdzona z kryteriami akceptacji.
+DoD (*Definition of Done*) mówi, kiedy zadanie jest skończone. Zadanie przechodzi do stanu *Rozwiązane*, gdy: kod jest na gałęzi `typ/REJ-123-opis` · CI jest zielone (kompilacja bez ostrzeżeń, testy, lintery) ·
+logika ma testy (reguły: test `Rnn_…`) · co najmniej 1 inna osoba zaakceptowała pull request · dokumentacja modułu jest zaktualizowana (repozytorium + Confluence) ·
+czas jest zarejestrowany w Jirze · zmianę pokazano na środowisku deweloperskim i sprawdzono z kryteriami akceptacji.

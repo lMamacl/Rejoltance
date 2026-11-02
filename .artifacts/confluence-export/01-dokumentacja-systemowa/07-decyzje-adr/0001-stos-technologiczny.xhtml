@@ -1,7 +1,7 @@
-<ac:structured-macro ac:name="info"><ac:rich-text-body><p><strong>Synchronizacja 1:1 z repozytorium Git:</strong> <code>docs/01-dokumentacja-systemowa/07-decyzje-adr/0001-stos-technologiczny.md</code> (commit <code>10829d3</code>, data eksportu: <code>2026-11-02</code>)</p></ac:rich-text-body></ac:structured-macro>
+<ac:structured-macro ac:name="info"><ac:rich-text-body><p><strong>Synchronizacja 1:1 z repozytorium Git:</strong> <code>docs/01-dokumentacja-systemowa/07-decyzje-adr/0001-stos-technologiczny.md</code> (commit <code>a2bf2a4</code>, data eksportu: <code>2026-11-02</code>)</p></ac:rich-text-body></ac:structured-macro>
 <ul><li><strong>Status:</strong> zatwierdzona (decyzja zespołu, 2026-10-27; formalna akceptacja 2 osób na spotkaniu startowym)</li><li><strong>Data:</strong> 2026-10-27</li><li><strong>Powiązane:</strong> ADR-0007, ADR-0010, <strong><code>03-dokumentacja-procesowa/04-badania-i-analizy/faza-1-porownanie.md</code></strong> (<code>../../03-dokumentacja-procesowa/04-badania-i-analizy/faza-1-porownanie.md</code>)</li></ul>
 <h2>Kontekst i problem</h2>
-<p>Gra ma działać w przeglądarce, z autorytatywnym serwerem i botem. Zespół zna C# (wcześniejszy projekt w Godot), część osób — JS. <code>REJOLTANCE-ANALIZA.md</code> rekomendowała jeden język (TypeScript), opisując wariant .NET + Aspire jako uczciwą alternatywę. [V] .NET 8 kończy wsparcie 2026-11-10; .NET 10 to LTS. [V]</p>
+<p>Gra ma działać w przeglądarce. Potrzebuje autorytatywnego serwera (to serwer decyduje o stanie gry) i bota. Zespół zna C# z wcześniejszego projektu w Godot. Część osób zna też JavaScript (JS). Analiza <code>REJOLTANCE-ANALIZA.md</code> zalecała jeden język (TypeScript, TS). Wariant .NET + Aspire opisała jako uczciwą alternatywę. [V] .NET 8 traci wsparcie 2026-11-10. .NET 10 to wersja LTS (Long-Term Support, z wydłużonym wsparciem). [V]</p>
 <h2>Rozważane opcje</h2>
 <table><thead><tr>
 <th><p>Opcja</p></th>
@@ -12,8 +12,8 @@
 <tr>
 <td><p>TS full‑stack (Node)</p></td>
 <td><p>jeden język, wspólne typy</p></td>
-<td><p>zespół słabiej zna TS na backendzie; mniej materiału do inżynierek w C#</p></td>
-<td><p>nauka backendu TS</p></td>
+<td><p>zespół słabiej zna TS na backendzie; mniej materiału do prac inżynierskich w C#</p></td>
+<td><p>nauka backendu w TS</p></td>
 </tr>
 <tr>
 <td><p><strong>.NET 10 + React/TS + Aspire</strong></p></td>
@@ -32,8 +32,8 @@
 <p>W kontekście gry webowej robionej przez 6 osób znających głównie C#, mierząc się z ryzykiem rozjazdu kontraktów między językami, wybieramy <strong>.NET 10 (ASP.NET Core + SignalR) z klientem React + TypeScript + Vite i orkiestracją Aspire 13</strong> zamiast TS full‑stack, aby wykorzystać znajomość C# i gotowe mechanizmy (SignalR, EF Core, telemetria), akceptując dwa toolchainy i obowiązkową kontrolę kontraktu (ADR-0010).</p>
 <h2>Konsekwencje</h2>
 <h3>Pozytywne</h3>
-<ul><li><code>dotnet run --project src/Rejoltance.AppHost</code> stawia serwer + klienta bez Dockera (zweryfikowane testem <code>AppHostSmokeTests</code>).</li><li>Telemetria i health checks z <code>ServiceDefaults</code> za darmo.</li></ul>
+<ul><li><code>dotnet run --project src/Rejoltance.AppHost</code> uruchamia serwer i klienta bez Dockera (zweryfikowane testem <code>AppHostSmokeTests</code>).</li><li>Telemetrię i health checks (sprawdzanie stanu usługi) dostajemy za darmo z <code>ServiceDefaults</code>.</li></ul>
 <h3>Negatywne / ryzyka</h3>
-<ul><li>Każdy laptop potrzebuje .NET 10 SDK i Node 24 (<code>tools/doctor.ps1</code>).</li><li>Windows: Smart App Control, długie ścieżki, OneDrive — opisane w <strong><code>00-przewodnik-i-setup/01-szybki-start-i-instalacja.md</code></strong> (<code>../../00-przewodnik-i-setup/01-szybki-start-i-instalacja.md</code>).</li></ul>
+<ul><li>Każdy laptop potrzebuje .NET 10 SDK i Node 24 (sprawdza to <code>tools/doctor.ps1</code>).</li><li>Na Windows przeszkadzają Smart App Control, długie ścieżki i OneDrive. Opisujemy to w <strong><code>00-przewodnik-i-setup/01-szybki-start-i-instalacja.md</code></strong> (<code>../../00-przewodnik-i-setup/01-szybki-start-i-instalacja.md</code>).</li></ul>
 <h3>Do zrobienia</h3>
-<ul><li>[x] szkielet solucji (Faza 2)</li><li>[ ] E6-S01: CI zielone na GitHubie</li></ul>
+<ul><li>[x] szkielet solucji (Faza 2)</li><li>[ ] E6-S01: CI (ciągła integracja) zielone na GitHubie</li></ul>

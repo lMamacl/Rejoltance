@@ -1,5 +1,6 @@
-<ac:structured-macro ac:name="info"><ac:rich-text-body><p><strong>Synchronizacja 1:1 z repozytorium Git:</strong> <code>docs/03-dokumentacja-procesowa/04-badania-i-analizy/faza-0-analiza.md</code> (commit <code>10829d3</code>, data eksportu: <code>2026-11-02</code>)</p></ac:rich-text-body></ac:structured-macro>
+<ac:structured-macro ac:name="info"><ac:rich-text-body><p><strong>Synchronizacja 1:1 z repozytorium Git:</strong> <code>docs/03-dokumentacja-procesowa/04-badania-i-analizy/faza-0-analiza.md</code> (commit <code>a2bf2a4</code>, data eksportu: <code>2026-11-02</code>)</p></ac:rich-text-body></ac:structured-macro>
 <p><strong>Data:</strong> 2026-10-27 · <strong>Status:</strong> zaakceptowana (decyzje poniżej) · Legenda: <strong>[V]</strong> zweryfikowane, <strong>[Z]</strong> założenie, <strong>[?]</strong> nieznane.</p>
+<p>Skróty użyte w tej notatce: MVP (Minimum Viable Product) to najmniejsza wersja gry, którą da się pokazać graczom. P2P (peer-to-peer) to połączenie przeglądarek bez serwera. XSS (cross-site scripting) to wstrzyknięcie złośliwego skryptu do strony. DSL to język opisu efektów kart. RNG to generator liczb losowych. DIP to Dokument Inicjujący Projekt, a PO to Product Owner (właściciel produktu).</p>
 <h2>Streszczenie źródeł</h2>
 <table><thead><tr>
 <th><p>Źródło</p></th>
@@ -43,7 +44,7 @@
 <h2>Decyzje podjęte</h2>
 <ol><li>GitHub główny + mirror do Bitbucket PB.</li><li>Frontend: React + TypeScript + Vite.</li><li>Narzędzia AI zespołu: Claude Code, Antigravity, Copilot, Gemini, Codex, DeepSeek → wspólny <code>AGENTS.md</code> + <code>.agents/</code>.</li><li>SQLite na start, PostgreSQL później (Aspire bez Dockera).</li><li><strong>Kernel pisany od nowa</strong> (stare C# tylko jako lista przypadków brzegowych + wzór <code>DeterministicRng</code>).</li><li><strong>Kanon reguł = prototyp JS v11</strong>; ewidentne błędy → <code>docs/01-dokumentacja-systemowa/04-rozbieznosci-prototypu.md</code> do decyzji zespołu.</li><li>Materiały (kod, assety prototypu) można commitować — autorem jest zespół.</li><li>Sprinty: S0 27.10–2.11 · S1 3–16.11 · S2 17–30.11 · S3 1–14.12 · S4 15.12–11.01 · S5 12–25.01.</li><li>(Faza 1) Narzędzie SDD: <strong>OpenSpec</strong> + własna konstytucja; gałęzie <code>typ/REJ-123-opis</code>.</li></ol>
 <h2>Pytania otwarte do zespołu</h2>
-<p>Numery #1–#10 są przywoływane w innych dokumentach (np. „pytanie otwarte #6”).</p>
+<p>Inne dokumenty odwołują się do tych pytań po numerach #1–#10 (np. „pytanie otwarte #6”).</p>
 <h3>Proces / uczelnia</h3>
 <ul><li><strong>#1</strong> Klucz projektu Jira i kto go zakłada (w repo placeholder <code>REJ</code>).</li><li><strong>#2</strong> Przydział PO do sprintów (6 osób, 5 sprintów — czy S0 się liczy?).</li><li><strong>#3</strong> Mapowanie workflow <code>Open/In Progress/Resolved/Closed</code> na tablicę.</li><li><strong>#4</strong> Czy prowadzący zakłada repo w Bitbucket (cel mirrora) i czy wystarczy review na GitHubie z linkiem w Jirze.</li></ul>
 <h3>Produkt</h3>

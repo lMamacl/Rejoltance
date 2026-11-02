@@ -1,21 +1,22 @@
-<ac:structured-macro ac:name="info"><ac:rich-text-body><p><strong>Synchronizacja 1:1 z repozytorium Git:</strong> <code>docs/05-szablony/szablon-qa-raport-i-checklista.md</code> (commit <code>10829d3</code>, data eksportu: <code>2026-11-02</code>)</p></ac:rich-text-body></ac:structured-macro>
+<ac:structured-macro ac:name="info"><ac:rich-text-body><p><strong>Synchronizacja 1:1 z repozytorium Git:</strong> <code>docs/05-szablony/szablon-qa-raport-i-checklista.md</code> (commit <code>a2bf2a4</code>, data eksportu: <code>2026-11-02</code>)</p></ac:rich-text-body></ac:structured-macro>
 <blockquote><p><strong>Źródło prawdy:</strong> Confluence PB · <strong>Kategoria AltexSoft:</strong> Product: System Documentation — Quality Assurance (Test Report &amp; Test Checklists) · <strong>Etap SDD:</strong> Weryfikacja (<code>Verify</code>) · <strong>Wymóg uczelniany:</strong> EU6</p></blockquote>
+<p>Wypełnij raport na koniec sprintu, przed Sprint Review. Zastąp pola w nawiasach <code>&lt;...&gt;</code>. QA to quality assurance (zapewnienie jakości), SDD — spec-driven development (praca sterowana specyfikacją), EU — efekt uczenia się, CI — ciągła integracja, E2E — test end-to-end całej aplikacji.</p>
 <hr />
-<h2>1. Podsumowanie wykonania testów w Sprincie <code>N</code></h2>
+<h2>1. Podsumowanie testów w Sprincie <code>N</code></h2>
 <table><thead><tr>
-<th><p>Metryka jakościowa</p></th>
+<th><p>Metryka jakości</p></th>
 <th><p>Wynik w Sprincie <code>N</code></p></th>
-<th><p>Wartość docelowa (Brama jakości)</p></th>
+<th><p>Wartość docelowa (bramka jakości)</p></th>
 <th><p>Status</p></th>
 </tr></thead><tbody>
 <tr>
-<td><p><strong>Testy jednostkowe C# (<code>Rejoltance.Kernel.Tests</code> + <code>Cards.Tests</code>)</strong></p></td>
+<td><p><strong>Testy jednostkowe C# (<code>Rejoltance.Kernel.Tests</code> + planowany <code>Rejoltance.Cards.Tests</code>)</strong></p></td>
 <td><p><code>&lt;Przeszło / Razem&gt;</code></p></td>
 <td><p>100% zielone</p></td>
 <td><p><code>✅ / ❌</code></p></td>
 </tr>
 <tr>
-<td><p><strong>Testy integracyjne (<code>Rejoltance.Host.Tests</code>)</strong></p></td>
+<td><p><strong>Testy integracyjne (<code>Rejoltance.Server.Tests</code>)</strong></p></td>
 <td><p><code>&lt;Przeszło / Razem&gt;</code></p></td>
 <td><p>100% zielone</p></td>
 <td><p><code>✅ / ❌</code></p></td>
@@ -33,7 +34,7 @@
 <td><p><code>✅ / ❌</code></p></td>
 </tr>
 <tr>
-<td><p><strong>Pokrycie kodu w <code>Rejoltance.Kernel</code> (Line Coverage)</strong></p></td>
+<td><p><strong>Pokrycie kodu w <code>Rejoltance.Kernel</code> (line coverage)</strong></p></td>
 <td><p><code>&lt;X %&gt;</code></p></td>
 <td><p><code>≥ 90%</code> (<code>NFR-41</code>)</p></td>
 <td><p><code>✅ / ❌</code></p></td>
@@ -52,8 +53,8 @@
 </tr>
 </tbody></table>
 <hr />
-<h2>2. Lista kontrolna dymnych testów akceptacyjnych przed Sprint Review (Test Checklist)</h2>
-<ul><li>[ ] Aplikacja uruchamia się czysto jedną komendą <code>docker compose up --build</code> (<code>NFR-50</code>).</li><li>[ ] Endpoint diagnostyczny <code>GET /health</code> zwraca status <code>200 OK</code> (<code>NFR-53</code>).</li><li>[ ] Gracz może utworzyć pokój w lobby i dołączyć do niego z drugiej karty przeglądarki lub wybrać grę z botem AI.</li><li>[ ] Faza wymiany kart startowych (mulligan) przebiega bez błędów dla obu graczy (<code>R-12</code>).</li><li>[ ] Cztery kroki rundy (<em>Jednostki → Akcje → Walka → Koniec rundy</em>) zmieniają się we właściwej kolejności (<code>R-15</code>).</li><li>[ ] Zerwanie połączenia WebSocket i odświeżenie karty przeglądarki przywraca aktualny widok stołu bez ujawnienia ukrytych kart przeciwnika (<code>R-66</code>, <code>NFR-30</code>).</li><li>[ ] Po obniżeniu HP lidera do <code>0</code> wyświetla się ekran podsumowania meczu z poprawnym zwycięzcą (<code>R-64</code>).</li></ul>
+<h2>2. Lista kontrolna testów dymnych (smoke tests) przed Sprint Review (Test Checklist)</h2>
+<ul><li>[ ] Aplikacja uruchamia się bez błędów jedną komendą <code>docker compose up --build</code> (<code>NFR-50</code>).</li><li>[ ] Endpoint diagnostyczny <code>GET /health</code> zwraca status <code>200 OK</code> (<code>NFR-53</code>).</li><li>[ ] Gracz może utworzyć pokój w lobby i dołączyć do niego z drugiej karty przeglądarki albo wybrać grę z botem AI.</li><li>[ ] Wymiana kart startowych (mulligan) przebiega bez błędów dla obu graczy (<code>R-12</code>).</li><li>[ ] Cztery kroki rundy (<em>Jednostki → Akcje → Walka → Koniec rundy</em>) zmieniają się we właściwej kolejności (<code>R-15</code>).</li><li>[ ] Po zerwaniu połączenia WebSocket i odświeżeniu karty przeglądarki gracz widzi aktualny stół, a ukryte karty przeciwnika pozostają ukryte (<code>R-66</code>, <code>NFR-30</code>).</li><li>[ ] Gdy HP lidera spadnie do <code>0</code>, pojawia się ekran podsumowania meczu z poprawnym zwycięzcą (<code>R-64</code>).</li></ul>
 <hr />
 <h2>3. Rejestr wykrytych defektów (Bug Report Log)</h2>
 <table><thead><tr>

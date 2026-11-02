@@ -1,5 +1,5 @@
 ---
-description: "Architektura dokumentacji technicznej wg taksonomii AltexSoft i cyklu SDD w ukladzie 1:1 z przestrzenia Confluence PB (sekcje 00..05)."
+description: "Jak układamy dokumentację: typy dokumentów wg AltexSoft, etapy SDD i układ 1:1 z przestrzenią Confluence PB (sekcje 00..05)."
 applyTo: "**"
 ---
 

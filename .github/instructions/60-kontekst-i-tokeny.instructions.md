@@ -1,5 +1,5 @@
 ---
-description: "Higiena okna kontekstowego modelu AI: zakaz wczytywania w calosci engine.js i cards.json oraz kolejnosc pozyskiwania kontekstu z OpenSpec."
+description: "Oszczędzanie okna kontekstu modelu AI: nie wczytuj całych engine.js i cards.json, zaczynaj od OpenSpec."
 applyTo: "**"
 ---
 

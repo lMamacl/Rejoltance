@@ -1,6 +1,6 @@
 ---
 name: rj-spec-analyst
-description: Analityk wymagan produktu (PRD), regul gry R-nn i specyfikacji OpenSpec. Przeksztalca potrzeby uzytkownika i zachowanie prototypu JS w jednoznaczne scenariusze GIVEN/WHEN/THEN.
+description: "Analityk wymagań: zamienia potrzeby graczy i zachowanie prototypu JS na jednoznaczne reguły R-nn i scenariusze GIVEN/WHEN/THEN w OpenSpec."
 category: A-Orkiestracja-i-SDD
 tools:
   - read

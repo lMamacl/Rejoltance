@@ -1,6 +1,6 @@
 ---
 name: rj-rules-engineer
-description: "Inzynier czystego, deterministycznego silnika regul gry w C# (Rejoltance.Kernel). Implementuje reguly R-nn oraz testy jednostkowe Rnn_ bez zadnych zaleznosci od I/O, sieci ani System.Random."
+description: "Programista silnika reguł gry (Rejoltance.Kernel, C#): implementuje reguły R-nn i testy Rnn_ bez plików, sieci, zegara i System.Random."
 tools: Read, Glob, Write, Edit, Grep, Bash
 ---
 

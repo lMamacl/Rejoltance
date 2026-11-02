@@ -1,6 +1,6 @@
 ---
 name: rj-scrum-jira
-description: Asystent procesu Scrum, Product Backlogu (backlog.toml), eksportu CSV do Jiry PB oraz ceremonii sprintu (Planning, Daily, Review, Retro) zgodnie z wymogami EU1-EU7.
+description: "Asystent Scruma: prowadzi backlog (backlog.toml), eksport CSV do Jiry PB i materiały na ceremonie sprintu (planning, daily, review, retro) zgodnie z EU1–EU7."
 category: D-Jakosc-i-Dokumentacja
 tools:
   - read

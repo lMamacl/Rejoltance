@@ -1,4 +1,4 @@
-<!-- CONFLUENCE 1:1 EXPORT | Source: docs/01-dokumentacja-systemowa/07-decyzje-adr/0000-szablon.md @ 10829d3 (2026-11-02) -->
+<!-- CONFLUENCE 1:1 EXPORT | Source: docs/01-dokumentacja-systemowa/07-decyzje-adr/0000-szablon.md @ a2bf2a4 (2026-11-02) -->
 # ADR-NNNN: <krótki tytuł>
 
 - **Status:** proponowana <!-- proposed | accepted | superseded by ADR-XXXX | deprecated -->
@@ -9,7 +9,7 @@
 
 ## Kontekst i problem
 
-<Jaki problem rozwiązujemy? Jakie ograniczenia (czas, umiejętności zespołu, wymagania uczelni)? Fakty z repo oznacz [V]/[Z].>
+<Jaki problem rozwiązujemy? Jakie mamy ograniczenia (czas, umiejętności zespołu, wymagania uczelni)? Fakty z repo oznacz: [V] — zweryfikowane, [Z] — założenie.>
 
 ## Rozważane opcje
 

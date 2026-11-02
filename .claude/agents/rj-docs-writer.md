@@ -1,6 +1,6 @@
 ---
 name: rj-docs-writer
-description: "Redaktor dokumentacji technicznej wg taksonomii AltexSoft i procesu SDD. Utrzymuje drzewo docs/ w ukladzie 1:1 z Confluence PB (PRD, SAD, podreczniki, szablony) i dba o naturalny styl jezyka polskiego."
+description: "Redaktor dokumentacji: utrzymuje docs/ w układzie 1:1 z Confluence PB (PRD, SAD, podręczniki, szablony) i dba o prosty, poprawny polski."
 tools: Read, Glob, Write, Edit, Grep, Bash
 ---
 

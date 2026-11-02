@@ -1,7 +1,7 @@
-<ac:structured-macro ac:name="info"><ac:rich-text-body><p><strong>Synchronizacja 1:1 z repozytorium Git:</strong> <code>docs/01-dokumentacja-systemowa/07-decyzje-adr/0005-kanon-regul-prototyp-js.md</code> (commit <code>10829d3</code>, data eksportu: <code>2026-11-02</code>)</p></ac:rich-text-body></ac:structured-macro>
+<ac:structured-macro ac:name="info"><ac:rich-text-body><p><strong>Synchronizacja 1:1 z repozytorium Git:</strong> <code>docs/01-dokumentacja-systemowa/07-decyzje-adr/0005-kanon-regul-prototyp-js.md</code> (commit <code>a2bf2a4</code>, data eksportu: <code>2026-11-02</code>)</p></ac:rich-text-body></ac:structured-macro>
 <ul><li><strong>Status:</strong> zatwierdzona (2026-10-27)</li><li><strong>Data:</strong> 2026-10-27</li><li><strong>Powiązane:</strong> <strong><code>02-specyfikacja-regul-gry.md</code></strong> (<code>../02-specyfikacja-regul-gry.md</code>), <strong><code>03-indeks-regul-r-nn.md</code></strong> (<code>../03-indeks-regul-r-nn.md</code>), <strong><code>04-rozbieznosci-prototypu.md</code></strong> (<code>../04-rozbieznosci-prototypu.md</code>), <code>openspec/specs/*</code>, <code>tools/content/extract_cards.py</code></li></ul>
 <h2>Kontekst i problem</h2>
-<p>Mamy trzy źródła zasad, które się różnią: <code>RE_JOLTANCE.md</code> (spisana specyfikacja), stary C# i prototyp JS v11 (najnowszy, grywalny, z kartami 61–69). [V] Zespół zna grę z prototypu; to on jest wdrożony i pokazywany.</p>
+<p>Mamy trzy źródła zasad i każde mówi coś innego: <code>RE_JOLTANCE.md</code> (spisana specyfikacja), stary kod C# i prototyp JS (JavaScript) v11. Prototyp jest najnowszy, grywalny i ma karty 61–69. [V] Zespół zna grę z prototypu. To prototyp jest wdrożony i to jego pokazujemy.</p>
 <h2>Rozważane opcje</h2>
 <table><thead><tr>
 <th><p>Opcja</p></th>
@@ -26,6 +26,6 @@
 <p>W kontekście trzech niespójnych źródeł, wybieramy <strong>zachowanie <code>prototype/revibance/engine.js</code> (v11) oraz dane <code>cards.js</code> jako kanon</strong> zamiast starej specyfikacji, aby gra była tą, którą zespół zna i testuje, akceptując, że każdy błąd prototypu musi być jawnie opisany w <strong><code>04-rozbieznosci-prototypu.md</code></strong> (<code>../04-rozbieznosci-prototypu.md</code>) i rozstrzygnięty przez zespół, zanim trafi do reguły R‑nn.</p>
 <h2>Konsekwencje</h2>
 <h3>Pozytywne</h3>
-<ul><li><code>cards.json</code> generowany z prototypu; CI wykrywa rozjazd (<code>extract_cards.py --check</code>).</li><li>Prototyp służy jako wyrocznia do testów różnicowych (E5-S04).</li></ul>
+<ul><li><code>cards.json</code> generujemy z prototypu. CI (ciągła integracja) wykrywa rozjazd (<code>extract_cards.py --check</code>).</li><li>Prototyp służy jako wyrocznia w testach różnicowych (E5-S04).</li></ul>
 <h3>Negatywne / ryzyka</h3>
-<ul><li>20 pozycji D‑nn do rozstrzygnięcia (E0-S04); do tego czasu reguły sporne mają status ❓.</li></ul>
+<ul><li>Mamy 20 pozycji D‑nn (rozbieżności prototypu) do rozstrzygnięcia (E0-S04). Do tego czasu sporne reguły mają status ❓.</li></ul>

@@ -1,31 +1,31 @@
 # Sprint N — Przegląd sprintu i retrospektywa
 
-**Okres:** RRRR-MM-DD – RRRR-MM-DD · **Właściciel Produktu w sprincie:** <imię> · **Cel sprintu:** <jedno zdanie>
+**Okres:** RRRR-MM-DD – RRRR-MM-DD · **PO (Product Owner) sprintu:** <imię> · **Cel sprintu:** <jedno zdanie>
 
 ## Przegląd sprintu (Sprint Review)
 
-**Cel osiągnięty?** tak / częściowo / nie — <uzasadnienie>
+**Czy osiągnęliśmy cel?** tak / częściowo / nie — <uzasadnienie>
 
-| Story | Kto pokazuje | Kroki demo | Wynik |
+| Story | Kto pokazuje | Kroki pokazu (demo) | Wynik |
 |---|---|---|---|
 | REJ-… | | | ✅ / ⚠️ |
 
-**Feedback użytkowników / prowadzącego:**
+**Uwagi od użytkowników i prowadzącego:**
 
 -
 
-**Zmiany w Product Backlogu po review:**
+**Zmiany w Product Backlogu po przeglądzie:**
 
 -
 
-## Estymata vs rzeczywistość (z eksportu Jiry)
+## Szacunek a rzeczywistość (z eksportu Jiry)
 
-| Klucz | Zadanie | Właściciel | Estymata [h] | Rzeczywiste [h] | Δ | Przyczyna |
+| Klucz | Zadanie | Właściciel | Szacunek [h] | Rzeczywiście [h] | Δ | Przyczyna |
 |---|---|---|---|---|---|---|
 | | | | | | | |
 
-**Metryki:** velocity <SP> · godziny <rzecz.>/<plan> (<%>) · przeniesione do backlogu: <liczba>
-**Burndown:** zrzut ekranu (godziny i zadania) wklejony w Confluence: <link>
+**Metryki:** velocity (prędkość zespołu) <SP> · godziny <rzecz.>/<plan> (<%>) · przeniesione do backlogu: <liczba>
+**Burndown (wykres spalania):** zrzut ekranu (godziny i zadania) wklejony w Confluence: <link>
 
 ## Retrospektywa
 
@@ -35,6 +35,6 @@
 
 ### Akcje (maks. 3)
 
-| Akcja | Właściciel | Sprawdzimy na kolejnej retro |
+| Akcja | Właściciel | Sprawdzimy na kolejnej retrospektywie |
 |---|---|---|
 | | | |

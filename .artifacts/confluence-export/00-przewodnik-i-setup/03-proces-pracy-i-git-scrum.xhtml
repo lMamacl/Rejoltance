@@ -1,9 +1,11 @@
-<ac:structured-macro ac:name="info"><ac:rich-text-body><p><strong>Synchronizacja 1:1 z repozytorium Git:</strong> <code>docs/00-przewodnik-i-setup/03-proces-pracy-i-git-scrum.md</code> (commit <code>10829d3</code>, data eksportu: <code>2026-11-02</code>)</p></ac:rich-text-body></ac:structured-macro>
-<blockquote><p><strong>Źródło prawdy:</strong> repozytorium (<code>docs/00-przewodnik-i-setup/03-proces-pracy-i-git-scrum.md</code>) · <strong>Kategoria dokumentacji:</strong> Dokumentacja procesowa — Standardy pracy deweloperskiej i Scrum · <strong>Etap SDD:</strong> Cały cykl SDD</p></blockquote>
-<p>Niniejszy dokument definiuje jednolity standard pracy dla wszystkich 6 członków zespołu oraz wspierających ich agentów AI. Przestrzeganie tego przepływu gwarantuje spełnienie wymagań uczelnianych (<strong>EU1–EU6</strong>), utrzymanie czystej historii w GitHubie i Bitbuckecie oraz pełną śledzalność między wymaganiami a kodem.</p>
+<ac:structured-macro ac:name="info"><ac:rich-text-body><p><strong>Synchronizacja 1:1 z repozytorium Git:</strong> <code>docs/00-przewodnik-i-setup/03-proces-pracy-i-git-scrum.md</code> (commit <code>a2bf2a4</code>, data eksportu: <code>2026-11-02</code>)</p></ac:rich-text-body></ac:structured-macro>
+<blockquote><p><strong>Źródło prawdy:</strong> repozytorium (<code>docs/00-przewodnik-i-setup/03-proces-pracy-i-git-scrum.md</code>) · <strong>Kategoria dokumentacji:</strong> dokumentacja procesowa — standardy pracy deweloperskiej i Scrum · <strong>Etap SDD:</strong> Cały cykl SDD</p></blockquote>
+<p>Ten dokument opisuje wspólny sposób pracy dla 6 osób w zespole i wspierających nas agentów AI. Jeśli go przestrzegamy:</p>
+<ul><li>spełniamy wymagania uczelniane (efekty <strong>EU1–EU6</strong>),</li><li>mamy czystą historię w GitHubie i Bitbuckecie,</li><li>łatwo prześledzimy drogę od wymagania do kodu.</li></ul>
+<p>SDD (Spec-Driven Development) oznacza u nas, że specyfikację piszemy przed kodem. SP (Story Points) to punkty, w których szacujemy rozmiar zadania. PR to Pull Request, a CI (Continuous Integration) to automatyczne sprawdzanie zmian w GitHub Actions.</p>
 <hr />
-<h2>1. Cykl życia zadania (Od zgłoszenia w Jirze do wdrożenia i Confluence)</h2>
-<p>Każda zmiana w projekcie przechodzi przez 10 uporządkowanych kroków:</p>
+<h2>1. Cykl życia zadania (od Jiry do wdrożenia i Confluence)</h2>
+<p>Każda zmiana przechodzi przez 10 kroków:</p>
 <p><em>Diagram przepływu (Mermaid):</em></p>
 <ac:structured-macro ac:name="code"><ac:parameter ac:name="language">none</ac:parameter><ac:plain-text-body><![CDATA[flowchart LR
   J1["1. Jira: To Do → In Progress<br/>+ Log Work"] --> B["2. Gałąź z develop<br/>typ/REJ-123-opis"]
@@ -15,143 +17,145 @@
   PR --> CR["8. Code Review (≥1 osoba)<br/>+ Zielone CI"]
   CR --> M["9. Squash Merge<br/>+ Archiwizacja OpenSpec"]
   M --> C["10. Aktualizacja Confluence<br/>+ Jira: Resolved"]]]></ac:plain-text-body></ac:structured-macro>
-<h3>Szczegółowa instrukcja krok po kroku</h3>
+<p>TDD na diagramie oznacza tu Test-Driven Development: najpierw piszesz test, potem kod. PO to Product Owner.</p>
+<h3>Krok po kroku</h3>
 <table><thead><tr>
 <th><p>Krok</p></th>
-<th><p>Co należy zrobić</p></th>
-<th><p>Narzędzie / Polecenie / Skill AI</p></th>
+<th><p>Co robisz</p></th>
+<th><p>Narzędzie / polecenie / skill AI</p></th>
 </tr></thead><tbody>
 <tr>
 <td><p><strong>1. Podjęcie zadania</strong></p></td>
-<td><p>Podczas <em>Sprint Planningu</em> bierzesz zadanie z rejestru sprintu, weryfikujesz jego estymację (pojedynczy sub-task maks. <strong>4 h</strong>) i zmieniasz status w Jirze na <strong>In Progress</strong>.</p></td>
-<td><p>Jira PB</p></td>
+<td><p>Na <em>Sprint Planningu</em> bierzesz zadanie z rejestru sprintu. Sprawdzasz estymację: jedno podzadanie to maks. <strong>4 h</strong>. Zmieniasz status w Jirze na <strong>In Progress</strong>.</p></td>
+<td><p>Jira PB (uczelniana Jira Politechniki Białostockiej)</p></td>
 </tr>
 <tr>
 <td><p><strong>2. Utworzenie gałęzi</strong></p></td>
-<td><p>Tworzysz nową gałąź roboczą bezpośrednio od aktualnej gałęzi <code>develop</code>.</p></td>
-<td><p><code>git switch develop &amp;&amp; git pull &amp;&amp; git switch -c feature/REJ-123-krotki-opis</code> <em>(lub skill <code>/rj-start-feature</code>)</em></p></td>
+<td><p>Tworzysz gałąź roboczą od aktualnej gałęzi <code>develop</code>.</p></td>
+<td><p><code>git switch develop &amp;&amp; git pull &amp;&amp; git switch -c feature/REJ-123-krotki-opis</code> <em>(albo skill <code>/rj-start-feature</code>)</em></p></td>
 </tr>
 <tr>
 <td><p><strong>3. Specyfikacja SDD</strong></p></td>
-<td><p>Jeśli zadanie ma <strong>≥ 3 SP</strong>, zmienia <strong>regułę gry (<code>R-nn</code>)</strong> lub modyfikuje <strong>kontrakt komunikacyjny</strong>, przed napisaniem kodu tworzysz propozycję zmiany w OpenSpec (<code>proposal.md</code>, delta specyfikacji <code>GIVEN/WHEN/THEN</code>, opcjonalnie <code>design.md</code> oraz <code>tasks.md</code>).</p></td>
+<td><p>Przed kodem tworzysz propozycję zmiany w OpenSpec, jeśli zadanie ma <strong>≥ 3 SP</strong>, zmienia <strong>regułę gry (<code>R-nn</code>)</strong> albo <strong>kontrakt komunikacyjny</strong>. Propozycja to <code>proposal.md</code> i delta specyfikacji <code>GIVEN/WHEN/THEN</code>. Opcjonalnie dochodzą <code>design.md</code> i <code>tasks.md</code>.</p></td>
 <td><p><code>/opsx:propose</code> (<strong>Przewodnik OpenSpec</strong> (<code>../04-system-agentow-ai/03-jak-pisac-specyfikacje-openspec.md</code>))</p></td>
 </tr>
 <tr>
 <td><p><strong>4. Akceptacja planu</strong></p></td>
-<td><p>Przedstawiasz propozycję specyfikacji na kanale zespołu lub w krótkim PR. Implementację rozpoczynasz dopiero po zatwierdzeniu zakresu przez człowieka (Product Ownera sprintu lub właściciela modułu).</p></td>
+<td><p>Pokazujesz propozycję na kanale zespołu albo w krótkim PR. Kod zaczynasz pisać dopiero, gdy człowiek zatwierdzi zakres. Zatwierdza Product Owner sprintu albo właściciel modułu.</p></td>
 <td><p>Człowiek (PO / właściciel epiku)</p></td>
 </tr>
 <tr>
 <td><p><strong>5. Test przed kodem</strong></p></td>
-<td><p>Piszesz test automatyczny opisujący docelowe zachowanie (dla reguł gry nazwa testu musi zaczynać się od identyfikatora reguły, np. <code>R14_drawing_from_empty_deck_deals_growing_fatigue_damage</code>). Upewniasz się, że test początkowo nie przechodzi z oczekiwanego powodu.</p></td>
-<td><p>Skill <code>/rj-add-rule-test</code> lub ręcznie w <code>tests/</code></p></td>
+<td><p>Piszesz test automatyczny, który opisuje docelowe zachowanie. Test reguły gry zaczyna się od numeru reguły, np. <code>R14_drawing_from_empty_deck_deals_growing_fatigue_damage</code>. Sprawdzasz, że na początku test nie przechodzi, i to z oczekiwanego powodu.</p></td>
+<td><p>Skill <code>/rj-add-rule-test</code> albo ręcznie w <code>tests/</code></p></td>
 </tr>
 <tr>
 <td><p><strong>6. Implementacja</strong></p></td>
-<td><p>Piszesz kod produkcyjny w najmniejszym możliwym kroku, aż testy staną się zielone. Tworzysz czytelne commity z kluczem Jira: <code>REJ-123: implement fatigue damage rule</code>.</p></td>
-<td><p>Agenci <code>rj-backend-engineer</code> / <code>rj-frontend-engineer</code></p></td>
+<td><p>Piszesz kod małymi krokami, aż testy przejdą. Commity mają klucz Jiry, np. <code>REJ-123: implement fatigue damage rule</code>.</p></td>
+<td><p>Agenci <code>rj-backend-engineer</code> / <code>rj-frontend-engineer</code> (reguły w Kernelu: <code>rj-rules-engineer</code>, karty: <code>rj-card-author</code>)</p></td>
 </tr>
 <tr>
 <td><p><strong>7. Kontrola przed PR</strong></p></td>
-<td><p>Uruchamiasz pełną listę kontrolną jakości (kompilacja, testy jednostkowe, testy granic architektury, walidacja OpenSpec i markdownlint).</p></td>
-<td><p>Skill <code>/rj-pr-ready</code> lub <code>npm run check &amp;&amp; dotnet test</code></p></td>
+<td><p>Uruchamiasz listę kontrolną jakości: kompilacja, testy jednostkowe, testy granic architektury, walidacja OpenSpec, markdownlint.</p></td>
+<td><p>Skill <code>/rj-pr-ready</code> albo <code>npm run check &amp;&amp; dotnet test</code></p></td>
 </tr>
 <tr>
-<td><p><strong>8. Pull Request i Review</strong></p></td>
-<td><p>Wypychasz gałąź na GitHub i otwierasz Pull Request do gałęzi <code>develop</code>, wypełniając szablon PR. Przynajmniej jedna osoba z zespołu przeprowadza merytoryczne Code Review (można wspomóc się agentem <code>rj-reviewer</code>).</p></td>
-<td><p>GitHub PR + agent <code>rj-reviewer</code></p></td>
+<td><p><strong>8. Pull Request i przegląd</strong></p></td>
+<td><p>Wypychasz gałąź na GitHub i otwierasz PR do <code>develop</code>. Wypełniasz szablon PR. Co najmniej jedna osoba z zespołu robi merytoryczny przegląd kodu (Code Review). Może pomóc agent <code>rj-qa-verifier</code>.</p></td>
+<td><p>GitHub PR + agent <code>rj-qa-verifier</code></p></td>
 </tr>
 <tr>
-<td><p><strong>9. Scalenie (Merge)</strong></p></td>
-<td><p>Po uzyskaniu akceptacji recenzenta i przejściu wszystkich testów w GitHub Actions autor wykonuje <strong>Squash and merge</strong> do <code>develop</code>. Jeśli zadanie miało zmianę OpenSpec, archiwizuje ją (<code>/opsx:archive</code>).</p></td>
-<td><p>Człowiek (agenci mają zakaz wykonywania merge!)</p></td>
+<td><p><strong>9. Scalenie (merge)</strong></p></td>
+<td><p>Gdy recenzent zaakceptuje zmianę, a testy w GitHub Actions przejdą, autor robi <strong>Squash and merge</strong> do <code>develop</code>. Jeśli zadanie miało zmianę OpenSpec, autor ją archiwizuje (<code>/opsx:archive</code>).</p></td>
+<td><p>Człowiek (agenci nie mogą robić merge!)</p></td>
 </tr>
 <tr>
-<td><p><strong>10. Zamknięcie i ewidencja</strong></p></td>
-<td><p>Rejestrujesz przepracowany czas w Jirze (<strong>Log Work</strong>), zmieniasz status zadania na <strong>Resolved</strong> i aktualizujesz powiązaną stronę dokumentacji w Confluence PB.</p></td>
+<td><p><strong>10. Zamknięcie</strong></p></td>
+<td><p>Rejestrujesz czas pracy w Jirze (<strong>Log Work</strong>). Zmieniasz status zadania na <strong>Resolved</strong>. Aktualizujesz powiązaną stronę w Confluence PB.</p></td>
 <td><p>Jira PB + Confluence PB (skill <code>/rj-sync-confluence</code>)</p></td>
 </tr>
 </tbody></table>
 <hr />
-<h2>2. Strategia rozgałęzień Git i konwencje nazewnicze</h2>
-<p>W projekcie stosujemy uproszczony model <strong>GitFlow dopasowany do sprintów Scrumowych</strong>:</p>
+<h2>2. Gałęzie Git i nazewnictwo</h2>
+<p>Używamy uproszczonego <strong>GitFlow dopasowanego do sprintów Scrum</strong>:</p>
 <table><thead><tr>
 <th><p>Gałąź</p></th>
-<th><p>Przeznaczenie</p></th>
-<th><p>Zasady ochrony i aktualizacji</p></th>
+<th><p>Do czego służy</p></th>
+<th><p>Ochrona i aktualizacja</p></th>
 </tr></thead><tbody>
 <tr>
 <td><p><strong><code>main</code></strong></p></td>
-<td><p>Stabilne wydania na koniec każdego sprintu (wersja prezentowana na <em>Sprint Review</em>).</p></td>
-<td><p>Chroniona. Aktualizowana wyłącznie przez Pull Request <code>develop → main</code> na koniec sprintu, oznaczana tagiem <code>sprint-N</code> (np. <code>sprint-1</code>).</p></td>
+<td><p>Stabilne wydanie na koniec sprintu (wersja z <em>Sprint Review</em>).</p></td>
+<td><p>Chroniona. Zmienia się tylko przez PR <code>develop → main</code> na koniec sprintu. Dostaje tag <code>sprint-N</code> (np. <code>sprint-1</code>).</p></td>
 </tr>
 <tr>
 <td><p><strong><code>develop</code></strong></p></td>
 <td><p>Główna gałąź integracyjna bieżącego sprintu.</p></td>
-<td><p>Chroniona. Kod trafia tu wyłącznie przez zrecenzowane Pull Requesty z zielonym statusem CI.</p></td>
+<td><p>Chroniona. Kod trafia tu tylko przez zrecenzowane PR z zielonym CI.</p></td>
 </tr>
 <tr>
 <td><p><strong><code>feature/REJ-123-opis</code></strong></p></td>
-<td><p>Nowa funkcjonalność lub historyjka użytkownika.</p></td>
-<td><p>Tworzona z <code>develop</code>. Czas życia gałęzi nie powinien przekraczać <strong>3 dni</strong> bez integracji (Konstytucja, Art. VII).</p></td>
+<td><p>Nowa funkcjonalność albo historyjka użytkownika.</p></td>
+<td><p>Tworzona z <code>develop</code>. Bez integracji żyje maks. <strong>3 dni</strong> (krótkie gałęzie: Konstytucja, Art. VIII).</p></td>
 </tr>
 <tr>
 <td><p><strong><code>fix/REJ-123-opis</code></strong></p></td>
-<td><p>Naprawa błędu zidentyfikowanego w testach lub na Review.</p></td>
-<td><p>Tworzona z <code>develop</code>, scalana przez PR z testem reprodukującym błąd.</p></td>
+<td><p>Naprawa błędu znalezionego w testach albo na Review.</p></td>
+<td><p>Tworzona z <code>develop</code>. Scalana przez PR z testem, który odtwarza błąd.</p></td>
 </tr>
 <tr>
 <td><p><strong><code>docs/REJ-123-opis</code></strong></p></td>
-<td><p>Tworzenie lub aktualizacja dokumentacji, ADR lub szablonów.</p></td>
-<td><p>Tworzona z <code>develop</code>, weryfikowana przez linter Markdown i walidator OpenSpec.</p></td>
+<td><p>Nowa lub poprawiona dokumentacja, ADR albo szablon. ADR (Architecture Decision Record) to zapis decyzji architektonicznej.</p></td>
+<td><p>Tworzona z <code>develop</code>. Sprawdzana linterem Markdown i walidatorem OpenSpec.</p></td>
 </tr>
 <tr>
 <td><p><strong><code>chore/REJ-123-opis</code></strong></p></td>
-<td><p>Konfiguracja narzędzi, skryptów, CI/CD, agentów lub zależności.</p></td>
+<td><p>Konfiguracja narzędzi, skryptów, CI/CD, agentów albo zależności.</p></td>
 <td><p>Tworzona z <code>develop</code>.</p></td>
 </tr>
 <tr>
 <td><p><strong><code>spike/REJ-123-opis</code></strong></p></td>
-<td><p>Krótkie badanie techniczne (maks. 2 h) zakończone notatką badawczą.</p></td>
-<td><p>Tworzona z <code>develop</code>; wynik trafia do <code>docs/03-dokumentacja-procesowa/04-badania-i-analizy/</code>.</p></td>
+<td><p>Krótkie badanie techniczne (maks. 2 h) zakończone notatką.</p></td>
+<td><p>Tworzona z <code>develop</code>. Wynik trafia do <code>docs/03-dokumentacja-procesowa/04-badania-i-analizy/</code>.</p></td>
 </tr>
 </tbody></table>
-<h3>Wymogi walidowane automatycznie przez potok CI (<code>pr-conventions.yml</code>)</h3>
-<ul><li><strong>Nazwa gałęzi</strong> musi pasować do wyrażenia regularnego: <code>^(feature|fix|docs|chore|spike)/REJ-[0-9]+-[a-z0-9-]+$</code></li><li><strong>Tytuł Pull Requesta oraz wiadomości commitów</strong> muszą zaczynać się od klucza zadania w Jirze i dwukropka, po których następuje opis po angielsku w trybie rozkazującym, np.:</li><li><code>REJ-45: add turn order selection after mulligan</code></li><li><code>REJ-12: update SAD deployment diagram for Aspire</code></li></ul>
+<h3>Co sprawdza automatycznie CI (<code>pr-conventions.yml</code>)</h3>
+<ul><li><strong>Nazwa gałęzi</strong> musi pasować do wyrażenia: <code>^(feature|fix|docs|chore|spike)/REJ-[0-9]+-[a-z0-9-]+$</code></li><li><strong>Tytuł PR i wiadomości commitów</strong> zaczynają się od klucza zadania z Jiry i dwukropka. Dalej jest opis po angielsku w trybie rozkazującym, np.:</li><li><code>REJ-45: add turn order selection after mulligan</code></li><li><code>REJ-12: update SAD deployment diagram for Aspire</code></li></ul>
 <hr />
-<h2>3. Zasady bezpiecznej i odpowiedzialnej pracy z agentami AI</h2>
-<p>Agenci AI (Claude Code, Antigravity, GitHub Copilot, Gemini, Codex) są w naszym projekcie traktowani jako wyspecjalizowani asystenci inżynierscy, jednak <strong>pełną odpowiedzialność za kod, dokumentację i ocenę na przedmiocie ponosi człowiek</strong>.</p>
-<h3>Co jest dobrą praktyką, a co błędem?</h3>
+<h2>3. Bezpieczna praca z agentami AI</h2>
+<p>Agenci AI (Claude Code, Antigravity, GitHub Copilot, Gemini, Codex) to dla nas wyspecjalizowani asystenci. <strong>Za kod, dokumentację i ocenę z przedmiotu odpowiada jednak człowiek.</strong></p>
+<h3>Dobre praktyki i błędy</h3>
 <table><thead><tr>
-<th><p>Dobra praktyka inżynierska</p></th>
-<th><p>Błąd / Antywzorzec</p></th>
+<th><p>Dobra praktyka</p></th>
+<th><p>Błąd</p></th>
 </tr></thead><tbody>
 <tr>
-<td><p>Zlecanie agentowi konkretnego zadania z odwołaniem do zaakceptowanej specyfikacji: <em>„Zrealizuj zadanie REJ-45 zgodnie z <code>openspec/changes/rej-45-choose-order/tasks.md</code>, zaczynając od testu <code>R04_...</code>”</em>.</p></td>
-<td><p>Ogólnikowe polecenia bez specyfikacji: <em>„Zaprogramuj walkę w grze”</em>.</p></td>
+<td><p>Dajesz agentowi konkretne zadanie i wskazujesz zaakceptowaną specyfikację: <em>„Zrealizuj zadanie REJ-45 zgodnie z <code>openspec/changes/rej-45-choose-order/tasks.md</code>, zaczynając od testu <code>R04_...</code>”</em>.</p></td>
+<td><p>Wydajesz ogólne polecenie bez specyfikacji: <em>„Zaprogramuj walkę w grze”</em>.</p></td>
 </tr>
 <tr>
-<td><p>Wymaganie od agenta faktycznego uruchomienia komend testowych (<code>dotnet test</code>, <code>npm test</code>) i przedstawienia ich wyjścia w raporcie końcowym.</p></td>
-<td><p>Przyjmowanie na wiarę deklaracji agenta <em>„kod powinien działać poprawnie”</em>.</p></td>
+<td><p>Wymagasz, żeby agent naprawdę uruchomił testy (<code>dotnet test</code>, <code>npm test</code>) i pokazał wynik w raporcie.</p></td>
+<td><p>Wierzysz agentowi na słowo, gdy pisze <em>„kod powinien działać poprawnie”</em>.</p></td>
 </tr>
 <tr>
-<td><p>Dokładne przeczytanie zmian (<code>git diff</code>) przed utworzeniem commita i otwarciem Pull Requesta.</p></td>
-<td><p>Bezrefleksyjne commitowanie wygenerowanego kodu, którego autor nie potrafi wyjaśnić na zajęciach.</p></td>
+<td><p>Czytasz zmiany (<code>git diff</code>) przed commitem i przed otwarciem PR.</p></td>
+<td><p>Commitujesz wygenerowany kod bez czytania i nie umiesz go potem wyjaśnić na zajęciach.</p></td>
 </tr>
 <tr>
-<td><p>Używanie niezależnego agenta weryfikującego (<code>rj-reviewer</code>, <code>rj-test-verifier</code>) przed poproszeniem kolegi z zespołu o Code Review.</p></td>
-<td><p>Proszenie tego samego agenta o napisanie kodu i samodzielne wystawienie sobie ostatecznej akceptacji.</p></td>
+<td><p>Przed prośbą o Code Review do kolegi uruchamiasz niezależnego agenta weryfikującego (<code>rj-qa-verifier</code>).</p></td>
+<td><p>Prosisz tego samego agenta, żeby napisał kod i sam go zaakceptował.</p></td>
 </tr>
 </tbody></table>
-<blockquote><p><strong>Bezwzględny zakaz dla agentów AI (Konstytucja, Art. X):</strong> Żaden agent nie ma prawa wykonywać <code>git push</code> na gałęzie <code>main</code> i <code>develop</code>, scalać Pull Requestów, zamykać zadań w Jirze ani odczytywać plików <code>.env</code> i tokenów dostępowych.</p></blockquote>
+<blockquote><p><strong>Zakaz dla agentów AI (Konstytucja, Art. X):</strong> żaden agent nie może robić <code>git push</code> na <code>main</code> i <code>develop</code>, scalać PR, zamykać zadań w Jirze ani czytać plików <code>.env</code> i tokenów dostępowych.</p></blockquote>
 <hr />
-<h2>4. Automatyczny mirror repozytorium do Bitbucket PB</h2>
-<p>Zgodnie z decyzją <strong>ADR-0002</strong> (<code>../01-dokumentacja-systemowa/07-decyzje-adr/0002-github-i-mirror-bitbucket.md</code>), głównym miejscem codziennej pracy (Pull Requesty, GitHub Actions CI, integracje AI) jest GitHub, natomiast gałęzie <code>main</code>, <code>develop</code> oraz tagi <code>sprint-*</code> są automatycznie synchronizowane do uczelnianego serwera <strong>Bitbucket Data Center PB</strong>.</p>
-<h3>Jednorazowa konfiguracja mirrora (wykonuje administrator repozytorium)</h3>
-<ol><li>Po utworzeniu repozytorium w Bitbucket PB przez prowadzącego zaloguj się do Bitbucket PB i przejdź do: <em>Profil → Manage account → HTTP access tokens → Create token</em> (uprawnienie: <em>Repository write</em>).</li><li>W repozytorium na GitHubie przejdź do: <em>Settings → Secrets and variables → Actions</em> i skonfiguruj: - <strong>Repository secret</strong> <code>BITBUCKET_TOKEN</code>: wygenerowany token dostępowy z Bitbucket PB. - <strong>Repository variable</strong> <code>BITBUCKET_REPO_URL</code>: pełny adres HTTPS repozytorium, np. <code>https://devtools.wi.pb.edu.pl/bitbucket/scm/&lt;PROJEKT&gt;/&lt;repo&gt;.git</code>. - <strong>Repository variable</strong> <code>BITBUCKET_USER</code>: Twój identyfikator uczelniany (np. <code>wi00000</code>).</li><li>Przejdź do zakładki <em>Actions → Mirror to Bitbucket PB → Run workflow</em>, aby zweryfikować pierwszą synchronizację. Dopóki powyższe zmienne nie są ustawione, workflow mirrora bezpiecznie pomija wykonanie i nie blokuje CI.</li></ol>
+<h2>4. Automatyczna kopia repozytorium w Bitbucket PB</h2>
+<p>Decyzja <strong>ADR-0002</strong> (<code>../01-dokumentacja-systemowa/07-decyzje-adr/0002-github-i-mirror-bitbucket.md</code>) ustala podział. Na co dzień pracujemy na GitHubie: tam są PR, CI w GitHub Actions i integracje AI. Gałęzie <code>main</code>, <code>develop</code> i tagi <code>sprint-*</code> kopiują się automatycznie (mirror) na uczelniany serwer <strong>Bitbucket Data Center PB</strong>.</p>
+<h3>Jednorazowa konfiguracja mirrora (robi to administrator repozytorium)</h3>
+<ol><li>Prowadzący tworzy repozytorium w Bitbucket PB. Wtedy zaloguj się do Bitbucket PB i przejdź do: <em>Profil → Manage account → HTTP access tokens → Create token</em> (uprawnienie: <em>Repository write</em>).</li><li>W repozytorium na GitHubie przejdź do: <em>Settings → Secrets and variables → Actions</em> i ustaw: - <strong>Repository secret</strong> <code>BITBUCKET_TOKEN</code>: token z Bitbucket PB. - <strong>Repository variable</strong> <code>BITBUCKET_REPO_URL</code>: pełny adres HTTPS repozytorium, np. <code>https://devtools.wi.pb.edu.pl/bitbucket/scm/&lt;PROJEKT&gt;/&lt;repo&gt;.git</code>. - <strong>Repository variable</strong> <code>BITBUCKET_USER</code>: twój identyfikator uczelniany (np. <code>wi00000</code>).</li><li>Przejdź do <em>Actions → Mirror to Bitbucket PB → Run workflow</em> i sprawdź pierwszą synchronizację. Dopóki zmienne nie są ustawione, workflow mirrora po prostu się pomija i nie blokuje CI.</li></ol>
 <hr />
-<h2>5. Kryteria Gotowości (DoR) i Kryteria Ukończenia (DoD)</h2>
-<h3>Kryteria Gotowości (DoR) — kiedy zadanie może wejść do sprintu?</h3>
-<ol><li>Zadanie posiada wpis w Jirze z przypisanym epikiem, opisem w formacie <em>User Story</em> (<em>Jako… chcę… aby…</em>) oraz mierzalnymi kryteriami akceptacji w formacie <code>GIVEN / WHEN / THEN</code>.</li><li>Zadanie zostało oszacowane przez zespół w <em>Story Points</em> (skala Fibonacciego) i podzielone na podzadania (<em>Sub-tasks</em>) o pracochłonności <strong>≤ 4 h</strong>.</li><li>Dla zadań o rozmiarze ≥ 3 SP lub zmieniających reguły gry wskazano powiązane identyfikatory reguł <code>R-nn</code> / <code>NFR-nn</code>.</li><li>Zidentyfikowano zależności od innych modułów oraz potwierdzono ze współpracującymi członkami zespołu, że kontrakty wejścia/wyjścia są jasne.</li></ol>
-<h3>Kryteria Ukończenia (DoD) — kiedy zadanie uznajemy za ukończone?</h3>
-<ol><li>Kod znajduje się na gałęzi nazwanej zgodnie ze standardem <code>typ/REJ-123-opis</code>, a commity zawierają klucz Jira.</li><li>Wszystkie nowe reguły gry i wymagania posiadają testy automatyczne (<code>Rnn_...</code> / <code>NFRnn_...</code>), a cały potok CI na GitHubie jest zielony (<code>dotnet test</code>, <code>npm test</code>, <code>npm run check</code>).</li><li>Dla zadań ≥ 3 SP zmiana w <code>openspec/</code> została zwalidowana i zarchiwizowana po wdrożeniu.</li><li>Pull Request został sprawdzony i zaakceptowany przez co najmniej jednego innego członka zespołu i scalony do <code>develop</code> (oraz zsynchronizowany z Bitbucket PB).</li><li>Dokumentacja modułu (<code>src/&lt;moduł&gt;/README.md</code>), indeks reguł (<code>03-indeks-regul-r-nn.md</code>) oraz odpowiadająca strona w <strong>Confluence PB</strong> zostały zaktualizowane.</li><li>Rzeczywisty czas pracy został rzetelnie zarejestrowany w Jirze za pomocą funkcji <strong>Log Work</strong>, a przyrost został zademonstrowany i zaakceptowany przez reprezentanta użytkowników końcowych (Radę Graczy).</li></ol>
+<h2>5. Definicja gotowości (DoR) i definicja ukończenia (DoD)</h2>
+<p>DoR (Definition of Ready) mówi, kiedy zadanie może wejść do sprintu. DoD (Definition of Done) mówi, kiedy uznajemy je za skończone.</p>
+<h3>DoR — kiedy zadanie może wejść do sprintu?</h3>
+<ol><li>Zadanie ma wpis w Jirze z przypisanym epikiem. Ma opis w formacie <em>User Story</em> (<em>Jako… chcę… aby…</em>). Ma mierzalne kryteria akceptacji <code>GIVEN / WHEN / THEN</code>.</li><li>Zespół oszacował zadanie w <em>Story Points</em> (skala Fibonacciego). Zadanie jest podzielone na podzadania (<em>Sub-tasks</em>) po <strong>≤ 4 h</strong>.</li><li>Zadania ≥ 3 SP i zadania zmieniające reguły gry mają wskazane numery reguł <code>R-nn</code> / <code>NFR-nn</code>.</li><li>Znamy zależności od innych modułów. Osoby współpracujące potwierdziły, że kontrakty wejścia i wyjścia są jasne.</li></ol>
+<h3>DoD — kiedy zadanie jest ukończone?</h3>
+<ol><li>Kod jest na gałęzi nazwanej według wzorca <code>typ/REJ-123-opis</code>. Commity zawierają klucz Jiry.</li><li>Nowe reguły gry i wymagania mają testy automatyczne (<code>Rnn_...</code> / <code>NFRnn_...</code>). Całe CI na GitHubie jest zielone (<code>dotnet test</code>, <code>npm test</code>, <code>npm run check</code>).</li><li>W zadaniach ≥ 3 SP zmiana w <code>openspec/</code> jest zwalidowana i po wdrożeniu zarchiwizowana.</li><li>Co najmniej jedna inna osoba z zespołu sprawdziła i zaakceptowała PR. PR jest scalony do <code>develop</code> i zsynchronizowany z Bitbucket PB.</li><li>Zaktualizowane są: dokumentacja modułu (<code>src/&lt;moduł&gt;/README.md</code>), indeks reguł (<code>03-indeks-regul-r-nn.md</code>) i odpowiednia strona w <strong>Confluence PB</strong>.</li><li>Rzeczywisty czas pracy jest zapisany w Jirze przez <strong>Log Work</strong>. Przyrost został pokazany i zaakceptowany przez przedstawicieli użytkowników (Radę Graczy).</li></ol>

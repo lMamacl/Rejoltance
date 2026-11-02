@@ -6,15 +6,16 @@
 
 ## Kontekst i problem
 
-Gra ma działać w przeglądarce, z autorytatywnym serwerem i botem. Zespół zna C# (wcześniejszy projekt w Godot), część osób — JS.
-`REJOLTANCE-ANALIZA.md` rekomendowała jeden język (TypeScript), opisując wariant .NET + Aspire jako uczciwą alternatywę. [V]
-.NET 8 kończy wsparcie 2026-11-10; .NET 10 to LTS. [V]
+Gra ma działać w przeglądarce. Potrzebuje autorytatywnego serwera (to serwer decyduje o stanie gry) i bota.
+Zespół zna C# z wcześniejszego projektu w Godot. Część osób zna też JavaScript (JS).
+Analiza `REJOLTANCE-ANALIZA.md` zalecała jeden język (TypeScript, TS). Wariant .NET + Aspire opisała jako uczciwą alternatywę. [V]
+.NET 8 traci wsparcie 2026-11-10. .NET 10 to wersja LTS (Long-Term Support, z wydłużonym wsparciem). [V]
 
 ## Rozważane opcje
 
 | Opcja | Zalety | Wady | Koszt / ryzyko |
 |---|---|---|---|
-| TS full‑stack (Node) | jeden język, wspólne typy | zespół słabiej zna TS na backendzie; mniej materiału do inżynierek w C# | nauka backendu TS |
+| TS full‑stack (Node) | jeden język, wspólne typy | zespół słabiej zna TS na backendzie; mniej materiału do prac inżynierskich w C# | nauka backendu w TS |
 | **.NET 10 + React/TS + Aspire** | znajomość C#, silne typowanie, SignalR, EF Core, orkiestracja i telemetria z Aspire | dwa toolchainy; kontrakt C#↔TS trzeba pilnować | ADR-0010 (kontrola kontraktu) |
 | .NET + Blazor | jeden język | słabsza referencja UI, mniejsza społeczność do animacji kart | przepisanie UI prototypu |
 
@@ -28,15 +29,15 @@ aby wykorzystać znajomość C# i gotowe mechanizmy (SignalR, EF Core, telemetri
 
 ### Pozytywne
 
-- `dotnet run --project src/Rejoltance.AppHost` stawia serwer + klienta bez Dockera (zweryfikowane testem `AppHostSmokeTests`).
-- Telemetria i health checks z `ServiceDefaults` za darmo.
+- `dotnet run --project src/Rejoltance.AppHost` uruchamia serwer i klienta bez Dockera (zweryfikowane testem `AppHostSmokeTests`).
+- Telemetrię i health checks (sprawdzanie stanu usługi) dostajemy za darmo z `ServiceDefaults`.
 
 ### Negatywne / ryzyka
 
-- Każdy laptop potrzebuje .NET 10 SDK i Node 24 (`tools/doctor.ps1`).
-- Windows: Smart App Control, długie ścieżki, OneDrive — opisane w [`00-przewodnik-i-setup/01-szybki-start-i-instalacja.md`](../../00-przewodnik-i-setup/01-szybki-start-i-instalacja.md).
+- Każdy laptop potrzebuje .NET 10 SDK i Node 24 (sprawdza to `tools/doctor.ps1`).
+- Na Windows przeszkadzają Smart App Control, długie ścieżki i OneDrive. Opisujemy to w [`00-przewodnik-i-setup/01-szybki-start-i-instalacja.md`](../../00-przewodnik-i-setup/01-szybki-start-i-instalacja.md).
 
 ### Do zrobienia
 
 - [x] szkielet solucji (Faza 2)
-- [ ] E6-S01: CI zielone na GitHubie
+- [ ] E6-S01: CI (ciągła integracja) zielone na GitHubie

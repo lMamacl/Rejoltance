@@ -1,9 +1,11 @@
-<!-- CONFLUENCE 1:1 EXPORT | Source: docs/03-dokumentacja-procesowa/04-badania-i-analizy/faza-1-porownanie.md @ 10829d3 (2026-11-02) -->
+<!-- CONFLUENCE 1:1 EXPORT | Source: docs/03-dokumentacja-procesowa/04-badania-i-analizy/faza-1-porownanie.md @ a2bf2a4 (2026-11-02) -->
 # Faza 1 — porównanie narzędzi i rekomendacje
 
 **Data:** 2026-10-27 · **Autor:** agent (Claude Code) na zlecenie zespołu · **Status:** do akceptacji
 
 Legenda: **[V]** zweryfikowane testem lub odczytem, **[Z]** założenie/wnioskowanie, **[?]** niezweryfikowane.
+
+Notatkę napisał agent AI, dlatego miejscami mówi w pierwszej osobie. SDD (Spec-Driven Development) to podejście „najpierw specyfikacja, potem kod”. CI (continuous integration) to automatyczne budowanie i testy przy każdej zmianie.
 
 ---
 
@@ -20,7 +22,7 @@ Legenda: **[V]** zweryfikowane testem lub odczytem, **[Z]** założenie/wnioskow
 | OpenSpec (`@fission-ai/openspec`) | 1.15.0 | [V] `npm i -g @fission-ai/openspec` |
 | Aspire templates | 13.6.4 | [V] `dotnet new install Aspire.ProjectTemplates` |
 
-Wszystkie testy w katalogu tymczasowym, poza repozytorium.
+Wszystkie testy odbyły się w katalogu tymczasowym, poza repozytorium.
 
 ---
 
@@ -54,11 +56,11 @@ Wszystkie testy w katalogu tymczasowym, poza repozytorium.
 
 ### 2.3 „SDD‑lite” (własne szablony + skille, bez CLI) [Z]
 
-Najmniej zależności, pełna kontrola, ale: brak walidacji, brak gotowych komend we wszystkich IDE, każdą zmianę procesu utrzymujemy sami. Sens tylko jako plan awaryjny.
+Najmniej zależności i pełna kontrola. Wady: brak walidacji, brak gotowych komend we wszystkich IDE, a każdą zmianę procesu utrzymujemy sami. Ma sens tylko jako plan awaryjny.
 
 ### 2.4 BMAD [Z — nie testowany]
 
-Odrzucony na etapie analizy: symuluje cały zespół (Analyst, PM, Architect…) — dla 6 prawdziwych osób z rolami Scrum to dublowanie ról i największy narzut.
+Odrzucony na etapie analizy. BMAD symuluje cały zespół (Analyst, PM, Architect…). Przy 6 prawdziwych osobach z rolami Scrum to dublowanie ról i największy narzut.
 
 ### 2.5 Punktacja (skala 1–5, waga w nawiasie)
 
@@ -78,9 +80,9 @@ Dodatkowe argumenty spoza tabeli:
 - **Za Spec Kit:** jawna konstytucja z bramkami (`/speckit-analyze`, `/speckit-checklist`), szablon `tasks.md` z kolejnością zadań — dobra „szkoła” dla zespołu.
 - **Za OpenSpec:** walidacja w CI, żywa specyfikacja reguł, polski język artefaktów, czysta instalacja w 5 narzędziach.
 
-### 2.6 Czego NIE sprawdziłem
+### 2.6 Czego nie sprawdziłem
 
-Pełnego przebiegu „propose → apply → archive” (OpenSpec) ani „specify → plan → tasks → implement” (Spec Kit) z udziałem agenta na realnym ficzerze. Testy objęły instalację, strukturę plików, skrypty i CLI. Jakość generowanych speców zależy od modelu i oceni ją zespół na pierwszym ficzerze.
+Nie sprawdziłem pełnego przebiegu „propose → apply → archive” (OpenSpec) ani „specify → plan → tasks → implement” (Spec Kit) z udziałem agenta na prawdziwej funkcji (*feature*). Testy objęły instalację, strukturę plików, skrypty i CLI. Jakość generowanych specyfikacji zależy od modelu. Oceni ją zespół przy pierwszej funkcji.
 
 ---
 
@@ -96,13 +98,13 @@ Pełnego przebiegu „propose → apply → archive” (OpenSpec) ani „specify
 | Czy AppHost sam robi `npm install` | [?] nie dało się sprawdzić (AppHost nie wystartował) |
 | Działanie bez Dockera | [Z] tak, dopóki nie dodamy kontenerów (Postgres); SQLite to plik |
 
-**Dlaczego AppHost nie wystartował — trzy problemy, z których tylko jeden dotyczy zespołu:**
+**Dlaczego AppHost nie wystartował? Były trzy problemy. Tylko jeden dotyczy całego zespołu:**
 
 1. **Smart App Control (Windows 11) blokuje świeżo zbudowany, niepodpisany `AppHost.dll`** (`0x800711C7`, zdarzenia Code Integrity 3033/3077). Na tym komputerze ta funkcja jest włączona (`VerifiedAndReputablePolicyState = 1`). **To dotyczy każdego w zespole, kto ma włączone Smart App Control.** Wyłączenie jest w Ustawieniach Windows (Zabezpieczenia → Kontrola aplikacji i przeglądarki), ale ponownie włączyć da się dopiero po reinstalacji systemu — decyzja należy do właściciela komputera, ja tego nie zmieniam.
 2. **Limit 260 znaków ścieżki (MAX_PATH):** `dcp.exe` z pakietu NuGet nie uruchomił się z bardzo długiej ścieżki. W repo: zalecenie krótkiej ścieżki klonu (np. `C:\dev\Rejoltance`) i `git config --system core.longpaths true`.
 3. **Certyfikat deweloperski HTTPS:** pierwszy start pokazuje „Ufanie certyfikatom…” i wymaga jednorazowego `dotnet dev-certs https --trust` (okno systemowe — robi to użytkownik). `setup.ps1` będzie o to pytał wprost.
 
-**Plan weryfikacji zastępczej:** w Fazie 2 dodam test integracyjny `Aspire.Hosting.Testing`, który w GitHub Actions (Ubuntu) uruchamia cały AppHost i sprawdza `/health`. Wtedy „jedno polecenie uruchamia całość” jest dowodzone przez CI, a nie przez pojedynczy laptop.
+**Plan weryfikacji zastępczej:** w Fazie 2 dodam test integracyjny `Aspire.Hosting.Testing`. Uruchomi on w GitHub Actions (Ubuntu) cały AppHost i sprawdzi `/health`. Wtedy to CI, a nie pojedynczy laptop, potwierdzi, że „jedno polecenie uruchamia całość”.
 
 ---
 
@@ -111,7 +113,7 @@ Pełnego przebiegu „propose → apply → archive” (OpenSpec) ani „specify
 - [V] Jira, Bitbucket DC 8.14.4 i Confluence 8.4.5 odpowiadają z publicznego internetu (strony logowania, LDAP).
 - [V] Przygotowane pliki testowe: `docs/03-dokumentacja-procesowa/02-backlog/test-import/` (1 epik, 1 story, 1 sub‑task) + instrukcja.
 - [?] Do sprawdzenia przez Ciebie importem: Epic Link po nazwie epiku, Parent Id dla sub‑tasków, format `Original Estimate` (zakładam sekundy: 14400 = 4 h), dostępność Story Points w schemacie „Pracownia projektowa”.
-- [V] Integracja agentów z Jirą/Confluence: `mcp-atlassian` obsługuje Server/DC przez Personal Access Token (Jira ≥ 8.14). Token trzyma każdy u siebie w zmiennej środowiskowej; w repo tylko szablon. Domyślnie tryb tylko do odczytu.
+- [V] Integracja agentów z Jirą/Confluence: serwer MCP (Model Context Protocol) `mcp-atlassian` obsługuje Server/DC przez Personal Access Token (PAT, Jira ≥ 8.14). Każdy trzyma token u siebie w zmiennej środowiskowej albo w lokalnym pliku `.env`, który git ignoruje. W repo jest tylko szablon. Dzięki temu token nie trafia do historii repozytorium. Domyślnie działa tryb tylko do odczytu.
 
 ---
 

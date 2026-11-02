@@ -6,8 +6,9 @@
 
 ## Kontekst i problem
 
-Prototyp działa P2P (PeerJS): host trzyma cały stan, gość może poświęcić jednostkę hosta, zna jego rękę i kolejność talii (wyciek przez `uid`),
-a złośliwy host może wykonać skrypt u gościa (XSS). [V] Gra online wymaga uczciwości.
+Prototyp działa w modelu P2P (peer-to-peer, przez PeerJS). Host trzyma cały stan gry. Gość może poświęcić jednostkę hosta
+i zna jego rękę oraz kolejność talii (wyciek przez `uid`). Złośliwy host może też wykonać skrypt u gościa (XSS, cross-site scripting). [V]
+Gra online musi być uczciwa.
 
 ## Rozważane opcje
 
@@ -15,7 +16,7 @@ a złośliwy host może wykonać skrypt u gościa (XSS). [V] Gra online wymaga u
 |---|---|---|---|
 | P2P jak w prototypie | zero serwera | oszustwa, brak reconnectu | nie do obrony |
 | Stan wysyłany do klienta, ukrywany w UI | prosto | podgląd w DevTools | oszustwa |
-| **Serwer autorytatywny + projekcja per miejsce** | jedno miejsce prawdy i fog of war | serwer trzyma mecze w pamięci | reconnect i skalowanie do zrobienia |
+| **Serwer autorytatywny + projekcja per miejsce** | jedno miejsce prawdy i fog of war (ukrycie informacji przed przeciwnikiem) | serwer trzyma mecze w pamięci | reconnect i skalowanie do zrobienia |
 
 ## Decyzja
 

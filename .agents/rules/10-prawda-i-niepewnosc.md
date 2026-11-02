@@ -1,6 +1,6 @@
 ---
 trigger: always_on
-description: "Hierarchia zrodel prawdy (OpenSpec, prototyp JS v11, indeks R-nn), zakaz cichego zgadywania przez AI oraz obsluga rozbieznosci D-01..D-20."
+description: "Kolejność źródeł prawdy (OpenSpec, prototyp JS v11, indeks R-nn), zakaz zgadywania przez AI i postępowanie przy rozbieżnościach D-01..D-20."
 ---
 
 # 10. Prawda, hierarchia źródeł i postępowanie z niepewnością

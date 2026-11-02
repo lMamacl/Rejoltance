@@ -11,7 +11,7 @@ Katalog `.agents/` stanowi **jedyne źródło prawdy** dla konfiguracji wszystki
 ```text
 .agents/
 ├── rules/                      ← 8 reguł strażniczych (Konstytucja 00 + reguły warstwowe 10..70, maks. 80 linii/plik)
-│   ├── 00-konstytucja.md       ← Nadrzędne prawo projektu (10 artykułów)
+│   ├── 00-konstytucja.md       ← Nadrzędne prawo projektu (11 artykułów, ADR-0012)
 │   ├── 10-prawda-i-niepewnosc.md ← Zakaz zgadywania, hierarchia źródeł prawdy, praca z D-nn
 │   ├── 20-plan-i-zakres.md     ← Kiedy wymagana jest propozycja OpenSpec i plan przed kodem
 │   ├── 30-architektura-i-kontrakty.md ← Granice 5 modułów i ochrona 5 zamrożonych kontraktów

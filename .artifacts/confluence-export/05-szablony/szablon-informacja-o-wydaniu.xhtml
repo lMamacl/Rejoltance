@@ -1,5 +1,6 @@
-<ac:structured-macro ac:name="info"><ac:rich-text-body><p><strong>Synchronizacja 1:1 z repozytorium Git:</strong> <code>docs/05-szablony/szablon-informacja-o-wydaniu.md</code> (commit <code>10829d3</code>, data eksportu: <code>2026-11-02</code>)</p></ac:rich-text-body></ac:structured-macro>
+<ac:structured-macro ac:name="info"><ac:rich-text-body><p><strong>Synchronizacja 1:1 z repozytorium Git:</strong> <code>docs/05-szablony/szablon-informacja-o-wydaniu.md</code> (commit <code>a2bf2a4</code>, data eksportu: <code>2026-11-02</code>)</p></ac:rich-text-body></ac:structured-macro>
 <blockquote><p><strong>Źródło prawdy:</strong> Confluence PB / GitHub Releases · <strong>Kategoria AltexSoft:</strong> Process Documentation — Release Plan, Notes &amp; Release Checklist · <strong>Etap SDD:</strong> Wydanie (<code>Release</code>) · <strong>Wymóg uczelniany:</strong> EU3</p></blockquote>
+<p>Skopiuj ten szablon przy każdym wydaniu i zastąp pola w nawiasach <code>&lt;...&gt;</code>. SDD to spec-driven development (praca sterowana specyfikacją), EU — efekt uczenia się, PO — Product Owner, CI — ciągła integracja.</p>
 <hr />
 <h2>1. Metadane wydania</h2>
 <table><thead><tr>
@@ -7,7 +8,7 @@
 <th><p>Wartość</p></th>
 </tr></thead><tbody>
 <tr>
-<td><p><strong>Wersja / Tag Git</strong></p></td>
+<td><p><strong>Wersja / tag Git</strong></p></td>
 <td><p><code>sprint-N</code> (gałąź <code>main</code> @ <code>&lt;commit&gt;</code>)</p></td>
 </tr>
 <tr>
@@ -16,7 +17,7 @@
 </tr>
 <tr>
 <td><p><strong>Cel Sprintu <code>N</code></strong></p></td>
-<td><p><code>&lt;Jednozdaniowy cel sprintu z Sprint Planning&gt;</code></p></td>
+<td><p><code>&lt;Jednozdaniowy cel sprintu ze Sprint Planning&gt;</code></p></td>
 </tr>
 <tr>
 <td><p><strong>Zespół odpowiedzialny za wydanie</strong></p></td>
@@ -24,9 +25,9 @@
 </tr>
 </tbody></table>
 <hr />
-<h2>2. Co nowego w tym wydaniu? (Nowe funkcjonalności i reguły)</h2>
+<h2>2. Co nowego w tym wydaniu? (nowe funkcje i reguły)</h2>
 <ul><li><strong><code>REJ-...</code> — <code>&lt;Tytuł ukończonej historyjki&gt;</code>:</strong> <code>&lt;Opis wartości dostarczonej użytkownikowi oraz zaimplementowanych reguł R-nn&gt;</code></li><li><strong><code>REJ-...</code> — <code>&lt;Tytuł ukończonej historyjki&gt;</code>:</strong> <code>&lt;Opis&gt;</code></li></ul>
-<h2>3. Naprawione błędy i usprawnienia jakościowe</h2>
+<h2>3. Naprawione błędy i usprawnienia jakości</h2>
 <ul><li><strong><code>REJ-...</code>:</strong> <code>&lt;Opis naprawionego defektu lub usprawnienia wydajności/UX&gt;</code></li></ul>
 <h2>4. Znane ograniczenia tej wersji (Known Issues)</h2>
 <ul><li><code>&lt;Opis ograniczenia wraz z numerem zadania zaplanowanego na kolejny sprint&gt;</code></li></ul>
@@ -35,4 +36,4 @@
 docker compose up --build
 # Aplikacja dostępna pod adresem: http://localhost:5000]]></ac:plain-text-body></ac:structured-macro>
 <h2>6. Lista kontrolna wydania (Release Checklist)</h2>
-<ul><li>[ ] Wszystkie testy automatyczne (xUnit, Vitest, Playwright) oraz walidatory (<code>npm run check</code>) przechodzą na zielono w CI.</li><li>[ ] Wykonano połączenie gałęzi <code>develop</code> do <code>main</code> przez zatwierdzony Pull Request i nadano tag <code>sprint-N</code>.</li><li>[ ] Zarchiwizowano ukończone propozycje zmian w <code>openspec/changes/archive/</code>.</li><li>[ ] Zaktualizowano dokumentację w repozytorium i zsynchronizowano strony w Confluence PB (<code>sync_confluence.py</code>).</li></ul>
+<ul><li>[ ] Wszystkie testy automatyczne (xUnit, Vitest, Playwright) i walidatory (<code>npm run check</code>) przechodzą w CI.</li><li>[ ] Gałąź <code>develop</code> scalono do <code>main</code> przez zatwierdzony pull request i nadano tag <code>sprint-N</code>.</li><li>[ ] Ukończone propozycje zmian są zarchiwizowane w <code>openspec/changes/archive/</code>.</li><li>[ ] Dokumentacja w repozytorium jest aktualna, a strony w Confluence PB są zsynchronizowane (<code>sync_confluence.py</code>).</li></ul>

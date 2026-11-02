@@ -1,7 +1,10 @@
-<ac:structured-macro ac:name="info"><ac:rich-text-body><p><strong>Synchronizacja 1:1 z repozytorium Git:</strong> <code>docs/01-dokumentacja-systemowa/04-rozbieznosci-prototypu.md</code> (commit <code>10829d3</code>, data eksportu: <code>2026-11-02</code>)</p></ac:rich-text-body></ac:structured-macro>
-<blockquote><p><strong>Źródło prawdy:</strong> repozytorium (<code>docs/01-dokumentacja-systemowa/04-rozbieznosci-prototypu.md</code>) · <strong>Kategoria dokumentacji:</strong> Dokumentacja produktowa — systemowa (Notatka analityczna rozbieżności) · <strong>Etap SDD:</strong> Specyfikacja.</p></blockquote>
-<p>Kanonicznym punktem odniesienia dla zasad gry jest prototyp JavaScript v11 (<strong>ADR-0005</strong> (<code>07-decyzje-adr/0005-kanon-regul-prototyp-js.md</code>)). Poniższa tabela gromadzi wszystkie zidentyfikowane różnice pomiędzy prototypem a pierwotnym dokumentem tekstowym (<code>docs/99-archiwum-zrodel/pomoce-dydaktyczne/RE_JOLTANCE.md</code>) oraz ewidentne błędy implementacyjne prototypu. Każdy punkt jest rozstrzygany przez zespół w ramach zadania <code>E0-S04</code>, po czym agent <code>rj-rules-engineer</code> aktualizuje odpowiednią regułę <code>R‑nn</code> w <code>openspec/specs/</code> oraz test jednostkowy.</p>
-<p>Typ zgłoszenia: <strong>R</strong> — różnica w zasadach gry (obie wersje są merytorycznie dopuszczalne), <strong>B</strong> — błąd implementacyjny prototypu, <strong>I</strong> — kwestia architektury wewnętrznej.</p>
+<ac:structured-macro ac:name="info"><ac:rich-text-body><p><strong>Synchronizacja 1:1 z repozytorium Git:</strong> <code>docs/01-dokumentacja-systemowa/04-rozbieznosci-prototypu.md</code> (commit <code>a2bf2a4</code>, data eksportu: <code>2026-11-02</code>)</p></ac:rich-text-body></ac:structured-macro>
+<blockquote><p><strong>Źródło prawdy:</strong> repozytorium (<code>docs/01-dokumentacja-systemowa/04-rozbieznosci-prototypu.md</code>) · <strong>Kategoria dokumentacji:</strong> Dokumentacja produktowa — systemowa (notatka analityczna rozbieżności) · <strong>Etap SDD:</strong> Specyfikacja.</p></blockquote>
+<p>Wzorcem zasad gry jest prototyp JavaScript v11 (<strong>ADR-0005</strong> (<code>07-decyzje-adr/0005-kanon-regul-prototyp-js.md</code>)). Tabela poniżej zbiera wszystkie znalezione różnice między prototypem a pierwotnym opisem tekstowym (<code>docs/99-archiwum-zrodel/pomoce-dydaktyczne/RE_JOLTANCE.md</code>). Zbiera też oczywiste błędy w kodzie prototypu.</p>
+<p>Każdy punkt rozstrzygamy jako zespół w zadaniu <code>E0-S04</code>. Potem agent <code>rj-spec-analyst</code> aktualizuje regułę <code>R‑nn</code> w <code>openspec/specs/</code>. Agent <code>rj-rules-engineer</code> dopisuje lub poprawia test jednostkowy i implementację w Kernelu.</p>
+<p>Typ zgłoszenia:</p>
+<ul><li><strong>R</strong> — różnica w zasadach gry (obie wersje mają sens),</li><li><strong>B</strong> — błąd w kodzie prototypu,</li><li><strong>I</strong> — kwestia wewnętrznej architektury.</li></ul>
+<p>Kolumna „Decyzja” pokazuje stan: <code>?</code> oznacza, że czekamy na decyzję zespołu.</p>
 <table><thead><tr>
 <th><p>#</p></th>
 <th><p>Typ</p></th>
@@ -126,7 +129,7 @@
 <td><p>D-12</p></td>
 <td><p>B</p></td>
 <td><p>Obniżki kosztu po powrocie</p></td>
-<td><p>readme twierdzi, że zostają; kod je kasuje</p></td>
+<td><p>README twierdzi, że zostają; kod je kasuje</p></td>
 <td><p>„przepadają”</p></td>
 <td><p>zgodnie z kodem i specyfikacją: przepadają</p></td>
 <td><p>R-24, R-53</p></td>
@@ -138,7 +141,7 @@
 <td><p>Wyciek informacji</p></td>
 <td><p>numery <code>uid</code> nadawane przed tasowaniem → gość zna rękę i kolejność talii hosta</p></td>
 <td><p>—</p></td>
-<td><p>id przy wyjściu z talii (zrobione w Kernelu)</p></td>
+<td><p>identyfikator nadawany przy wyjściu z talii (zrobione w Kernelu)</p></td>
 <td><p>R-81</p></td>
 <td><p>naprawione</p></td>
 </tr>
@@ -196,7 +199,7 @@
 <td><p>D-19</p></td>
 <td><p>B</p></td>
 <td><p>Opis karty Regifter</p></td>
-<td><p>readme: „tylko ty dobierasz 2”</p></td>
+<td><p>README: „tylko ty dobierasz 2”</p></td>
 <td><p>dane: poświęcona → ty 2, wróg 1</p></td>
 <td><p>dane są kanonem; poprawić opis</p></td>
 <td><p>—</p></td>

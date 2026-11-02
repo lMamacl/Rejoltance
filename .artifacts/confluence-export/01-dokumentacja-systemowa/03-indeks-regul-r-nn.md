@@ -1,13 +1,25 @@
-<!-- CONFLUENCE 1:1 EXPORT | Source: docs/01-dokumentacja-systemowa/03-indeks-regul-r-nn.md @ 10829d3 (2026-11-02) -->
+<!-- CONFLUENCE 1:1 EXPORT | Source: docs/01-dokumentacja-systemowa/03-indeks-regul-r-nn.md @ a2bf2a4 (2026-11-02) -->
 # 1.3 Indeks reguł gry (R‑nn) i macierz śledzalności testów
 
-> **Źródło prawdy:** repozytorium (`docs/01-dokumentacja-systemowa/03-indeks-regul-r-nn.md`) · **Kategoria dokumentacji:** Dokumentacja produktowa — systemowa (Macierz śledzenia wymagań) · **Etap SDD:** Specyfikacja i weryfikacja.
+> **Źródło prawdy:** repozytorium (`docs/01-dokumentacja-systemowa/03-indeks-regul-r-nn.md`) · **Kategoria dokumentacji:** Dokumentacja produktowa — systemowa (macierz śledzenia wymagań) · **Etap SDD:** Specyfikacja i weryfikacja.
 
-Każda reguła domenowa posiada: unikalny numer `R-nn`, formalne wymaganie ze scenariuszami w `openspec/specs/<obszar>/spec.md`, odwołanie do prototypu ([ADR-0005](07-decyzje-adr/0005-kanon-regul-prototyp-js.md)), test jednostkowy o nazwie zaczynającej się od numeru reguły (`R14_…`) oraz powiązane zadanie w backlogu. Aby uruchomić test pojedynczej reguły, wykonaj: `dotnet test --filter "FullyQualifiedName~R14"`.
+Ta strona to macierz śledzenia: dla każdej reguły gry pokazuje, skąd pochodzi, gdzie jest opisana i czym ją testujemy. SDD (Spec-Driven Development) to nasz sposób pracy, w którym specyfikacja powstaje przed kodem.
 
-Wymagania niefunkcjonalne `NFR‑nn` (ISO/IEC 25010): `openspec/specs/quality-attributes/spec.md` — testy `NFRnn_…`.
+Każda reguła domenowa ma:
 
-Numeracja posiada celowe odstępy: nowa reguła otrzymuje kolejny wolny numer w swoim obszarze (np. `R-16`), natomiast istniejących numerów nigdy nie zmieniamy.
+- unikalny numer `R-nn`,
+- formalne wymaganie ze scenariuszami w `openspec/specs/<obszar>/spec.md`,
+- odwołanie do prototypu ([ADR-0005](07-decyzje-adr/0005-kanon-regul-prototyp-js.md)),
+- test jednostkowy, którego nazwa zaczyna się od numeru reguły (`R14_…`),
+- powiązane zadanie w backlogu.
+
+Test jednej reguły uruchomisz tak: `dotnet test --filter "FullyQualifiedName~R14"`.
+
+Wymagania niefunkcjonalne `NFR‑nn` (NFR, Non-Functional Requirement; norma ISO/IEC 25010) są w `openspec/specs/quality-attributes/spec.md`. Ich testy mają nazwy `NFRnn_…`.
+
+W numeracji celowo zostawiamy odstępy. Nowa reguła dostaje kolejny wolny numer w swoim obszarze (np. `R-16`). Istniejących numerów nigdy nie zmieniamy.
+
+Kolumna „Źródło” wskazuje funkcję w prototypie (`engine.js`, chyba że podano inny plik). Kolumna „Story” to zadanie w backlogu.
 
 Legenda statusu: ✅ zaimplementowane i przetestowane · 🟡 częściowo · ⏳ w backlogu · ❓ czeka na decyzję ([`04-rozbieznosci-prototypu.md`](04-rozbieznosci-prototypu.md)).
 

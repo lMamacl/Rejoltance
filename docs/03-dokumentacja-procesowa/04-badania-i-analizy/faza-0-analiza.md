@@ -2,6 +2,8 @@
 
 **Data:** 2026-10-27 · **Status:** zaakceptowana (decyzje poniżej) · Legenda: **[V]** zweryfikowane, **[Z]** założenie, **[?]** nieznane.
 
+Skróty użyte w tej notatce: MVP (Minimum Viable Product) to najmniejsza wersja gry, którą da się pokazać graczom. P2P (peer-to-peer) to połączenie przeglądarek bez serwera. XSS (cross-site scripting) to wstrzyknięcie złośliwego skryptu do strony. DSL to język opisu efektów kart. RNG to generator liczb losowych. DIP to Dokument Inicjujący Projekt, a PO to Product Owner (właściciel produktu).
+
 ## Streszczenie źródeł
 
 | Źródło | Najważniejsze ustalenia |
@@ -35,7 +37,7 @@
 
 ## Pytania otwarte do zespołu
 
-Numery #1–#10 są przywoływane w innych dokumentach (np. „pytanie otwarte #6”).
+Inne dokumenty odwołują się do tych pytań po numerach #1–#10 (np. „pytanie otwarte #6”).
 
 ### Proces / uczelnia
 

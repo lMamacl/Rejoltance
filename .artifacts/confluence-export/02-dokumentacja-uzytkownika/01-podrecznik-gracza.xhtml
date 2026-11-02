@@ -1,121 +1,121 @@
-<ac:structured-macro ac:name="info"><ac:rich-text-body><p><strong>Synchronizacja 1:1 z repozytorium Git:</strong> <code>docs/02-dokumentacja-uzytkownika/01-podrecznik-gracza.md</code> (commit <code>10829d3</code>, data eksportu: <code>2026-11-02</code>)</p></ac:rich-text-body></ac:structured-macro>
-<blockquote><p><strong>Źródło prawdy:</strong> repozytorium (<code>docs/02-dokumentacja-uzytkownika/01-podrecznik-gracza.md</code>) · <strong>Kategoria dokumentacji:</strong> Dokumentacja produktowa — użytkownika (Podręcznik użytkownika końcowego) · <strong>Etap SDD:</strong> Wydanie · <strong>Wymóg uczelniany:</strong> EU5</p></blockquote>
-<p>Niniejszy podręcznik jest przeznaczony dla graczy oraz członków Rady Graczy Testowych. Pozwala w mniej niż 5 minut poznać zasady gry <strong>RE:JOLTANCE</strong>, rozpocząć pojedynek w przeglądarce i rozwiązać ewentualne problemy techniczne. Pełna specyfikacja wszystkich 55 reguł turniejowych znajduje się w dokumencie <strong><strong>1.2 Specyfikacja funkcjonalna zasad gry</strong> (<code>../01-dokumentacja-systemowa/02-specyfikacja-regul-gry.md</code>)</strong>.</p>
+<ac:structured-macro ac:name="info"><ac:rich-text-body><p><strong>Synchronizacja 1:1 z repozytorium Git:</strong> <code>docs/02-dokumentacja-uzytkownika/01-podrecznik-gracza.md</code> (commit <code>a2bf2a4</code>, data eksportu: <code>2026-11-02</code>)</p></ac:rich-text-body></ac:structured-macro>
+<blockquote><p><strong>Źródło prawdy:</strong> repozytorium (<code>docs/02-dokumentacja-uzytkownika/01-podrecznik-gracza.md</code>) · <strong>Kategoria dokumentacji:</strong> Dokumentacja produktowa — użytkownika (podręcznik użytkownika końcowego) · <strong>Etap SDD:</strong> Wydanie · <strong>Wymóg uczelniany:</strong> EU5 (efekt uczenia się)</p></blockquote>
+<p>Ten podręcznik jest dla graczy i członków Rady Graczy Testowych. W mniej niż 5 minut poznasz zasady gry RE:JOLTANCE, zaczniesz pojedynek w przeglądarce i poradzisz sobie z typowymi problemami. Wszystkie 55 reguł turniejowych opisuje dokument <strong>1.2 Specyfikacja funkcjonalna zasad gry</strong> (<code>../01-dokumentacja-systemowa/02-specyfikacja-regul-gry.md</code>).</p>
 <hr />
 <h2>1. Szybki start w 60 sekund</h2>
-<ol><li><strong>Otwórz grę w przeglądarce:</strong> Wejdź na udostępniony adres serwera demonstracyjnego (lub lokalny adres zasobu <code>web</code> z panelu .NET Aspire). Nie musisz niczego pobierać ani instalować.</li><li><strong>Wybierz tryb rozgrywki:</strong> - <strong>Trening / Piaskownica (<code>Start Sandbox</code>):</strong> Natychmiast uruchamia pojedynek testowy z wybranymi taliami startowymi. - <strong>Gra z kolegą (Lobby 1v1):</strong> Utwórz pokój, skopiuj wygenerowany kod pokoju lub link i wyślij go znajomemu na komunikatorze. - <strong>Gra z Botem AI:</strong> Wybierz jedną z 5 talii startowych i zmierz się z komputerowym przeciwnikiem.</li><li><strong>Wymień karty startowe (Mulligan):</strong> Na początku meczu otrzymujesz <strong>4 karty</strong>. Kliknij karty, które chcesz wymienić na inne z talii, a następnie kliknij <strong>Zatwierdź Mulligan</strong>.</li><li><strong>Wybierz kolejność:</strong> Zadeklaruj, czy wolisz rozpoczynać pierwszą rundę jako pierwszy gracz (Gracz A), czy jako drugi (Gracz B).</li></ol>
+<ol><li><strong>Otwórz grę w przeglądarce.</strong> Wejdź na adres serwera demonstracyjnego, który dostaniesz od zespołu. Jeśli grasz lokalnie, użyj adresu zasobu <code>web</code> z panelu .NET Aspire. Nie musisz niczego pobierać ani instalować.</li><li><strong>Wybierz tryb gry:</strong> - <strong>Trening, czyli piaskownica (<code>Start Sandbox</code>):</strong> od razu uruchamia pojedynek testowy z wybranymi taliami startowymi. - <strong>Gra ze znajomym (lobby 1v1):</strong> utwórz pokój, skopiuj kod pokoju albo link i wyślij go znajomemu. - <strong>Gra z botem AI:</strong> wybierz jedną z 5 talii startowych i zagraj z komputerem.</li><li><strong>Wymień karty startowe (mulligan).</strong> Na początku meczu dostajesz 4 karty. Kliknij te, które chcesz wymienić na inne z talii. Potem kliknij <strong>Zatwierdź Mulligan</strong>.</li><li><strong>Wybierz kolejność.</strong> Zdecyduj, czy chcesz zacząć pierwszą rundę jako pierwszy gracz (Gracz A), czy jako drugi (Gracz B).</li></ol>
 <hr />
-<h2>2. Zasady rozgrywki w pigułce</h2>
-<h3>2.1 Cel gry i układ planszy</h3>
-<ul><li>Każdy z dwóch graczy steruje bohaterem posiadającym <strong>20 punktów zdrowia (HP)</strong> oraz talią złożoną z <strong>30 kart</strong>.</li><li>Plansza składa się z <strong>4 linii walki</strong> (oznaczonych od <code>0</code> do <code>3</code> od lewej do prawej). W każdej linii znajduje się po jednym miejscu na jednostkę dla każdego gracza.</li><li><strong>Warunek zwycięstwa:</strong> Wygrywasz natychmiast, gdy sprowadzisz punkty zdrowia wrogiego bohatera do <strong>0 lub mniej</strong>.</li></ul>
-<h3>2.2 Zasób Blood (Krew)</h3>
-<ul><li>Zagrywanie kart kosztuje punkty zasobu <strong>Blood</strong> (widoczne w czerwonym kółku na karcie).</li><li>Na początku każdej rundy Twój zasób Blood odnawia się do wartości równej numerowi bieżącej rundy (maksymalnie do <strong>10 Blood</strong>). Niewykorzystany zasób z poprzedniej rundy nie przechodzi na kolejną.</li></ul>
-<h3>2.3 Cztery kroki każdej rundy</h3>
-<p>W każdej rundzie jeden z graczy pełni rolę <strong>Gracza A (rozpoczynającego)</strong>, a drugi <strong>Gracza B</strong>. W kolejnej rundzie role te zamieniają się miejscami. Runda przebiega zawsze w czterech krokach:</p>
+<h2>2. Zasady gry w pigułce</h2>
+<h3>2.1 Cel gry i plansza</h3>
+<ul><li>Każdy z dwóch graczy ma bohatera z <strong>20 punktami zdrowia</strong> (HP, od ang. <em>health points</em>) i talię <strong>30 kart</strong>.</li><li>Plansza ma <strong>4 linie walki</strong>, ponumerowane od <code>0</code> do <code>3</code> od lewej do prawej. W każdej linii każdy gracz ma jedno miejsce na jednostkę.</li><li><strong>Jak wygrać:</strong> wygrywasz od razu, gdy zdrowie bohatera przeciwnika spadnie do <strong>0 lub mniej</strong>.</li></ul>
+<h3>2.2 Zasób Blood (krew)</h3>
+<ul><li>Zagranie karty kosztuje punkty <strong>Blood</strong>. Koszt widzisz w czerwonym kółku na karcie.</li><li>Na początku każdej rundy twój Blood odnawia się do wartości równej numerowi rundy (najwyżej <strong>10 Blood</strong>). Niewydany Blood nie przechodzi na następną rundę.</li></ul>
+<h3>2.3 Cztery kroki rundy</h3>
+<p>W każdej rundzie jeden gracz jest Graczem A (zaczyna), a drugi Graczem B. W następnej rundzie role się zamieniają. Każda runda ma zawsze cztery kroki:</p>
 <table><thead><tr>
 <th><p>Krok rundy</p></th>
-<th><p>Kto wykonuje ruch?</p></th>
-<th><p>Jakie karty można zagrać?</p></th>
+<th><p>Kto gra?</p></th>
+<th><p>Co możesz zagrać?</p></th>
 </tr></thead><tbody>
 <tr>
-<td><p><strong>1. Krok Jednostek (<code>unitStep</code>)</strong></p></td>
+<td><p><strong>1. Krok jednostek (<code>unitStep</code>)</strong></p></td>
 <td><p>Gracz A</p></td>
-<td><p>Wyłącznie karty <strong>Jednostek (<code>Unit</code>)</strong> na wolne linie po swojej stronie.</p></td>
+<td><p>Tylko karty jednostek (<code>Unit</code>), na wolne linie po swojej stronie.</p></td>
 </tr>
 <tr>
-<td><p><strong>2. Krok Mieszany (<code>mixedStep</code>)</strong></p></td>
+<td><p><strong>2. Krok mieszany (<code>mixedStep</code>)</strong></p></td>
 <td><p>Gracz B</p></td>
-<td><p>Zarówno karty <strong>Jednostek (<code>Unit</code>)</strong>, jak i karty <strong>Akcji (<code>Spell</code>)</strong>.</p></td>
+<td><p>Karty jednostek (<code>Unit</code>) i karty akcji (<code>Spell</code>).</p></td>
 </tr>
 <tr>
-<td><p><strong>3. Krok Akcji (<code>actionStep</code>)</strong></p></td>
+<td><p><strong>3. Krok akcji (<code>actionStep</code>)</strong></p></td>
 <td><p>Gracz A</p></td>
-<td><p>Wyłącznie karty <strong>Akcji (<code>Spell</code>)</strong> — odpowiedź taktyczna przed walką.</p></td>
+<td><p>Tylko karty akcji (<code>Spell</code>). To taktyczna odpowiedź przed walką.</p></td>
 </tr>
 <tr>
-<td><p><strong>4. Faza Walki (<code>combat</code>)</strong></p></td>
-<td><p>Automatyczna</p></td>
-<td><p>Jednostki walczą ze sobą po kolei na liniach <strong>od lewej do prawej (<code>0 → 1 → 2 → 3</code>)</strong>.</p></td>
+<td><p><strong>4. Faza walki (<code>combat</code>)</strong></p></td>
+<td><p>Gra sama</p></td>
+<td><p>Jednostki walczą po kolei na liniach od lewej do prawej (<code>0 → 1 → 2 → 3</code>).</p></td>
 </tr>
 </tbody></table>
 <h3>2.4 Jak działa walka na linii?</h3>
-<ol><li>Jeśli naprzeciw Twojej jednostki nie ma wrogiej jednostki (lub Twoja jednostka ma cechę <strong>Flying</strong>, a przeciwnik nie), uderzenie trafia <strong>bezpośrednio w bohatera przeciwnika</strong>.</li><li>Jeśli naprzeciw siebie stoją dwie jednostki o tym samym statusie latania, <strong>uderzają się jednocześnie</strong> wartością swojego ataku.</li></ol>
+<ol><li>Jeśli naprzeciw twojej jednostki nie ma wrogiej jednostki, twoja jednostka uderza <strong>prosto w bohatera przeciwnika</strong>. Tak samo jest, gdy twoja jednostka ma cechę <strong>Flying</strong>, a jednostka przeciwnika jej nie ma.</li><li>Jeśli naprzeciw siebie stoją dwie jednostki o tym samym statusie latania, <strong>uderzają się jednocześnie</strong> wartością swojego ataku.</li></ol>
 <h3>2.5 Najważniejsze słowa kluczowe na kartach</h3>
 <table><thead><tr>
-<th><p>Słowo kluczowe / Status</p></th>
-<th><p>Co oznacza w trakcie gry?</p></th>
+<th><p>Słowo kluczowe / status</p></th>
+<th><p>Co robi w grze?</p></th>
 </tr></thead><tbody>
 <tr>
 <td><p><strong>Flying</strong></p></td>
-<td><p>Jednostka latająca przelatuje nad jednostką naziemną i uderza bezpośrednio w bohatera przeciwnika.</p></td>
+<td><p>Jednostka latająca przelatuje nad jednostką naziemną i uderza prosto w bohatera przeciwnika.</p></td>
 </tr>
 <tr>
 <td><p><strong>Armored (n) / Armor2</strong></p></td>
-<td><p>Zmniejsza obrażenia z każdego otrzymanego uderzenia o <code>n</code> (lub o <code>2</code> dla <code>Armor2</code>).</p></td>
+<td><p>Zmniejsza obrażenia z każdego otrzymanego uderzenia o <code>n</code> (przy <code>Armor2</code> o <code>2</code>).</p></td>
 </tr>
 <tr>
 <td><p><strong>Marked</strong></p></td>
-<td><p>Jednostka naznaczona otrzymuje <strong>podwójne obrażenia</strong> (po uwzględnieniu pancerza).</p></td>
+<td><p>Naznaczona jednostka dostaje <strong>podwójne obrażenia</strong> (liczone po odjęciu pancerza).</p></td>
 </tr>
 <tr>
 <td><p><strong>Stunned</strong></p></td>
-<td><p>Jednostka ogłuszona pomija swoje najbliższe uderzenie, po czym status ogłuszenia znika.</p></td>
+<td><p>Ogłuszona jednostka pomija swoje najbliższe uderzenie. Potem ogłuszenie znika.</p></td>
 </tr>
 <tr>
 <td><p><strong>Burning / BurnSource</strong></p></td>
-<td><p>Jednostka podpalona traci <strong>1 HP na koniec każdej rundy</strong>. Jednostka z <code>BurnSource</code> podpala każdy trafiony cel.</p></td>
+<td><p>Podpalona jednostka traci <strong>1 HP na koniec każdej rundy</strong>. Jednostka z <code>BurnSource</code> podpala każdy cel, który trafi.</p></td>
 </tr>
 <tr>
 <td><p><strong>SplashDamage (n)</strong></p></td>
-<td><p>Podczas ataku zadaje <code>n</code> obrażeń wrogim jednostkom stojącym na sąsiednich liniach (z lewej i z prawej).</p></td>
+<td><p>Podczas ataku zadaje <code>n</code> obrażeń wrogim jednostkom na sąsiednich liniach (z lewej i z prawej).</p></td>
 </tr>
 <tr>
 <td><p><strong>Breakthrough</strong></p></td>
-<td><p>Po uderzeniu we wrogą jednostkę zadaje dodatkowo pełną wartość swojego ataku bohaterowi przeciwnika.</p></td>
+<td><p>Po uderzeniu we wrogą jednostkę zadaje dodatkowo bohaterowi przeciwnika obrażenia równe pełnej wartości swojego ataku.</p></td>
 </tr>
 <tr>
 <td><p><strong>SoulGuard</strong></p></td>
-<td><p>Chroni jednostkę przed śmiercią jeden raz (zostawia ją przy życiu z <strong>1 HP</strong>). Nie chroni przed poświęceniem (<code>Sacrifice</code>).</p></td>
+<td><p>Raz chroni jednostkę przed śmiercią i zostawia ją przy życiu z <strong>1 HP</strong>. Nie chroni przed poświęceniem (<code>Sacrifice</code>).</p></td>
 </tr>
 <tr>
 <td><p><strong>Unkillable</strong></p></td>
-<td><p>Gdy jednostka zginie na planszy, zamiast pozostać na stosie odrzuconych wraca do ręki właściciela.</p></td>
+<td><p>Gdy jednostka zginie na planszy, wraca do ręki właściciela zamiast zostać na stosie kart odrzuconych.</p></td>
 </tr>
 </tbody></table>
 <hr />
 <h2>3. Sterowanie i skróty klawiszowe</h2>
 <table><thead><tr>
-<th><p>Czynność w grze</p></th>
-<th><p>Obsługa myszą</p></th>
-<th><p>Obsługa klawiaturą</p></th>
+<th><p>Co chcesz zrobić</p></th>
+<th><p>Mysz</p></th>
+<th><p>Klawiatura</p></th>
 </tr></thead><tbody>
 <tr>
-<td><p>Wybór karty z ręki</p></td>
+<td><p>Wybrać kartę z ręki</p></td>
 <td><p>Kliknij kartę w wachlarzu ręki</p></td>
-<td><p>Klawisze numeryczne <code>1</code> – <code>8</code></p></td>
+<td><p>Klawisze cyfr <code>1</code> – <code>8</code></p></td>
 </tr>
 <tr>
-<td><p>Zagranie jednostki na linię</p></td>
-<td><p>Kliknij podświetlony slot linii (<code>0–3</code>)</p></td>
-<td><p>Strzałki lewo/prawo + <code>Enter</code></p></td>
+<td><p>Zagrać jednostkę na linię</p></td>
+<td><p>Kliknij podświetlone miejsce na linii (<code>0–3</code>)</p></td>
+<td><p>Strzałki w lewo/prawo + <code>Enter</code></p></td>
 </tr>
 <tr>
-<td><p>Wskazanie celu akcji / umiejętności</p></td>
-<td><p>Kliknij podświetloną jednostkę lub bohatera</p></td>
+<td><p>Wskazać cel akcji lub umiejętności</p></td>
+<td><p>Kliknij podświetloną jednostkę albo bohatera</p></td>
 <td><p>Strzałki + <code>Enter</code></p></td>
 </tr>
 <tr>
-<td><p>Zakończenie bieżącego kroku</p></td>
+<td><p>Zakończyć bieżący krok</p></td>
 <td><p>Kliknij przycisk <strong>Zakończ krok</strong></p></td>
-<td><p><code>Spacja</code> lub <code>Enter</code> (gdy żadna karta nie jest wybrana)</p></td>
+<td><p><code>Spacja</code> lub <code>Enter</code> (gdy nie masz wybranej karty)</p></td>
 </tr>
 <tr>
-<td><p>Anulowanie wyboru karty</p></td>
+<td><p>Anulować wybór karty</p></td>
 <td><p>Prawy przycisk myszy</p></td>
 <td><p><code>Escape</code></p></td>
 </tr>
 <tr>
-<td><p>Podgląd dziennika rozgrywki</p></td>
+<td><p>Otworzyć dziennik gry</p></td>
 <td><p>Kliknij przycisk <strong>Log / Dziennik</strong></p></td>
 <td><p>Klawisz <code>L</code></p></td>
 </tr>
@@ -123,27 +123,27 @@
 <hr />
 <h2>4. Najczęściej zadawane pytania (FAQ) i rozwiązywanie problemów</h2>
 <table><thead><tr>
-<th><p>Pytanie / Objaw problemu</p></th>
-<th><p>Wyjaśnienie i sposób rozwiązania</p></th>
+<th><p>Pytanie lub problem</p></th>
+<th><p>Wyjaśnienie i rozwiązanie</p></th>
 </tr></thead><tbody>
 <tr>
-<td><p><strong>Dlaczego nie mogę zagrać wybranej karty z ręki?</strong></p></td>
-<td><p>Sprawdź trzy warunki: (1) czy masz wystarczającą ilość zasobu <em>Blood</em>, (2) czy obecny krok rundy pozwala na ten typ karty (np. w <em>Kroku Akcji</em> nie można wystawiać jednostek), (3) czy dla karty akcji istnieje na planszy wymagany cel. Interfejs podświetla wyłącznie dozwolone zagrania.</p></td>
+<td><p><strong>Dlaczego nie mogę zagrać karty z ręki?</strong></p></td>
+<td><p>Sprawdź trzy rzeczy: (1) czy masz dość <em>Blood</em>, (2) czy w tym kroku rundy wolno zagrać ten typ karty (np. w kroku akcji nie wystawisz jednostki), (3) czy karta akcji ma na planszy wymagany cel. Gra podświetla tylko dozwolone zagrania.</p></td>
 </tr>
 <tr>
-<td><p><strong>Dlaczego moja nowo dobrana karta od razu spłonęła?</strong></p></td>
-<td><p>Ręka gracza mieści maksymalnie <strong>8 kart</strong> (<code>R-13</code>). Każda kolejna dobrana karta powyżej tego limitu jest automatycznie odrzucana na stos kart odrzuconych.</p></td>
+<td><p><strong>Dlaczego nowo dobrana karta od razu spłonęła?</strong></p></td>
+<td><p>W ręce mieścisz najwyżej <strong>8 kart</strong> (reguła <code>R-13</code>). Każda karta dobrana ponad ten limit od razu trafia na stos kart odrzuconych.</p></td>
 </tr>
 <tr>
 <td><p><strong>Co się dzieje, gdy skończą mi się karty w talii?</strong></p></td>
-<td><p>W grze nie tasuje się stosu odrzuconych z powrotem do talii. Każda próba dobrania karty z pustej talii zadaje bohaterowi narastające obrażenia <strong>Fatigue</strong> (<code>1</code>, potem <code>2</code>, potem <code>3</code> itd. — <code>R-14</code>).</p></td>
+<td><p>Stos kart odrzuconych nie wraca do talii. Każda próba dobrania karty z pustej talii zadaje twojemu bohaterowi rosnące obrażenia <strong>Fatigue</strong> (zmęczenie): <code>1</code>, potem <code>2</code>, potem <code>3</code> itd. (reguła <code>R-14</code>).</p></td>
 </tr>
 <tr>
-<td><p><strong>Przeglądarka straciła połączenie z serwerem w trakcie meczu</strong></p></td>
-<td><p>Odśwież stronę lub poczekaj na automatyczne wznowienie połączenia SignalR. Serwer utrzymuje stan Twojego meczu przez <strong>60 sekund</strong> (<code>R-73</code>) i po powrocie odtworzy dokładny widok planszy.</p></td>
+<td><p><strong>Gra straciła połączenie z serwerem w trakcie meczu</strong></p></td>
+<td><p>Odśwież stronę albo poczekaj, aż gra sama wznowi połączenie (SignalR). Serwer trzyma twój mecz przez <strong>60 sekund</strong> (reguła <code>R-73</code>). Po powrocie zobaczysz dokładnie tę samą planszę.</p></td>
 </tr>
 <tr>
-<td><p><strong>Gra wyświetla komunikat o obróceniu ekranu</strong></p></td>
-<td><p>Interfejs planszy wymaga orientacji poziomej (minimum <code>1280×720</code>). Zmaksymalizuj okno przeglądarki na komputerze.</p></td>
+<td><p><strong>Gra prosi o obrócenie ekranu</strong></p></td>
+<td><p>Plansza wymaga orientacji poziomej i okna o rozmiarze co najmniej <code>1280×720</code>. Na komputerze zmaksymalizuj okno przeglądarki.</p></td>
 </tr>
 </tbody></table>

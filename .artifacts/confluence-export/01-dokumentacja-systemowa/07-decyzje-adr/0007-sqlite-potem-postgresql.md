@@ -1,4 +1,4 @@
-<!-- CONFLUENCE 1:1 EXPORT | Source: docs/01-dokumentacja-systemowa/07-decyzje-adr/0007-sqlite-potem-postgresql.md @ 10829d3 (2026-11-02) -->
+<!-- CONFLUENCE 1:1 EXPORT | Source: docs/01-dokumentacja-systemowa/07-decyzje-adr/0007-sqlite-potem-postgresql.md @ a2bf2a4 (2026-11-02) -->
 # ADR-0007: SQLite na start, PostgreSQL od Sprintu 4
 
 - **Status:** zatwierdzona (2026-10-27)
@@ -7,14 +7,14 @@
 
 ## Kontekst i problem
 
-Do Sprintu 2 baza jest prawie niepotrzebna (mecze żyją w pamięci). PostgreSQL w Aspire wymaga Dockera/Podmana na każdym laptopie. [V]
+Do Sprintu 2 baza danych jest prawie niepotrzebna, bo mecze żyją w pamięci. PostgreSQL w Aspire wymaga Dockera lub Podmana na każdym laptopie. [V]
 
 ## Rozważane opcje
 
 | Opcja | Zalety | Wady | Koszt / ryzyko |
 |---|---|---|---|
-| PostgreSQL od razu | zgodność z produkcją | Docker u 6 osób od dnia 1 | blokada startu |
-| **SQLite → PostgreSQL** | zero instalacji; EF Core ukrywa różnice | dwa dostawcy do przetestowania | migracje trzeba sprawdzić na obu |
+| PostgreSQL od razu | zgodność z produkcją | Docker u 6 osób od pierwszego dnia | blokada startu |
+| **SQLite → PostgreSQL** | zero instalacji; EF Core ukrywa różnice | dwóch dostawców do przetestowania | migracje trzeba sprawdzić na obu |
 | Bez bazy | najprościej | przesuwa problem | — |
 
 ## Decyzja
@@ -30,5 +30,5 @@ od Sprintu 4** zamiast PostgreSQL od razu, aby nikt nie był zablokowany instala
 
 ### Negatywne / ryzyka
 
-- Do S4 każdy musi mieć Docker/Podman albo korzystać z SQLite lokalnie (#10).
-- Unikać funkcji specyficznych dla jednego silnika (np. typy JSON) bez testu na obu.
+- Do S4 (Sprintu 4) każdy musi mieć Docker lub Podman albo korzystać lokalnie z SQLite (#10).
+- Unikamy funkcji specyficznych dla jednego silnika bazy (np. typów JSON), jeśli nie przetestowaliśmy ich na obu.

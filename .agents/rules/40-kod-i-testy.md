@@ -1,6 +1,6 @@
 ---
 trigger: model_decision
-description: "Standardy kodu C# (.NET 10) i TypeScript (strict), zasada Fail Loud, nazewnictwo testow Rnn_ oraz obowiazkowa weryfikacja przed zakonczeniem zadania."
+description: "Standardy kodu C# (.NET 10) i TypeScript (strict), zasada głośnej porażki (fail loud), nazwy testów Rnn_ i obowiązkowe sprawdzenie przed końcem zadania."
 ---
 
 # 40. Standardy kodu, determinizm i testy automatyczne

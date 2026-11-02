@@ -1,20 +1,22 @@
-<!-- CONFLUENCE 1:1 EXPORT | Source: docs/04-system-agentow-ai/03-jak-pisac-specyfikacje-openspec.md @ 10829d3 (2026-11-02) -->
+<!-- CONFLUENCE 1:1 EXPORT | Source: docs/04-system-agentow-ai/03-jak-pisac-specyfikacje-openspec.md @ a2bf2a4 (2026-11-02) -->
 # 4.3 Przewodnik pisania specyfikacji w OpenSpec (Spec-Driven Development)
 
-> **Źródło prawdy:** repozytorium (`docs/04-system-agentow-ai/03-jak-pisac-specyfikacje-openspec.md`) · **Kategoria dokumentacji:** Dokumentacja procesowa — Standard specyfikacji SDD · **Etap SDD:** Specyfikacja i planowanie
+> **Źródło prawdy:** repozytorium (`docs/04-system-agentow-ai/03-jak-pisac-specyfikacje-openspec.md`) · **Kategoria dokumentacji:** Dokumentacja procesowa — standard specyfikacji SDD · **Etap SDD:** specyfikacja i planowanie
 
-Niniejszy przewodnik wyjaśnia krok po kroku, jak w praktyce stosujemy podejście **Spec-Driven Development (SDD)** przy użyciu narzędzia **OpenSpec**.
+Ten przewodnik pokazuje krok po kroku, jak w praktyce pracujemy w podejściu **Spec-Driven Development (SDD)**, czyli „najpierw specyfikacja, potem kod”. Używamy do tego narzędzia **OpenSpec**.
 
 ---
 
 ## 1. Kiedy tworzymy specyfikację zmiany w OpenSpec?
 
-| Rodzaj zadania | Czy wymagana jest zmiana w `openspec/changes/`? | Wymagany artefakt przed kodowaniem |
+SP (story points) to punktowa wycena wielkości historyjki.
+
+| Rodzaj zadania | Czy potrzebna jest zmiana w `openspec/changes/`? | Co musi istnieć przed kodowaniem |
 |---|---|---|
-| **Historyjka (Story) o rozmiarze ≥ 3 SP** | **TAK (obowiązkowo)** | Zatwierdzona propozycja zmiany w `openspec/changes/rej-123-...` |
-| **Każda zmiana lub implementacja reguły gry (`R-nn`)** | **TAK (obowiązkowo)** | Scenariusze `GIVEN / WHEN / THEN` w delcie specyfikacji + lista testów `Rnn_...` |
-| **Każda modyfikacja 5 kontraktów (`Rejoltance.Contracts`)** | **TAK (obowiązkowo + decyzja ADR)** | Zmiana OpenSpec z plikiem `design.md` oraz dokument ADR zatwierdzony przez 2 osoby |
-| **Drobna poprawka błędu, stylów CSS lub dokumentacji (< 3 SP)** | **NIE (ścieżka szybka)** | Krótki, 5-punktowy plan działania przedstawiony człowiekowi lub wpisany w opis PR |
+| **Historyjka (story) o rozmiarze ≥ 3 SP** | **Tak** | Zatwierdzona propozycja zmiany w `openspec/changes/rej-123-...` |
+| **Każda zmiana lub implementacja reguły gry (`R-nn`)** | **Tak** | Scenariusze `GIVEN / WHEN / THEN` w delcie specyfikacji i lista testów `Rnn_...` |
+| **Każda zmiana 5 kontraktów (`Rejoltance.Contracts`)** | **Tak, plus decyzja ADR** | Zmiana OpenSpec z plikiem `design.md` i ADR (Architecture Decision Record) zatwierdzony przez 2 osoby |
+| **Drobna poprawka błędu, stylów CSS lub dokumentacji (< 3 SP)** | **Nie (ścieżka szybka)** | Krótki plan w 5 punktach, pokazany człowiekowi albo wpisany w opis PR (pull requesta) |
 
 ---
 
@@ -47,48 +49,48 @@ openspec/
 
 ---
 
-## 3. Cykl życia specyfikacji krok po kroku (Przykład: Zadanie `REJ-45`)
+## 3. Cykl życia specyfikacji krok po kroku (przykład: zadanie `REJ-45`)
 
-### Krok 1: Utworzenie gałęzi i wygenerowanie propozycji (`/opsx:propose`)
+### Krok 1: Utwórz gałąź i wygeneruj propozycję (`/opsx:propose`)
 
-Po utworzeniu gałęzi `feature/REJ-45-choose-order` wywołaj w swoim narzędziu AI polecenie:
+Utwórz gałąź `feature/REJ-45-choose-order`. Potem wywołaj w swoim narzędziu AI polecenie:
 
 - **Claude Code / Gemini CLI:** `/opsx:propose REJ-45 wybór kolejności po mulliganie i rozpoczęcie rundy 1 (R-04, R-10, R-11)`
 - **Antigravity / GitHub Copilot:** `/opsx-propose REJ-45 wybór kolejności po mulliganie i rozpoczęcie rundy 1 (R-04, R-10, R-11)`
 - **OpenAI Codex:** `$openspec-propose REJ-45 wybór kolejności po mulliganie i rozpoczęcie rundy 1 (R-04, R-10, R-11)`
 
-Agent (korzystając z wiedzy ról `rj-rules-expert` oraz `rj-architect`) utworzy katalog `openspec/changes/rej-45-choose-order/` wraz z kompletem plików.
+Agent (korzystając z wiedzy ról `rj-spec-analyst` i `rj-architect`) utworzy katalog `openspec/changes/rej-45-choose-order/` ze wszystkimi plikami zmiany.
 
-### Krok 2: Weryfikacja merytoryczna i walidacja techniczna
+### Krok 2: Sprawdź treść i uruchom walidator
 
-Przejrzyj wygenerowane pliki pod kątem czterech kryteriów:
+Przejrzyj wygenerowane pliki i sprawdź cztery rzeczy:
 
-1. Czy w `proposal.md` znajduje się klucz Jira (`REJ-45`) oraz wyraźna sekcja **Poza zakresem (Out of Scope)**?
-2. Czy każde zmieniane lub dodawane wymaganie w `specs/<obszar>/spec.md` posiada identyfikator `R-nn` oraz co najmniej jeden konkretny scenariusz `GIVEN / WHEN / THEN` oparty na wartościach liczbowych z prototypu?
-3. Czy w `tasks.md` każde zadanie ma pracochłonność **≤ 4 h** i wskazuje dokładną nazwę testu xUnit/Vitest (np. `R04_different_order_choices_respect_wants_first_preference`)?
+1. Czy w `proposal.md` jest klucz Jira (`REJ-45`) i wyraźna sekcja **Poza zakresem (Out of Scope)**?
+2. Czy każde zmieniane lub dodawane wymaganie w `specs/<obszar>/spec.md` ma identyfikator `R-nn` i co najmniej jeden konkretny scenariusz `GIVEN / WHEN / THEN` z wartościami liczbowymi z prototypu?
+3. Czy w `tasks.md` każde zadanie ma szacunek **≤ 4 h** i podaje dokładną nazwę testu xUnit/Vitest (np. `R04_different_order_choices_respect_wants_first_preference`)?
 4. Uruchom walidator CLI:
 
    ```bash
    npx openspec validate rej-45-choose-order --strict
    ```
 
-### Krok 3: Bramka akceptacji człowieka (Human Approval Gate)
+### Krok 3: Akceptacja człowieka (*human approval gate*)
 
-Zatwierdź pliki propozycji na swojej gałęzi i pokaż je Product Ownerowi sprintu lub właścicielowi epiku. **Kodowanie rozpoczynamy dopiero po uzyskaniu akceptacji specyfikacji.** Zapobiega to pisaniu kodu, który trzeba byłoby przepisywać po Code Review.
+Zapisz pliki propozycji w commicie na swojej gałęzi i pokaż je PO (Product Ownerowi) sprintu albo właścicielowi epiku. **Kod piszemy dopiero po akceptacji specyfikacji.** Dzięki temu nie piszemy kodu, który po code review trzeba by przepisać.
 
-### Krok 4: Implementacja według `tasks.md` (`/opsx:apply`)
+### Krok 4: Implementuj według `tasks.md` (`/opsx:apply`)
 
-Wywołaj `/opsx:apply` (lub realizuj kolejne punkty z `tasks.md` z pomocą `rj-backend-engineer` / `rj-frontend-engineer`). Dla każdego punktu najpierw powstaje test, a następnie implementacja. Po ukończeniu każdego kroku zadanie w `tasks.md` jest oznaczane jako `[x]`.
+Wywołaj `/opsx:apply` albo realizuj kolejne punkty z `tasks.md` z pomocą właściwego agenta: `rj-rules-engineer` (reguły w `Rejoltance.Kernel`, jak w tym przykładzie), `rj-backend-engineer` (serwer) albo `rj-frontend-engineer` (klient web). W każdym punkcie najpierw piszesz test, potem implementację. Po skończeniu kroku oznaczasz zadanie w `tasks.md` jako `[x]`.
 
-### Krok 5: Archiwizacja po scaleniu Pull Requesta (`/opsx:archive`)
+### Krok 5: Zarchiwizuj zmianę po scaleniu pull requesta (`/opsx:archive`)
 
-Po zatwierdzeniu i scaleniu Pull Requesta wywołaj `/opsx:archive`. Narzędzie OpenSpec automatycznie włączy zmiany z delty do głównej specyfikacji w `openspec/specs/` i przeniesie katalog zmiany do `openspec/changes/archive/`.
+Gdy pull request zostanie zatwierdzony i scalony, wywołaj `/opsx:archive`. OpenSpec przeniesie zmiany z delty do głównej specyfikacji w `openspec/specs/`, a katalog zmiany przeniesie do `openspec/changes/archive/`.
 
 ---
 
-## 4. Standard formatowania wymagań i scenariuszy w OpenSpec
+## 4. Jak formatować wymagania i scenariusze w OpenSpec
 
-Walidator `openspec validate --all --strict` (uruchamiany w każdym przebiegu CI) wymaga zachowania angielskich słów kluczowych struktury Markdown przy polskojęzycznej treści merytorycznej:
+Walidator `openspec validate --all --strict` działa w każdym przebiegu CI (ciągłej integracji). Treść piszemy po polsku, ale słowa kluczowe struktury Markdown muszą zostać po angielsku:
 
 ```markdown
 ## MODIFIED Requirements
@@ -112,6 +114,6 @@ Po zakończeniu mulliganu przez obu graczy system SHALL przyjąć od każdego gr
 
 ### Najważniejsze reguły walidatora OpenSpec
 
-1. Nagłówki muszą mieć dokładną postać `### Requirement: <ID i tytuł>` oraz `#### Scenario: <Tytuł scenariusza>`.
-2. Treść wymagania pod nagłówkiem `### Requirement:` musi zawierać słowo kluczowe **`SHALL`** lub **`MUST`** (pisane wielkimi literami) i nie powinna przekraczać 500 znaków (szczegółowe przypadki umieszczaj w sekcjach `#### Scenario:`).
-3. Każdy scenariusz musi zawierać punkty **`- **GIVEN** ...`**, **`- **WHEN** ...`** oraz **`- **THEN** ...`**.
+1. Nagłówki mają dokładnie postać `### Requirement: <ID i tytuł>` oraz `#### Scenario: <Tytuł scenariusza>`.
+2. Treść wymagania pod nagłówkiem `### Requirement:` zawiera słowo kluczowe **`SHALL`** albo **`MUST`** (wielkimi literami) i ma najwyżej 500 znaków. Szczegółowe przypadki opisuj w sekcjach `#### Scenario:`.
+3. Każdy scenariusz zawiera punkty **`- **GIVEN** ...`**, **`- **WHEN** ...`** i **`- **THEN** ...`**.

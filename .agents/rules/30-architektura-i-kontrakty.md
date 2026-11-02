@@ -1,6 +1,6 @@
 ---
 trigger: model_decision
-description: "Granice 5 modulow architektonicznych (Web -> Server -> Kernel -> Content -> Contracts), czystosc Rejoltance.Kernel i ochrona 5 zamrozonych kontraktow."
+description: "Granice 5 modułów (Web -> Server -> Kernel -> Content -> Contracts), czystość Rejoltance.Kernel i ochrona 5 zamrożonych kontraktów."
 ---
 
 # 30. Architektura warstwowa i ochrona kontraktów
@@ -35,7 +35,7 @@ Granice te są automatycznie weryfikowane przez `tests/Rejoltance.Architecture.T
 1. `Intent` — intencja akcji gracza wysyłana z klienta do serwera.
 2. `LegalAction` — dozwolona akcja wyliczona przez silnik dla aktywnego gracza.
 3. `PendingInteraction` — oczekiwanie silnika na wybór celu lub opcji przez gracza.
-4. `MatchView` — przefiltrowany widok stanu meczu dla konkretnego gracza (*Fog of War* — `R-66`).
+4. `MatchView` — przefiltrowany widok stanu meczu dla konkretnego gracza (*Fog of War* — `R-80…R-82`).
 5. `DomainEvent` — fakt domenowy wyemitowany podczas rozstrzygania intencji (podstawa animacji UI i dziennika).
 
 Każda zmiana tych typów wymaga: (1) nowego **ADR**, (2) symetrycznej aktualizacji C# i TypeScriptu oraz (3) aktualizacji próbek w `tests/Rejoltance.Contracts.Tests/ContractSampleTests.cs`.

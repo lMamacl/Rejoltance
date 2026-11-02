@@ -1,13 +1,14 @@
-<ac:structured-macro ac:name="info"><ac:rich-text-body><p><strong>Synchronizacja 1:1 z repozytorium Git:</strong> <code>docs/05-szablony/szablon-qa-plan-testow.md</code> (commit <code>10829d3</code>, data eksportu: <code>2026-11-02</code>)</p></ac:rich-text-body></ac:structured-macro>
+<ac:structured-macro ac:name="info"><ac:rich-text-body><p><strong>Synchronizacja 1:1 z repozytorium Git:</strong> <code>docs/05-szablony/szablon-qa-plan-testow.md</code> (commit <code>a2bf2a4</code>, data eksportu: <code>2026-11-02</code>)</p></ac:rich-text-body></ac:structured-macro>
 <blockquote><p><strong>Źródło prawdy:</strong> Confluence PB / Repozytorium · <strong>Kategoria AltexSoft:</strong> Product: System Documentation — Quality Assurance (Test Plan &amp; Test Case Specifications) · <strong>Etap SDD:</strong> Weryfikacja (<code>Verify</code>) · <strong>Wymóg uczelniany:</strong> EU6</p></blockquote>
+<p>Wypełnij plan na początku sprintu i zastąp pola w nawiasach <code>&lt;...&gt;</code>. QA to quality assurance (zapewnienie jakości), SDD — spec-driven development (praca sterowana specyfikacją), EU — efekt uczenia się, NFR — wymaganie niefunkcjonalne, CI — ciągła integracja, E2E — test end-to-end całej aplikacji.</p>
 <hr />
-<h2>1. Metadane Planu Testów Sprintu</h2>
+<h2>1. Metadane planu testów sprintu</h2>
 <table><thead><tr>
 <th><p>Pole</p></th>
 <th><p>Wartość</p></th>
 </tr></thead><tbody>
 <tr>
-<td><p><strong>Sprint / Wydanie</strong></p></td>
+<td><p><strong>Sprint / wydanie</strong></p></td>
 <td><p><code>Sprint N</code> (<code>sprint-N</code>)</p></td>
 </tr>
 <tr>
@@ -15,11 +16,11 @@
 <td><p><code>&lt;Imię i nazwisko&gt;</code></p></td>
 </tr>
 <tr>
-<td><p><strong>Zakres historyjek objętych planem</strong></p></td>
+<td><p><strong>Historyjki objęte planem</strong></p></td>
 <td><p><code>&lt;Lista kluczy Jira: REJ-...&gt;</code></p></td>
 </tr>
 <tr>
-<td><p><strong>Zakres reguł domenowych i NFR</strong></p></td>
+<td><p><strong>Reguły domenowe i NFR objęte planem</strong></p></td>
 <td><p><code>&lt;Lista R-nn oraz NFR-nn&gt;</code></p></td>
 </tr>
 <tr>
@@ -28,19 +29,19 @@
 </tr>
 </tbody></table>
 <hr />
-<h2>2. Zakres testowania w sprincie</h2>
-<ul><li><strong>Funkcjonalności objęte testami (In Scope):</strong> <code>&lt;Lista nowych i zmodyfikowanych funkcji w sprincie&gt;</code></li><li><strong>Funkcjonalności wyłączone z testowania w tym sprincie (Out of Scope):</strong> <code>&lt;Lista wraz z uzasadnieniem&gt;</code></li><li><strong>Kryteria wejścia (Entry Criteria):</strong> kod przechodzi budowanie i statyczną analizę typów (<code>dotnet build -warnaserror</code>, <code>npm run typecheck</code>).</li><li><strong>Kryteria wyjścia (Exit Criteria / Definition of Done):</strong> 100% testów automatycznych przechodzi na zielono w CI, 0 otwartych defektów o priorytecie <code>P0</code> i <code>P1</code>, wykonana lista kontrolna E2E.</li></ul>
+<h2>2. Zakres testów w sprincie</h2>
+<ul><li><strong>Co testujemy (In Scope):</strong> <code>&lt;Lista nowych i zmodyfikowanych funkcji w sprincie&gt;</code></li><li><strong>Czego nie testujemy w tym sprincie (Out of Scope):</strong> <code>&lt;Lista wraz z uzasadnieniem&gt;</code></li><li><strong>Kryteria wejścia (Entry Criteria):</strong> kod się buduje i przechodzi statyczną analizę typów (<code>dotnet build -warnaserror</code>, <code>npm run typecheck</code>).</li><li><strong>Kryteria wyjścia (Exit Criteria / Definition of Done):</strong> 100% testów automatycznych przechodzi w CI, 0 otwartych defektów o priorytecie <code>P0</code> i <code>P1</code>, lista kontrolna E2E jest wykonana.</li></ul>
 <hr />
-<h2>3. Specyfikacja Przypadków Testowych (Test Case Specifications)</h2>
+<h2>3. Specyfikacja przypadków testowych (Test Case Specifications)</h2>
 <table><thead><tr>
-<th><p>ID Testu</p></th>
+<th><p>ID testu</p></th>
 <th><p>Tytuł przypadku testowego</p></th>
 <th><p>Powiązane wymaganie (<code>R-nn</code> / <code>NFR-nn</code> / <code>REJ-...</code>)</p></th>
 <th><p>Poziom testu (<code>Unit / Integration / E2E</code>)</p></th>
 <th><p>Warunki wstępne (<code>GIVEN</code>)</p></th>
 <th><p>Kroki testowe (<code>WHEN</code>)</p></th>
-<th><p>Oczekiwany rezultat (<code>THEN</code>)</p></th>
-<th><p>Automatyzacja (Plik testu)</p></th>
+<th><p>Oczekiwany wynik (<code>THEN</code>)</p></th>
+<th><p>Automatyzacja (plik testu)</p></th>
 </tr></thead><tbody>
 <tr>
 <td><p><code>TC-01</code></p></td>

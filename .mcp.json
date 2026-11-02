@@ -1,7 +1,7 @@
 {
   "mcpServers": {
     "atlassian-pb": {
-      "description": "Jira + Confluence PB (Server/DC) via mcp-atlassian, read-only. Tokens come from your local environment (.env is git-ignored). See docs/00-start/jira-confluence-mcp.md",
+      "description": "Jira + Confluence PB (Server/DC) via mcp-atlassian, read-only. Tokens come from your local environment (.env is git-ignored). See docs/04-system-agentow-ai/01-architektura-i-konfiguracja-agentow.md",
       "command": "uvx",
       "args": ["--python", "3.13", "mcp-atlassian"],
       "env": {

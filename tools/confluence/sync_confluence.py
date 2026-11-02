@@ -11,15 +11,12 @@ Usage:
     # 3. Dry-run publishing (shows exact parent -> child tree that will be created in Confluence):
     python tools/confluence/sync_confluence.py --publish --dry-run
 
-    # 4. Publish all 67 pages automatically to WI PB Confluence 8.4.5 via REST API:
+    # 4. Publish all pages to WI PB Confluence 8.4.5 via REST API.
+    #    Keep the token out of the command line and the repo: set CONFLUENCE_PERSONAL_TOKEN
+    #    (or put it in the git-ignored .env) and pass the space key explicitly.
+    #    WARNING: docs/README.md replaces the content of the space home page.
     python tools/confluence/sync_confluence.py --publish \\
-        --url https://devtools.wi.pb.edu.pl/confluence \\
-        --token TWOJ_PERSONAL_ACCESS_TOKEN
-
-    # (Optional) If using login/password instead of a Personal Access Token:
-    python tools/confluence/sync_confluence.py --publish \\
-        --url https://devtools.wi.pb.edu.pl/confluence \\
-        --user twoj_login --password twoje_haslo
+        --url https://devtools.wi.pb.edu.pl/confluence --space-key PT2026GCGS
 
     # 5. Publish selected pages (parent README pages are included automatically):
     python tools/confluence/sync_confluence.py --publish \
@@ -51,7 +48,7 @@ ROOT = Path(__file__).resolve().parents[2]
 DOCS_DIR = ROOT / "docs"
 EXPORT_DIR = ROOT / ".artifacts" / "confluence-export"
 DEFAULT_CONFLUENCE_URL = "https://devtools.wi.pb.edu.pl/confluence"
-DEFAULT_SPACE_NAME_HINT = "TU WPISAC NAZWE PROJEKTU PROJEKT!!!!"
+DEFAULT_SPACE_NAME_HINT = "2026PT GCDC"  # space name of team "Gra sieciowa" (key PT2026GCGS)
 
 EXPECTED_SECTIONS = {
     "00-przewodnik-i-setup": "00. Przewodnik i konfiguracja środowiska",

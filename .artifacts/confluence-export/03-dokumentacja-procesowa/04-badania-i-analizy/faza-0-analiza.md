@@ -1,7 +1,9 @@
-<!-- CONFLUENCE 1:1 EXPORT | Source: docs/03-dokumentacja-procesowa/04-badania-i-analizy/faza-0-analiza.md @ 10829d3 (2026-11-02) -->
+<!-- CONFLUENCE 1:1 EXPORT | Source: docs/03-dokumentacja-procesowa/04-badania-i-analizy/faza-0-analiza.md @ a2bf2a4 (2026-11-02) -->
 # Faza 0 — analiza materiałów źródłowych
 
 **Data:** 2026-10-27 · **Status:** zaakceptowana (decyzje poniżej) · Legenda: **[V]** zweryfikowane, **[Z]** założenie, **[?]** nieznane.
+
+Skróty użyte w tej notatce: MVP (Minimum Viable Product) to najmniejsza wersja gry, którą da się pokazać graczom. P2P (peer-to-peer) to połączenie przeglądarek bez serwera. XSS (cross-site scripting) to wstrzyknięcie złośliwego skryptu do strony. DSL to język opisu efektów kart. RNG to generator liczb losowych. DIP to Dokument Inicjujący Projekt, a PO to Product Owner (właściciel produktu).
 
 ## Streszczenie źródeł
 
@@ -36,7 +38,7 @@
 
 ## Pytania otwarte do zespołu
 
-Numery #1–#10 są przywoływane w innych dokumentach (np. „pytanie otwarte #6”).
+Inne dokumenty odwołują się do tych pytań po numerach #1–#10 (np. „pytanie otwarte #6”).
 
 ### Proces / uczelnia
 

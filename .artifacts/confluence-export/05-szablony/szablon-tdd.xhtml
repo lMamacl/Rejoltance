@@ -1,6 +1,6 @@
-<ac:structured-macro ac:name="info"><ac:rich-text-body><p><strong>Synchronizacja 1:1 z repozytorium Git:</strong> <code>docs/05-szablony/szablon-tdd.md</code> (commit <code>10829d3</code>, data eksportu: <code>2026-11-02</code>)</p></ac:rich-text-body></ac:structured-macro>
+<ac:structured-macro ac:name="info"><ac:rich-text-body><p><strong>Synchronizacja 1:1 z repozytorium Git:</strong> <code>docs/05-szablony/szablon-tdd.md</code> (commit <code>a2bf2a4</code>, data eksportu: <code>2026-11-02</code>)</p></ac:rich-text-body></ac:structured-macro>
 <blockquote><p><strong>Źródło prawdy:</strong> Repozytorium (<code>openspec/changes/&lt;id-zmiany&gt;/design.md</code>) · <strong>Kategoria AltexSoft:</strong> Product: System Documentation — Technical Design Document (TDD) · <strong>Etap SDD:</strong> Plan / Zadania (<code>Plan</code> / <code>Tasks</code>)</p></blockquote>
-<p>Zgodnie z klasyfikacją AltexSoft, <strong>Technical Design Document (TDD)</strong> stanowi niskopoziomowy pomost pomiędzy wysokopoziomową architekturą systemu (<strong>SAD</strong>) a rzeczywistym kodem źródłowym. W naszym procesie SDD dokument ten powstaje jako plik <code>design.md</code> wewnątrz katalogu zmiany <code>openspec/changes/&lt;id-zmiany&gt;/</code> dla każdego złożonego zadania (≥ 3 SP).</p>
+<p>W klasyfikacji AltexSoft TDD (Technical Design Document) łączy architekturę wysokiego poziomu (SAD, Software Architecture Document) z kodem źródłowym. W naszym procesie SDD (spec-driven development, praca sterowana specyfikacją) TDD to plik <code>design.md</code> w katalogu zmiany <code>openspec/changes/&lt;id-zmiany&gt;/</code>. Tworzymy go dla każdego złożonego zadania (≥ 3 SP, czyli story points). Zastąp pola w nawiasach <code>&lt;...&gt;</code>.</p>
 <hr />
 <h2>Metadane projektu technicznego</h2>
 <table><thead><tr>
@@ -20,7 +20,7 @@
 <td><p><code>R-nn</code>, <code>NFR-nn</code></p></td>
 </tr>
 <tr>
-<td><p><strong>Dotknięte moduły</strong></p></td>
+<td><p><strong>Moduły, których dotyczy zmiana</strong></p></td>
 <td><p><code>&lt;np. Rejoltance.Kernel, Rejoltance.Contracts, src/web&gt;</code></p></td>
 </tr>
 <tr>
@@ -32,7 +32,7 @@
 <h2>1. Cel techniczny i granice zmiany (Goals &amp; Non-Goals)</h2>
 <ul><li><strong>Cel implementacyjny:</strong> <code>&lt;Co dokładnie ma zostać zbudowane na poziomie komponentów kodu&gt;</code></li><li><strong>Poza zakresem (Non-Goals):</strong> <code>&lt;Czego świadomie nie zmieniamy w ramach tego projektu&gt;</code></li></ul>
 <h2>2. Projekt komponentów i struktur danych (Component &amp; Data Structure Design)</h2>
-<ul><li><strong>Nowe lub modyfikowane klasy / rekordy / komponenty:</strong></li><li><code>src/&lt;Moduł&gt;/&lt;Plik&gt;.cs</code>: <code>&lt;Opis odpowiedzialności, sygnatury metod publicznych, niezmienniki&gt;</code></li><li><strong>Wpływ na 5 zamrożonych kontraktów (<code>Rejoltance.Contracts</code> ↔ <code>src/web/src/contracts</code>):</strong></li><li><code>&lt;Brak zmian / Wymagana zmiana kontraktu opisana w ADR-NNNN&gt;</code></li></ul>
+<ul><li><strong>Nowe lub zmienione klasy / rekordy / komponenty:</strong></li><li><code>src/&lt;Moduł&gt;/&lt;Plik&gt;.cs</code>: <code>&lt;Opis odpowiedzialności, sygnatury metod publicznych, niezmienniki&gt;</code></li><li><strong>Wpływ na 5 zamrożonych kontraktów (<code>Rejoltance.Contracts</code> ↔ <code>src/web/src/contracts</code>):</strong></li><li><code>&lt;Brak zmian / Wymagana zmiana kontraktu opisana w ADR-NNNN&gt;</code></li></ul>
 <h2>3. Algorytm i przepływ danych (Algorithms &amp; Data Flow)</h2>
 <p><code>&lt;Opis krok po kroku algorytmu rozstrzygania reguły, diagram sekwencji lub pseudokod dla przypadków brzegowych&gt;</code></p>
 <ol><li>Warunek wstępny i walidacja intencji: <code>...</code></li><li>Aktualizacja niemutowalnego stanu <code>MatchState</code>: <code>...</code></li><li>Emitowane zdarzenia <code>DomainEvent[]</code> i wpływ na projekcję <code>Projection.ToView</code>: <code>...</code></li></ol>
@@ -46,13 +46,13 @@
 <th><p>Powód wyboru / odrzucenia</p></th>
 </tr></thead><tbody>
 <tr>
-<td><p><strong>Opcja 1 (Wybrana)</strong></p></td>
+<td><p><strong>Opcja 1 (wybrana)</strong></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
 </tr>
 <tr>
-<td><p><strong>Opcja 2 (Prostsza alternatywa)</strong></p></td>
+<td><p><strong>Opcja 2 (prostsza alternatywa)</strong></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>

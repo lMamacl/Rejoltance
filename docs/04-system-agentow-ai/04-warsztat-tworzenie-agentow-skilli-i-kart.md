@@ -1,18 +1,18 @@
 # 4.4 Warsztat inżynierski: Jak samodzielnie budować agentów, umiejętności, dokumentację, ADR i karty
 
-> **Źródło prawdy:** repozytorium (`docs/04-system-agentow-ai/04-warsztat-tworzenie-agentow-skilli-i-kart.md`) · **Kategoria dokumentacji:** Dokumentacja procesowa — Podręcznik warsztatowy zespołu i AI · **Etap SDD:** Cały cykl SDD
+> **Źródło prawdy:** repozytorium (`docs/04-system-agentow-ai/04-warsztat-tworzenie-agentow-skilli-i-kart.md`) · **Kategoria dokumentacji:** Dokumentacja procesowa — podręcznik warsztatowy zespołu i AI · **Etap SDD:** cały cykl SDD
 
-Ten dokument to praktyczny podręcznik („warsztat”) dla każdego członka zespołu. Wyjaśnia krok po kroku, **jak samodzielnie rozbudowywać system agentowy (`.agents/`)**, **jak tworzyć i synchronizować dokumentację z Confluence**, **jak rejestrować decyzje architektoniczne (ADR)** oraz **jak dodawać nowe karty do gry**.
+To praktyczny warsztat dla każdej osoby w zespole. Pokazuje krok po kroku, jak samodzielnie rozbudować system agentowy (`.agents/`), jak pisać dokumentację i przenosić ją do Confluence, jak zapisać decyzję architektoniczną (ADR, Architecture Decision Record) i jak dodać nową kartę do gry.
 
 ---
 
 ## Warsztat 1: Jak samodzielnie zbudować nową rolę agenta AI?
 
-Nową rolę agenta (`.agents/agents/rj-<rola>.md`) tworzymy wtedy, gdy pojawia się **nowy obszar odpowiedzialności wymagający odrębnego zestawu uprawnień narzędziowych** (np. dedykowany tester wydajności lub projektant balansu talii). Jeśli potrzebujesz jedynie nowej procedury krok po kroku dla istniejących agentów — przejdź do **Warsztatu 2 (Tworzenie skilla)**.
+Nową rolę agenta (`.agents/agents/rj-<rola>.md`) tworzymy wtedy, gdy pojawia się **nowy obszar odpowiedzialności, który wymaga innego zestawu narzędzi** (np. osobny tester wydajności albo projektant balansu talii). Jeśli potrzebujesz tylko nowej procedury krok po kroku dla istniejących agentów, przejdź do **Warsztatu 2 (tworzenie skilla)**.
 
 ### Krok 1: Utwórz plik definicji roli w `.agents/agents/rj-<nazwa>.md`
 
-Plik musi zaczynać się od nagłówka YAML (*frontmatter*) zgodnego ze schematem walidowanym przez `tools/agents/sync_agents.py`:
+Plik zaczyna się od nagłówka YAML (*frontmatter*). Jego schemat sprawdza skrypt `tools/agents/sync_agents.py`:
 
 ```markdown
 ---
@@ -48,17 +48,20 @@ commandExecutionPolicy: sandbox
 ## 6. Format raportu wyjściowego
 ```
 
-### Krok 2: Dobierz minimalny zestaw narzędzi (`tools`) oraz wbudowane skille (`skills`)
+> Przykład używa starszych identyfikatorów narzędzi Antigravity (`view_file`, `run_command` itd.) i kategorii `verification`. Skrypt nadal je akceptuje. Obecne role w `.agents/agents/` używają jednak identyfikatorów logicznych (`read`, `edit`, `search`, `execute`, `todo`, `agent`) i kategorii `A-Orkiestracja-i-SDD`, `B-Inzynieria-Domeny`, `C-Inzynieria-Aplikacji` albo `D-Jakosc-i-Dokumentacja`. W nowej roli stosuj ten sam zapis co w istniejących plikach.
 
-Skrypt `sync_agents.py` automatycznie tłumaczy identyfikatory narzędzi na format wymagany przez poszczególne środowiska IDE:
+### Krok 2: Dobierz minimalny zestaw narzędzi (`tools`) i wbudowane skille (`skills`)
 
-| Identyfikator w `.agents/agents/` | Odpowiednik w Claude Code | Kiedy przyznać to narzędzie agentowi? |
+Skrypt `sync_agents.py` sam tłumaczy identyfikatory narzędzi na format każdego IDE:
+
+| Identyfikator w `.agents/agents/` | Odpowiednik w Claude Code | Kiedy dać to narzędzie agentowi? |
 |---|---|---|
-| `view_file`, `list_dir`, `find_by_name`, `grep_search` | `Read`, `Glob`, `Grep` | Zawsze — pozwala agentowi czytać kod i dokumentację projektu. |
-| `run_command` | `Bash` | Gdy agent musi uruchamiać komendy budowania, testy lub skrypty w `tools/`. |
-| `write_to_file`, `replace_file_content`, `multi_replace_file_content` | `Write`, `Edit` | **Wyłącznie dla ról implementacyjnych i analitycznych.** Role z grupy `verification` (`rj-reviewer`, `rj-security-reviewer`, `rj-test-verifier`) nie mogą posiadać narzędzi zapisu! |
-| `search_web`, `read_url_content` | `WebSearch`, `WebFetch` | Gdy agent potrzebuje sprawdzać zewnętrzną dokumentację bibliotek (`rj-researcher`, `rj-architect`). |
-| `invoke_subagent` | `Task` | Wyłącznie dla głównego koordynatora (`rj-orchestrator`). |
+| `read`, `search` (starsze: `view_file`, `list_dir`, `find_by_name`, `grep_search`) | `Read`, `Glob`, `Grep` | Zawsze. Agent może wtedy czytać kod i dokumentację projektu. |
+| `execute` (starsze: `run_command`) | `Bash` | Gdy agent musi uruchamiać budowanie, testy albo skrypty z `tools/`. |
+| `edit` (starsze: `write_to_file`, `replace_file_content`, `multi_replace_file_content`) | `Write`, `Edit` | **Tylko dla ról, które tworzą kod, specyfikacje albo dokumentację.** Rola weryfikująca `rj-qa-verifier` nie może mieć narzędzi zapisu, żeby jej audyt był niezależny. |
+| `search_web`, `read_url_content` | `WebSearch`, `WebFetch` | Gdy agent musi sprawdzać zewnętrzną dokumentację bibliotek. Obecnie żadna z dziesięciu ról nie ma tych narzędzi. |
+| `agent` (starsze: `invoke_subagent`) | `Task` | Tylko dla głównego koordynatora (`rj-orchestrator`). |
+| `todo` | — | Lista zadań agenta. Mają ją wszystkie obecne role. |
 
 ### Krok 3: Wygeneruj adaptery IDE i zwaliduj konfigurację
 
@@ -67,17 +70,17 @@ python tools/agents/sync_agents.py
 python tools/agents/sync_agents.py --check
 ```
 
-Skrypt utworzy odpowiednie pliki w `.claude/agents/` oraz `.github/agents/` i sprawdzi poprawność wszystkich powiązań. Na koniec dopisz nowego agenta do tabeli w `AGENTS.md` oraz `02-katalog-rol-i-wbudowanych-skilli.md`.
+Skrypt utworzy pliki w `.claude/agents/` i `.github/agents/` i sprawdzi wszystkie powiązania. Na koniec dopisz nowego agenta do tabeli w `AGENTS.md` i w `02-katalog-rol-i-wbudowanych-skilli.md`.
 
 ---
 
 ## Warsztat 2: Jak samodzielnie zbudować nowy skill dla agentów i ludzi?
 
-**Skill** to powtarzalna procedura inżynierska zapisana w pliku `.agents/skills/rj-<czasownik>-<obiekt>/SKILL.md`. Dobry skill jest napisany tak jasno, że może go wykonać zarówno agent AI, jak i nowy student w zespole.
+**Skill** to powtarzalna procedura zapisana w pliku `.agents/skills/rj-<czasownik>-<obiekt>/SKILL.md`. Dobry skill jest napisany tak jasno, że wykona go i agent AI, i nowa osoba w zespole.
 
 ### Krok 1: Utwórz katalog i plik `SKILL.md`
 
-Nazwa katalogu musi zaczynać się od prefiksu `rj-` i być identyczna z polem `name` w nagłówku pliku:
+Nazwa katalogu zaczyna się od prefiksu `rj-` i jest taka sama jak pole `name` w nagłówku pliku:
 
 ```markdown
 ---
@@ -101,7 +104,7 @@ description: "Reviews React components in src/web against UI architecture rules 
 ## 6. Ograniczenia bezpieczeństwa (Czego nie wolno)
 ```
 
-> **Wskazówka techniczna:** Pole `description` w nagłówku YAML piszemy po angielsku (maks. 1024 znaki), jasno określając **CO** robi skill i **KIEDY** należy go użyć — to na podstawie tego pola silniki AI automatycznie dobierają skill do zadania. Samą treść instrukcji piszemy po polsku.
+> **Wskazówka:** pole `description` w nagłówku YAML piszemy po angielsku (maks. 1024 znaki). Napisz w nim jasno, **co** robi skill i **kiedy** go użyć. Na tej podstawie narzędzia AI same dobierają skill do zadania. Treść instrukcji piszemy po polsku.
 
 ### Krok 2: Przypisz skill do odpowiednich agentów i uruchom synchronizację
 
@@ -113,50 +116,61 @@ description: "Reviews React components in src/web against UI architecture rules 
    python tools/agents/sync_agents.py --check
    ```
 
-   Skrypt automatycznie skopiuje skill do `.claude/skills/`, `.github/skills/`, `.gemini/skills/` oraz wygeneruje komendę ukośnikową `/rj-review-ui` w `.agents/workflows/`.
+   Skrypt skopiuje skill do `.claude/skills/`, `.github/skills/` i `.gemini/skills/` oraz wygeneruje komendę ukośnikową `/rj-review-ui` w `.agents/workflows/`.
 
 ---
 
 ## Warsztat 3: Jak tworzyć dokumentację i przenosić ją do Confluence PB?
 
-1. **Wybierz właściwą sekcję w `docs/`** zgodnie z architekturą 1:1 (`00-przewodnik-i-setup`, `01-dokumentacja-systemowa`, `02-dokumentacja-uzytkownika`, `03-dokumentacja-procesowa`, `04-system-agentow-ai`, `05-szablony`).
-2. **Skorzystaj z odpowiedniego szablonu** z katalogu [`docs/05-szablony/`](../05-szablony/README.md) (np. `szablon-karta-modulu.md` przy dokumentowaniu swojego modułu na zaliczenie efektu **EU5** lub `szablon-qa-raport-i-checklista.md` na zaliczenie **EU6**).
-3. **Dodaj ustandaryzowany blok metadanych** pod tytułem dokumentu:
+1. **Wybierz sekcję w `docs/`** zgodnie z układem 1:1 z Confluence (`00-przewodnik-i-setup`, `01-dokumentacja-systemowa`, `02-dokumentacja-uzytkownika`, `03-dokumentacja-procesowa`, `04-system-agentow-ai`, `05-szablony`).
+2. **Użyj szablonu** z katalogu [`docs/05-szablony/`](../05-szablony/README.md), np. `szablon-karta-modulu.md`, gdy opisujesz swój moduł na zaliczenie efektu **EU5**, albo `szablon-qa-raport-i-checklista.md` na zaliczenie **EU6**.
+3. **Dodaj blok metadanych** pod tytułem dokumentu:
 
    ```markdown
    > **Źródło prawdy:** repozytorium (`docs/...`) · **Kategoria AltexSoft:** ... · **Etap SDD:** ...
    ```
 
-4. **Zwaliduj formatowanie i wygeneruj paczkę do Confluence:**
+4. **Sprawdź formatowanie i strukturę dokumentacji:**
 
    ```bash
    npm run check
    python tools/confluence/sync_confluence.py
    ```
 
-   Gotowe do wklejenia (lub automatycznej publikacji przez REST API) strony znajdziesz w katalogu `.artifacts/confluence-export/`.
+   Bez flag skrypt tylko sprawdza drzewo `docs/` i linki (tak samo jak `--check`). Paczkę stron gotowych do wklejenia wygenerujesz flagą `--export`. Znajdziesz ją w katalogu `.artifacts/confluence-export/`.
+
+5. **Opublikuj strony przez REST API (opcjonalnie).** Token PAT (Personal Access Token) z Confluence PB ustaw w zmiennej środowiskowej `CONFLUENCE_PERSONAL_TOKEN` albo w lokalnym pliku `.env` (git go ignoruje). Skrypt sam odczyta zmienną:
+
+   ```bash
+   python tools/confluence/sync_confluence.py --publish --dry-run
+   python tools/confluence/sync_confluence.py --publish --url https://devtools.wi.pb.edu.pl/confluence
+   ```
+
+   Nie podawaj tokenu ani hasła w parametrach `--token` czy `--password`. Komenda z tokenem trafia do historii terminala i logów, a stamtąd łatwo do innych osób.
 
 ---
 
 ## Warsztat 4: Jak napisać i zatwierdzić decyzję architektoniczną (ADR)?
 
-Decyzję ADR tworzymy zawsze, gdy wybieramy technologię, zmieniamy jeden z 5 zamrożonych kontraktów lub ustalamy regułę procesową, o którą ktoś może zapytać za miesiąc (możesz użyć skilla `/rj-write-adr`).
+Decyzję ADR piszemy zawsze, gdy wybieramy technologię, zmieniamy jeden z 5 zamrożonych kontraktów albo ustalamy regułę procesu, o którą ktoś może zapytać za miesiąc. Możesz użyć skilla `/rj-write-adr`.
 
 1. Sprawdź najwyższy numer w `docs/01-dokumentacja-systemowa/07-decyzje-adr/` i utwórz nowy plik `NNNN-krotki-tytul.md` na bazie wzorca [`0000-szablon.md`](../01-dokumentacja-systemowa/07-decyzje-adr/0000-szablon.md).
 2. Ustaw początkowy status na `proposed`.
-3. Opisz **Kontekst i problem**, porównaj minimum **2–3 opcje w tabeli** (Zalety, Wady, Koszt/Ryzyko) i sformułuj decyzję w postaci zdania **Y-statement**:
+3. Opisz **kontekst i problem**, porównaj w tabeli co najmniej **2–3 opcje** (zalety, wady, koszt/ryzyko) i zapisz decyzję jako zdanie **Y-statement**:
    > *„W kontekście **X**, mierząc się z **Y**, wybieramy **Z** zamiast **A**, aby osiągnąć **B**, akceptując **C**.”*
-4. Dopisz nowy dokument do tabeli w `07-decyzje-adr/README.md` i otwórz Pull Request. Po uzyskaniu akceptacji od 2 członków zespołu zmień status na `accepted`.
+4. Dopisz nowy dokument do tabeli w `07-decyzje-adr/README.md` i otwórz pull request. Gdy 2 osoby z zespołu zaakceptują decyzję, zmień status na `accepted`.
 
 ---
 
 ## Warsztat 5: Jak dodać lub zmodyfikować kartę w grze?
 
-Karty w **RE:JOLTANCE** są czystymi danymi generowanymi z kanonicznego prototypu JS (`prototype/revibance/cards.js`) do pliku `src/Rejoltance.Content/Data/cards.json` (możesz użyć skilla `/rj-add-card`).
+Karty w **RE:JOLTANCE** to same dane. Generujemy je z kanonicznego prototypu JS (`prototype/revibance/cards.js`) do pliku `src/Rejoltance.Content/Data/cards.json`. Możesz użyć skilla `/rj-add-card`.
 
-### Wariant A: Karta wykorzystuje istniejące słowa kluczowe, wyzwalacze i akcje DSL
+### Wariant A: karta używa istniejących słów kluczowych, wyzwalaczy i akcji DSL
 
-1. Otwórz plik `prototype/revibance/cards.js` i dodaj lub edytuj wpis w tablicy `CARDS`:
+DSL to nasz język opisu efektów kart.
+
+1. Otwórz plik `prototype/revibance/cards.js` i dodaj albo zmień wpis w tablicy `CARDS`:
 
    ```javascript
    {
@@ -179,18 +193,18 @@ Karty w **RE:JOLTANCE** są czystymi danymi generowanymi z kanonicznego prototyp
    python tools/content/extract_cards.py
    ```
 
-3. Uruchom testy walidatora katalogu kart:
+3. Uruchom testy walidatora katalogu kart. Na razie są w `Rejoltance.Kernel.Tests`, bo projekt `Rejoltance.Cards.Tests` jest dopiero planowany:
 
    ```bash
    dotnet test tests/Rejoltance.Kernel.Tests --filter ContentTests
    ```
 
-   *(Jeśli dodałeś nową kartę ponad obecne 69 kart kolekcjonerskich + 9 tokenów, zaktualizuj oczekiwaną liczbę kart w teście `Catalog_contains_all_prototype_cards`).*
+   Jeśli dodajesz kartę ponad obecne 69 kart kolekcjonerskich i 9 tokenów, zmień oczekiwaną liczbę kart w teście `Catalog_contains_all_prototype_cards`.
 
-### Wariant B: Karta wymaga nowego słowa kluczowego, wyzwalacza lub akcji w DSL
+### Wariant B: karta wymaga nowego słowa kluczowego, wyzwalacza albo akcji w DSL
 
-Jeśli karta wprowadza mechanikę nieobecną w klasie `src/Rejoltance.Content/Vocabulary.cs`:
+Gdy karta wprowadza mechanikę, której nie ma w klasie `src/Rejoltance.Content/Vocabulary.cs`:
 
-1. Najpierw utwórz specyfikację reguły `R-nn` w `openspec/specs/` ([Przewodnik OpenSpec](03-jak-pisac-specyfikacje-openspec.md)).
+1. Najpierw napisz specyfikację reguły `R-nn` w `openspec/specs/` ([przewodnik OpenSpec](03-jak-pisac-specyfikacje-openspec.md)).
 2. Dodaj nowe słowo do `Vocabulary.cs`, zaimplementuj jego obsługę w `Rejoltance.Kernel` i napisz test jednostkowy `Rnn_...`.
-3. Dopiero w ostatnim kroku dodaj kartę i wygeneruj `cards.json`.
+3. Dopiero na końcu dodaj kartę i wygeneruj `cards.json`.

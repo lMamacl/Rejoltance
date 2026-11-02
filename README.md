@@ -52,7 +52,7 @@ Rejoltance/
 │   ├── Rejoltance.Contracts/   ← 5 zamrożonych kontraktów DTO (Intent, LegalAction, PendingInteraction, MatchView, DomainEvent)
 │   ├── Rejoltance.Content/     ← Katalog 69 kart z cards.json i walidator schematu
 │   ├── Rejoltance.Kernel/      ← Czysty, deterministyczny silnik reguł gry w C# (zero I/O, SeededRng)
-│   ├── Rejoltance.Server/      ← Autorytatywny serwer ASP.NET Core + SignalR (/hubs/match) + projekcja Fog of War
+│   ├── Rejoltance.Server/      ← Autorytatywny serwer ASP.NET Core + SignalR (/api/hubs/match) + projekcja Fog of War
 │   ├── Rejoltance.AppHost/     ← Orkiestrator deweloperski .NET Aspire
 │   └── web/                    ← Klient przeglądarkowy React 19 + TypeScript 5 + Vite
 ├── tests/                      ← Testy jednostkowe, integracyjne, kontraktowe, architektoniczne i E2E (Playwright)

@@ -1,32 +1,33 @@
-<ac:structured-macro ac:name="info"><ac:rich-text-body><p><strong>Synchronizacja 1:1 z repozytorium Git:</strong> <code>docs/04-system-agentow-ai/03-jak-pisac-specyfikacje-openspec.md</code> (commit <code>10829d3</code>, data eksportu: <code>2026-11-02</code>)</p></ac:rich-text-body></ac:structured-macro>
-<blockquote><p><strong>Źródło prawdy:</strong> repozytorium (<code>docs/04-system-agentow-ai/03-jak-pisac-specyfikacje-openspec.md</code>) · <strong>Kategoria dokumentacji:</strong> Dokumentacja procesowa — Standard specyfikacji SDD · <strong>Etap SDD:</strong> Specyfikacja i planowanie</p></blockquote>
-<p>Niniejszy przewodnik wyjaśnia krok po kroku, jak w praktyce stosujemy podejście <strong>Spec-Driven Development (SDD)</strong> przy użyciu narzędzia <strong>OpenSpec</strong>.</p>
+<ac:structured-macro ac:name="info"><ac:rich-text-body><p><strong>Synchronizacja 1:1 z repozytorium Git:</strong> <code>docs/04-system-agentow-ai/03-jak-pisac-specyfikacje-openspec.md</code> (commit <code>a2bf2a4</code>, data eksportu: <code>2026-11-02</code>)</p></ac:rich-text-body></ac:structured-macro>
+<blockquote><p><strong>Źródło prawdy:</strong> repozytorium (<code>docs/04-system-agentow-ai/03-jak-pisac-specyfikacje-openspec.md</code>) · <strong>Kategoria dokumentacji:</strong> Dokumentacja procesowa — standard specyfikacji SDD · <strong>Etap SDD:</strong> specyfikacja i planowanie</p></blockquote>
+<p>Ten przewodnik pokazuje krok po kroku, jak w praktyce pracujemy w podejściu <strong>Spec-Driven Development (SDD)</strong>, czyli „najpierw specyfikacja, potem kod”. Używamy do tego narzędzia <strong>OpenSpec</strong>.</p>
 <hr />
 <h2>1. Kiedy tworzymy specyfikację zmiany w OpenSpec?</h2>
+<p>SP (story points) to punktowa wycena wielkości historyjki.</p>
 <table><thead><tr>
 <th><p>Rodzaj zadania</p></th>
-<th><p>Czy wymagana jest zmiana w <code>openspec/changes/</code>?</p></th>
-<th><p>Wymagany artefakt przed kodowaniem</p></th>
+<th><p>Czy potrzebna jest zmiana w <code>openspec/changes/</code>?</p></th>
+<th><p>Co musi istnieć przed kodowaniem</p></th>
 </tr></thead><tbody>
 <tr>
-<td><p><strong>Historyjka (Story) o rozmiarze ≥ 3 SP</strong></p></td>
-<td><p><strong>TAK (obowiązkowo)</strong></p></td>
+<td><p><strong>Historyjka (story) o rozmiarze ≥ 3 SP</strong></p></td>
+<td><p><strong>Tak</strong></p></td>
 <td><p>Zatwierdzona propozycja zmiany w <code>openspec/changes/rej-123-...</code></p></td>
 </tr>
 <tr>
 <td><p><strong>Każda zmiana lub implementacja reguły gry (<code>R-nn</code>)</strong></p></td>
-<td><p><strong>TAK (obowiązkowo)</strong></p></td>
-<td><p>Scenariusze <code>GIVEN / WHEN / THEN</code> w delcie specyfikacji + lista testów <code>Rnn_...</code></p></td>
+<td><p><strong>Tak</strong></p></td>
+<td><p>Scenariusze <code>GIVEN / WHEN / THEN</code> w delcie specyfikacji i lista testów <code>Rnn_...</code></p></td>
 </tr>
 <tr>
-<td><p><strong>Każda modyfikacja 5 kontraktów (<code>Rejoltance.Contracts</code>)</strong></p></td>
-<td><p><strong>TAK (obowiązkowo + decyzja ADR)</strong></p></td>
-<td><p>Zmiana OpenSpec z plikiem <code>design.md</code> oraz dokument ADR zatwierdzony przez 2 osoby</p></td>
+<td><p><strong>Każda zmiana 5 kontraktów (<code>Rejoltance.Contracts</code>)</strong></p></td>
+<td><p><strong>Tak, plus decyzja ADR</strong></p></td>
+<td><p>Zmiana OpenSpec z plikiem <code>design.md</code> i ADR (Architecture Decision Record) zatwierdzony przez 2 osoby</p></td>
 </tr>
 <tr>
 <td><p><strong>Drobna poprawka błędu, stylów CSS lub dokumentacji (&lt; 3 SP)</strong></p></td>
-<td><p><strong>NIE (ścieżka szybka)</strong></p></td>
-<td><p>Krótki, 5-punktowy plan działania przedstawiony człowiekowi lub wpisany w opis PR</p></td>
+<td><p><strong>Nie (ścieżka szybka)</strong></p></td>
+<td><p>Krótki plan w 5 punktach, pokazany człowiekowi albo wpisany w opis PR (pull requesta)</p></td>
 </tr>
 </tbody></table>
 <hr />
@@ -54,24 +55,24 @@
     │   └── tasks.md                     # 4. Lista zadań implementacyjnych ≤ 4 h z nazwami testów
     └── archive/                         # Archiwum zrealizowanych i scalonych zmian]]></ac:plain-text-body></ac:structured-macro>
 <hr />
-<h2>3. Cykl życia specyfikacji krok po kroku (Przykład: Zadanie <code>REJ-45</code>)</h2>
-<h3>Krok 1: Utworzenie gałęzi i wygenerowanie propozycji (<code>/opsx:propose</code>)</h3>
-<p>Po utworzeniu gałęzi <code>feature/REJ-45-choose-order</code> wywołaj w swoim narzędziu AI polecenie:</p>
+<h2>3. Cykl życia specyfikacji krok po kroku (przykład: zadanie <code>REJ-45</code>)</h2>
+<h3>Krok 1: Utwórz gałąź i wygeneruj propozycję (<code>/opsx:propose</code>)</h3>
+<p>Utwórz gałąź <code>feature/REJ-45-choose-order</code>. Potem wywołaj w swoim narzędziu AI polecenie:</p>
 <ul><li><strong>Claude Code / Gemini CLI:</strong> <code>/opsx:propose REJ-45 wybór kolejności po mulliganie i rozpoczęcie rundy 1 (R-04, R-10, R-11)</code></li><li><strong>Antigravity / GitHub Copilot:</strong> <code>/opsx-propose REJ-45 wybór kolejności po mulliganie i rozpoczęcie rundy 1 (R-04, R-10, R-11)</code></li><li><strong>OpenAI Codex:</strong> <code>$openspec-propose REJ-45 wybór kolejności po mulliganie i rozpoczęcie rundy 1 (R-04, R-10, R-11)</code></li></ul>
-<p>Agent (korzystając z wiedzy ról <code>rj-rules-expert</code> oraz <code>rj-architect</code>) utworzy katalog <code>openspec/changes/rej-45-choose-order/</code> wraz z kompletem plików.</p>
-<h3>Krok 2: Weryfikacja merytoryczna i walidacja techniczna</h3>
-<p>Przejrzyj wygenerowane pliki pod kątem czterech kryteriów:</p>
-<ol><li>Czy w <code>proposal.md</code> znajduje się klucz Jira (<code>REJ-45</code>) oraz wyraźna sekcja <strong>Poza zakresem (Out of Scope)</strong>?</li><li>Czy każde zmieniane lub dodawane wymaganie w <code>specs/&lt;obszar&gt;/spec.md</code> posiada identyfikator <code>R-nn</code> oraz co najmniej jeden konkretny scenariusz <code>GIVEN / WHEN / THEN</code> oparty na wartościach liczbowych z prototypu?</li><li>Czy w <code>tasks.md</code> każde zadanie ma pracochłonność <strong>≤ 4 h</strong> i wskazuje dokładną nazwę testu xUnit/Vitest (np. <code>R04_different_order_choices_respect_wants_first_preference</code>)?</li><li>Uruchom walidator CLI:</li></ol>
+<p>Agent (korzystając z wiedzy ról <code>rj-spec-analyst</code> i <code>rj-architect</code>) utworzy katalog <code>openspec/changes/rej-45-choose-order/</code> ze wszystkimi plikami zmiany.</p>
+<h3>Krok 2: Sprawdź treść i uruchom walidator</h3>
+<p>Przejrzyj wygenerowane pliki i sprawdź cztery rzeczy:</p>
+<ol><li>Czy w <code>proposal.md</code> jest klucz Jira (<code>REJ-45</code>) i wyraźna sekcja <strong>Poza zakresem (Out of Scope)</strong>?</li><li>Czy każde zmieniane lub dodawane wymaganie w <code>specs/&lt;obszar&gt;/spec.md</code> ma identyfikator <code>R-nn</code> i co najmniej jeden konkretny scenariusz <code>GIVEN / WHEN / THEN</code> z wartościami liczbowymi z prototypu?</li><li>Czy w <code>tasks.md</code> każde zadanie ma szacunek <strong>≤ 4 h</strong> i podaje dokładną nazwę testu xUnit/Vitest (np. <code>R04_different_order_choices_respect_wants_first_preference</code>)?</li><li>Uruchom walidator CLI:</li></ol>
 <ac:structured-macro ac:name="code"><ac:parameter ac:name="language">bash</ac:parameter><ac:plain-text-body><![CDATA[   npx openspec validate rej-45-choose-order --strict]]></ac:plain-text-body></ac:structured-macro>
-<h3>Krok 3: Bramka akceptacji człowieka (Human Approval Gate)</h3>
-<p>Zatwierdź pliki propozycji na swojej gałęzi i pokaż je Product Ownerowi sprintu lub właścicielowi epiku. <strong>Kodowanie rozpoczynamy dopiero po uzyskaniu akceptacji specyfikacji.</strong> Zapobiega to pisaniu kodu, który trzeba byłoby przepisywać po Code Review.</p>
-<h3>Krok 4: Implementacja według <code>tasks.md</code> (<code>/opsx:apply</code>)</h3>
-<p>Wywołaj <code>/opsx:apply</code> (lub realizuj kolejne punkty z <code>tasks.md</code> z pomocą <code>rj-backend-engineer</code> / <code>rj-frontend-engineer</code>). Dla każdego punktu najpierw powstaje test, a następnie implementacja. Po ukończeniu każdego kroku zadanie w <code>tasks.md</code> jest oznaczane jako <code>[x]</code>.</p>
-<h3>Krok 5: Archiwizacja po scaleniu Pull Requesta (<code>/opsx:archive</code>)</h3>
-<p>Po zatwierdzeniu i scaleniu Pull Requesta wywołaj <code>/opsx:archive</code>. Narzędzie OpenSpec automatycznie włączy zmiany z delty do głównej specyfikacji w <code>openspec/specs/</code> i przeniesie katalog zmiany do <code>openspec/changes/archive/</code>.</p>
+<h3>Krok 3: Akceptacja człowieka (<em>human approval gate</em>)</h3>
+<p>Zapisz pliki propozycji w commicie na swojej gałęzi i pokaż je PO (Product Ownerowi) sprintu albo właścicielowi epiku. <strong>Kod piszemy dopiero po akceptacji specyfikacji.</strong> Dzięki temu nie piszemy kodu, który po code review trzeba by przepisać.</p>
+<h3>Krok 4: Implementuj według <code>tasks.md</code> (<code>/opsx:apply</code>)</h3>
+<p>Wywołaj <code>/opsx:apply</code> albo realizuj kolejne punkty z <code>tasks.md</code> z pomocą właściwego agenta: <code>rj-rules-engineer</code> (reguły w <code>Rejoltance.Kernel</code>, jak w tym przykładzie), <code>rj-backend-engineer</code> (serwer) albo <code>rj-frontend-engineer</code> (klient web). W każdym punkcie najpierw piszesz test, potem implementację. Po skończeniu kroku oznaczasz zadanie w <code>tasks.md</code> jako <code>[x]</code>.</p>
+<h3>Krok 5: Zarchiwizuj zmianę po scaleniu pull requesta (<code>/opsx:archive</code>)</h3>
+<p>Gdy pull request zostanie zatwierdzony i scalony, wywołaj <code>/opsx:archive</code>. OpenSpec przeniesie zmiany z delty do głównej specyfikacji w <code>openspec/specs/</code>, a katalog zmiany przeniesie do <code>openspec/changes/archive/</code>.</p>
 <hr />
-<h2>4. Standard formatowania wymagań i scenariuszy w OpenSpec</h2>
-<p>Walidator <code>openspec validate --all --strict</code> (uruchamiany w każdym przebiegu CI) wymaga zachowania angielskich słów kluczowych struktury Markdown przy polskojęzycznej treści merytorycznej:</p>
+<h2>4. Jak formatować wymagania i scenariusze w OpenSpec</h2>
+<p>Walidator <code>openspec validate --all --strict</code> działa w każdym przebiegu CI (ciągłej integracji). Treść piszemy po polsku, ale słowa kluczowe struktury Markdown muszą zostać po angielsku:</p>
 <ac:structured-macro ac:name="code"><ac:parameter ac:name="language">markdown</ac:parameter><ac:plain-text-body><![CDATA[## MODIFIED Requirements
 
 ### Requirement: R-04 Wybór kolejności rozpoczęcia gry
@@ -90,4 +91,4 @@ Po zakończeniu mulliganu przez obu graczy system SHALL przyjąć od każdego gr
 - **WHEN** obaj gracze wysyłają `chooseOrder(wantsFirst: true)`
 - **THEN** gracz rozpoczynający rundę 1 zostaje wylosowany deterministycznie za pomocą `SeededRng` meczu]]></ac:plain-text-body></ac:structured-macro>
 <h3>Najważniejsze reguły walidatora OpenSpec</h3>
-<ol><li>Nagłówki muszą mieć dokładną postać <code>### Requirement: &lt;ID i tytuł&gt;</code> oraz <code>#### Scenario: &lt;Tytuł scenariusza&gt;</code>.</li><li>Treść wymagania pod nagłówkiem <code>### Requirement:</code> musi zawierać słowo kluczowe <strong><code>SHALL</code></strong> lub <strong><code>MUST</code></strong> (pisane wielkimi literami) i nie powinna przekraczać 500 znaków (szczegółowe przypadki umieszczaj w sekcjach <code>#### Scenario:</code>).</li><li>Każdy scenariusz musi zawierać punkty <strong><code>- **GIVEN** ...</code></strong>, <strong><code>- **WHEN** ...</code></strong> oraz <strong><code>- **THEN** ...</code></strong>.</li></ol>
+<ol><li>Nagłówki mają dokładnie postać <code>### Requirement: &lt;ID i tytuł&gt;</code> oraz <code>#### Scenario: &lt;Tytuł scenariusza&gt;</code>.</li><li>Treść wymagania pod nagłówkiem <code>### Requirement:</code> zawiera słowo kluczowe <strong><code>SHALL</code></strong> albo <strong><code>MUST</code></strong> (wielkimi literami) i ma najwyżej 500 znaków. Szczegółowe przypadki opisuj w sekcjach <code>#### Scenario:</code>.</li><li>Każdy scenariusz zawiera punkty <strong><code>- **GIVEN** ...</code></strong>, <strong><code>- **WHEN** ...</code></strong> i <strong><code>- **THEN** ...</code></strong>.</li></ol>

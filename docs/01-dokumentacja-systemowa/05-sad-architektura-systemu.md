@@ -1,10 +1,12 @@
 # 1.5 Dokument architektury systemu (SAD) — RE:JOLTANCE
 
-> **Źródło prawdy:** repozytorium (`docs/01-dokumentacja-systemowa/05-sad-architektura-systemu.md`) · **Kategoria dokumentacji:** Dokumentacja produktowa — systemowa (Architektura systemu SAD) · **Etap SDD:** Planowanie · **Struktura:** AltexSoft SAD + arc42 + model C4 · **Wersja:** 1.1 (2026-11-02)
+> **Źródło prawdy:** repozytorium (`docs/01-dokumentacja-systemowa/05-sad-architektura-systemu.md`) · **Kategoria dokumentacji:** Dokumentacja produktowa — systemowa (architektura systemu, SAD) · **Etap SDD:** Planowanie · **Struktura:** AltexSoft SAD + arc42 + model C4 · **Wersja:** 1.1 (2026-11-02)
 
-Niniejszy **Dokument Architektury Oprogramowania (SAD)** definiuje strukturę architektoniczną systemu **RE:JOLTANCE**, podział na kontenery i moduły, kontrakty komunikacyjne, model danych, strategie przekrojowe oraz architekturę wdrożenia. Dokument został opracowany zgodnie z wytycznymi AltexSoft oraz standardami **arc42** i **C4**.
+Ten dokument to SAD (Software Architecture Document), czyli opis architektury systemu RE:JOLTANCE. Znajdziesz tu podział na kontenery i moduły, kontrakty komunikacyjne, model danych, strategie przekrojowe i sposób wdrożenia. Układ opiera się na wytycznych AltexSoft oraz na dwóch szablonach: arc42 (struktura dokumentu architektury) i C4 (model diagramów w czterech poziomach szczegółowości: kontekst, kontenery, komponenty, kod).
 
-Szczegółowy wykaz bibliotek i wersji znajduje się w dokumencie **[1.6 Stos technologiczny i roadmapa IT](06-stos-technologiczny.md)**, natomiast formalne uzasadnienia pojedynczych decyzji architektonicznych znajdują się w rejestrze **[1.7 Decyzje architektoniczne (ADR)](07-decyzje-adr/README.md)**.
+SDD (Spec-Driven Development) to nasz sposób pracy: specyfikacja powstaje przed kodem. SAD należy do etapu *Planowanie*.
+
+Biblioteki i ich wersje opisuje dokument [1.6 Stos technologiczny i roadmapa IT](06-stos-technologiczny.md). Uzasadnienia pojedynczych decyzji są w rejestrze [1.7 Decyzje architektoniczne (ADR)](07-decyzje-adr/README.md). ADR (Architecture Decision Record) to krótki zapis jednej decyzji architektonicznej.
 
 ---
 
@@ -12,22 +14,22 @@ Szczegółowy wykaz bibliotek i wersji znajduje się w dokumencie **[1.6 Stos te
 
 ### 1.1 Cel dokumentu i kontekst problemu
 
-Zadaniem architektury **RE:JOLTANCE** jest zastąpienie podatnego na oszustwa, niedeterministycznego prototypu przeglądarkowego P2P (JavaScript / PeerJS) nowoczesną aplikacją webową typu klient–serwer, w której:
+Prototyp przeglądarkowy działał w modelu P2P (Peer-to-Peer, JavaScript / PeerJS). Był podatny na oszustwa i niedeterministyczny. Zastępujemy go aplikacją webową klient–serwer, w której:
 
-1. **Serwer jest jedynym autorytetem stanu gry** — żaden klient nie ma dostępu do ukrytych informacji przeciwnika (*Fog of War*) ani możliwości wykonania nielegalnego ruchu.
-2. **Silnik reguł gry (`Rejoltance.Kernel`) jest w 100% deterministyczny i odizolowany od infrastruktury** — co pozwala na natychmiastowe testowanie 55 reguł domenowych, uruchamianie symulacji bot-vs-bot oraz odtwarzanie powtórek meczów (*replay*) wyłącznie z ziarna losowości (`Seed`) i listy intencji graczy.
-3. **Sześciu członków zespołu może pracować równolegle bez wzajemnego blokowania się** — dzięki zamrożonym kontraktom komunikacyjnym i automatycznym testom granic architektonicznych.
+1. **Serwer jest jedynym autorytetem stanu gry.** Żaden klient nie widzi ukrytych informacji przeciwnika (*Fog of War*). Żaden klient nie może wykonać nielegalnego ruchu.
+2. **Silnik reguł (`Rejoltance.Kernel`) jest deterministyczny i oddzielony od infrastruktury.** Dzięki temu łatwo testujemy 55 reguł domenowych i uruchamiamy symulacje bot-vs-bot. Powtórkę meczu (*replay*) odtwarzamy z samego ziarna losowości (`Seed`) i listy intencji graczy.
+3. **Sześć osób pracuje równolegle i nie blokuje się nawzajem.** Pozwalają na to zamrożone kontrakty komunikacyjne i automatyczne testy granic architektonicznych.
 
 ### 1.2 Najważniejsze cele jakościowe
 
-Pełne drzewo wymagań jakościowych zgodne z normą **ISO/IEC 25010:2023** (`NFR-01..NFR-70`) znajduje się w specyfikacji [`openspec/specs/quality-attributes/spec.md`](../../openspec/specs/quality-attributes/spec.md). Architektura systemu jest podporządkowana czterem nadrzędnym priorytetom:
+Pełne drzewo wymagań jakościowych wg normy ISO/IEC 25010:2023 (`NFR-01..NFR-70`) jest w specyfikacji [`openspec/specs/quality-attributes/spec.md`](../../openspec/specs/quality-attributes/spec.md). NFR (Non-Functional Requirement) to wymaganie niefunkcjonalne. Architekturę podporządkowaliśmy czterem priorytetom:
 
-| Priorytet | Cel jakościowy | Powiązane wymagania | Mechanizm architektoniczny realizujący cel |
+| Priorytet | Cel jakościowy | Wymagania | Jak architektura to realizuje |
 |---|---|---|---|
-| **1** | **Uczciwość rozgrywki i bezpieczeństwo stanu (*Server Authority & Fog of War*)** | `R-80..R-82`, `NFR-40..NFR-42` | Pełny stan `MatchState` nigdy nie opuszcza serwera. Klient otrzymuje wyłącznie przefiltrowaną projekcję `MatchView` (`Projection.ToView`) i wysyła wyłącznie intencje (`Intent`). |
-| **2** | **Determinizm i weryfikowalność reguł (*Determinism & Testability*)** | `R-83`, `R-84`, `NFR-51` | Czysty funkcyjnie reduktor `MatchEngine.Reduce` + deterministyczny generator `SeededRng` (SplitMix64) + zakaz używania `System.Random`, zegara i IO wymuszony przez kompilator (`BannedSymbols.txt`). |
-| **3** | **Modułowość i równoległość pracy zespołu (*Modularity*)** | `NFR-11`, `NFR-50` | Architektura modularnego monolitu z jednokierunkowym grafem zależności weryfikowanym w każdym PR przez `NetArchTest` (`BoundaryTests.cs`) oraz kontrolą zgodności kontraktów C# ↔ TS przez próbkę JSON. |
-| **4** | **Niski próg wejścia i łatwość uruchomienia (*Operability & Portability*)** | `NFR-20`, `NFR-60`, `NFR-61` | Orkiestracja lokalna .NET Aspire (`AppHost`) uruchamiająca serwer, klienta Vite i bazę SQLite jednym poleceniem bez konieczności instalacji Dockera w pierwszych sprintach. |
+| **1** | Uczciwość rozgrywki i bezpieczeństwo stanu (*Server Authority & Fog of War*) | `R-80..R-82`, `NFR-40..NFR-42` | Pełny stan `MatchState` nigdy nie opuszcza serwera. Klient dostaje tylko przefiltrowaną projekcję `MatchView` (`Projection.ToView`) i wysyła tylko intencje (`Intent`). |
+| **2** | Determinizm i testowalność reguł (*Determinism & Testability*) | `R-83`, `R-84`, `NFR-51` | Czysty reduktor `MatchEngine.Reduce`, deterministyczny generator `SeededRng` (SplitMix64) i zakaz `System.Random`, zegara oraz I/O. Zakaz pilnuje kompilator (`BannedSymbols.txt`). |
+| **3** | Modułowość i równoległa praca zespołu (*Modularity*) | `NFR-11`, `NFR-50` | Modularny monolit z jednokierunkowym grafem zależności. `NetArchTest` (`BoundaryTests.cs`) sprawdza go w każdym PR. Zgodność kontraktów C# ↔ TS sprawdza próbka JSON. |
+| **4** | Niski próg wejścia i łatwe uruchomienie (*Operability & Portability*) | `NFR-20`, `NFR-60`, `NFR-61` | .NET Aspire (`AppHost`) uruchamia lokalnie serwer, klienta Vite i bazę SQLite jednym poleceniem. W pierwszych sprintach nie trzeba instalować Dockera. |
 
 ---
 
@@ -35,26 +37,30 @@ Pełne drzewo wymagań jakościowych zgodne z normą **ISO/IEC 25010:2023** (`NF
 
 ### 2.1 Zakres funkcjonalny z perspektywy architektury
 
-System obsługuje cykl życia taktycznego meczu karcianego 1 na 1 na czterech liniach:
+System obsługuje cały cykl życia meczu karcianego 1 na 1 na czterech liniach:
 
-- ładowanie i walidację katalogu 78 kart (69 kolekcjonerskich + 9 tokenów) oraz 5 talii startowych z plików JSON wygenerowanych z kanonicznego prototypu,
-- zarządzanie sesjami meczowymi w pamięci serwera (tryb piaskownicy, gra z botem AI, pokoje 1v1 przez kod zaproszenia),
-- dwukierunkową komunikację czasu rzeczywistego przez protokół WebSocket (SignalR),
-- trwałe przechowywanie kont użytkowników, własnych talii oraz zapisów zakończonych meczów w relacyjnej bazie danych.
+- ładuje i sprawdza katalog 78 kart (69 kolekcjonerskich + 9 tokenów) i 5 talii startowych z plików JSON wygenerowanych z prototypu,
+- zarządza sesjami meczowymi w pamięci serwera (piaskownica, gra z botem AI, pokoje 1v1 przez kod zaproszenia),
+- komunikuje się z klientem w obie strony w czasie rzeczywistym przez WebSocket (SignalR),
+- trwale przechowuje w relacyjnej bazie danych konta, własne talie i zapisy zakończonych meczów.
 
 ### 2.2 Ograniczenia techniczne i organizacyjne
 
-| Kategoria ograniczenia | Opis ograniczenia | Konsekwencja dla architektury |
+| Ograniczenie | Opis | Konsekwencja dla architektury |
 |---|---|---|
-| **Zasoby czasowe zespołu** | 6 studentów × ok. 5 h tygodniowo przez 5 dwutygodniowych sprintów w Semestrze 1. | Odrzucenie złożonych wzorców rozproszonych (mikroserwisy, zewnętrzny Event Store) na rzecz prostego modularnego monolitu ([ADR-0001](07-decyzje-adr/0001-stos-technologiczny.md), Konstytucja Art. VIII). |
-| **Infrastruktura uczelniana** | Wymóg korzystania z uczelnianych instancji Jira, Confluence i Bitbucket Data Center PB. | Praca codzienna i CI/CD na GitHubie z automatycznym mirrorem do Bitbucket PB ([ADR-0002](07-decyzje-adr/0002-github-i-mirror-bitbucket.md)) oraz strukturą `docs/` odpowiadającą 1:1 drzewu Confluence ([ADR-0011](07-decyzje-adr/0011-dokumentacja-hybryda-repo-confluence.md)). |
-| **Środowiska studenckie** | Zróżnicowane laptopy z systemem Windows 11 (polityki Smart App Control, brak Dockera na części maszyn). | Zastosowanie bazy SQLite w Sprintach 0–3 oraz wprowadzenie kontenera PostgreSQL dopiero od Sprintu 4 ([ADR-0007](07-decyzje-adr/0007-sqlite-potem-postgresql.md)). |
+| **Czas zespołu** | 6 studentów × ok. 5 h tygodniowo przez 5 dwutygodniowych sprintów w Semestrze 1. | Rezygnujemy ze złożonych wzorców rozproszonych (mikroserwisy, zewnętrzny Event Store). Wybieramy prosty modularny monolit ([ADR-0001](07-decyzje-adr/0001-stos-technologiczny.md), Konstytucja Art. VIII). |
+| **Infrastruktura uczelniana** | Musimy korzystać z uczelnianych instancji Jira, Confluence i Bitbucket Data Center PB. | Na co dzień pracujemy i uruchamiamy CI/CD na GitHubie, z automatycznym mirrorem do Bitbucket PB ([ADR-0002](07-decyzje-adr/0002-github-i-mirror-bitbucket.md)). Struktura `docs/` odpowiada 1:1 drzewu Confluence ([ADR-0011](07-decyzje-adr/0011-dokumentacja-hybryda-repo-confluence.md)). |
+| **Komputery studentów** | Różne laptopy z Windows 11 (polityka Smart App Control, na części maszyn brak Dockera). | W Sprintach 0–3 używamy bazy SQLite. Kontener PostgreSQL wchodzi dopiero od Sprintu 4 ([ADR-0007](07-decyzje-adr/0007-sqlite-potem-postgresql.md)). |
+
+CI/CD (Continuous Integration / Continuous Delivery) to automatyczne budowanie, testowanie i wdrażanie kodu.
 
 ---
 
-## 3. Architektura wysokopoziomowa (Model C4 — Poziom 1 i 2)
+## 3. Architektura wysokopoziomowa (model C4 — poziom 1 i 2)
 
-### 3.1 Kontekst systemu (C4 Poziom 1)
+### 3.1 Kontekst systemu (C4 poziom 1)
+
+Diagram pokazuje system jako jedną całość oraz ludzi i systemy zewnętrzne, z którymi się komunikuje.
 
 ```mermaid
 flowchart LR
@@ -67,9 +73,9 @@ flowchart LR
   DEV -- "Backlog CSV, dokumentacja 1:1" --> ATL["🏛️ Jira + Confluence PB"]
 ```
 
-### 3.2 Architektura kontenerów i bloków (C4 Poziom 2)
+### 3.2 Kontenery i bloki (C4 poziom 2)
 
-System działa w oparciu o wzorzec **Modularnego Monolitu** po stronie serwera oraz aplikacji **Single Page Application (SPA)** po stronie przeglądarki:
+Serwer to modularny monolit: jeden proces podzielony na moduły z jasnymi granicami. W przeglądarce działa SPA (Single Page Application), czyli aplikacja, która nie przeładowuje strony.
 
 ```mermaid
 flowchart TB
@@ -102,33 +108,37 @@ flowchart TB
 
 ---
 
-## 4. Szczegółowy projekt systemu (Model C4 — Poziom 3)
+## 4. Szczegółowy projekt systemu (model C4 — poziom 3)
 
-### 4.1 Podział na moduły i reguły zależności
+### 4.1 Moduły i reguły zależności
 
-Wszystkie moduły posiadają ściśle określone granice odpowiedzialności. Strzałki zależności mogą prowadzić **wyłącznie w dół tabeli** (od warstwy prezentacji i transportu ku czystym kontraktom). Zasada ta jest automatycznie egzekwowana przez zestaw testów `tests/Rejoltance.Architecture.Tests/BoundaryTests.cs`.
+Każdy moduł ma jasno określoną odpowiedzialność. Zależności mogą prowadzić **tylko w dół tabeli**: od prezentacji i transportu w stronę czystych kontraktów. Pilnują tego testy `tests/Rejoltance.Architecture.Tests/BoundaryTests.cs`.
 
-| Moduł / Projekt | Warstwa | Odpowiedzialność i główne klasy | Dozwolone zależności | Właściciel (Epik) |
+| Moduł / projekt | Warstwa | Odpowiedzialność i główne klasy | Dozwolone zależności | Właściciel (epik) |
 |---|---|---|---|---|
-| **`src/web`** | Prezentacja (Klient TS) | Renderowanie stanu `MatchView`, podświetlanie dozwolonych akcji z `legalActions`, obsługa połączenia SignalR (`MatchTransport`) i stanu lokalnego (`Zustand`). **Klient nie zawiera żadnej logiki reguł gry.** | Kontrakt JSON (`src/web/src/contracts`) | Epik E4 |
-| **`Rejoltance.AppHost`** i **`ServiceDefaults`** | Orkiestracja i Telemetria | Konfiguracja lokalnego środowiska uruchomieniowego .NET Aspire, OpenTelemetry (logi, metryki, ślady) oraz punktów kontrolnych `/health` i `/alive`. | `Rejoltance.Server` | Epik E6 |
-| **`Rejoltance.Server`** | Transport, Sesje i Trwałość | Hub SignalR (`MatchHub`), zarządzanie sesjami meczowymi w pamięci z synchronizacją per mecz (`MatchSessionManager`), punkty końcowe REST (`/api/cards`, `/api/decks`, `/api/info`), kontekst EF Core (`RejoltanceDb`). | `Kernel`, `Content`, `Contracts`, `ServiceDefaults` | Epik E3 / E6 |
-| **`Rejoltance.Sim`** *(planowany od S2)* | Sztuczna Inteligencja i Symulacje | Polityki decyzyjne botów (`IBotPolicy`), masowy symulator gier bot-vs-bot oraz wyrocznia testów różnicowych względem prototypu JS. | `Kernel`, `Content`, `Contracts` | Epik E5 |
-| **`Rejoltance.Kernel`** | Czysta Domena (Silnik Reguł) | Niemutowalny stan meczu (`MatchState`), czysty reduktor `MatchEngine.Reduce(state, seat, intent)`, generator ruchów `MatchEngine.LegalActions`, projekcja *Fog of War* (`Projection.ToView`) oraz deterministyczny generator `SeededRng`. | `Content`, `Contracts` *(zakaz IO, zegara i `System.Random`)* | Epik E1 |
-| **`Rejoltance.Content`** | Dane Domenowe i Walidacja DSL | Ładowanie wbudowanych zasobów `cards.json` i `decks.json` (`CardCatalog`), słownik dozwolonych słów kluczowych, wyzwalaczy i akcji (`Vocabulary`) oraz walidator kart i talii (`ContentValidator`). | `Contracts` | Epik E2 |
-| **`Rejoltance.Contracts`** | Zamrożone Kontrakty (DTO) | Czyste rekordy danych przesyłane przez sieć, pozbawione jakiejkolwiek logiki biznesowej (weryfikowane testem refleksyjnym `Contracts_contain_no_logic_types`). | **Brak zależności** | Wspólny (Backend + Frontend) |
+| **`src/web`** | Prezentacja (klient TS) | Renderuje `MatchView`, podświetla dozwolone akcje z `legalActions`, obsługuje połączenie SignalR (`MatchTransport`) i stan lokalny (`Zustand`). **Klient nie zawiera logiki reguł gry.** | Kontrakt JSON (`src/web/src/contracts`) | Epik E4 |
+| **`Rejoltance.AppHost`** i **`ServiceDefaults`** | Orkiestracja i telemetria | Konfiguracja lokalnego środowiska .NET Aspire, OpenTelemetry (logi, metryki, ślady) i punktów kontrolnych `/health` oraz `/alive`. | `Rejoltance.Server` | Epik E6 |
+| **`Rejoltance.Server`** | Transport, sesje i trwałość | Hub SignalR (`MatchHub`), sesje meczowe w pamięci z synchronizacją per mecz (`MatchSessionManager`), endpointy REST (`/api/cards`, `/api/decks`, `/api/info`), kontekst EF Core (`RejoltanceDb`). | `Kernel`, `Content`, `Contracts`, `ServiceDefaults` | Epik E3 / E6 |
+| **`Rejoltance.Sim`** *(planowany od S2)* | Sztuczna inteligencja i symulacje | Polityki botów (`IBotPolicy`), symulator wielu gier bot-vs-bot, wyrocznia testów różnicowych względem prototypu JS. | `Kernel`, `Content`, `Contracts` | Epik E5 |
+| **`Rejoltance.Kernel`** | Czysta domena (silnik reguł) | Niemutowalny stan meczu (`MatchState`), czysty reduktor `MatchEngine.Reduce(state, seat, intent)`, generator ruchów `MatchEngine.LegalActions`, projekcja *Fog of War* (`Projection.ToView`), deterministyczny `SeededRng`. | `Content`, `Contracts` *(zakaz I/O, zegara i `System.Random`)* | Epik E1 |
+| **`Rejoltance.Content`** | Dane domenowe i walidacja DSL | Ładuje wbudowane `cards.json` i `decks.json` (`CardCatalog`). Zawiera słownik słów kluczowych, wyzwalaczy i akcji (`Vocabulary`) oraz walidator kart i talii (`ContentValidator`). | `Contracts` | Epik E2 |
+| **`Rejoltance.Contracts`** | Zamrożone kontrakty (DTO) | Proste rekordy danych przesyłane przez sieć, bez logiki biznesowej. Sprawdza to test refleksyjny `Contracts_contain_no_logic_types`. | **Brak zależności** | Wspólny (backend + frontend) |
+
+DTO (Data Transfer Object) to obiekt, który tylko przenosi dane. DSL (Domain-Specific Language) to nasz mały język opisu efektów kart.
 
 ### 4.2 Pięć zamrożonych kontraktów komunikacyjnych
 
-Komunikacja pomiędzy klientem webowym, botem AI, serwerem a silnikiem reguł opiera się wyłącznie na pięciu niemutowalnych strukturach zdefiniowanych w `Rejoltance.Contracts` (i odzwierciedlonych w `src/web/src/contracts/index.ts`):
+Klient webowy, bot AI, serwer i silnik reguł komunikują się wyłącznie przez pięć niemutowalnych struktur. Są zdefiniowane w `Rejoltance.Contracts`, a ich odpowiedniki w TypeScript są w `src/web/src/contracts/index.ts`:
 
-1. **`Intent` (Klient / Bot → Serwer → Kernel):** Jedyny sposób wyrażenia woli gracza (`MulliganIntent`, `ChooseOrderIntent`, `PlayCardIntent`, `EndStepIntent`, `AnswerPendingIntent`, `SurrenderIntent`).
-2. **`LegalAction` (Kernel → Serwer → Klient / Bot):** Kompletna lista dozwolonych w danej chwili ruchów wraz z prawidłowymi celami i liniami. Stanowi **jedyne źródło prawdy o legalności ruchu** — interfejs użytkownika nigdy nie oblicza legalności na własną rękę.
-3. **`PendingInteraction` (Kernel → Serwer → Klient / Bot):** Jawny opis pytania zadawanego graczowi przez silnik (np. wybór kart do wymiany w mulliganie lub wskazanie celu dla efektu karty). Dzięki temu Kernel nigdy nie blokuje wątku w oczekiwaniu na odpowiedź użytkownika.
-4. **`MatchView` (Kernel `Projection` → Serwer → Klient / Bot):** Przefiltrowany widok stanu meczu dla konkretnego miejsca przy stole (`yourSeat`). Zawiera pełne dane własnej ręki gracza, natomiast dla przeciwnika (`OpponentView`) udostępnia wyłącznie liczebność ręki, talii i stosu odrzuconych (*Fog of War*).
-5. **`DomainEvent` (Kernel → `Projection` → Serwer → Klient):** Uporządkowana lista faktów domenowych wygenerowanych w wyniku zastosowania intencji (np. `CardDrawn`, `FatigueDamage`, `MatchFinished`), stanowiąca podstawę do odtwarzania animacji i dźwięków w kliencie bez konieczności porównywania stanów (*diffingu*).
+1. **`Intent` (klient / bot → serwer → Kernel).** Jedyny sposób, w jaki gracz mówi, co chce zrobić (`MulliganIntent`, `ChooseOrderIntent`, `PlayCardIntent`, `EndStepIntent`, `AnswerPendingIntent`, `SurrenderIntent`).
+2. **`LegalAction` (Kernel → serwer → klient / bot).** Lista ruchów dozwolonych w danej chwili, z poprawnymi celami i liniami. To **jedyne źródło prawdy o legalności ruchu**. Interfejs nigdy sam nie liczy, czy ruch jest legalny.
+3. **`PendingInteraction` (Kernel → serwer → klient / bot).** Pytanie, które silnik zadaje graczowi, np. które karty wymienić w mulliganie albo jaki cel wybrać dla efektu. Dzięki temu Kernel nigdy nie blokuje wątku w oczekiwaniu na gracza.
+4. **`MatchView` (`Projection` w Kernelu → serwer → klient / bot).** Przefiltrowany widok meczu dla jednego miejsca przy stole (`yourSeat`). Zawiera pełną rękę gracza. O przeciwniku (`OpponentView`) podaje tylko liczbę kart w ręce, w talii i na stosie odrzuconych (*Fog of War*).
+5. **`DomainEvent` (Kernel → `Projection` → serwer → klient).** Uporządkowana lista faktów, które wydarzyły się po intencji (np. `CardDrawn`, `FatigueDamage`, `MatchFinished`). Klient na jej podstawie odtwarza animacje i dźwięki. Nie musi porównywać stanów (*diffing*).
 
-### 4.3 Widok wykonania — przebieg pojedynczego ruchu gracza
+### 4.3 Widok wykonania — jeden ruch gracza
+
+Diagram pokazuje, co dzieje się od kliknięcia karty do odświeżenia widoku u obu graczy.
 
 ```mermaid
 sequenceDiagram
@@ -156,12 +166,12 @@ sequenceDiagram
   end
 ```
 
-### 4.4 Architektura danych i model trwałości
+### 4.4 Dane i model trwałości
 
-System wyraźnie rozdziela **ulotny stan aktywnego meczu** od **danych trwałych**:
+Oddzielamy **ulotny stan trwającego meczu** od **danych trwałych**:
 
-- **Aktywne mecze w toku (`MatchState`)** są przechowywane w pamięci operacyjnej serwera (`ConcurrentDictionary` w `MatchSessionManager`), co zapewnia minimalne opóźnienia (brak zapisu do bazy przy każdym kliknięciu karty).
-- **Dane trwałe (`RejoltanceDb` — Entity Framework Core)** obejmują konta użytkowników, zapisane talie graczy oraz archiwum zakończonych meczów wraz z ziarnem losowości (`Seed`) i listą intencji na potrzeby powtórek (*replay*).
+- **Trwające mecze (`MatchState`)** są w pamięci serwera (`ConcurrentDictionary` w `MatchSessionManager`). Nie zapisujemy ich do bazy przy każdym kliknięciu, więc opóźnienia są minimalne.
+- **Dane trwałe (`RejoltanceDb` — Entity Framework Core)** to konta użytkowników, zapisane talie i archiwum zakończonych meczów. Dla każdego meczu zapisujemy ziarno losowości (`Seed`) i listę intencji, żeby móc odtworzyć powtórkę (*replay*).
 
 ```mermaid
 erDiagram
@@ -199,20 +209,20 @@ erDiagram
 
 ## 5. Strategie techniczne i koncepcje przekrojowe
 
-| Zagadnienie przekrojowe | Zastosowana strategia i rozwiązanie architektoniczne |
+| Zagadnienie | Strategia i rozwiązanie |
 |---|---|
-| **Determinizm i odtwarzalność (Replay)** | Cała losowość w `Rejoltance.Kernel` pochodzi z niemutowalnej struktury `SeededRng` (algorytm *SplitMix64*), której stan (`State: ulong`) jest częścią `MatchState`. Użycie `System.Random`, `DateTime` lub `Guid.NewGuid()` w Kernelu powoduje błąd kompilacji dzięki analizatorowi `Microsoft.CodeAnalysis.BannedApiAnalyzers` i plikowi `BannedSymbols.txt`. |
-| **Ochrona przed podglądaniem kart (*Fog of War*)** | Karty znajdujące się w talii są przechowywane wyłącznie jako lista definicji (`CardId`). Unikalny identyfikator egzemplarza (`InstanceId`) jest nadawany karcie dopiero w momencie jej wyjścia z talii do ręki lub na planszę (`R-81`), dzięki czemu kolejność numerów `InstanceId` nie zdradza układu talii. Projekcja `Projection.ToViewerEvents` zamienia identyfikatory kart dobieranych przez przeciwnika na wartości zerowe (`0`). |
-| **Współbieżność i izolacja meczów** | Każda sesja meczowa w `MatchSessionManager` posiada własny obiekt `SemaphoreSlim(1, 1)`. Równoległe żądania z różnych meczów wykonują się współbieżnie na wielu wątkach, natomiast intencje w obrębie jednego meczu są ściśle serializowane. Wyjątek w jednym meczu jest przechwytywany i logowany wraz z `matchId` i `seed`, nie wpływając na pozostałe trwające mecze (`NFR-31`). |
-| **Zasada Głośnej Porażki (*Fail Loud*)** | System kategorycznie zabrania cichych obejść błędów (takich jak zwracanie pustej tablicy celów czy losowanie celu w przypadku braku wyboru gracza). Nieznane słowo w danych kart zatrzymuje start serwera wyjątkiem `ContentValidationException`, a niezaimplementowana akcja lub nielegalna intencja zwraca czytelny `HubException`. |
-| **Synchronizacja kontraktów C# ↔ TypeScript** | Test integracyjny `ContractSampleTests` serializuje rzeczywisty obiekt `MatchView` wygenerowany przez Kernel C# do pliku `src/web/src/contracts/match-view.sample.json`, a test `contracts.test.ts` weryfikuje jego zgodność z typami TypeScript. Każde rozjechanie się pól po którejkolwiek stronie natychmiast zatrzymuje potok CI ([ADR-0010](07-decyzje-adr/0010-kontrakt-csharp-ts-przez-probke.md)). |
-| **Obserwowalność i telemetria (*Observability*)** | Projekt `Rejoltance.ServiceDefaults` automatycznie konfiguruje bibliotekę **OpenTelemetry** ( zbieranie logów strukturalnych, metryk czasu odpowiedzi HTTP/SignalR oraz śladów rozproszonych prezentowanych w panelu .NET Aspire) oraz punkty kontrolne `/health` i `/alive`. |
+| **Determinizm i odtwarzalność (replay)** | Cała losowość w `Rejoltance.Kernel` pochodzi z niemutowalnej struktury `SeededRng` (algorytm *SplitMix64*). Jej stan (`State: ulong`) jest częścią `MatchState`. Użycie `System.Random`, `DateTime` lub `Guid.NewGuid()` w Kernelu kończy się błędem kompilacji. Pilnują tego analizator `Microsoft.CodeAnalysis.BannedApiAnalyzers` i plik `BannedSymbols.txt`. |
+| **Ochrona przed podglądaniem kart (*Fog of War*, R-80…R-82)** | Talia przechowuje tylko definicje kart (`CardId`). Karta dostaje identyfikator egzemplarza (`InstanceId`) dopiero wtedy, gdy wychodzi z talii do ręki lub na planszę (`R-81`). Dzięki temu kolejność numerów `InstanceId` nie zdradza układu talii. `Projection.ToViewerEvents` zamienia identyfikatory kart dobieranych przez przeciwnika na `0`. |
+| **Współbieżność i izolacja meczów** | Każda sesja w `MatchSessionManager` ma własny `SemaphoreSlim(1, 1)`. Żądania z różnych meczów wykonują się równolegle na wielu wątkach. Intencje w jednym meczu wykonują się ściśle po kolei. Wyjątek w jednym meczu jest przechwytywany i logowany z `matchId` i `seed`. Nie wpływa na inne mecze (`NFR-31`). |
+| **Zasada głośnej porażki (*fail loud*)** | Zabraniamy cichego obchodzenia błędów, np. zwracania pustej tablicy celów albo losowania celu, gdy gracz go nie wybrał. Nieznane słowo w danych kart zatrzymuje start serwera wyjątkiem `ContentValidationException`. Niezaimplementowana akcja lub nielegalna intencja zwraca czytelny `HubException`. |
+| **Zgodność kontraktów C# ↔ TypeScript** | Test integracyjny `ContractSampleTests` serializuje prawdziwy `MatchView` z Kernela C# do pliku `src/web/src/contracts/match-view.sample.json`. Test `contracts.test.ts` sprawdza zgodność tego pliku z typami TypeScript. Każda rozbieżność pól zatrzymuje potok CI ([ADR-0010](07-decyzje-adr/0010-kontrakt-csharp-ts-przez-probke.md)). |
+| **Obserwowalność i telemetria (*observability*)** | Projekt `Rejoltance.ServiceDefaults` konfiguruje **OpenTelemetry**: logi strukturalne, metryki czasu odpowiedzi HTTP/SignalR i ślady rozproszone widoczne w panelu .NET Aspire. Konfiguruje też punkty kontrolne `/health` i `/alive`. |
 
 ---
 
-## 6. Infrastruktura i architektura wdrożenia
+## 6. Infrastruktura i wdrożenie
 
-System obsługuje trzy środowiska uruchomieniowe oraz statyczną publikację prototypu referencyjnego:
+System działa w trzech środowiskach. Dodatkowo publikujemy statycznie prototyp referencyjny.
 
 ```mermaid
 flowchart LR
@@ -229,20 +239,20 @@ flowchart LR
   end
 ```
 
-| Środowisko | Sposób uruchomienia i topologia | Baza danych | Przeznaczenie |
+| Środowisko | Jak działa | Baza danych | Do czego służy |
 |---|---|---|---|
-| **1. Lokalne środowisko deweloperskie** | Proces `Rejoltance.AppHost` uruchamia natywnie proces serwera Kestrel oraz serwer deweloperski Vite ze skonfigurowanym proxy `/api`. | Lokalny plik SQLite `.data/rejoltance.db` (Sprinty 0–3) lub lokalny kontener PostgreSQL zarządzany przez Aspire (od Sprintu 4). | Codzienna praca programistyczna i manualne testowanie nowych funkcji. |
-| **2. Środowisko CI (GitHub Actions)** | Maszyny wirtualne `ubuntu-latest` uruchamiające 3 równoległe zadania: `.NET build & tests` (wraz z pełnym testem integracyjnym `AppHostSmokeTests`), `Web lint, typecheck, tests, build` oraz `Specs, docs, agents, content`. | Baza w pamięci / tymczasowy plik SQLite tworzony na czas testów. | Automatyczna bramka jakości dla każdego Pull Requesta i commita na `develop`/`main`. |
-| **3. Środowisko demonstracyjne (Demo)** | Pojedynczy obraz kontenera budowany przez platformę .NET (`PublishWithContainerFiles`), w którym serwer ASP.NET Core serwuje jednocześnie API/SignalR oraz statyczne pliki zbudowanego klienta React z katalogu `wwwroot/`. | Zarządzana instancja lub kontener PostgreSQL 16+. | Sesje testów użyteczności z Radą Graczy oraz prezentacje na *Sprint Review*. |
-| **4. Hosting prototypu referencyjnego** | Automatyczny workflow `.github/workflows/prototype-pages.yml` publikujący katalog `prototype/revibance/` na **GitHub Pages**. | Brak (aplikacja czysto kliencka). | Stały punkt odniesienia przy weryfikacji kanonicznych zasad gry v11. |
+| **1. Lokalne środowisko deweloperskie** | `Rejoltance.AppHost` uruchamia natywnie serwer Kestrel i serwer deweloperski Vite z proxy `/api`. | Plik SQLite `.data/rejoltance.db` (Sprinty 0–3) albo lokalny kontener PostgreSQL zarządzany przez Aspire (od Sprintu 4). | Codzienne programowanie i ręczne testy nowych funkcji. |
+| **2. Środowisko CI (GitHub Actions)** | Maszyny `ubuntu-latest` uruchamiają 3 równoległe zadania: `.NET build & tests` (z testem integracyjnym `AppHostSmokeTests`), `Web lint, typecheck, tests, build` oraz `Specs, docs, agents, content`. | Baza w pamięci albo tymczasowy plik SQLite na czas testów. | Automatyczna bramka jakości dla każdego Pull Requesta i commita na `develop`/`main`. |
+| **3. Środowisko demonstracyjne (demo)** | Jeden obraz kontenera budowany przez .NET (`PublishWithContainerFiles`). Serwer ASP.NET Core serwuje API/SignalR i statyczne pliki klienta React z `wwwroot/`. | Zarządzana instancja lub kontener PostgreSQL 16+. | Testy użyteczności z Radą Graczy i prezentacje na *Sprint Review*. |
+| **4. Hosting prototypu referencyjnego** | Workflow `.github/workflows/prototype-pages.yml` publikuje katalog `prototype/revibance/` na **GitHub Pages**. | Brak (aplikacja działa tylko w przeglądarce). | Stały punkt odniesienia przy sprawdzaniu zasad gry v11. |
 
 ---
 
 ## 7. Ryzyka architektoniczne i dług techniczny
 
-| Zidentyfikowane ryzyko lub dług techniczny | Potencjalny skutek | Strategia mitygacji i plan działania |
+| Ryzyko lub dług techniczny | Możliwy skutek | Jak ograniczamy ryzyko |
 |---|---|---|
-| **Przechowywanie aktywnych meczów wyłącznie w pamięci jednego procesu serwera** | Restart procesu serwera przerywa aktualnie trwające pojedynki. | Rozwiązanie w pełni akceptowalne w skali projektu uczelnianego. Odtwarzanie przebiegu meczu zapewnia mechanizm deterministycznego replayu z zapisanego `Seed` i listy intencji (`E6-S07`). |
-| **Ręczne utrzymywanie deklaracji typów TypeScript odpowiadających rekordom C#** | Ryzyko pomyłki przy rozbudowie kontraktów o nowe zdarzenia i efekty. | Zabezpieczone automatycznym testem próbki JSON w CI (`ContractSampleTests` + `contracts.test.ts`). Po Sprincie 2 przewidziano przegląd decyzji [ADR-0010](07-decyzje-adr/0010-kontrakt-csharp-ts-przez-probke.md) pod kątem ewentualnego generatora typów. |
-| **Zaszyte na sztywno efekty pasywne 3 kart w prototypie JS (`Tea Maid`, `Wyvern`, `Survivalist`)** | Utrudnione dodawanie nowych kart z efektami pasywnymi/aurami bez modyfikacji kodu silnika. | Zaplanowano przeniesienie deklaracji efektów pasywnych bezpośrednio do schematu DSL w pliku `cards.json` w ramach zadania `E2-S07` (rozbieżność `D-11`). |
-| **Blokowanie bibliotek DLL przez politykę Smart App Control na części laptopów z Windows 11** | Brak możliwości uruchomienia orkiestratora Aspire jednym poleceniem na niektórych komputerach. | Przygotowano skrypt diagnostyczny `tools/doctor.ps1` oraz udokumentowano tryb uruchamiania serwera i klienta w dwóch osobnych terminalach bez udziału DCP (`01-szybki-start-i-instalacja.md`). |
+| **Trwające mecze żyją tylko w pamięci jednego procesu serwera** | Restart serwera przerywa trwające pojedynki. | W projekcie uczelnianym to akceptowalne. Przebieg meczu odtworzymy deterministycznym replayem z zapisanego `Seed` i listy intencji (`E6-S07`). |
+| **Typy TypeScript utrzymujemy ręcznie, równolegle do rekordów C#** | Łatwo o pomyłkę przy dodawaniu nowych zdarzeń i efektów. | Chroni nas test próbki JSON w CI (`ContractSampleTests` + `contracts.test.ts`). Po Sprincie 2 wrócimy do decyzji [ADR-0010](07-decyzje-adr/0010-kontrakt-csharp-ts-przez-probke.md) i rozważymy generator typów. |
+| **Prototyp JS ma na sztywno zakodowane efekty pasywne 3 kart (`Tea Maid`, `Wyvern`, `Survivalist`)** | Nowych kart z efektami pasywnymi lub aurami nie da się dodać bez zmiany kodu silnika. | W zadaniu `E2-S07` przeniesiemy efekty pasywne do schematu DSL w `cards.json` (rozbieżność `D-11`). |
+| **Smart App Control blokuje biblioteki DLL na części laptopów z Windows 11** | Na niektórych komputerach nie da się uruchomić Aspire jednym poleceniem. | Mamy skrypt diagnostyczny `tools/doctor.ps1`. Opisaliśmy też uruchamianie serwera i klienta w dwóch osobnych terminalach, bez DCP (Developer Control Plane — komponent Aspire, który uruchamia procesy) (`01-szybki-start-i-instalacja.md`). |

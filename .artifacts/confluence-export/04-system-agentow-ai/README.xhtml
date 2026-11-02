@@ -1,32 +1,32 @@
-<ac:structured-macro ac:name="info"><ac:rich-text-body><p><strong>Synchronizacja 1:1 z repozytorium Git:</strong> <code>docs/04-system-agentow-ai/README.md</code> (commit <code>10829d3</code>, data eksportu: <code>2026-11-02</code>)</p></ac:rich-text-body></ac:structured-macro>
-<p>Witaj w przewodniku po systemie <strong>inżynierii agentowej</strong> projektu <strong>RE:JOLTANCE</strong>. Ponieważ nasz projekt jest rozwijany w podejściu <strong>Spec-Driven Development (SDD)</strong> ze wsparciem wyspecjalizowanych agentów AI, cały ten mechanizm został zaprojektowany tak, aby był <strong>w pełni przejrzysty, zrozumiały i łatwy w rozbudowie dla każdego członka zespołu</strong>.</p>
-<p>Nie traktujemy sztucznej inteligencji jako „czarnej skrzynki” — w naszym repozytorium każdy agent posiada ściśle zdefiniowaną rolę, jawnie przypisane umiejętności, ograniczone uprawnienia narzędziowe oraz obowiązek przestrzegania Konstytucji Projektu.</p>
+<ac:structured-macro ac:name="info"><ac:rich-text-body><p><strong>Synchronizacja 1:1 z repozytorium Git:</strong> <code>docs/04-system-agentow-ai/README.md</code> (commit <code>a2bf2a4</code>, data eksportu: <code>2026-11-02</code>)</p></ac:rich-text-body></ac:structured-macro>
+<p>Ta sekcja opisuje, jak w projekcie <strong>RE:JOLTANCE</strong> pracujemy z agentami AI. Rozwijamy projekt w podejściu <strong>Spec-Driven Development (SDD)</strong>, czyli najpierw piszemy specyfikację, a dopiero potem kod. Pomagają nam w tym wyspecjalizowani agenci AI. Chcemy, żeby każda osoba w zespole rozumiała, jak ten mechanizm działa, i umiała go rozbudować.</p>
+<p>Nie traktujemy AI jak „czarnej skrzynki”. W repozytorium każdy agent ma opisaną rolę, jawnie przypisane umiejętności (skille), ograniczone narzędzia i obowiązek przestrzegania konstytucji projektu (<code>.agents/rules/00-konstytucja.md</code>).</p>
 <hr />
-<h2>Spis przewodników w tej sekcji (Układ 1:1 z Confluence)</h2>
+<h2>Przewodniki w tej sekcji (układ 1:1 z Confluence)</h2>
 <table><thead><tr>
 <th><p>Nr</p></th>
 <th><p>Dokument</p></th>
-<th><p>Czego dowiesz się z tego dokumentu?</p></th>
+<th><p>Czego się dowiesz?</p></th>
 </tr></thead><tbody>
 <tr>
 <td><p><strong>4.1</strong></p></td>
 <td><p><strong><code>01-architektura-i-konfiguracja-agentow.md</code></strong> (<code>01-architektura-i-konfiguracja-agentow.md</code>)</p></td>
-<td><p>Jak zbudowany jest katalog <code>.agents/</code>, jak działa automatyczna synchronizacja do 5 środowisk IDE (Claude Code, Antigravity, GitHub Copilot, Gemini, Codex) oraz jak skonfigurować połączenie MCP z uczelnianą Jirą i Confluence PB.</p></td>
+<td><p>Jak zbudowany jest katalog <code>.agents/</code>, jak skrypt synchronizuje go do 5 środowisk (Claude Code, Antigravity, GitHub Copilot, Gemini, Codex) i jak połączyć agentów z uczelnianą Jirą i Confluence PB przez MCP (Model Context Protocol).</p></td>
 </tr>
 <tr>
 <td><p><strong>4.2</strong></p></td>
 <td><p><strong><code>02-katalog-rol-i-wbudowanych-skilli.md</code></strong> (<code>02-katalog-rol-i-wbudowanych-skilli.md</code>)</p></td>
-<td><p>Podział 10 agentów na 4 grupy funkcjonalne, szczegółowy opis każdej roli, <strong>macierz wbudowanych umiejętności każdego agenta</strong> oraz katalog wszystkich 19 umiejętności dostępnych w projekcie (13 zespołowych <code>rj-*</code> oraz 6 systemowych <code>openspec-*</code>).</p></td>
+<td><p>Podział 10 agentów na 4 grupy, opis każdej roli, macierz skilli przypisanych do agentów i katalog wszystkich 19 skilli w projekcie (13 zespołowych <code>rj-*</code> i 6 systemowych <code>openspec-*</code>).</p></td>
 </tr>
 <tr>
 <td><p><strong>4.3</strong></p></td>
 <td><p><strong><code>03-jak-pisac-specyfikacje-openspec.md</code></strong> (<code>03-jak-pisac-specyfikacje-openspec.md</code>)</p></td>
-<td><p>Praktyczny podręcznik pracy w metodyce Spec-Driven Development przy użyciu narzędzia <strong>OpenSpec</strong>: od propozycji zmiany (<code>/opsx:propose</code>) przez akceptację i implementację (<code>/opsx:apply</code>) po archiwizację (<code>/opsx:archive</code>).</p></td>
+<td><p>Jak pracujemy w SDD z narzędziem <strong>OpenSpec</strong>: od propozycji zmiany (<code>/opsx:propose</code>) przez akceptację i implementację (<code>/opsx:apply</code>) po archiwizację (<code>/opsx:archive</code>).</p></td>
 </tr>
 <tr>
 <td><p><strong>4.4</strong></p></td>
 <td><p><strong><code>04-warsztat-tworzenie-agentow-skilli-i-kart.md</code></strong> (<code>04-warsztat-tworzenie-agentow-skilli-i-kart.md</code>)</p></td>
-<td><p>Praktyczny warsztat krok po kroku: <strong>jak samodzielnie zbudować nowego agenta</strong>, <strong>jak stworzyć nową umiejętność</strong>, <strong>jak pisać i synchronizować dokumentację z Confluence</strong>, <strong>jak dodać decyzję ADR</strong> oraz <strong>jak dodać nową kartę do gry</strong>.</p></td>
+<td><p>Warsztat krok po kroku: jak zbudować nowego agenta, jak stworzyć nowy skill, jak pisać dokumentację i przenosić ją do Confluence, jak dodać decyzję ADR (Architecture Decision Record) i jak dodać nową kartę do gry.</p></td>
 </tr>
 </tbody></table>
 <h2>Podstrony w tej sekcji (Drzewo Confluence)</h2><ac:structured-macro ac:name="children"><ac:parameter ac:name="all">true</ac:parameter></ac:structured-macro>

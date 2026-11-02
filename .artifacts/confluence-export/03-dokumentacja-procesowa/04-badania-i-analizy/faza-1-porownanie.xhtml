@@ -1,6 +1,7 @@
-<ac:structured-macro ac:name="info"><ac:rich-text-body><p><strong>Synchronizacja 1:1 z repozytorium Git:</strong> <code>docs/03-dokumentacja-procesowa/04-badania-i-analizy/faza-1-porownanie.md</code> (commit <code>10829d3</code>, data eksportu: <code>2026-11-02</code>)</p></ac:rich-text-body></ac:structured-macro>
+<ac:structured-macro ac:name="info"><ac:rich-text-body><p><strong>Synchronizacja 1:1 z repozytorium Git:</strong> <code>docs/03-dokumentacja-procesowa/04-badania-i-analizy/faza-1-porownanie.md</code> (commit <code>a2bf2a4</code>, data eksportu: <code>2026-11-02</code>)</p></ac:rich-text-body></ac:structured-macro>
 <p><strong>Data:</strong> 2026-10-27 · <strong>Autor:</strong> agent (Claude Code) na zlecenie zespołu · <strong>Status:</strong> do akceptacji</p>
 <p>Legenda: <strong>[V]</strong> zweryfikowane testem lub odczytem, <strong>[Z]</strong> założenie/wnioskowanie, <strong>[?]</strong> niezweryfikowane.</p>
+<p>Notatkę napisał agent AI, dlatego miejscami mówi w pierwszej osobie. SDD (Spec-Driven Development) to podejście „najpierw specyfikacja, potem kod”. CI (continuous integration) to automatyczne budowanie i testy przy każdej zmianie.</p>
 <hr />
 <h2>1. Środowisko testowe</h2>
 <table><thead><tr>
@@ -49,7 +50,7 @@
 <td><p>[V] <code>dotnet new install Aspire.ProjectTemplates</code></p></td>
 </tr>
 </tbody></table>
-<p>Wszystkie testy w katalogu tymczasowym, poza repozytorium.</p>
+<p>Wszystkie testy odbyły się w katalogu tymczasowym, poza repozytorium.</p>
 <hr />
 <h2>2. Spec‑driven development: Spec Kit vs OpenSpec vs „SDD‑lite”</h2>
 <h3>2.1 Spec Kit 1.2.4 — wyniki [V]</h3>
@@ -57,9 +58,9 @@
 <h3>2.2 OpenSpec 1.15.0 — wyniki [V]</h3>
 <ul><li><code>openspec init --tools claude,antigravity,codex,github-copilot,gemini --language pl</code> → <strong>1,4 s, jednym poleceniem, bez konfliktów</strong>.</li><li>Komplet 5 narzędzi: <strong>52 pliki, ~7 800 linii</strong> (6 skilli + komendy/workflowy per narzędzie; Antigravity dostaje też <code>.agents/workflows/opsx-*.md</code>).</li><li><strong>Język:</strong> <code>--language pl</code> → artefakty po polsku, nagłówki strukturalne i SHALL/MUST po angielsku (zapisane w <code>openspec/config.yaml</code>).</li><li><strong>„Żywe” specyfikacje:</strong> <code>openspec/specs/&lt;capability&gt;/spec.md</code> (wymagania + <code>#### Scenario:</code>), zmiany jako delty w <code>openspec/changes/&lt;nazwa&gt;/</code>, a <code>archive</code> wciela je do specyfikacji. Pasuje do reguł gry R‑nn, które muszą być aktualne przez cały projekt.</li><li><strong>Walidacja w CI:</strong> <code>openspec validate --all</code> — przetestowane; poprawnie odrzuca zmianę bez delt i bez scenariuszy.</li><li>Nazwa zmiany dowolna, np. <code>rej-12-mulligan</code> → śledzalność z Jirą bez obejść.</li><li>Brak pojęcia „konstytucji” — zastępuje je <code>config.yaml</code> (<code>context</code>, <code>rules</code> per artefakt), który może wskazywać na nasz plik konstytucji.</li><li><strong>Telemetria domyślnie włączona</strong> → w <code>setup.ps1</code> / <code>.env.example</code> ustawiamy <code>OPENSPEC_TELEMETRY=0</code>.</li></ul>
 <h3>2.3 „SDD‑lite” (własne szablony + skille, bez CLI) [Z]</h3>
-<p>Najmniej zależności, pełna kontrola, ale: brak walidacji, brak gotowych komend we wszystkich IDE, każdą zmianę procesu utrzymujemy sami. Sens tylko jako plan awaryjny.</p>
+<p>Najmniej zależności i pełna kontrola. Wady: brak walidacji, brak gotowych komend we wszystkich IDE, a każdą zmianę procesu utrzymujemy sami. Ma sens tylko jako plan awaryjny.</p>
 <h3>2.4 BMAD [Z — nie testowany]</h3>
-<p>Odrzucony na etapie analizy: symuluje cały zespół (Analyst, PM, Architect…) — dla 6 prawdziwych osób z rolami Scrum to dublowanie ról i największy narzut.</p>
+<p>Odrzucony na etapie analizy. BMAD symuluje cały zespół (Analyst, PM, Architect…). Przy 6 prawdziwych osobach z rolami Scrum to dublowanie ról i największy narzut.</p>
 <h3>2.5 Punktacja (skala 1–5, waga w nawiasie)</h3>
 <table><thead><tr>
 <th><p>Kryterium</p></th>
@@ -118,8 +119,8 @@
 </tbody></table>
 <p>Dodatkowe argumenty spoza tabeli:</p>
 <ul><li><strong>Za Spec Kit:</strong> jawna konstytucja z bramkami (<code>/speckit-analyze</code>, <code>/speckit-checklist</code>), szablon <code>tasks.md</code> z kolejnością zadań — dobra „szkoła” dla zespołu.</li><li><strong>Za OpenSpec:</strong> walidacja w CI, żywa specyfikacja reguł, polski język artefaktów, czysta instalacja w 5 narzędziach.</li></ul>
-<h3>2.6 Czego NIE sprawdziłem</h3>
-<p>Pełnego przebiegu „propose → apply → archive” (OpenSpec) ani „specify → plan → tasks → implement” (Spec Kit) z udziałem agenta na realnym ficzerze. Testy objęły instalację, strukturę plików, skrypty i CLI. Jakość generowanych speców zależy od modelu i oceni ją zespół na pierwszym ficzerze.</p>
+<h3>2.6 Czego nie sprawdziłem</h3>
+<p>Nie sprawdziłem pełnego przebiegu „propose → apply → archive” (OpenSpec) ani „specify → plan → tasks → implement” (Spec Kit) z udziałem agenta na prawdziwej funkcji (<em>feature</em>). Testy objęły instalację, strukturę plików, skrypty i CLI. Jakość generowanych specyfikacji zależy od modelu. Oceni ją zespół przy pierwszej funkcji.</p>
 <hr />
 <h2>3. Aspire + React/TS + SQLite</h2>
 <table><thead><tr>
@@ -155,12 +156,12 @@
 <td><p>[Z] tak, dopóki nie dodamy kontenerów (Postgres); SQLite to plik</p></td>
 </tr>
 </tbody></table>
-<p><strong>Dlaczego AppHost nie wystartował — trzy problemy, z których tylko jeden dotyczy zespołu:</strong></p>
+<p><strong>Dlaczego AppHost nie wystartował? Były trzy problemy. Tylko jeden dotyczy całego zespołu:</strong></p>
 <ol><li><strong>Smart App Control (Windows 11) blokuje świeżo zbudowany, niepodpisany <code>AppHost.dll</code></strong> (<code>0x800711C7</code>, zdarzenia Code Integrity 3033/3077). Na tym komputerze ta funkcja jest włączona (<code>VerifiedAndReputablePolicyState = 1</code>). <strong>To dotyczy każdego w zespole, kto ma włączone Smart App Control.</strong> Wyłączenie jest w Ustawieniach Windows (Zabezpieczenia → Kontrola aplikacji i przeglądarki), ale ponownie włączyć da się dopiero po reinstalacji systemu — decyzja należy do właściciela komputera, ja tego nie zmieniam.</li><li><strong>Limit 260 znaków ścieżki (MAX_PATH):</strong> <code>dcp.exe</code> z pakietu NuGet nie uruchomił się z bardzo długiej ścieżki. W repo: zalecenie krótkiej ścieżki klonu (np. <code>C:\dev\Rejoltance</code>) i <code>git config --system core.longpaths true</code>.</li><li><strong>Certyfikat deweloperski HTTPS:</strong> pierwszy start pokazuje „Ufanie certyfikatom…” i wymaga jednorazowego <code>dotnet dev-certs https --trust</code> (okno systemowe — robi to użytkownik). <code>setup.ps1</code> będzie o to pytał wprost.</li></ol>
-<p><strong>Plan weryfikacji zastępczej:</strong> w Fazie 2 dodam test integracyjny <code>Aspire.Hosting.Testing</code>, który w GitHub Actions (Ubuntu) uruchamia cały AppHost i sprawdza <code>/health</code>. Wtedy „jedno polecenie uruchamia całość” jest dowodzone przez CI, a nie przez pojedynczy laptop.</p>
+<p><strong>Plan weryfikacji zastępczej:</strong> w Fazie 2 dodam test integracyjny <code>Aspire.Hosting.Testing</code>. Uruchomi on w GitHub Actions (Ubuntu) cały AppHost i sprawdzi <code>/health</code>. Wtedy to CI, a nie pojedynczy laptop, potwierdzi, że „jedno polecenie uruchamia całość”.</p>
 <hr />
 <h2>4. Jira PB — import CSV</h2>
-<ul><li>[V] Jira, Bitbucket DC 8.14.4 i Confluence 8.4.5 odpowiadają z publicznego internetu (strony logowania, LDAP).</li><li>[V] Przygotowane pliki testowe: <code>docs/03-dokumentacja-procesowa/02-backlog/test-import/</code> (1 epik, 1 story, 1 sub‑task) + instrukcja.</li><li>[?] Do sprawdzenia przez Ciebie importem: Epic Link po nazwie epiku, Parent Id dla sub‑tasków, format <code>Original Estimate</code> (zakładam sekundy: 14400 = 4 h), dostępność Story Points w schemacie „Pracownia projektowa”.</li><li>[V] Integracja agentów z Jirą/Confluence: <code>mcp-atlassian</code> obsługuje Server/DC przez Personal Access Token (Jira ≥ 8.14). Token trzyma każdy u siebie w zmiennej środowiskowej; w repo tylko szablon. Domyślnie tryb tylko do odczytu.</li></ul>
+<ul><li>[V] Jira, Bitbucket DC 8.14.4 i Confluence 8.4.5 odpowiadają z publicznego internetu (strony logowania, LDAP).</li><li>[V] Przygotowane pliki testowe: <code>docs/03-dokumentacja-procesowa/02-backlog/test-import/</code> (1 epik, 1 story, 1 sub‑task) + instrukcja.</li><li>[?] Do sprawdzenia przez Ciebie importem: Epic Link po nazwie epiku, Parent Id dla sub‑tasków, format <code>Original Estimate</code> (zakładam sekundy: 14400 = 4 h), dostępność Story Points w schemacie „Pracownia projektowa”.</li><li>[V] Integracja agentów z Jirą/Confluence: serwer MCP (Model Context Protocol) <code>mcp-atlassian</code> obsługuje Server/DC przez Personal Access Token (PAT, Jira ≥ 8.14). Każdy trzyma token u siebie w zmiennej środowiskowej albo w lokalnym pliku <code>.env</code>, który git ignoruje. W repo jest tylko szablon. Dzięki temu token nie trafia do historii repozytorium. Domyślnie działa tryb tylko do odczytu.</li></ul>
 <hr />
 <h2>5. Rekomendacje</h2>
 <table><thead><tr>

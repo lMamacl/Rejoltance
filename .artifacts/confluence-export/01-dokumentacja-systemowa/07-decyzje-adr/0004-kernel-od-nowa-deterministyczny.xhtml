@@ -1,7 +1,7 @@
-<ac:structured-macro ac:name="info"><ac:rich-text-body><p><strong>Synchronizacja 1:1 z repozytorium Git:</strong> <code>docs/01-dokumentacja-systemowa/07-decyzje-adr/0004-kernel-od-nowa-deterministyczny.md</code> (commit <code>10829d3</code>, data eksportu: <code>2026-11-02</code>)</p></ac:rich-text-body></ac:structured-macro>
+<ac:structured-macro ac:name="info"><ac:rich-text-body><p><strong>Synchronizacja 1:1 z repozytorium Git:</strong> <code>docs/01-dokumentacja-systemowa/07-decyzje-adr/0004-kernel-od-nowa-deterministyczny.md</code> (commit <code>a2bf2a4</code>, data eksportu: <code>2026-11-02</code>)</p></ac:rich-text-body></ac:structured-macro>
 <ul><li><strong>Status:</strong> zatwierdzona (2026-10-27)</li><li><strong>Data:</strong> 2026-10-27</li><li><strong>Powiązane:</strong> ADR-0005, <code>src/Rejoltance.Kernel</code>, reguły R-83, R-84</li></ul>
 <h2>Kontekst i problem</h2>
-<p>Istnieją dwa stare silniki: C#/Godot <code>CardGame.Core</code> (9 258 LOC, 64 testy, repo <code>Bluzacy2/CardGame</code> — niedostępne lokalnie, audyt zbyt optymistyczny) oraz prototyp JS (dziurawy: brak seeda, UI w silniku, cichy <code>return []</code>, hardcod kart, brak modelu „czekam na gracza”). [V] Serwer autorytatywny, replay, bot i testy wymagają silnika, który jest czysty i powtarzalny.</p>
+<p>Mamy dwa stare silniki. Pierwszy to <code>CardGame.Core</code> w C#/Godot (9 258 LOC, czyli linii kodu, 64 testy, repo <code>Bluzacy2/CardGame</code>). Nie mamy go lokalnie, a jego audyt był zbyt optymistyczny. Drugi to prototyp JS, który ma luki: brak seeda, UI w silniku, cichy <code>return []</code>, karty wpisane na sztywno w kod, brak modelu „czekam na gracza”. [V] Serwer autorytatywny, replay, bot i testy wymagają silnika, który jest czysty i powtarzalny.</p>
 <h2>Rozważane opcje</h2>
 <table><thead><tr>
 <th><p>Opcja</p></th>
@@ -23,15 +23,15 @@
 </tr>
 <tr>
 <td><p><strong>Nowy Kernel wg kontraktów</strong></p></td>
-<td><p>determinizm, <code>PendingInteraction</code>, testy R‑nn od dnia 1</p></td>
+<td><p>determinizm, <code>PendingInteraction</code>, testy R‑nn od pierwszego dnia</p></td>
 <td><p>trzeba napisać wszystko</p></td>
 <td><p>~ MVP 340 h wg analizy</p></td>
 </tr>
 </tbody></table>
 <h2>Decyzja</h2>
-<p>W kontekście serwera autorytatywnego i potrzeby replayów, mierząc się z błędami obu starych silników, wybieramy **nowy Kernel w C#: niemutowalny <code>MatchState</code>, <code>reduce(state, seat, intent) → (state, events)</code>, <code>SeededRng</code> (SplitMix64) w stanie, <code>PendingInteraction</code> zamiast blokowania** zamiast refaktoru lub portu, aby każdy mecz był powtarzalny z seeda i listy intencji, akceptując koszt napisania reguł od zera (stare 64 testy C# traktujemy jako listę przypadków brzegowych, nie kod).</p>
+<p>W kontekście serwera autorytatywnego i potrzeby replayów, mierząc się z błędami obu starych silników, wybieramy **nowy Kernel w C#: niemutowalny <code>MatchState</code>, <code>reduce(state, seat, intent) → (state, events)</code>, <code>SeededRng</code> (SplitMix64) w stanie, <code>PendingInteraction</code> zamiast blokowania** zamiast refaktoru lub portu, aby każdy mecz był powtarzalny z seeda i listy intencji, akceptując koszt napisania reguł od zera (stare 64 testy C# traktujemy jako listę przypadków brzegowych, nie jako kod).</p>
 <h2>Konsekwencje</h2>
 <h3>Pozytywne</h3>
-<ul><li>Build blokuje <code>System.Random</code>, zegar i IO w Kernelu (<code>BannedSymbols.txt</code>); testy granic w CI.</li><li>Replay = seed + intencje (<code>MatchSessionManager</code> już je zapisuje).</li></ul>
+<ul><li>Build blokuje w Kernelu <code>System.Random</code>, zegar i IO, czyli operacje wejścia-wyjścia (<code>BannedSymbols.txt</code>). Testy granic działają w CI (ciągłej integracji).</li><li>Replay to seed i lista intencji (<code>MatchSessionManager</code> już je zapisuje).</li></ul>
 <h3>Negatywne / ryzyka</h3>
-<ul><li>Największe ryzyko projektu: zakres reguł (55 wymagań). Mitygacja: linia cięcia w backlogu, wyrocznia JS (E5-S04).</li></ul>
+<ul><li>Największe ryzyko projektu to zakres reguł (55 wymagań). Mitygacja: linia cięcia w backlogu i wyrocznia JS (E5-S04).</li></ul>

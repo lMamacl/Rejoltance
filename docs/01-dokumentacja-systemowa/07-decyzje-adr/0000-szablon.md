@@ -8,7 +8,7 @@
 
 ## Kontekst i problem
 
-<Jaki problem rozwiązujemy? Jakie ograniczenia (czas, umiejętności zespołu, wymagania uczelni)? Fakty z repo oznacz [V]/[Z].>
+<Jaki problem rozwiązujemy? Jakie mamy ograniczenia (czas, umiejętności zespołu, wymagania uczelni)? Fakty z repo oznacz: [V] — zweryfikowane, [Z] — założenie.>
 
 ## Rozważane opcje
 

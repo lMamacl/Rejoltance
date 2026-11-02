@@ -21,7 +21,7 @@ Uruchamiaj podczas implementacji lub weryfikacji każdej reguły domenowej `R-nn
    - W razie potrzeby sprawdź odpowiedni fragment w `prototype/revibance/engine.js` (używając `grep`, bez wczytywania całego pliku).
 
 2. **Napisz deterministyczny test jednostkowy xUnit:**
-   - Umieść test w `tests/Rejoltance.Kernel.Tests` (mechanika rdzenia) lub `tests/Rejoltance.Cards.Tests` (efekty kart).
+   - Umieść test w `tests/Rejoltance.Kernel.Tests` (mechanika rdzenia) lub, gdy powstanie, w planowanym `tests/Rejoltance.Cards.Tests` (efekty kart).
    - Nazwij metodę testową dokładnie według konwencji `Rnn_<opis_zachowania>`, np.:
 
      ```csharp

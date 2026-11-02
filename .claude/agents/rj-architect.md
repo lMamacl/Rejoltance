@@ -1,6 +1,6 @@
 ---
 name: rj-architect
-description: "Architekt systemu i straznik SAD, 5 zamrozonych kontraktow w Rejoltance.Contracts, granic modulow oraz decyzji architektonicznych ADR."
+description: "Architekt systemu: pilnuje dokumentu architektury (SAD), 5 zamrożonych kontraktów w Rejoltance.Contracts, granic modułów i decyzji ADR."
 tools: Read, Glob, Write, Edit, Grep, Bash
 ---
 

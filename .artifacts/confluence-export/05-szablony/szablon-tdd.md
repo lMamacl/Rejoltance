@@ -1,9 +1,9 @@
-<!-- CONFLUENCE 1:1 EXPORT | Source: docs/05-szablony/szablon-tdd.md @ 10829d3 (2026-11-02) -->
+<!-- CONFLUENCE 1:1 EXPORT | Source: docs/05-szablony/szablon-tdd.md @ a2bf2a4 (2026-11-02) -->
 # 5.4 Szablon: Projekt Techniczny Funkcjonalności (Technical Design Document — TDD)
 
 > **Źródło prawdy:** Repozytorium (`openspec/changes/<id-zmiany>/design.md`) · **Kategoria AltexSoft:** Product: System Documentation — Technical Design Document (TDD) · **Etap SDD:** Plan / Zadania (`Plan` / `Tasks`)
 
-Zgodnie z klasyfikacją AltexSoft, **Technical Design Document (TDD)** stanowi niskopoziomowy pomost pomiędzy wysokopoziomową architekturą systemu (**SAD**) a rzeczywistym kodem źródłowym. W naszym procesie SDD dokument ten powstaje jako plik `design.md` wewnątrz katalogu zmiany `openspec/changes/<id-zmiany>/` dla każdego złożonego zadania (≥ 3 SP).
+W klasyfikacji AltexSoft TDD (Technical Design Document) łączy architekturę wysokiego poziomu (SAD, Software Architecture Document) z kodem źródłowym. W naszym procesie SDD (spec-driven development, praca sterowana specyfikacją) TDD to plik `design.md` w katalogu zmiany `openspec/changes/<id-zmiany>/`. Tworzymy go dla każdego złożonego zadania (≥ 3 SP, czyli story points). Zastąp pola w nawiasach `<...>`.
 
 ---
 
@@ -14,7 +14,7 @@ Zgodnie z klasyfikacją AltexSoft, **Technical Design Document (TDD)** stanowi n
 | **Zadanie Jira** | `REJ-123` |
 | **Identyfikator zmiany OpenSpec** | `openspec/changes/rej-123-<krotki-opis>/` |
 | **Powiązane reguły i wymagania** | `R-nn`, `NFR-nn` |
-| **Dotknięte moduły** | `<np. Rejoltance.Kernel, Rejoltance.Contracts, src/web>` |
+| **Moduły, których dotyczy zmiana** | `<np. Rejoltance.Kernel, Rejoltance.Contracts, src/web>` |
 | **Autor projektu** | `<Imię i nazwisko>` |
 
 ---
@@ -26,7 +26,7 @@ Zgodnie z klasyfikacją AltexSoft, **Technical Design Document (TDD)** stanowi n
 
 ## 2. Projekt komponentów i struktur danych (Component & Data Structure Design)
 
-- **Nowe lub modyfikowane klasy / rekordy / komponenty:**
+- **Nowe lub zmienione klasy / rekordy / komponenty:**
   - `src/<Moduł>/<Plik>.cs`: `<Opis odpowiedzialności, sygnatury metod publicznych, niezmienniki>`
 - **Wpływ na 5 zamrożonych kontraktów (`Rejoltance.Contracts` ↔ `src/web/src/contracts`):**
   - `<Brak zmian / Wymagana zmiana kontraktu opisana w ADR-NNNN>`
@@ -48,8 +48,8 @@ Zgodnie z klasyfikacją AltexSoft, **Technical Design Document (TDD)** stanowi n
 
 | Opcja implementacyjna | Zalety | Wady | Powód wyboru / odrzucenia |
 |---|---|---|---|
-| **Opcja 1 (Wybrana)** | | | |
-| **Opcja 2 (Prostsza alternatywa)** | | | |
+| **Opcja 1 (wybrana)** | | | |
+| **Opcja 2 (prostsza alternatywa)** | | | |
 
 ## 6. Plan weryfikacji i testów automatycznych
 

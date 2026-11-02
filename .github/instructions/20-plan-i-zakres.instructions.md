@@ -1,5 +1,5 @@
 ---
-description: "Bramki planowania Spec-Driven Development (kiedy wymagana jest zmiana OpenSpec), dyscyplina zakresu Jira i operacje wymagajace zgody czlowieka."
+description: "Kiedy przed kodem potrzebna jest zmiana OpenSpec, jak trzymać się zakresu zadania z Jiry i które operacje wymagają zgody człowieka."
 applyTo: "**"
 ---
 

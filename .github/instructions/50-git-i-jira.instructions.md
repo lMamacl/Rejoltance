@@ -1,5 +1,5 @@
 ---
-description: "Model galezi Git (main, develop, typ/REJ-123-opis), konwencja commitow i PR oraz synchronizacja Product Backlogu (backlog.toml -> Jira CSV)."
+description: "Gałęzie Git (main, develop, typ/REJ-123-opis), zasady commitów i PR oraz synchronizacja backlogu (backlog.toml -> CSV do Jiry)."
 applyTo: "**"
 ---
 
