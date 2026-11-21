@@ -1,0 +1,24 @@
+{
+  // Node side of the monorepo: packages/* and apps/server run as TypeScript directly on Node 24
+  // (type stripping), so only erasable syntax is allowed and relative imports carry the .ts extension.
+  // The web client has its own config in apps/web (DOM + JSX).
+  "compilerOptions": {
+    "target": "ES2023",
+    "lib": ["ES2023"],
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "types": ["node"],
+    "strict": true,
+    "noEmit": true,
+    "allowImportingTsExtensions": true,
+    "erasableSyntaxOnly": true,
+    "verbatimModuleSyntax": true,
+    "resolveJsonModule": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedSideEffectImports": true,
+    "skipLibCheck": true
+  },
+  "include": ["packages/*/src", "packages/*/test", "apps/server/src", "apps/server/test", "tools/**/*.ts", "vitest.config.ts"]
+}

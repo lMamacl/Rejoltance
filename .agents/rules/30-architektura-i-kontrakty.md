@@ -1,41 +1,34 @@
 ---
 trigger: model_decision
-description: "Granice 5 modułów (Web -> Server -> Kernel -> Content -> Contracts), czystość Rejoltance.Kernel i ochrona 5 zamrożonych kontraktów."
+description: "Granice pakietów (web -> contracts; server -> engine -> content -> contracts), czystość silnika i ochrona 5 zamrożonych kontraktów."
 ---
 
-# 30. Architektura warstwowa i ochrona kontraktów
+# 30. Architektura i ochrona kontraktów
 
-> Pełny opis architektury: [`docs/01-dokumentacja-systemowa/05-sad-architektura-systemu.md`](../../docs/01-dokumentacja-systemowa/05-sad-architektura-systemu.md) oraz [`08-mapa-kodu-i-modulow.md`](../../docs/01-dokumentacja-systemowa/08-mapa-kodu-i-modulow.md).
+> Pełny opis architektury: [`docs/01-dokumentacja-systemowa/05-sad-architektura-systemu.md`](../../docs/01-dokumentacja-systemowa/05-sad-architektura-systemu.md) oraz [ADR-0015](../../docs/01-dokumentacja-systemowa/07-decyzje-adr/0015-backend-node-typescript.md).
 
-## 1. Kierunek zależności pomiędzy modułami
+## 1. Kierunek zależności (npm workspaces)
 
 ```text
-src/web (React/TS) ──(HTTP / SignalR JSON)──► Rejoltance.Server
-                                                    │
-                                                    ▼
-                                            Rejoltance.Kernel
-                                                    │
-                                                    ▼
-                                            Rejoltance.Content
-                                                    │
-                                                    ▼
-                                           Rejoltance.Contracts
+apps/web (React) ──(Socket.IO + REST, typy z contracts)──► apps/server (Fastify + Socket.IO)
+     │                                                          │
+     └──────────────► packages/contracts ◄── packages/content ◄── packages/engine
 ```
 
-- **`Rejoltance.Contracts`:** zero zależności wewnętrznych. Zawiera wyłącznie niemutowalne rekordy DTO i wyliczenia.
-- **`Rejoltance.Content`:** zależy wyłącznie od `Contracts`. Wczytuje `cards.json` i waliduje schemat kart.
-- **`Rejoltance.Kernel`:** zależy wyłącznie od `Contracts` i `Content`. **Zakaz** używania `System.IO`, `System.Net.Http`, `Microsoft.AspNetCore.*`, `Microsoft.EntityFrameworkCore.*`, `DateTime.Now`, `DateTime.UtcNow`, `Guid.NewGuid()` oraz `System.Random`.
-- **`Rejoltance.Server`:** hostuje `MatchHub`, sesje meczowe, bazę EF Core i wywołuje `Kernel.Apply` oraz `Projection.ToView`.
-- **`src/web`:** klient przeglądarkowy — renderuje wyłącznie `MatchView` i wysyła `Intent`. Nie duplikuje logiki reguł gry.
+- **`packages/contracts`:** typy 5 kontraktów, protokół Socket.IO i schemat zod dla `Intent`. Nie importuje innych pakietów.
+- **`packages/content`:** `data/cards.json`, `data/decks.json`, słownik DSL i walidator. Nie importuje silnika, serwera ani modułów `node:*`.
+- **`packages/engine`:** czysty silnik: `createEngine(catalog)`, `reduce`, `legalActions`, `toView`. **Zakaz:** `Date`, `Math.random`, timerów, `fetch`, `crypto` i modułów `node:*`. Losowość tylko przez `rng.ts`.
+- **`apps/server`:** REST (`/health`, `/api/*`), Socket.IO (`startSandbox`, `sendIntent`, `matchUpdated`), sesje meczów. Waliduje `Intent` schematem zod przed silnikiem.
+- **`apps/web`:** renderuje wyłącznie `MatchView` i wysyła `Intent`. Importuje tylko `@rejoltance/contracts`.
 
-Granice te są automatycznie weryfikowane przez `tests/Rejoltance.Architecture.Tests/LayerDependencyTests.cs`.
+Granice sprawdza ESLint (`no-restricted-imports`, `no-restricted-globals` w `eslint.config.js`) oraz test `tools/architecture.test.ts`.
 
-## 2. Pięć zamrożonych kontraktów komunikacyjnych
+## 2. Pięć zamrożonych kontraktów
 
-1. `Intent` — intencja akcji gracza wysyłana z klienta do serwera.
-2. `LegalAction` — dozwolona akcja wyliczona przez silnik dla aktywnego gracza.
-3. `PendingInteraction` — oczekiwanie silnika na wybór celu lub opcji przez gracza.
-4. `MatchView` — przefiltrowany widok stanu meczu dla konkretnego gracza (*Fog of War* — `R-80…R-82`).
-5. `DomainEvent` — fakt domenowy wyemitowany podczas rozstrzygania intencji (podstawa animacji UI i dziennika).
+1. `Intent` — intencja gracza (klient → serwer), schemat zod.
+2. `LegalAction` — dozwolona akcja wyliczona przez silnik.
+3. `PendingInteraction` — silnik czeka na wybór celu lub opcji.
+4. `MatchView` — widok meczu dla jednego gracza (*Fog of War*, `R-80…R-82`).
+5. `DomainEvent` — fakt wyemitowany przy rozstrzyganiu intencji (animacje, dziennik).
 
-Każda zmiana tych typów wymaga: (1) nowego **ADR**, (2) symetrycznej aktualizacji C# i TypeScriptu oraz (3) aktualizacji próbek w `tests/Rejoltance.Contracts.Tests/ContractSampleTests.cs`.
+Zmiana tych typów wymaga: (1) nowego **ADR**, (2) zmiany w `packages/contracts` (serwer i klient dostają ją automatycznie, `tsc` pokaże miejsca do poprawy) oraz (3) odświeżenia próbki `UPDATE_CONTRACT_SAMPLES=1 npm test`.

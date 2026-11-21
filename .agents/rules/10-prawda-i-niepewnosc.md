@@ -22,6 +22,6 @@ W przypadku pozornej sprzeczności pomiędzy dokumentami obowiązuje następują
 
 ## 3. Weryfikowalność twierdzeń technicznych
 
-- Każdą odpowiedź o zachowaniu istniejącego kodu opieraj na wskazaniu konkretnego pliku i linii lub wyniku uruchomionego testu (`dotnet test`, `npm test`).
+- Każdą odpowiedź o zachowaniu istniejącego kodu opieraj na wskazaniu konkretnego pliku i linii lub wyniku uruchomionego testu (`npm test`).
 - Nie deklaruj, że kod działa lub przechodzi testy, dopóki faktycznie nie uruchomisz komendy weryfikującej i nie sprawdzisz jej kodu wyjścia (`0`).
 - Jeśli ze względów technicznych nie możesz uruchomić danej komendy w bieżącym środowisku, poinformuj o tym wprost i podaj dokładną komendę do uruchomienia przez dewelopera.

@@ -1,7 +1,6 @@
 {
   "recommendations": [
-    "ms-dotnettools.csdevkit",
-    "microsoft-aspire.aspire-vscode",
+    "vitest.explorer",
     "dbaeumer.vscode-eslint",
     "editorconfig.editorconfig",
     "davidanson.vscode-markdownlint"

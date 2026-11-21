@@ -42,13 +42,13 @@ Klient MUST działać w dwóch ostatnich stabilnych wersjach Chrome, Edge, Firef
 
 ### Requirement: NFR-11 Zgodny kontrakt klient–serwer
 
-Format `MatchView` i intencji MUST być identyczny po stronie C# i TypeScript; rozjazd SHALL zatrzymywać build po obu stronach (ADR-0010).
+Format `MatchView` i intencji MUST być identyczny po stronie serwera i klienta: oba importują typy z `packages/contracts`, a serwer sprawdza każdą intencję schematem zod; rozjazd SHALL zatrzymywać build (ADR-0015).
 
 #### Scenario: Zmiana pola tylko po stronie serwera
 
-- **GIVEN** nowe pole w `MatchView` w C#, bez zmiany typów TS
-- **WHEN** uruchamiane są testy kontraktu w CI
-- **THEN** `ContractSampleTests` albo `tsc` kończy się błędem
+- **GIVEN** zmiana pola w `MatchView` w `packages/contracts`, bez poprawki w kliencie lub silniku
+- **WHEN** CI uruchamia typecheck i testy
+- **THEN** `tsc` albo test próbki `match-view.sample.json` kończy się błędem
 
 ### Requirement: NFR-20 Łatwość nauki
 
@@ -92,17 +92,17 @@ Instancja demo MUST być dostępna w ≥ 99% czasu w tygodniu przed każdym Spri
 
 ### Requirement: NFR-31 Izolacja meczów
 
-Błąd w jednym meczu (wyjątek w Kernelu, utrata połączenia) MUST NOT przerywać innych meczów ani zatrzymywać serwera; błąd SHALL być zalogowany z identyfikatorem meczu i seedem.
+Błąd w jednym meczu (wyjątek w silniku, utrata połączenia) MUST NOT przerywać innych meczów ani zatrzymywać serwera; błąd SHALL być zalogowany z identyfikatorem meczu i seedem.
 
 #### Scenario: Wyjątek w meczu A
 
 - **GIVEN** dwa równoległe mecze A i B
-- **WHEN** w meczu A Kernel rzuca nieoczekiwany wyjątek
+- **WHEN** w meczu A silnik rzuca nieoczekiwany wyjątek
 - **THEN** mecz B toczy się dalej, a log zawiera identyfikator i seed meczu A
 
 ### Requirement: NFR-40 Ochrona kont
 
-Hasła MUST być przechowywane wyłącznie jako skrót (ASP.NET Core Identity), sesja SHALL używać ciasteczka HttpOnly, Secure, SameSite, a demo MUST działać tylko przez HTTPS.
+Hasła MUST być przechowywane wyłącznie jako skrót (np. scrypt z `node:crypto`), sesja SHALL używać ciasteczka HttpOnly, Secure, SameSite, a demo MUST działać tylko przez HTTPS.
 
 #### Scenario: Podgląd bazy
 
@@ -112,7 +112,7 @@ Hasła MUST być przechowywane wyłącznie jako skrót (ASP.NET Core Identity), 
 
 ### Requirement: NFR-41 Ochrona przed nadużyciem
 
-Logowanie i hub SignalR MUST mieć limity żądań (np. 5 nieudanych logowań na minutę, 20 intencji na sekundę na połączenie); przekroczenie SHALL być odrzucane i logowane.
+Logowanie i połączenia Socket.IO MUST mieć limity żądań (np. 5 nieudanych logowań na minutę, 20 intencji na sekundę na połączenie); przekroczenie SHALL być odrzucane i logowane.
 
 #### Scenario: Zalew intencjami
 
@@ -132,47 +132,47 @@ Klient MUST NOT renderować danych przez `innerHTML` ani `dangerouslySetInnerHTM
 
 ### Requirement: NFR-50 Granice modułów
 
-Zależności MUST iść tylko w kierunku Server → Kernel → Content → Contracts; Kernel MUST NOT zależeć od ASP.NET, EF Core ani sieci. Naruszenie SHALL zatrzymać CI.
+Zależności MUST iść tylko w kierunku server → engine → content → contracts (klient web → contracts); silnik MUST NOT używać I/O, sieci, zegara ani `Math.random`. Naruszenie SHALL zatrzymać CI.
 
-#### Scenario: Import ASP.NET w Kernelu
+#### Scenario: Import modułu sieciowego w silniku
 
-- **GIVEN** klasa w Kernelu używająca typu z `Microsoft.AspNetCore`
-- **WHEN** CI uruchamia testy architektury
-- **THEN** test `Module_does_not_depend_on` kończy się błędem
+- **GIVEN** plik w `packages/engine/src` importujący `node:http` albo wywołujący `Math.random()`
+- **WHEN** CI uruchamia `npm run lint`
+- **THEN** ESLint zgłasza błąd granicy modułu i job jest czerwony
 
 ### Requirement: NFR-51 Testowalność reguł
 
-Każda reguła R‑nn o statusie „zaimplementowana” MUST mieć test o nazwie zaczynającej się od jej numeru, a pokrycie linii kodu Kernela SHALL wynosić ≥ 80%.
+Każda reguła R‑nn o statusie „zaimplementowana” MUST mieć test o nazwie zaczynającej się od jej numeru, a pokrycie linii kodu silnika SHALL wynosić ≥ 80%.
 
 #### Scenario: Raport pokrycia
 
 - **GIVEN** koniec sprintu
 - **WHEN** generowany jest raport testów
-- **THEN** lista reguł bez testu jest pusta, a pokrycie Kernela ≥ 80%
+- **THEN** lista reguł bez testu jest pusta, a pokrycie silnika ≥ 80%
 
 ### Requirement: NFR-52 Czysty build
 
-Build MUST przechodzić bez ostrzeżeń (CI traktuje ostrzeżenia jak błędy), a kod SHALL być sformatowany wg `.editorconfig` (`dotnet format --verify-no-changes`, ESLint).
+Build MUST przechodzić bez błędów lintera i typów (`npm run verify`), a kod SHALL być zgodny z `.editorconfig` i ESLint.
 
 #### Scenario: Ostrzeżenie kompilatora
 
-- **GIVEN** PR wprowadzający ostrzeżenie kompilatora
+- **GIVEN** PR wprowadzający błąd typów albo naruszenie reguły ESLint
 - **WHEN** uruchamia się CI
-- **THEN** job .NET jest czerwony
+- **THEN** job „Lint, typecheck, tests, build” jest czerwony
 
 ### Requirement: NFR-60 Jedno polecenie do uruchomienia
 
-Środowisko deweloperskie MUST uruchamiać się na Windows, macOS i Linux jednym poleceniem (`dotnet run --project src/Rejoltance.AppHost`) bez Dockera do czasu wprowadzenia PostgreSQL (ADR-0007).
+Środowisko deweloperskie MUST uruchamiać się na Windows, macOS i Linux jednym poleceniem (`npm run dev`) bez Dockera do czasu wprowadzenia PostgreSQL (ADR-0007).
 
 #### Scenario: Czysty klon
 
-- **GIVEN** czysty klon i zainstalowane .NET 10 oraz Node 24
-- **WHEN** uruchamiam `tools/setup` i AppHost
-- **THEN** serwer odpowiada `Healthy`, a klient się ładuje (test `AppHostSmokeTests`)
+- **GIVEN** czysty klon i zainstalowany Node 24
+- **WHEN** uruchamiam `npm run setup` i `npm run dev`
+- **THEN** `/health` odpowiada `ok`, a klient się ładuje (testy serwera w `apps/server/test`)
 
 ### Requirement: NFR-61 Wdrożenie jako kontener
 
-Aplikacja MUST być wdrażana jako jeden obraz kontenera (serwer + zbudowany klient w `wwwroot`), konfigurowany wyłącznie zmiennymi środowiskowymi.
+Aplikacja MUST być wdrażana jako jeden obraz kontenera (serwer Node.js + zbudowany klient serwowany jako pliki statyczne), konfigurowany wyłącznie zmiennymi środowiskowymi.
 
 #### Scenario: Nowe środowisko
 

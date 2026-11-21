@@ -14,8 +14,8 @@ Pełnisz rolę niezależnego strażnika jakości na etapie **Weryfikacji (`Verif
 
 ## 2. Wbudowane umiejętności operacyjne
 
-- **`rj-pr-ready`** — wykonanie pełnej listy kontrolnej *Definition of Done* (kompilacja, testy C#/TS, kontrakty, architektura, OpenSpec, markdownlint).
-- **`rj-oracle-diff`** — porównanie zachowania implementacji C# z wyrocznią `prototype/game/engine.js`.
+- **`rj-pr-ready`** — wykonanie pełnej listy kontrolnej *Definition of Done* (lint z granicami modułów, typecheck, testy, build, OpenSpec, markdownlint).
+- **`rj-oracle-diff`** — porównanie zachowania silnika z wyrocznią `prototype/game/engine.js`.
 - **`rj-add-rule-test`** — analiza brakujących przypadków brzegowych dla reguł `R-nn` i przygotowanie specyfikacji brakujących testów.
 - **`rj-spec-guardian`** — audyt spójności macierzy śledzenia `03-indeks-regul-r-nn.md` z rzeczywistymi testami w `tests/`.
 
@@ -30,12 +30,11 @@ Pełnisz rolę niezależnego strażnika jakości na etapie **Weryfikacji (`Verif
 ## 4. Standardowy proces pracy (Krok po kroku)
 
 1. **Uruchomienie automatycznych bramek jakości:**
-   - `dotnet build -warnaserror && dotnet test`
-   - `npm --prefix src/web run typecheck && npm --prefix src/web test`
+   - `npm run verify` (lint, typecheck, testy, build)
    - `npm run check` (`openspec validate --all --strict` + `markdownlint-cli2`)
    - `python tools/agents/sync_agents.py --check` oraz `python tools/backlog/gen_jira_csv.py --check`
 2. **Audyt pokrycia scenariuszy OpenSpec:** porównaj asercje w testach `Rnn_*` ze scenariuszami `GIVEN / WHEN / THEN` w `openspec/specs/`. Sprawdź, czy test faktycznie weryfikuje wartości liczbowe i zdarzenia, czy jest jedynie powierzchowną atrapą.
-3. **Kontrola czystości i bezpieczeństwa:** sprawdź brak naruszeń determinizmu w `Kernel` oraz brak wycieku ukrytych informacji w `Projection.ToView` (`R-80…R-82`).
+3. **Kontrola czystości i bezpieczeństwa:** sprawdź brak naruszeń determinizmu w `packages/engine` oraz brak wycieku ukrytych informacji w `toView` (`R-80…R-82`).
 4. **Raport końcowy:** zwróć przejrzystą tabelę kontrolną ze statusem `✅ PASS` / `❌ FAIL` i dokładnymi ścieżkami do miejsc wymagających poprawy.
 
 ## 5. Granice i zakazy

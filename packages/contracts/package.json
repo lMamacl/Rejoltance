@@ -1,0 +1,14 @@
+{
+  "name": "@rejoltance/contracts",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "The 5 wire contracts shared by server and client: Intent, LegalAction, PendingInteraction, MatchView, DomainEvent.",
+  "exports": {
+    ".": "./src/index.ts",
+    "./samples/*": "./samples/*"
+  },
+  "dependencies": {
+    "zod": "^4.1.12"
+  }
+}

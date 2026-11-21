@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Słowa kluczowe i statusy jednostek. Kanon: `engine.js` (`dmg`, `status`, `resolve`, `aura`, `killUnit`, `endRound`), słownik: `src/Rejoltance.Content/Vocabulary.cs`.
+Słowa kluczowe i statusy jednostek. Kanon: `engine.js` (`dmg`, `status`, `resolve`, `aura`, `killUnit`, `endRound`), słownik: `packages/content/src/vocabulary.ts`.
 
 ## Requirements
 
