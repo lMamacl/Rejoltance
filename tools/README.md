@@ -1,14 +1,30 @@
-# `tools/` — Skrypty Automatyzacji i Strażnicy Jakości
+# `tools/` — skrypty repozytorium
 
-Skrypty w tym katalogu automatyzują konfigurację środowiska, synchronizację agentów AI, ekstrakcję kart z prototypu, generowanie plików CSV do Jiry oraz walidację i eksport dokumentacji 1:1 do Confluence PB.
+Wszystkie skrypty są w TypeScript i uruchamia je bezpośrednio Node.js 24 (bez kompilacji). Wywołujesz je przez `npm run …` z katalogu głównego. Polecenia `dev`, `start` i `docs:publish` same wczytują plik `.env`.
 
-Wszystkie skrypty Pythona korzystają wyłącznie z biblioteki standardowej **Python 3.11+** (zero zewnętrznych zależności `pip`).
+| Polecenie | Skrypt | Co robi |
+|---|---|---|
+| `npm run setup` | `setup.ts` | Jednorazowo po sklonowaniu: sprawdza narzędzia, instaluje zależności, tworzy `.env`, uruchamia testy. |
+| `npm run doctor` | `doctor.ts` | Diagnostyka komputera (Node, git, OneDrive, `.env`). Niczego nie zmienia. |
+| `npm run dev` | `dev.ts` | Serwer gry i klient Vite razem; Ctrl+C zatrzymuje oba. |
+| `npm run agents` / `agents:check` | `agents/sync-agents.ts` | Walidacja `.agents/` i generowanie adapterów Claude Code oraz komend Antigravity. |
+| `npm run cards` / `cards:check` | `content/extract-cards.ts` | Karty i talie z `prototype/game/cards.js` i `decks.js` do `packages/content/data/*.json`. |
+| `npm run backlog` / `backlog:check` | `backlog/gen-jira-csv.ts` | Walidacja `backlog.toml` i jego spójności z indeksem R-nn; generuje `BACKLOG.md` i pliki CSV do Jiry. |
+| `npm run docs:check` | `confluence/sync-confluence.ts` | Struktura `docs/` 1:1 z Confluence, wymagane dokumenty, linki wewnętrzne. |
+| `npm run docs:export` | `confluence/sync-confluence.ts` | Paczka `.artifacts/confluence-export/` (Markdown + XHTML + `manifest.json`). Nagłówek pliku nie zawiera hasha commita, więc zmieniają się tylko strony o zmienionej treści. |
+| `npm run docs:publish -- …` | `confluence/sync-confluence.ts` | Publikacja przez REST API. Token z `CONFLUENCE_PERSONAL_TOKEN` w `.env`. |
+| — | `architecture.test.ts`, `tools.test.ts` | Testy: granice modułów i narzędzia (uruchamia je `npm test`). |
 
-| Skrypt | Przeznaczenie i tryby uruchomienia |
-|---|---|
-| `setup.ps1` / `setup.sh` | Jednorazowe przygotowanie środowiska po sklonowaniu repozytorium (instalacja zależności, build, testy). |
-| `doctor.ps1` | Diagnostyka stacji roboczej Windows/macOS/Linux (wersje SDK, długie ścieżki Git, OneDrive, Smart App Control, certyfikaty HTTPS). |
-| `agents/sync_agents.py` | Walidacja kanonu `.agents/` (`rules/`, `agents/`, `skills/`) oraz generowanie adapterów dla Claude Code i komend Antigravity (`--check` w CI). |
-| `content/extract_cards.py` | Ekstrakcja definicji kart i talii startowych z `prototype/game/cards.js` do `src/Rejoltance.Content/Data/*.json` (`--check` w CI). |
-| `backlog/gen_jira_csv.py` | Walidacja `docs/03-dokumentacja-procesowa/02-backlog/backlog.toml` oraz dwukierunkowej spójności z `03-indeks-regul-r-nn.md`; generowanie `BACKLOG.md` i plików CSV do importu w Jirze PB (`--check` w CI). |
-| `confluence/sync_confluence.py` | Walidacja architektury dokumentacji `docs/` w układzie 1:1 z Confluence PB (AltexSoft + SDD, linki wewnętrzne, nagłówki metadanych) oraz publikacja/eksport (`--check` / `--export` / `--publish`). Przy `--include PATH_OR_GLOB` można ograniczyć eksport lub publikację do wybranych stron; nadrzędne pliki `README.md` są dołączane automatycznie. |
+`npm run check` uruchamia wszystkie kontrole `…:check` razem z OpenSpec i markdownlint — tak samo jak CI.
+
+## Publikacja w Confluence
+
+```powershell
+npm run docs:publish -- --dry-run --changed-since develop          # podgląd: strony zmienione od develop
+npm run docs:publish -- --changed-since develop --only-existing     # aktualizacja tylko istniejących stron
+npm run docs:publish -- --include docs/01-dokumentacja-systemowa/06-stos-technologiczny.md
+```
+
+- `--include <ścieżka lub glob>` (można powtarzać) i `--changed-since <ref git>` wybierają strony; strony nadrzędne (`README.md`) dochodzą automatycznie.
+- `--only-existing` nie zakłada nowych stron — pomija te, których jeszcze nie ma w Confluence.
+- `docs/README.md` nadpisuje stronę główną przestrzeni.

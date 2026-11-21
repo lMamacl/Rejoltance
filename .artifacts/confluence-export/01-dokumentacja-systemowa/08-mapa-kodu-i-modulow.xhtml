@@ -1,91 +1,80 @@
-<ac:structured-macro ac:name="info"><ac:rich-text-body><p><strong>Synchronizacja 1:1 z repozytorium Git:</strong> <code>docs/01-dokumentacja-systemowa/08-mapa-kodu-i-modulow.md</code> (commit <code>28d2248</code>, data eksportu: <code>2026-11-21</code>)</p></ac:rich-text-body></ac:structured-macro>
+<ac:structured-macro ac:name="info"><ac:rich-text-body><p><strong>Synchronizacja 1:1 z repozytorium Git:</strong> <code>docs/01-dokumentacja-systemowa/08-mapa-kodu-i-modulow.md</code></p></ac:rich-text-body></ac:structured-macro>
 <blockquote><p><strong>Źródło prawdy:</strong> repozytorium (<code>docs/01-dokumentacja-systemowa/08-mapa-kodu-i-modulow.md</code>) · <strong>Kategoria dokumentacji:</strong> Dokumentacja produktowa — systemowa (dokumentacja kodu źródłowego) · <strong>Etap SDD:</strong> Realizacja</p></blockquote>
-<p>Ta mapa pomaga ci poruszać się po kodzie RE:JOLTANCE. Jest dla członków zespołu i dla agentów AI. Zanim zmienisz jakiś moduł, przeczytaj tę mapę i plik <code>README.md</code> w katalogu modułu (<code>src/&lt;moduł&gt;/README.md</code>).</p>
+<p>Ta mapa pomaga ci poruszać się po kodzie RE:JOLTANCE. Jest dla członków zespołu i dla agentów AI. Zanim zmienisz jakiś moduł, przeczytaj tę mapę i plik <code>README.md</code> w katalogu modułu (<code>packages/&lt;pakiet&gt;/README.md</code> albo <code>apps/&lt;aplikacja&gt;/README.md</code>).</p>
 <p>SDD (Spec-Driven Development) to nasz sposób pracy: najpierw specyfikacja, potem kod. Ta strona należy do etapu <em>Realizacja</em>.</p>
 <hr />
-<h2>1. Architektura warstwowa i kierunek zależności</h2>
+<h2>1. Architektura i kierunek zależności</h2>
+<p>Całe repozytorium to jeden projekt npm (<em>workspaces</em>) w TypeScript na Node.js 24 (<strong>ADR-0015</strong> (<code>07-decyzje-adr/0015-backend-node-typescript.md</code>)).</p>
 <ac:structured-macro ac:name="code"><ac:parameter ac:name="language">none</ac:parameter><ac:plain-text-body><![CDATA[┌──────────────────────────────────────────────────────────────────────┐
-│ src/web (React + TypeScript + Vite)                                  │  ← Warstwa Prezentacji
-│ Renderuje MatchView, podświetla legalActions, wysyła Intent          │    (Nie zna reguł gry!)
+│ apps/web (React + TypeScript + Vite)                                 │  ← Prezentacja
+│ Renderuje MatchView, podświetla legalActions, wysyła Intent          │    (nie zna reguł gry)
 └───────────────▲──────────────────────────────────┬───────────────────┘
-                │ MatchView + DomainEvent[]        │ Intent (WebSocket)
+                │ MatchView + DomainEvent[]        │ Intent (Socket.IO)
 ┌───────────────┴──────────────────────────────────▼───────────────────┐
-│ Rejoltance.Server (ASP.NET Core + SignalR)                           │  ← Warstwa Transportu i Sesji
-│ MatchHub (/api/hubs/match), REST (/api/*), MatchSessionManager,      │
-│ RejoltanceDb (SQLite → PostgreSQL)                                   │
+│ apps/server (Node.js: Fastify + Socket.IO)                           │  ← Transport i sesje
+│ REST (/health, /api/*), zdarzenia startSandbox / sendIntent,         │
+│ MatchSessionManager, walidacja Intent schematem zod                  │
 ├──────────────────────────────────────────────────────────────────────┤
-│ Rejoltance.Kernel (Czysty silnik reguł C#)                           │  ← Warstwa Domenowa
-│ MatchEngine.Reduce / LegalActions, Projection.ToView (Fog of War),   │    (Deterministyczna, bez IO)
-│ SeededRng, MatchState                                                │
+│ packages/engine (czysty silnik reguł)                                │  ← Domena
+│ createEngine: newMatch / reduce / legalActions, toView (Fog of War), │    (deterministyczna, bez I/O)
+│ rng.ts (SplitMix64), state.ts                                        │
 ├──────────────────────────────────────────────────────────────────────┤
-│ Rejoltance.Content (Katalog kart i słownik DSL)                      │  ← Warstwa Danych Domenowych
-│ CardCatalog (cards.json, decks.json), Vocabulary, ContentValidator   │
+│ packages/content (katalog kart i słownik DSL)                        │  ← Dane domenowe
+│ data/cards.json, data/decks.json, vocabulary.ts, validator.ts        │
 ├──────────────────────────────────────────────────────────────────────┤
-│ Rejoltance.Contracts (5 zamrożonych kontraktów DTO)                  │  ← Warstwa Kontraktów
-│ Intent, LegalAction, PendingInteraction, MatchView, DomainEvent      │    (Zero logiki biznesowej)
-└──────────────────────────────────────────────────────────────────────┘
-  Orkiestracja: Rejoltance.AppHost (.NET Aspire) + Rejoltance.ServiceDefaults (OpenTelemetry, Health)]]></ac:plain-text-body></ac:structured-macro>
-<blockquote><p><strong>Reguła zależności:</strong> zależności między projektami prowadzą tylko <strong>z góry na dół</strong>. Projekt niżej nigdy nie odwołuje się do projektu wyżej. Sprawdzają to testy <code>tests/Rejoltance.Architecture.Tests/BoundaryTests.cs</code> przy każdym <code>dotnet test</code>.</p></blockquote>
+│ packages/contracts (5 zamrożonych kontraktów)                        │  ← Kontrakty
+│ Intent (zod), LegalAction, PendingInteraction, MatchView,            │    (bez logiki gry)
+│ DomainEvent, protokół Socket.IO                                      │
+└──────────────────────────────────────────────────────────────────────┘]]></ac:plain-text-body></ac:structured-macro>
+<blockquote><p><strong>Reguła zależności:</strong> importy prowadzą tylko <strong>z góry na dół</strong>, a klient web importuje wyłącznie <code>packages/contracts</code>. Pilnuje tego ESLint (<code>eslint.config.js</code>) i test <code>tools/architecture.test.ts</code> przy każdym <code>npm run verify</code>.</p></blockquote>
 <hr />
-<h2>2. Katalog modułów w <code>src/</code> oraz <code>tests/</code></h2>
+<h2>2. Katalog modułów</h2>
 <table><thead><tr>
 <th><p>Ścieżka w repozytorium</p></th>
 <th><p>Rola modułu</p></th>
-<th><p>Główne pliki i klasy</p></th>
+<th><p>Główne pliki</p></th>
 <th><p>Właściciel (EU5/EU6)</p></th>
 </tr></thead><tbody>
 <tr>
-<td><p><strong><code>src/Rejoltance.Contracts/</code></strong> (<code>../../src/Rejoltance.Contracts/README.md</code>)</p></td>
-<td><p>5 kontraktów komunikacyjnych (DTO, Data Transfer Object — obiekt przenoszący dane), którymi wymieniają się serwer, klient i bot.</p></td>
-<td><p><code>Intents.cs</code>, <code>MatchView.cs</code>, <code>Events.cs</code></p></td>
-<td><p>Wspólny (Backend + Frontend)</p></td>
+<td><p><strong><code>packages/contracts/</code></strong> (<code>../../packages/contracts/README.md</code>)</p></td>
+<td><p>5 kontraktów wymienianych przez serwer, klienta i bota oraz protokół Socket.IO.</p></td>
+<td><p><code>src/intents.ts</code>, <code>src/view.ts</code>, <code>src/events.ts</code>, <code>src/protocol.ts</code>, <code>samples/match-view.sample.json</code></p></td>
+<td><p>Wspólny (backend + frontend)</p></td>
 </tr>
 <tr>
-<td><p><strong><code>src/Rejoltance.Content/</code></strong> (<code>../../src/Rejoltance.Content/README.md</code>)</p></td>
-<td><p>Wbudowany katalog 78 kart i 5 talii startowych. Walidator słownika DSL (Domain-Specific Language — nasz język opisu efektów kart).</p></td>
-<td><p><code>CardCatalog.cs</code>, <code>CardDefinition.cs</code>, <code>Vocabulary.cs</code>, <code>ContentValidator.cs</code>, <code>Data/cards.json</code></p></td>
-<td><p>Właściciel Epiku E2</p></td>
+<td><p><strong><code>packages/content/</code></strong> (<code>../../packages/content/README.md</code>)</p></td>
+<td><p>Katalog 130 kart, 29 tokenów i 4 talii startowych, walidator słownika DSL (języka opisu efektów kart).</p></td>
+<td><p><code>data/cards.json</code>, <code>src/vocabulary.ts</code>, <code>src/validator.ts</code>, <code>src/catalog.ts</code></p></td>
+<td><p>Właściciel epiku E2</p></td>
 </tr>
 <tr>
-<td><p><strong><code>src/Rejoltance.Kernel/</code></strong> (<code>../../src/Rejoltance.Kernel/README.md</code>)</p></td>
-<td><p>Czysty, deterministyczny silnik reguł gry. Projekcja <em>Fog of War</em> (ukrywanie informacji przed przeciwnikiem, R-80…R-82). Generator losowy oparty na ziarnie.</p></td>
-<td><p><code>MatchEngine.cs</code>, <code>MatchState.cs</code>, <code>Projection.cs</code>, <code>SeededRng.cs</code>, <code>BannedSymbols.txt</code></p></td>
-<td><p>Właściciel Epiku E1</p></td>
+<td><p><strong><code>packages/engine/</code></strong> (<code>../../packages/engine/README.md</code>)</p></td>
+<td><p>Czysty, deterministyczny silnik reguł gry, projekcja <em>Fog of War</em> (R-80…R-82), generator losowy z ziarnem.</p></td>
+<td><p><code>src/engine.ts</code>, <code>src/state.ts</code>, <code>src/projection.ts</code>, <code>src/rng.ts</code></p></td>
+<td><p>Właściciel epiku E1</p></td>
 </tr>
 <tr>
-<td><p><strong><code>src/Rejoltance.Server/</code></strong> (<code>../../src/Rejoltance.Server/README.md</code>)</p></td>
-<td><p>Autorytatywny serwer HTTP/SignalR. Menedżer trwających meczów w pamięci. Baza EF Core.</p></td>
-<td><p><code>Program.cs</code>, <code>Matches/MatchHub.cs</code>, <code>Matches/MatchSessionManager.cs</code>, <code>Data/RejoltanceDb.cs</code></p></td>
-<td><p>Właściciele Epików E3 i E6</p></td>
+<td><p><strong><code>apps/server/</code></strong> (<code>../../apps/server/README.md</code>)</p></td>
+<td><p>Autorytatywny serwer: REST i Socket.IO, mecze w pamięci.</p></td>
+<td><p><code>src/app.ts</code>, <code>src/sessions.ts</code>, <code>src/main.ts</code></p></td>
+<td><p>Właściciele epików E3 i E6</p></td>
 </tr>
 <tr>
-<td><p><strong><code>src/Rejoltance.AppHost/</code></strong> (<code>../../src/Rejoltance.AppHost/README.md</code>)</p></td>
-<td><p>Orkiestrator .NET Aspire. Uruchamia serwer i klienta webowego jednym poleceniem.</p></td>
-<td><p><code>AppHost.cs</code></p></td>
-<td><p>Właściciel Epiku E6</p></td>
+<td><p><strong><code>apps/web/</code></strong> (<code>../../apps/web/README.md</code>)</p></td>
+<td><p>Klient React + TypeScript + Vite + Zustand.</p></td>
+<td><p><code>src/net/matchConnection.ts</code>, <code>src/state/matchStore.ts</code>, <code>src/components/</code></p></td>
+<td><p>Właściciel epiku E4</p></td>
 </tr>
 <tr>
-<td><p><strong><code>src/Rejoltance.ServiceDefaults/</code></strong> (<code>../../src/Rejoltance.ServiceDefaults/README.md</code>)</p></td>
-<td><p>Wspólna konfiguracja OpenTelemetry, logowania i punktów kontrolnych <code>/health</code> oraz <code>/alive</code>.</p></td>
-<td><p><code>Extensions.cs</code></p></td>
-<td><p>Właściciel Epiku E6</p></td>
-</tr>
-<tr>
-<td><p><strong><code>src/web/</code></strong> (<code>../../src/web/README.md</code>)</p></td>
-<td><p>Aplikacja kliencka React + TypeScript + Vite + Zustand.</p></td>
-<td><p><code>src/contracts/index.ts</code>, <code>src/net/matchTransport.ts</code>, <code>src/state/matchStore.ts</code>, <code>src/components/</code></p></td>
-<td><p>Właściciel Epiku E4</p></td>
-</tr>
-<tr>
-<td><p><strong><code>tests/</code></strong> (<code>../../tests/README.md</code>)</p></td>
-<td><p>Testy xUnit: jednostkowe, architektoniczne, serwerowe i integracyjne. Projekt <code>Rejoltance.Cards.Tests</code> jest planowany, jeszcze nie istnieje.</p></td>
-<td><p><code>Rejoltance.Kernel.Tests</code>, <code>Rejoltance.Architecture.Tests</code>, <code>Rejoltance.Server.Tests</code>, <code>Rejoltance.AppHost.Tests</code></p></td>
-<td><p>Cały zespół (EU6)</p></td>
+<td><p><code>tools/</code></p></td>
+<td><p>Skrypty repozytorium: <code>npm run dev</code>, <code>setup</code>, <code>doctor</code>, test granic modułów, generatory (karty, backlog, adaptery agentów, Confluence).</p></td>
+<td><p><code>dev.ts</code>, <code>setup.ts</code>, <code>doctor.ts</code>, <code>architecture.test.ts</code></p></td>
+<td><p>Cały zespół</p></td>
 </tr>
 </tbody></table>
+<p>Testy leżą przy kodzie: <code>packages/*/test</code>, <code>apps/server/test</code>, <code>apps/web/src/**/*.test.tsx</code>. Uruchamia je jedno <code>npm test</code>.</p>
 <hr />
 <h2>3. Przewodnik praktyczny: „Gdzie dodać nową funkcję?”</h2>
-<p>Tabela podpowiada, które pliki zmienić w typowych zadaniach. Ostatnia kolumna wskazuje skill agenta AI, który prowadzi przez dane zadanie. Kartami zajmuje się agent <code>rj-card-author</code>, a regułami w Kernelu — <code>rj-rules-engineer</code>.</p>
 <table><thead><tr>
 <th><p>Co chcesz zrobić?</p></th>
 <th><p>Które pliki zmienić?</p></th>
@@ -94,73 +83,73 @@
 </tr></thead><tbody>
 <tr>
 <td><p><strong>Dodać nową kartę lub zmienić statystyki istniejącej</strong> (z istniejących słów DSL)</p></td>
-<td><p>1. Zmień <code>game/cards.js</code> w repo <code>PanCoto/rejoltance-prototype</code> (źródło prototypu)<br />2. Dociągnij zmiany: <code>git subtree pull --prefix=prototype https://github.com/PanCoto/rejoltance-prototype.git main</code><br />3. Uruchom <code>python tools/content/extract_cards.py</code><br />4. Uruchom testy <code>ContentTests</code></p></td>
+<td><p>1. Zmień <code>game/cards.js</code> w repo <code>PanCoto/rejoltance-prototype</code> (źródło prototypu)<br />2. Dociągnij zmiany: <code>git subtree pull --prefix=prototype https://github.com/PanCoto/rejoltance-prototype.git main</code><br />3. Uruchom <code>npm run cards</code><br />4. Uruchom <code>npm test</code></p></td>
 <td><p>Niski</p></td>
 <td><p><strong><code>rj-add-card</code></strong> (<code>../04-system-agentow-ai/02-katalog-rol-i-wbudowanych-skilli.md</code>)</p></td>
 </tr>
 <tr>
 <td><p><strong>Dodać do DSL nowe słowo kluczowe, wyzwalacz lub akcję</strong></p></td>
-<td><p>1. Dopisz regułę <code>R-nn</code> w <code>openspec/specs/</code><br />2. Dodaj słowo do <code>src/Rejoltance.Content/Vocabulary.cs</code><br />3. Zaimplementuj obsługę w <code>Rejoltance.Kernel</code><br />4. Napisz test <code>Rnn_...</code> w <code>Rejoltance.Kernel.Tests</code></p></td>
+<td><p>1. Dopisz regułę <code>R-nn</code> w <code>openspec/specs/</code><br />2. Dodaj słowo do <code>packages/content/src/vocabulary.ts</code><br />3. Zaimplementuj obsługę w <code>packages/engine</code><br />4. Napisz test <code>Rnn_...</code> w <code>packages/engine/test</code></p></td>
 <td><p>Średni</p></td>
 <td><p><strong><code>rj-add-rule-test</code></strong> (<code>../04-system-agentow-ai/02-katalog-rol-i-wbudowanych-skilli.md</code>)</p></td>
 </tr>
 <tr>
 <td><p><strong>Zaimplementować lub zmienić regułę mechaniki gry (<code>R-nn</code>)</strong></p></td>
-<td><p>1. Napisz test jednostkowy <code>Rnn_...</code> w <code>tests/Rejoltance.Kernel.Tests/</code><br />2. Zaimplementuj logikę w <code>src/Rejoltance.Kernel/MatchEngine.cs</code> (albo w osobnej klasie pomocniczej w Kernelu)<br />3. Zaktualizuj status w <code>03-indeks-regul-r-nn.md</code></p></td>
+<td><p>1. Napisz test <code>Rnn_...</code> w <code>packages/engine/test/</code><br />2. Zaimplementuj logikę w <code>packages/engine/src/engine.ts</code> (albo w osobnym pliku w silniku)<br />3. Zaktualizuj status w <code>03-indeks-regul-r-nn.md</code></p></td>
 <td><p>Średni</p></td>
 <td><p><strong><code>rj-add-rule-test</code></strong> (<code>../04-system-agentow-ai/02-katalog-rol-i-wbudowanych-skilli.md</code>)</p></td>
 </tr>
 <tr>
 <td><p><strong>Zmienić strukturę <code>MatchView</code>, <code>Intent</code> lub <code>DomainEvent</code></strong></p></td>
-<td><p>1. Zapisz decyzję w ADR (Architecture Decision Record, <code>07-decyzje-adr/</code>)<br />2. Zmień rekord w <code>src/Rejoltance.Contracts/</code> oraz <code>Projection.cs</code><br />3. Zaktualizuj typ w <code>src/web/src/contracts/index.ts</code><br />4. Odśwież próbkę <code>UPDATE_CONTRACT_SAMPLES=1 dotnet test</code> — <strong>wszystko w jednym PR!</strong></p></td>
+<td><p>1. Zapisz decyzję w ADR (<code>07-decyzje-adr/</code>)<br />2. Zmień typ albo schemat w <code>packages/contracts/src/</code><br />3. Popraw miejsca, które wskaże <code>npm run typecheck</code> (silnik, serwer, klient)<br />4. Odśwież próbkę: <code>UPDATE_CONTRACT_SAMPLES=1 npm test</code> — <strong>wszystko w jednym PR!</strong></p></td>
 <td><p><strong>Wysoki</strong> <em>(zmiana zamrożonego kontraktu)</em></p></td>
 <td><p><strong><code>rj-write-adr</code></strong> (<code>../04-system-agentow-ai/02-katalog-rol-i-wbudowanych-skilli.md</code>)</p></td>
 </tr>
 <tr>
-<td><p><strong>Dodać nową metodę w hubie SignalR lub endpoint REST</strong></p></td>
-<td><p>1. Rozszerz <code>src/Rejoltance.Server/Matches/MatchHub.cs</code> lub <code>Program.cs</code><br />2. Dodaj test integracyjny w <code>tests/Rejoltance.Server.Tests/</code><br />3. Zaktualizuj dokumentację <code>09-kontrakty-i-api.md</code></p></td>
+<td><p><strong>Dodać zdarzenie Socket.IO lub endpoint REST</strong></p></td>
+<td><p>1. Dopisz typ zdarzenia w <code>packages/contracts/src/protocol.ts</code><br />2. Obsłuż je w <code>apps/server/src/app.ts</code><br />3. Dodaj test w <code>apps/server/test/</code><br />4. Zaktualizuj <code>09-kontrakty-i-api.md</code></p></td>
 <td><p>Średni</p></td>
 <td><p>—</p></td>
 </tr>
 <tr>
 <td><p><strong>Dodać lub rozbudować komponent UI</strong></p></td>
-<td><p>1. Napisz test komponentu w <code>src/web/src/**/*.test.tsx</code> (na sztucznym transporcie)<br />2. Zaimplementuj komponent w <code>src/web/src/components/</code></p></td>
+<td><p>1. Napisz test komponentu w <code>apps/web/src/**/*.test.tsx</code> (na sztucznym transporcie)<br />2. Zaimplementuj komponent w <code>apps/web/src/components/</code></p></td>
 <td><p>Niski</p></td>
 <td><p>—</p></td>
 </tr>
 <tr>
-<td><p><strong>Dodać nową tabelę w bazie danych</strong></p></td>
-<td><p>1. Rozszerz <code>src/Rejoltance.Server/Data/RejoltanceDb.cs</code><br />2. Zweryfikuj działanie na SQLite (oraz PostgreSQL od Sprintu 4)<br />3. Zaktualizuj diagram ERD w <code>05-sad-architektura-systemu.md</code></p></td>
+<td><p><strong>Dodać trwałe dane (baza)</strong></p></td>
+<td><p>1. Zaplanuj tabelę zgodnie z ADR-0007 (SQLite, potem PostgreSQL)<br />2. Dodaj warstwę danych w <code>apps/server/src/</code><br />3. Zaktualizuj diagram ERD w <code>05-sad-architektura-systemu.md</code></p></td>
 <td><p>Średni</p></td>
 <td><p>—</p></td>
 </tr>
 </tbody></table>
 <hr />
-<h2>4. Aktualny stan implementacji (po Sprincie 0)</h2>
+<h2>4. Aktualny stan implementacji</h2>
 <table><thead><tr>
 <th><p>Obszar</p></th>
 <th><p>Stan w kodzie</p></th>
 <th><p>Testy automatyczne</p></th>
 </tr></thead><tbody>
 <tr>
-<td><p><strong>Start meczu, tasowanie z seeda, dobieranie, mulligan, obrażenia Fatigue, limit ręki (8 kart), poddanie się, projekcja Fog of War</strong></p></td>
-<td><p><strong>Zaimplementowane w <code>Rejoltance.Kernel</code></strong></p></td>
-<td><p>Testy jednostkowe (<code>R-01</code>, <code>R-02</code>, <code>R-03</code>, <code>R-10</code>, <code>R-13</code>, <code>R-14</code>, <code>R-68</code>, <code>R-70</code>, <code>R-72</code>, <code>R-80</code>, <code>R-83</code>, <code>R-84</code>).</p></td>
+<td><p><strong>Start meczu, tasowanie z ziarna, dobieranie, mulligan, obrażenia Fatigue, limit ręki (8 kart), poddanie się, projekcja Fog of War</strong></p></td>
+<td><p><strong>Zaimplementowane w <code>packages/engine</code></strong></p></td>
+<td><p>Testy <code>R-01</code>, <code>R-02</code>, <code>R-03</code>, <code>R-10</code>, <code>R-13</code>, <code>R-14</code>, <code>R-68</code>, <code>R-70</code>, <code>R-72</code>, <code>R-80</code>, <code>R-83</code>, <code>R-84</code>.</p></td>
 </tr>
 <tr>
-<td><p><strong>Walidacja katalogu 78 kart i 5 talii startowych względem słownika DSL</strong></p></td>
-<td><p><strong>Zaimplementowane w <code>Rejoltance.Content</code></strong></p></td>
-<td><p><code>ContentTests.cs</code>.</p></td>
+<td><p><strong>Walidacja katalogu 159 kart i 4 talii startowych względem słownika DSL</strong></p></td>
+<td><p><strong>Zaimplementowane w <code>packages/content</code></strong></p></td>
+<td><p><code>packages/content/test</code>.</p></td>
 </tr>
 <tr>
-<td><p><strong>Tryb piaskownicy w przeglądarce przez SignalR (<code>StartSandbox</code>, <code>SendIntent</code>)</strong></p></td>
-<td><p><strong>Zaimplementowane w <code>Server</code> i <code>src/web</code></strong></p></td>
-<td><p><code>ServerTests.cs</code>, <code>AppHostSmokeTests.cs</code> i testy Vitest.</p></td>
+<td><p><strong>Tryb piaskownicy w przeglądarce przez Socket.IO (<code>startSandbox</code>, <code>sendIntent</code>)</strong></p></td>
+<td><p><strong>Zaimplementowane w <code>apps/server</code> i <code>apps/web</code></strong></p></td>
+<td><p><code>apps/server/test</code> (prawdziwe połączenie Socket.IO) i testy Vitest klienta.</p></td>
 </tr>
 <tr>
 <td><p><strong>Kroki rundy (<code>unitStep</code>, <code>mixedStep</code>, <code>actionStep</code>), zagrywanie jednostek, walka na 4 liniach, efekty kart DSL</strong></p></td>
-<td><p><strong>Zaplanowane w backlogu (<code>E1</code>, <code>E2</code>).</strong> Na razie rzucają czytelny wyjątek <code>NotImplementedException</code>.</p></td>
-<td><p>Specyfikacje <code>GIVEN/WHEN/THEN</code> są gotowe w <code>openspec/specs/</code>.</p></td>
+<td><p><strong>Zaplanowane w backlogu (<code>E1</code>, <code>E2</code>).</strong> Na razie rzucają czytelny błąd <code>NotImplementedError</code>.</p></td>
+<td><p>Specyfikacje <code>GIVEN/WHEN/THEN</code> w <code>openspec/specs/</code>.</p></td>
 </tr>
 <tr>
 <td><p><strong>Pokoje 1v1 PvP, bot AI, konta użytkowników, Deckbuilder</strong></p></td>

@@ -28,8 +28,8 @@ Uruchamiaj zawsze, gdy dodajesz, dzielisz, przenosisz lub przeszacowujesz histor
 4. **Uruchom generator i walidator:**
 
    ```bash
-   python tools/backlog/gen_jira_csv.py
-   python tools/backlog/gen_jira_csv.py --check
+   npm run backlog
+   npm run backlog:check
    npm run lint:md
    ```
 

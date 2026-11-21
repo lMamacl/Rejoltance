@@ -1,4 +1,4 @@
-<!-- CONFLUENCE 1:1 EXPORT | Source: docs/03-dokumentacja-procesowa/03-scrum-i-spotkania/spotkanie-startowe-agenda.md @ 28d2248 (2026-11-21) -->
+<!-- CONFLUENCE 1:1 EXPORT | Source: docs/03-dokumentacja-procesowa/03-scrum-i-spotkania/spotkanie-startowe-agenda.md -->
 # Spotkanie startowe zespołu — agenda (Kick-off Sprintu 0)
 
 > **Źródło prawdy:** repozytorium (`docs/03-dokumentacja-procesowa/03-scrum-i-spotkania/spotkanie-startowe-agenda.md`) · **Kategoria AltexSoft:** Process Documentation — Meeting Notes · **Etap SDD:** fundamenty (`Constitution`)

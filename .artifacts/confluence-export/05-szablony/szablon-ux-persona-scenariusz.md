@@ -1,4 +1,4 @@
-<!-- CONFLUENCE 1:1 EXPORT | Source: docs/05-szablony/szablon-ux-persona-scenariusz.md @ a2bf2a4 (2026-11-02) -->
+<!-- CONFLUENCE 1:1 EXPORT | Source: docs/05-szablony/szablon-ux-persona-scenariusz.md -->
 # 5.5 Szablon UX: Persony, scenariusze użytkownika i mapa historyjek
 
 > **Źródło prawdy:** Confluence PB / Repozytorium · **Kategoria AltexSoft:** Product: System Documentation — UX Design (User Personas, User Scenarios, Scenario/Story Maps) · **Etap SDD:** Specyfikacja (`Specify`) · **Wymóg uczelniany:** EU1

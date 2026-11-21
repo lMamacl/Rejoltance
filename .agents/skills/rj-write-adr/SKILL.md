@@ -33,5 +33,5 @@ Uruchamiaj, gdy zespół podejmuje istotną decyzję architektoniczną, technolo
 
    ```bash
    npm run lint:md
-   python tools/confluence/sync_confluence.py --check
+   npm run docs:check
    ```

@@ -14,7 +14,7 @@ Ten plik jest odczytywany automatycznie przez narzędzia AI, z których korzysta
 | Warstwa | Katalog | Kluczowe niezmienniki architektoniczne |
 |---|---|---|
 | **Kontrakty** | `packages/contracts` | 5 zamrożonych typów (`Intent`, `LegalAction`, `PendingInteraction`, `MatchView`, `DomainEvent`) i protokół Socket.IO, wspólne dla serwera i klienta. `Intent` ma schemat zod. Zmiana wymaga **ADR** i odświeżenia próbki `samples/match-view.sample.json`. |
-| **Katalog kart** | `packages/content` | Dane 130 kart i 29 tokenów w `data/cards.json` generowane z `prototype/game/cards.js` (`tools/content/extract_cards.py`), słownik DSL i walidator. Brak logiki gry. |
+| **Katalog kart** | `packages/content` | Dane 130 kart i 29 tokenów w `data/cards.json` generowane z `prototype/game/cards.js` (`tools/content/extract-cards.ts`), słownik DSL i walidator. Brak logiki gry. |
 | **Silnik reguł** | `packages/engine` | Czysty TypeScript: zero I/O, zegara i `Math.random()` (pilnuje ESLint). Losowość tylko przez deterministyczny RNG (`rng.ts`). |
 | **Serwer autorytatywny** | `apps/server` | Node.js 24 + Fastify (REST) + Socket.IO. Sprawdza intencje schematem zod i `engine.legalActions`, rozsyła `MatchView` każdemu graczowi osobno (*Fog of War* — `R-80…R-82`). |
 | **Klient webowy** | `apps/web` | React 19 + TypeScript + Vite. Renderuje wyłącznie `MatchView` i wysyła `Intent`. Importuje tylko `@rejoltance/contracts`. |
@@ -46,8 +46,8 @@ Ten plik jest odczytywany automatycznie przez narzędzia AI, z których korzysta
 ```bash
 npm run verify     # lint (z granicami modułów), typecheck, testy, build
 npm run check      # OpenSpec + markdownlint
-python tools/agents/sync_agents.py --check
-python tools/backlog/gen_jira_csv.py --check
+npm run agents:check
+npm run backlog:check
 ```
 
 ---
@@ -55,7 +55,7 @@ python tools/backlog/gen_jira_csv.py --check
 ## 4. Agenci AI i skille
 
 Korzystamy z **Claude Code** oraz narzędzi, które czytają ten plik i `.agents/` bezpośrednio (**Codex**, **Cursor**, **Antigravity**) — ADR-0014.
-Źródłem jest `.agents/`; adaptery dla Claude Code generuje `python tools/agents/sync_agents.py`.
+Źródłem jest `.agents/`; adaptery dla Claude Code generuje `npm run agents`.
 
 - **Rola:** `rj-qa-verifier` — niezależny recenzent (tylko odczyt), uruchamia testy i raportuje niezgodności.
 - **Skille zespołu:** `rj-start-feature`, `rj-spec-guardian`, `rj-add-rule-test`, `rj-add-card`, `rj-oracle-diff`, `rj-pr-ready`, `rj-write-adr`, `rj-backlog-to-jira`, `rj-sync-confluence` (opis: [`.agents/README.md`](.agents/README.md)).

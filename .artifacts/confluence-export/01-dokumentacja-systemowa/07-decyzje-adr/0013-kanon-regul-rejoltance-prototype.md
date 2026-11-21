@@ -1,4 +1,4 @@
-<!-- CONFLUENCE 1:1 EXPORT | Source: docs/01-dokumentacja-systemowa/07-decyzje-adr/0013-kanon-regul-rejoltance-prototype.md @ 28d2248 (2026-11-21) -->
+<!-- CONFLUENCE 1:1 EXPORT | Source: docs/01-dokumentacja-systemowa/07-decyzje-adr/0013-kanon-regul-rejoltance-prototype.md -->
 # ADR-0013: Kanonem zasad jest prototyp rejoltance-prototype
 
 > **Źródło prawdy:** repozytorium (`docs/01-dokumentacja-systemowa/07-decyzje-adr/0013-kanon-regul-rejoltance-prototype.md`) · **Kategoria dokumentacji:** Decyzja architektoniczna (ADR) · **Etap SDD:** Specyfikacja

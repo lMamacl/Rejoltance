@@ -1,11 +1,11 @@
-<!-- CONFLUENCE 1:1 EXPORT | Source: docs/01-dokumentacja-systemowa/04-rozbieznosci-prototypu.md @ 28d2248 (2026-11-21) -->
+<!-- CONFLUENCE 1:1 EXPORT | Source: docs/01-dokumentacja-systemowa/04-rozbieznosci-prototypu.md -->
 # 1.4 Analiza rozbieżności i znanych błędów prototypu (D‑01..D‑20)
 
 > **Źródło prawdy:** repozytorium (`docs/01-dokumentacja-systemowa/04-rozbieznosci-prototypu.md`) · **Kategoria dokumentacji:** Dokumentacja produktowa — systemowa (notatka analityczna rozbieżności) · **Etap SDD:** Specyfikacja.
 
 Wzorcem zasad gry jest prototyp JavaScript `prototype/game` ([ADR-0013](07-decyzje-adr/0013-kanon-regul-rejoltance-prototype.md)). Pozycje D-nn spisano dla wersji v11 ([ADR-0005](07-decyzje-adr/0005-kanon-regul-prototyp-js.md)) i trzeba je sprawdzić na nowym prototypie. Tabela poniżej zbiera wszystkie znalezione różnice między prototypem a pierwotnym opisem tekstowym (`docs/99-archiwum-zrodel/pomoce-dydaktyczne/RE_JOLTANCE.md`). Zbiera też oczywiste błędy w kodzie prototypu.
 
-Każdy punkt rozstrzygamy jako zespół w zadaniu `E0-S04`. Potem agent `rj-spec-analyst` aktualizuje regułę `R‑nn` w `openspec/specs/`. Agent `rj-rules-engineer` dopisuje lub poprawia test jednostkowy i implementację w Kernelu.
+Każdy punkt rozstrzygamy jako zespół w zadaniu `E0-S04`. Potem aktualizujemy regułę `R‑nn` w `openspec/specs/` i dopisujemy lub poprawiamy test jednostkowy oraz implementację w silniku.
 
 Typ zgłoszenia:
 

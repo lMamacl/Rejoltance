@@ -1,4 +1,4 @@
-<!-- CONFLUENCE 1:1 EXPORT | Source: docs/01-dokumentacja-systemowa/07-decyzje-adr/README.md @ 28d2248 (2026-11-21) -->
+<!-- CONFLUENCE 1:1 EXPORT | Source: docs/01-dokumentacja-systemowa/07-decyzje-adr/README.md -->
 # 1.7 Decyzje architektoniczne (ADR)
 
 > **Źródło prawdy:** Repozytorium (`docs/01-dokumentacja-systemowa/07-decyzje-adr/`) · **Kategoria dokumentacji:** Dokumentacja produktowa — systemowa (decyzje architektoniczne ADR) · **Etap SDD:** Fundamenty i planowanie
@@ -13,11 +13,11 @@ W ADR-ach oznaczamy fakty: [V] — zweryfikowane, [Z] — założenie.
 
 ---
 
-## Rejestr decyzji (ADR-0001 – ADR-0013)
+## Rejestr decyzji (ADR-0001 – ADR-0015)
 
 | Numer ADR | Tytuł decyzji | Status | Główny obszar |
 |---|---|---|---|
-| [ADR-0001](0001-stos-technologiczny.md) | Stos technologiczny: .NET 10 + React/TypeScript + .NET Aspire | Zatwierdzona (`accepted`) | Technologia i uruchomienie |
+| [ADR-0001](0001-stos-technologiczny.md) | Stos technologiczny: .NET 10 + React/TypeScript + .NET Aspire | Zatwierdzona (`accepted`), backend zastąpiony przez ADR-0015 | Technologia i uruchomienie |
 | [ADR-0002](0002-github-i-mirror-bitbucket.md) | GitHub jako główne repozytorium robocze i automatyczny mirror do Bitbucket PB | Zatwierdzona (`accepted`) | Proces i repozytoria |
 | [ADR-0003](0003-openspec-i-konstytucja.md) | OpenSpec 1.15 jako narzędzie spec-driven development i własna konstytucja projektu | Zatwierdzona (`accepted`) | SDD i agenci AI |
 | [ADR-0004](0004-kernel-od-nowa-deterministyczny.md) | Czysty, deterministyczny silnik reguł (`Rejoltance.Kernel`) pisany od nowa w C# | Zatwierdzona (`accepted`) | Architektura domeny |
@@ -25,8 +25,10 @@ W ADR-ach oznaczamy fakty: [V] — zweryfikowane, [Z] — założenie.
 | [ADR-0006](0006-serwer-autorytatywny-fog-of-war.md) | Serwer autorytatywny z projekcją stanu dla każdego gracza (ochrona ukrytych informacji) | Zatwierdzona (`accepted`) | Bezpieczeństwo i sieć |
 | [ADR-0007](0007-sqlite-potem-postgresql.md) | Baza danych: SQLite na start (Sprinty 0–3), PostgreSQL od Sprintu 4 | Zatwierdzona (`accepted`) | Architektura danych |
 | [ADR-0008](0008-spine-first-pionowe-plastry.md) | Najpierw rdzeń (*spine-first*), potem pionowe plastry funkcji | Proponowana (`proposed`) | Planowanie i integracja |
-| [ADR-0009](0009-kanon-agentow-i-adaptery.md) | Jeden kanon konfiguracji agentów AI w `.agents/` i adaptery dla 5 narzędzi IDE | Zatwierdzona (`accepted`) | System agentów AI |
-| [ADR-0010](0010-kontrakt-csharp-ts-przez-probke.md) | Spójność kontraktu C# ↔ TypeScript sprawdzana kanonicznymi próbkami JSON | Proponowana (`proposed`) | Kontrakty i testy |
+| [ADR-0009](0009-kanon-agentow-i-adaptery.md) | Jeden kanon konfiguracji agentów AI w `.agents/` i adaptery dla 5 narzędzi IDE | Zatwierdzona (`accepted`), zakres zmieniony przez ADR-0014 | System agentów AI |
+| [ADR-0010](0010-kontrakt-csharp-ts-przez-probke.md) | Spójność kontraktu C# ↔ TypeScript sprawdzana kanonicznymi próbkami JSON | Zastąpiona (`superseded by ADR-0015`) | Kontrakty i testy |
 | [ADR-0011](0011-dokumentacja-hybryda-repo-confluence.md) | Dokumentacja w układzie 1:1 (taksonomia AltexSoft, cykl życia SDD, synchronizacja z Confluence) | Zatwierdzona (`accepted`) | Dokumentacja i SDD |
 | [ADR-0012](0012-konstytucja-v2.md) | Konstytucja v2: nowy układ artykułów, zachowane zakazy dla agentów AI i zasada języka | Zatwierdzona (`accepted`) | Proces i agenci AI |
 | [ADR-0013](0013-kanon-regul-rejoltance-prototype.md) | Prototyp `PanCoto/rejoltance-prototype` (git subtree w `prototype/`) jako kanon zasad gry zamiast v11 | Zatwierdzona (`accepted`) | Specyfikacja reguł |
+| [ADR-0014](0014-odchudzenie-systemu-agentow.md) | Odchudzenie systemu agentów: adaptery tylko dla Claude Code, jedna rola recenzenta, 9 skilli zespołu | Zatwierdzona (`accepted`) | System agentów AI |
+| [ADR-0015](0015-backend-node-typescript.md) | Backend w Node.js i TypeScript zamiast .NET; npm workspaces (contracts, content, engine, server, web) | Zatwierdzona (`accepted`) | Technologia i architektura |

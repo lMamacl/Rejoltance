@@ -1,4 +1,4 @@
-<!-- CONFLUENCE 1:1 EXPORT | Source: docs/00-przewodnik-i-setup/04-sciaga-komend.md @ 28d2248 (2026-11-21) -->
+<!-- CONFLUENCE 1:1 EXPORT | Source: docs/00-przewodnik-i-setup/04-sciaga-komend.md -->
 # 0.4 Ściąga komend deweloperskich, testowych i SDD
 
 > **Źródło prawdy:** repozytorium (`docs/00-przewodnik-i-setup/04-sciaga-komend.md`) · **Kategoria dokumentacji:** ściąga deweloperska · **Etap SDD:** Realizacja i weryfikacja
@@ -45,10 +45,10 @@ Każdy skrypt ma dwa tryby. Bez flagi generuje pliki. Z flagą `--check` tylko s
 
 | Cel | Generowanie plików | Sprawdzenie w CI (`--check`) |
 |---|---|---|
-| Synchronizacja agentów, reguł i skilli z `.agents/` do adapterów IDE | `python tools/agents/sync_agents.py` | `python tools/agents/sync_agents.py --check` |
-| Ekstrakcja kart i talii z prototypu JS do `cards.json` i `decks.json` | `python tools/content/extract_cards.py` | `python tools/content/extract_cards.py --check` |
-| Pliki importu CSV do Jiry i podsumowanie `BACKLOG.md` z `backlog.toml` | `python tools/backlog/gen_jira_csv.py` | `python tools/backlog/gen_jira_csv.py --check` |
-| Walidacja i eksport drzewa `docs/` do Confluence | `python tools/confluence/sync_confluence.py` | `python tools/confluence/sync_confluence.py --check` |
+| Synchronizacja agentów, reguł i skilli z `.agents/` do adapterów IDE | `npm run agents` | `npm run agents:check` |
+| Ekstrakcja kart i talii z prototypu JS do `cards.json` i `decks.json` | `npm run cards` | `npm run cards:check` |
+| Pliki importu CSV do Jiry i podsumowanie `BACKLOG.md` z `backlog.toml` | `npm run backlog` | `npm run backlog:check` |
+| Walidacja i eksport drzewa `docs/` do Confluence | `npm run docs:check` | `npm run docs:check` |
 
 ---
 
@@ -56,7 +56,7 @@ Każdy skrypt ma dwa tryby. Bez flagi generuje pliki. Z flagą `--check` tylko s
 
 Ta sama komenda ma inną składnię w różnych narzędziach AI:
 
-| Etap SDD | Claude Code / Gemini CLI | Antigravity / GitHub Copilot | OpenAI Codex |
+| Etap SDD | Claude Code | Antigravity | Codex |
 |---|---|---|---|
 | **1. Eksploracja problemu** | `/opsx:explore` | `/opsx-explore` | `$openspec-explore` |
 | **2. Propozycja zmiany w specyfikacji** | `/opsx:propose REJ-123 opis` | `/opsx-propose REJ-123 opis` | `$openspec-propose REJ-123 opis` |
@@ -69,18 +69,16 @@ Ta sama komenda ma inną składnię w różnych narzędziach AI:
 
 ## 5. Skille zespołu (`.agents/skills/`)
 
-Skill to opisana krok po kroku procedura, którą wykonuje agent albo człowiek. Kolumna „Agenci” pokazuje role, które mają dany skill w swojej konfiguracji (`.agents/agents/`).
+Skill to opisana krok po kroku procedura, którą wykonuje agent albo człowiek. Niezależną recenzję zmian robi rola `rj-qa-verifier`.
 
-| Skill (`/nazwa`) | Do czego służy | Agenci |
-|---|---|---|
-| `rj-start-feature` | Start pracy nad zadaniem z Jiry: gałąź i nowa zmiana OpenSpec. | `rj-orchestrator` |
-| `rj-add-rule-test` | Przeniesienie reguły gry z prototypu na wymaganie `R-nn` i test xUnit. | `rj-rules-engineer`, `rj-backend-engineer`, `rj-qa-verifier` |
-| `rj-add-card` | Dodanie lub zmiana karty w prototypie i ponowne wygenerowanie katalogu JSON. | `rj-card-author` |
-| `rj-write-adr` | Nowy zapis decyzji architektonicznej (ADR, Architecture Decision Record) według szablonu. | `rj-architect`, `rj-docs-writer` |
-| `rj-pr-ready` | Sprawdzenie buildu, testów, specyfikacji i opisu przed Pull Requestem (PR). | `rj-orchestrator`, `rj-qa-verifier` |
-| `rj-sync-confluence` | Walidacja struktury `docs/` i paczka stron do Confluence PB (Politechniki Białostockiej). | `rj-docs-writer`, `rj-scrum-jira` |
-| `rj-backlog-to-jira` | Aktualizacja `backlog.toml` i pliki CSV do importu w Jirze. | `rj-scrum-jira` |
-| `rj-daily-report` | Notatka ze spotkania Daily Scrum. | `rj-scrum-jira` |
-| `rj-sprint-report` | Raport z Sprint Review, Retrospektywy i analiza estymat. | `rj-scrum-jira` |
-| `rj-add-skill` | Nowy skill w `.agents/skills/` i synchronizacja adapterów. | `rj-orchestrator` |
-| `rj-add-agent` | Nowa rola agenta w `.agents/agents/` i synchronizacja adapterów. | `rj-orchestrator` |
+| Skill (`/nazwa`) | Do czego służy |
+|---|---|
+| `rj-start-feature` | Start pracy nad zadaniem z Jiry: gałąź i ewentualna zmiana OpenSpec. |
+| `rj-spec-guardian` | Spójność OpenSpec, indeksu R-nn, rozbieżności D-nn i backlogu. |
+| `rj-add-rule-test` | Przeniesienie reguły gry z prototypu na wymaganie `R-nn` i test. |
+| `rj-add-card` | Zmiana kart: dociągnięcie prototypu i ponowne wygenerowanie katalogu JSON. |
+| `rj-oracle-diff` | Porównanie silnika z prototypem JS. |
+| `rj-write-adr` | Nowy zapis decyzji architektonicznej (ADR, Architecture Decision Record) według szablonu. |
+| `rj-pr-ready` | Sprawdzenie buildu, testów, specyfikacji i opisu przed Pull Requestem (PR). |
+| `rj-sync-confluence` | Walidacja struktury `docs/` i paczka stron do Confluence PB (Politechniki Białostockiej). |
+| `rj-backlog-to-jira` | Aktualizacja `backlog.toml` i pliki CSV do importu w Jirze. |

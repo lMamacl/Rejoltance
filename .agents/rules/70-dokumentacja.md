@@ -29,4 +29,4 @@ Katalog `99-archiwum-zrodel/` zawiera historyczne materiały dydaktyczne (tylko 
 3. **Diagramy i tabele:** diagramy architektury i przepływów twórz w formacie `mermaid` (renderowanym natywnie w GitHubie i Confluence).
 4. **Spójność linków i formatowania:** po każdej edycji dokumentacji uruchom:
    - `npm run lint:md` (`markdownlint-cli2`),
-   - `python tools/confluence/sync_confluence.py --check` (weryfikacja drzewa i linków pod kątem Confluence).
+   - `npm run docs:check` (weryfikacja drzewa i linków pod kątem Confluence).

@@ -1,4 +1,4 @@
-<!-- CONFLUENCE 1:1 EXPORT | Source: docs/02-dokumentacja-uzytkownika/README.md @ a2bf2a4 (2026-11-02) -->
+<!-- CONFLUENCE 1:1 EXPORT | Source: docs/02-dokumentacja-uzytkownika/README.md -->
 # 02. Dokumentacja produktowa — użytkownika i administratora
 
 Katalog `02-dokumentacja-uzytkownika/` to druga główna gałąź dokumentacji produktowej w klasyfikacji AltexSoft. Dzielimy ją według dwóch grup czytelników:

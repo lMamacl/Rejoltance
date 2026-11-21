@@ -1,0 +1,42 @@
+<ac:structured-macro ac:name="info"><ac:rich-text-body><p><strong>Synchronizacja 1:1 z repozytorium Git:</strong> <code>docs/01-dokumentacja-systemowa/07-decyzje-adr/0014-odchudzenie-systemu-agentow.md</code></p></ac:rich-text-body></ac:structured-macro>
+<blockquote><p><strong>Źródło prawdy:</strong> repozytorium (<code>docs/01-dokumentacja-systemowa/07-decyzje-adr/0014-odchudzenie-systemu-agentow.md</code>) · <strong>Kategoria dokumentacji:</strong> Decyzja architektoniczna (ADR) · <strong>Etap SDD:</strong> Fundamenty</p></blockquote>
+<ul><li><strong>Status:</strong> zaakceptowana</li><li><strong>Data:</strong> 2026-11-21</li><li><strong>Autorzy:</strong> Gabriel Ostaszewski (z pomocą agenta AI)</li><li><strong>Akceptacja:</strong> cały zespół (6 osób), 2026-11-21, po przeczytaniu analizy repozytorium</li><li><strong>Powiązane:</strong> <strong>ADR-0009</strong> (<code>0009-kanon-agentow-i-adaptery.md</code>) (zmienia zakres), <code>AGENTS.md</code>, <code>.agents/</code>, <code>tools/agents/sync_agents.py</code></li></ul>
+<h2>Kontekst i problem</h2>
+<p>ADR-0009 wprowadził jedno źródło zasad w <code>.agents/</code> i generowane adaptery dla pięciu narzędzi. Po miesiącu konfiguracja agentów liczyła około 160 plików i 14 tys. linii. Własnej treści było w niej ok. 1,3 tys. linii, a resztę stanowiły kopie dla Claude Code, Copilota, Gemini i Antigravity. [V]</p>
+<p>Zespół korzysta z Claude Code oraz z narzędzi czytających <code>AGENTS.md</code> i <code>.agents/</code> bezpośrednio (Codex, Cursor, Antigravity). Z Copilota i Gemini CLI nikt nie korzysta. [V] Dziesięć ról agentów nie dawało nowych możliwości, bo każda była listą plików do przeczytania. W praktyce pracę wykonuje główny agent prowadzony konstytucją i skillami. [Z] Część plików wskazywała nieistniejące ścieżki, przez co agenci zgadywali. [V]</p>
+<h2>Rozważane opcje</h2>
+<table><thead><tr>
+<th><p>Opcja</p></th>
+<th><p>Zalety</p></th>
+<th><p>Wady</p></th>
+<th><p>Koszt / ryzyko</p></th>
+</tr></thead><tbody>
+<tr>
+<td><p>Zostawić bez zmian</p></td>
+<td><p>zero pracy</p></td>
+<td><p>szum, martwe ścieżki, utrzymanie 4 kopii</p></td>
+<td><p>rośnie z każdą zmianą</p></td>
+</tr>
+<tr>
+<td><p><strong>Zostawić tylko używane narzędzia, jedną rolę i skille oparte na skryptach</strong></p></td>
+<td><p>mniej plików, łatwiej utrzymać prawdę</p></td>
+<td><p>przy nowym narzędziu trzeba dopisać adapter</p></td>
+<td><p>niski</p></td>
+</tr>
+<tr>
+<td><p>Usunąć <code>.agents/</code> i zostawić sam <code>AGENTS.md</code></p></td>
+<td><p>najprościej</p></td>
+<td><p>tracimy skille i sprawdzanie w CI</p></td>
+<td><p>utrata powtarzalnych procedur</p></td>
+</tr>
+</tbody></table>
+<h2>Decyzja</h2>
+<p>W kontekście nadmiaru plików agentów wybieramy <strong>adaptery tylko dla Claude Code, jedną rolę <code>rj-qa-verifier</code> i 9 skilli zespołu</strong> zamiast pełnego zestawu dla pięciu narzędzi, aby zasady były krótkie i prawdziwe, akceptując, że nowe narzędzie wymaga dopisania adaptera.</p>
+<ul><li>Usunięte adaptery: <code>.gemini/</code>, <code>GEMINI.md</code>, <code>.github/agents/</code>, <code>.github/instructions/</code>, <code>.github/skills/</code>, <code>.github/prompts/</code>, <code>.github/copilot-instructions.md</code>, <code>.vscode/mcp.json</code>.</li><li>Usunięte role: wszystkie poza <code>rj-qa-verifier</code> (9 ról).</li><li>Usunięte skille: <code>rj-add-agent</code>, <code>rj-add-skill</code>, <code>rj-daily-report</code>, <code>rj-sprint-report</code>. Raporty ze spotkań piszemy z szablonów w <code>03-scrum-i-spotkania</code>.</li><li>Usunięta reguła <code>60-kontekst-i-tokeny.md</code>. Najważniejsza wskazówka (nie wczytywać całych dużych plików) jest w <code>AGENTS.md</code>.</li><li><code>sync_agents.py</code> generuje tylko <code>.claude/agents/</code>, <code>.claude/skills/</code> i komendy Antigravity w <code>.agents/workflows/</code>.</li></ul>
+<h2>Konsekwencje</h2>
+<h3>Pozytywne</h3>
+<ul><li>Ponad 100 plików mniej i jeden spójny opis w <code>AGENTS.md</code> oraz <code>.agents/README.md</code>.</li><li>Mniej miejsc, w których zasady mogą się rozjechać z kodem.</li></ul>
+<h3>Negatywne / ryzyka</h3>
+<ul><li>Osoba używająca Copilota albo Gemini nie dostanie gotowych adapterów. Może skorzystać z <code>AGENTS.md</code> albo poprosić o dopisanie adaptera.</li></ul>
+<h3>Do zrobienia</h3>
+<ul><li>[ ] Po zmianie backendu (osobny ADR) przepisać reguły i skille tak, żeby wskazywały nowe ścieżki i polecenia.</li></ul>

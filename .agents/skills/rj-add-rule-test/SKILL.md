@@ -38,4 +38,4 @@ Uruchamiaj podczas implementacji lub weryfikacji każdej reguły domenowej `R-nn
 
 4. **Zaktualizuj macierz śledzenia reguł:**
    - W pliku `docs/01-dokumentacja-systemowa/03-indeks-regul-r-nn.md` wpisz nazwę testu w kolumnie *Test* i zmień status reguły na `✅` (gdy cała reguła jest zaimplementowana i przetestowana).
-   - Uruchom `python tools/backlog/gen_jira_csv.py --check` oraz `npm run check`.
+   - Uruchom `npm run backlog:check` oraz `npm run check`.

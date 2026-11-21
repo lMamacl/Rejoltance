@@ -44,10 +44,10 @@ Każdy skrypt ma dwa tryby. Bez flagi generuje pliki. Z flagą `--check` tylko s
 
 | Cel | Generowanie plików | Sprawdzenie w CI (`--check`) |
 |---|---|---|
-| Synchronizacja agentów, reguł i skilli z `.agents/` do adapterów IDE | `python tools/agents/sync_agents.py` | `python tools/agents/sync_agents.py --check` |
-| Ekstrakcja kart i talii z prototypu JS do `cards.json` i `decks.json` | `python tools/content/extract_cards.py` | `python tools/content/extract_cards.py --check` |
-| Pliki importu CSV do Jiry i podsumowanie `BACKLOG.md` z `backlog.toml` | `python tools/backlog/gen_jira_csv.py` | `python tools/backlog/gen_jira_csv.py --check` |
-| Walidacja i eksport drzewa `docs/` do Confluence | `python tools/confluence/sync_confluence.py` | `python tools/confluence/sync_confluence.py --check` |
+| Synchronizacja agentów, reguł i skilli z `.agents/` do adapterów IDE | `npm run agents` | `npm run agents:check` |
+| Ekstrakcja kart i talii z prototypu JS do `cards.json` i `decks.json` | `npm run cards` | `npm run cards:check` |
+| Pliki importu CSV do Jiry i podsumowanie `BACKLOG.md` z `backlog.toml` | `npm run backlog` | `npm run backlog:check` |
+| Walidacja i eksport drzewa `docs/` do Confluence | `npm run docs:check` | `npm run docs:check` |
 
 ---
 

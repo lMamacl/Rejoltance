@@ -1,4 +1,4 @@
-<!-- CONFLUENCE 1:1 EXPORT | Source: docs/03-dokumentacja-procesowa/04-badania-i-analizy/README.md @ a2bf2a4 (2026-11-02) -->
+<!-- CONFLUENCE 1:1 EXPORT | Source: docs/03-dokumentacja-procesowa/04-badania-i-analizy/README.md -->
 # 3.4 Badania techniczne i analizy porównawcze
 
 > **Źródło prawdy:** repozytorium (`docs/03-dokumentacja-procesowa/04-badania-i-analizy/`) · **Kategoria dokumentacji:** Dokumentacja procesowa — notatki robocze i badania techniczne · **Etap SDD:** planowanie

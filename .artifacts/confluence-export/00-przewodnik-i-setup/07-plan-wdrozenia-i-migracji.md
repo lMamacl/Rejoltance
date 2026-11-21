@@ -1,4 +1,4 @@
-<!-- CONFLUENCE 1:1 EXPORT | Source: docs/00-przewodnik-i-setup/07-plan-wdrozenia-i-migracji.md @ 28d2248 (2026-11-21) -->
+<!-- CONFLUENCE 1:1 EXPORT | Source: docs/00-przewodnik-i-setup/07-plan-wdrozenia-i-migracji.md -->
 # 0.7 Plan wdrożenia i migracji: Co zmienić i co podmienić względem dotychczasowego podejścia
 
 > **Źródło prawdy:** repozytorium (`docs/00-przewodnik-i-setup/07-plan-wdrozenia-i-migracji.md`) · **Kategoria dokumentacji:** dokumentacja procesowa — plan zmian i wdrożenia · **Etap SDD:** Fundamenty i organizacja projektu

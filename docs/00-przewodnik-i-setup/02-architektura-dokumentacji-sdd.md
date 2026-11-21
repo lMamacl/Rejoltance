@@ -35,7 +35,7 @@ flowchart LR
 ### Pięć zasad naszej dokumentacji
 
 1. **Najpierw specyfikacja, potem kod.** Niektóre zadania wymagają zatwierdzonej specyfikacji przed kodowaniem. Dotyczy to zmian reguł gry, zmian kontraktów komunikacyjnych i funkcjonalności o rozmiarze ≥ 3 Story Points (SP, punkty oszacowania). Specyfikacja zawiera wymagania i scenariusze `GIVEN / WHEN / THEN`.
-2. **Układ 1:1 między `docs/` a Confluence.** Katalogi w `docs/` odpowiadają stronom nadrzędnym i podstronom w przestrzeni Confluence PB. Wiadomo więc, gdzie co leży. Dokumentację przenosi do Confluence skrypt `python tools/confluence/sync_confluence.py`.
+2. **Układ 1:1 między `docs/` a Confluence.** Katalogi w `docs/` odpowiadają stronom nadrzędnym i podstronom w przestrzeni Confluence PB. Wiadomo więc, gdzie co leży. Dokumentację przenosi do Confluence skrypt `npm run docs:check`.
 3. **Jedno źródło prawdy dla każdego typu treści (Single Source of Truth):**
    - **Repozytorium Git (`docs/` i `openspec/`)** to źródło prawdy dla dokumentacji, która steruje tworzeniem oprogramowania. Należą tu: PRD, reguły gry, SAD, stos technologiczny, ADR, API, UX, strategia testów i konfiguracja agentów AI. Każda zmiana przechodzi przez Pull Request i walidację w CI (`npm run check`).
    - **Confluence PB** zawiera całe drzewo dokumentacji. Są tam kopie dokumentów z repozytorium z nagłówkiem wersji. Confluence to też miejsce edycji „żywych” protokołów i raportów ze spotkań: raportów z testów sprintu, protokołów Sprint Review i notatek z Daily Scrum.
@@ -60,7 +60,7 @@ Rozważyliśmy dwa sposoby układania drzewa w repozytorium i w Confluence:
 | **2. Spójność tematyczna (wygoda dla ludzi)** | **Bardzo wysoka (9/10).** Każdy dokument ma jedno naturalne miejsce, wynikające z tego, czym jest. Dokumentacja systemowa leży w `01-dokumentacja-systemowa/`, szablony w `05-szablony/`, wiedza o agentach w `04-system-agentow-ai/`. | **Niska (4/10).** Jedna dziedzina rozpada się na kilka faz. Na przykład UX trafia w trzy miejsca: persony w fazie 2, mapa ekranów w fazie 3, testy użyteczności w fazie 5. Podobnie roadmapy. |
 | **3. Łatwość utrzymania przez 6-osobowy zespół** | **Bardzo wysoka (9/10).** Jest sześć czytelnych katalogów nadrzędnych. Osoba odpowiedzialna za epik (EU1) albo dokumentację modułu (EU5) wie, gdzie pracować. Nie musi przeszukiwać 35 drobnych podstron. | **Niska (5/10).** W poprzedniej wersji repozytorium łączyliśmy 12 katalogów roboczych z 7-etapowym drzewem Confluence. Nikt nie wiedział, gdzie szukać plików. |
 | **4. Praca z agentami AI i OpenSpec** | **Bardzo wysoka (10/10).** Agenci mają stałe ścieżki: wymagania w `01-dokumentacja-systemowa/`, reguły wykonywalne w `openspec/specs/`, własne procedury w `04-system-agentow-ai/` i `.agents/`. | **Dobra (7/10).** Agenci radzą sobie ze ścieżkami wpisanymi w reguły. Ludzie sprawdzający ich pracę gubią się jednak w rozproszonych katalogach. |
-| **5. Synchronizacja repozytorium ↔ Confluence (1:1)** | **Automatyczna (10/10).** Drzewo `docs/` i drzewo stron w Confluence są identyczne. Jeden skrypt (`sync_confluence.py`) eksportuje i waliduje całą przestrzeń. | **Utrudniona (5/10).** Trzeba ręcznie utrzymywać tabelę przekierowań między plikami w repozytorium a stronami w wiki. |
+| **5. Synchronizacja repozytorium ↔ Confluence (1:1)** | **Automatyczna (10/10).** Drzewo `docs/` i drzewo stron w Confluence są identyczne. Jeden skrypt (`tools/confluence/sync-confluence.ts`) eksportuje i waliduje całą przestrzeń. | **Utrudniona (5/10).** Trzeba ręcznie utrzymywać tabelę przekierowań między plikami w repozytorium a stronami w wiki. |
 
 **Wniosek:** wybieramy **wariant A**, czyli układ 1:1 według taksonomii AltexSoft połączony z cyklem SDD. Foldery i drzewo Confluence dzielimy tak jak w artykule AltexSoft. Każdy dokument ma w nagłówku i w tabeli nawigacyjnej przypisaną fazę SDD (`Constitution`, `Specify`, `Plan`, `Tasks`, `Implement`, `Verify`, `Release`). Spełniamy w ten sposób w 100% polecenie prowadzącego i zachowujemy dyscyplinę procesu SDD.
 
@@ -157,16 +157,16 @@ Drzewo powyżej nie pokazuje jeszcze strony 0.7 (plan wdrożenia i migracji). Ta
 
 ---
 
-## 5. Synchronizacja: repozytorium Git → Confluence (`sync_confluence.py`)
+## 5. Synchronizacja: repozytorium Git → Confluence (`npm run docs:*`)
 
-Nie chcemy ręcznie formatować stron ani pilnować, czy wersje w repozytorium i w Confluence PB się zgadzają. Dlatego przygotowaliśmy narzędzie `tools/confluence/sync_confluence.py` i skill agentowy `rj-sync-confluence`.
+Nie chcemy ręcznie formatować stron ani pilnować, czy wersje w repozytorium i w Confluence PB się zgadzają. Dlatego przygotowaliśmy narzędzie `tools/confluence/sync-confluence.ts` i skill agentowy `rj-sync-confluence`.
 
 ### Jak przenosimy dokumentację do Confluence?
 
 1. **Sprawdzenie drzewa (`--check`).**
-   Polecenie `python tools/confluence/sync_confluence.py --check` sprawdza trzy rzeczy. Czy każda strona ze struktury docelowej istnieje w `docs/`. Czy ma poprawny Markdown. Czy nie zawiera zepsutych linków. CI uruchamia ten krok automatycznie.
+   Polecenie `npm run docs:check` sprawdza trzy rzeczy. Czy każda strona ze struktury docelowej istnieje w `docs/`. Czy ma poprawny Markdown. Czy nie zawiera zepsutych linków. CI uruchamia ten krok automatycznie.
 2. **Paczka eksportowa (`--export`).**
-   Polecenie `python tools/confluence/sync_confluence.py` buduje pliki gotowe do publikacji w katalogu `.artifacts/confluence-export/`. Git ignoruje ten katalog. Skrypt dodaje do każdego dokumentu jednolity **nagłówek metadanych Confluence**:
+   Polecenie `npm run docs:export` buduje pliki gotowe do publikacji w katalogu `.artifacts/confluence-export/` (katalog jest w repozytorium; zmieniają się w nim tylko strony o zmienionej treści). Skrypt dodaje do każdego dokumentu jednolity **nagłówek metadanych Confluence**:
 
    ```text
    Źródło prawdy: Repozytorium Git — docs/01-dokumentacja-systemowa/05-sad-architektura-systemu.md (gałąź develop)
@@ -175,4 +175,4 @@ Nie chcemy ręcznie formatować stron ani pilnować, czy wersje w repozytorium i
 
 3. **Publikacja w Confluence PB (ręczna albo przez REST API).**
    - **Tryb ręczny (bez tokena):** otwórz plik z `.artifacts/confluence-export/` i skopiuj jego treść. W edytorze Confluence PB wybierz *Wstaw (Insert) → Znaczniki (Markup) → Markdown*.
-   - **Tryb automatyczny (z tokenem PAT, Personal Access Token):** ustaw zmienne środowiskowe `CONFLUENCE_URL`, `CONFLUENCE_SPACE_KEY` i `CONFLUENCE_PERSONAL_TOKEN`. Potem uruchom `python tools/confluence/sync_confluence.py --publish`. Skrypt utworzy lub zaktualizuje drzewo stron przez REST API Confluence Server/Data Center 8.4.
+   - **Tryb automatyczny (z tokenem PAT, Personal Access Token):** ustaw zmienne środowiskowe `CONFLUENCE_URL`, `CONFLUENCE_SPACE_KEY` i `CONFLUENCE_PERSONAL_TOKEN`. Potem uruchom `npm run docs:publish -- --changed-since develop --only-existing` (najpierw z `--dry-run`). Skrypt zaktualizuje drzewo stron przez REST API Confluence Server/Data Center 8.4.

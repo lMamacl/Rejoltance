@@ -1,4 +1,4 @@
-<!-- CONFLUENCE 1:1 EXPORT | Source: docs/05-szablony/naglowek-strony-confluence.md @ a2bf2a4 (2026-11-02) -->
+<!-- CONFLUENCE 1:1 EXPORT | Source: docs/05-szablony/naglowek-strony-confluence.md -->
 # 5.1 Standard nagłówka metadanych strony w Confluence
 
 Każda strona w przestrzeni projektu w Confluence PB zaczyna się od takiego samego bloku informacyjnego (makro informacyjne albo cytat na górze strony). Z tego bloku czytelnik dowiaduje się:

@@ -8,7 +8,7 @@ Projekt zespołowy (6 osób, 2 semestry) realizowany na Wydziale Informatyki Pol
 
 ## Szybki start (3 komendy)
 
-Wymagania wstępne: **Node.js 24**, **Python 3.11+** (skrypty w `tools/`), **Git**.
+Wymagania wstępne: **Node.js 24** i **Git**.
 
 ```powershell
 # 1. Jednorazowa konfiguracja: sprawdzenie narzędzi, instalacja zależności, plik .env, testy
@@ -68,7 +68,7 @@ Rejoltance/
 |---|---|
 | `npm run verify` | Lint (z granicami modułów i determinizmem silnika), typecheck, testy (`Rnn_`, serwer przez Socket.IO, klient) i build klienta |
 | `npm run check` | Walidacja `openspec validate --all --strict` oraz linter dokumentacji `markdownlint-cli2` |
-| `python tools/agents/sync_agents.py --check` | Spójność reguł, roli recenzenta, skilli i adapterów Claude Code |
-| `python tools/backlog/gen_jira_csv.py --check` | Dwukierunkowa spójność `backlog.toml`, `BACKLOG.md`, plików CSV Jiry i `03-indeks-regul-r-nn.md` |
-| `python tools/content/extract_cards.py --check` | Zgodność katalogu `packages/content/data/cards.json` z referencyjnym prototypem JS (`prototype/game`) |
-| `python tools/confluence/sync_confluence.py --check` | Gotowość drzewa `docs/` do eksportu 1:1 do przestrzeni Confluence PB |
+| `npm run agents:check` | Spójność reguł, roli recenzenta, skilli i adapterów Claude Code |
+| `npm run backlog:check` | Dwukierunkowa spójność `backlog.toml`, `BACKLOG.md`, plików CSV Jiry i `03-indeks-regul-r-nn.md` |
+| `npm run cards:check` | Zgodność katalogu `packages/content/data/cards.json` z referencyjnym prototypem JS (`prototype/game`) |
+| `npm run docs:check` | Gotowość drzewa `docs/` do eksportu 1:1 do przestrzeni Confluence PB |

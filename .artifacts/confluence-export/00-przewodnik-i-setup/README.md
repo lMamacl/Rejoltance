@@ -1,4 +1,4 @@
-<!-- CONFLUENCE 1:1 EXPORT | Source: docs/00-przewodnik-i-setup/README.md @ a2bf2a4 (2026-11-02) -->
+<!-- CONFLUENCE 1:1 EXPORT | Source: docs/00-przewodnik-i-setup/README.md -->
 # 00. Przewodnik, konfiguracja środowiska i architektura SDD
 
 Od tej sekcji zaczynasz pracę z projektem **RE:JOLTANCE**. Jest przeznaczona dla członków zespołu, prowadzącego zajęcia i agentów AI.

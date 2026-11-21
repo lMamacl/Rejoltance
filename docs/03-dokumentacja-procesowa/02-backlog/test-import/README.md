@@ -25,4 +25,4 @@ Zgłoszenia mają prefiks `[TEST]` i etykietę `test-import`. **Po teście je us
 | 5 | Czy wielowierszowy opis z kryteriami Given/When/Then zachował podział wierszy? | |
 | 6 | Jaki jest klucz projektu (np. `REJ`)? | |
 
-Zapisz też ostrzeżenia, jeśli kreator importu je pokazał. Na ich podstawie dopasujemy generator `tools/backlog/gen_jira_csv.py`.
+Zapisz też ostrzeżenia, jeśli kreator importu je pokazał. Na ich podstawie dopasujemy generator `tools/backlog/gen-jira-csv.ts`.

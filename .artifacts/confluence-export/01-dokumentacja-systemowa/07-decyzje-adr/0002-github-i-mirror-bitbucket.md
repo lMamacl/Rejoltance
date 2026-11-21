@@ -1,4 +1,4 @@
-<!-- CONFLUENCE 1:1 EXPORT | Source: docs/01-dokumentacja-systemowa/07-decyzje-adr/0002-github-i-mirror-bitbucket.md @ a2bf2a4 (2026-11-02) -->
+<!-- CONFLUENCE 1:1 EXPORT | Source: docs/01-dokumentacja-systemowa/07-decyzje-adr/0002-github-i-mirror-bitbucket.md -->
 # ADR-0002: GitHub jako główne repozytorium, mirror do Bitbucket PB
 
 - **Status:** zatwierdzona (2026-10-27)

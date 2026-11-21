@@ -1,6 +1,6 @@
 ---
 name: rj-sync-confluence
-description: "Waliduje drzewo dokumentacji 1:1 z Confluence w katalogu docs/ (nagłówki metadanych SDD i linki wewnętrzne) oraz generuje gotową paczkę eksportową do Confluence przy użyciu tools/confluence/sync_confluence.py."
+description: "Waliduje drzewo dokumentacji 1:1 z Confluence w katalogu docs/ (nagłówki metadanych SDD i linki wewnętrzne) oraz generuje gotową paczkę eksportową do Confluence przy użyciu tools/confluence/sync-confluence.ts."
 ---
 
 # Umiejętność: Walidacja i synchronizacja dokumentacji 1:1 z Confluence (`rj-sync-confluence`)
@@ -21,13 +21,13 @@ Uruchamiaj po każdej edycji dokumentacji w `docs/` oraz na koniec każdego spri
 
    ```bash
    npm run lint:md
-   python tools/confluence/sync_confluence.py --check
+   npm run docs:check
    ```
 
 3. **Wygeneruj paczkę eksportową 1:1 do Confluence PB (opcjonalnie przed publikacją):**
 
    ```bash
-   python tools/confluence/sync_confluence.py --export
+   npm run docs:export
    ```
 
    Skrypt tworzy w katalogu `artifacts/confluence-export/` gotowe strony z nagłówkami metadanych Confluence (hash commita, data, ścieżka w repozytorium) oraz manifest hierarchii stron `manifest.json`.

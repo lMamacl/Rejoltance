@@ -1,4 +1,4 @@
-<!-- CONFLUENCE 1:1 EXPORT | Source: docs/03-dokumentacja-procesowa/01-dip-dokument-inicjujacy.md @ 59f39d9 (2026-11-21) -->
+<!-- CONFLUENCE 1:1 EXPORT | Source: docs/03-dokumentacja-procesowa/01-dip-dokument-inicjujacy.md -->
 # Dokument Inicjujący Projekt (DIP) — RE:JOLTANCE
 
 > Wymóg zaliczenia (semestr 1): DIP nie dostaje oceny liczbowej, ale bez niego dostajemy ocenę niedostateczną.

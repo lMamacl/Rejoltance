@@ -32,8 +32,8 @@ Korzystamy z **Claude Code** oraz narzędzi, które czytają `AGENTS.md` i `.age
 Po każdej zmianie w `.agents/` uruchom:
 
 ```bash
-python tools/agents/sync_agents.py
-python tools/agents/sync_agents.py --check
+npm run agents
+npm run agents:check
 ```
 
 Skrypt sprawdza nagłówki YAML i generuje adaptery dla Claude Code (`.claude/agents/`, `.claude/skills/`) oraz komendy Antigravity (`.agents/workflows/`). Wygenerowanych plików nie edytuj ręcznie.

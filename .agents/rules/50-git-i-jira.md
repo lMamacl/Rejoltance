@@ -31,5 +31,5 @@ Dozwolone typy: `feat`, `fix`, `docs`, `test`, `refactor`, `chore`, `ci`. Przyk�
 
 - **Jedno źródło prawdy dla backlogu w repozytorium:** [`docs/03-dokumentacja-procesowa/02-backlog/backlog.toml`](../../docs/03-dokumentacja-procesowa/02-backlog/backlog.toml).
 - Po każdej edycji `backlog.toml` lub kolumny *Story* w [`03-indeks-regul-r-nn.md`](../../docs/01-dokumentacja-systemowa/03-indeks-regul-r-nn.md) uruchom generator:
-  `python tools/backlog/gen_jira_csv.py` (nie edytuj ręcznie wygenerowanych plików `BACKLOG.md` ani `jira-*.csv`).
+  `npm run backlog` (nie edytuj ręcznie wygenerowanych plików `BACKLOG.md` ani `jira-*.csv`).
 - **Wymóg uczelniany EU4:** każde zadanie realizowane w sprincie musi mieć przypisanego wykonawcę, szacunek czasu (`Original Estimate ≤ 4 h` dla podzadań technicznych) oraz regularnie rejestrowany czas pracy (*Log Work*).
