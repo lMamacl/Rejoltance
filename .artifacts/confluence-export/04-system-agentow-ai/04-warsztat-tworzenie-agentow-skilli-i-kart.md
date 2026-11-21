@@ -69,7 +69,7 @@ Decyzję ADR piszemy zawsze, gdy wybieramy technologię, zmieniamy jeden z 5 zam
 
 ## Warsztat 4: Jak dodać lub zmodyfikować kartę w grze?
 
-Karty w **RE:JOLTANCE** to same dane. Generujemy je z kanonicznego prototypu JS (`prototype/game/cards.js`) do pliku `src/Rejoltance.Content/Data/cards.json`. Możesz użyć skilla `/rj-add-card`.
+Karty w **RE:JOLTANCE** to same dane. Generujemy je z kanonicznego prototypu JS (`prototype/game/cards.js`) do pliku `packages/content/data/cards.json`. Możesz użyć skilla `/rj-add-card`.
 
 ### Wariant A: karta używa istniejących słów kluczowych, wyzwalaczy i akcji DSL
 
@@ -98,18 +98,18 @@ DSL to nasz język opisu efektów kart.
    npm run cards
    ```
 
-3. Uruchom testy walidatora katalogu kart. Na razie są w `Rejoltance.Kernel.Tests`, bo projekt `Rejoltance.Cards.Tests` jest dopiero planowany:
+3. Uruchom testy katalogu kart (`packages/content/test`):
 
    ```bash
-   dotnet test tests/Rejoltance.Kernel.Tests --filter ContentTests
+   npx vitest run packages/content
    ```
 
    Jeśli dodajesz kartę ponad obecne 130 kart kolekcjonerskich i 29 tokenów, zmień oczekiwaną liczbę kart w teście `Catalog_contains_all_prototype_cards`.
 
 ### Wariant B: karta wymaga nowego słowa kluczowego, wyzwalacza albo akcji w DSL
 
-Gdy karta wprowadza mechanikę, której nie ma w klasie `src/Rejoltance.Content/Vocabulary.cs`:
+Gdy karta wprowadza mechanikę, której nie ma w słowniku `packages/content/src/vocabulary.ts`:
 
 1. Najpierw napisz specyfikację reguły `R-nn` w `openspec/specs/` ([przewodnik OpenSpec](03-jak-pisac-specyfikacje-openspec.md)).
-2. Dodaj nowe słowo do `Vocabulary.cs`, zaimplementuj jego obsługę w `Rejoltance.Kernel` i napisz test jednostkowy `Rnn_...`.
+2. Dodaj nowe słowo do `vocabulary.ts`, zaimplementuj jego obsługę w `packages/engine` i napisz test `Rnn_...`.
 3. Dopiero na końcu dodaj kartę i wygeneruj `cards.json`.

@@ -9,7 +9,7 @@ Ten podręcznik jest dla graczy i członków Rady Graczy Testowych. W mniej niż
 
 ## 1. Szybki start w 60 sekund
 
-1. **Otwórz grę w przeglądarce.** Wejdź na adres serwera demonstracyjnego, który dostaniesz od zespołu. Jeśli grasz lokalnie, użyj adresu zasobu `web` z panelu .NET Aspire. Nie musisz niczego pobierać ani instalować.
+1. **Otwórz grę w przeglądarce.** Wejdź na adres serwera demonstracyjnego, który dostaniesz od zespołu. Jeśli grasz lokalnie, uruchom `npm run dev` i otwórz adres, który poda Vite (zwykle `http://localhost:5173`).
 2. **Wybierz tryb gry:**
    - **Trening, czyli piaskownica (`Start Sandbox`):** od razu uruchamia pojedynek testowy z wybranymi taliami startowymi.
    - **Gra ze znajomym (lobby 1v1):** utwórz pokój, skopiuj kod pokoju albo link i wyślij go znajomemu.
@@ -84,5 +84,5 @@ W każdej rundzie jeden gracz jest Graczem A (zaczyna), a drugi Graczem B. W nas
 | **Dlaczego nie mogę zagrać karty z ręki?** | Sprawdź trzy rzeczy: (1) czy masz dość *Blood*, (2) czy w tym kroku rundy wolno zagrać ten typ karty (np. w kroku akcji nie wystawisz jednostki), (3) czy karta akcji ma na planszy wymagany cel. Gra podświetla tylko dozwolone zagrania. |
 | **Dlaczego nowo dobrana karta od razu spłonęła?** | W ręce mieścisz najwyżej **8 kart** (reguła `R-13`). Każda karta dobrana ponad ten limit od razu trafia na stos kart odrzuconych. |
 | **Co się dzieje, gdy skończą mi się karty w talii?** | Stos kart odrzuconych nie wraca do talii. Każda próba dobrania karty z pustej talii zadaje twojemu bohaterowi rosnące obrażenia **Fatigue** (zmęczenie): `1`, potem `2`, potem `3` itd. (reguła `R-14`). |
-| **Gra straciła połączenie z serwerem w trakcie meczu** | Odśwież stronę albo poczekaj, aż gra sama wznowi połączenie (SignalR). Serwer trzyma twój mecz przez **60 sekund** (reguła `R-73`). Po powrocie zobaczysz dokładnie tę samą planszę. |
+| **Gra straciła połączenie z serwerem w trakcie meczu** | Odśwież stronę albo poczekaj, aż gra sama wznowi połączenie. Serwer trzyma twój mecz przez **60 sekund** (reguła `R-73`). Po powrocie zobaczysz dokładnie tę samą planszę. |
 | **Gra prosi o obrócenie ekranu** | Plansza wymaga orientacji poziomej i okna o rozmiarze co najmniej `1280×720`. Na komputerze zmaksymalizuj okno przeglądarki. |

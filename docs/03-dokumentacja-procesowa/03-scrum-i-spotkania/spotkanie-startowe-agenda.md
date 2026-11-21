@@ -12,7 +12,7 @@
 
 1. Zagraj jedną partię z botem w prototypie (`npx serve prototype/game` albo przez GitHub Pages).
 2. Przeczytaj [`README.md`](../../../README.md), [`01-prd-wymagania-produktu.md`](../../01-dokumentacja-systemowa/01-prd-wymagania-produktu.md) oraz [`02-specyfikacja-regul-gry.md`](../../01-dokumentacja-systemowa/02-specyfikacja-regul-gry.md) §1–6.
-3. Uruchom skrypt `tools/setup.ps1`. Jeśli coś nie działa, zanotuj problem razem z wynikiem `tools/doctor.ps1`.
+3. Uruchom `npm run setup`. Jeśli coś nie działa, zanotuj problem razem z wynikiem `npm run doctor`.
 
 ---
 
@@ -23,7 +23,7 @@
 | 0:00–0:05 | Powitanie, cel spotkania i wybór osoby, która notuje | PO S0 | ta agenda | wybrana osoba notująca |
 | 0:05–0:20 | **Gra:** omówienie zasad na prototypie (runda, 4 kroki, walka 4 linii, słowa kluczowe) | autorzy gry | prototyp, [`02-specyfikacja-regul-gry.md`](../../01-dokumentacja-systemowa/02-specyfikacja-regul-gry.md) | wszyscy rozumieją przebieg rundy |
 | 0:20–0:30 | **Wymogi uczelniane:** efekty EU1–EU7, rotacja PO, DIP (Dokument Inicjujący Projekt) i właściciele epików, Burndown, Log Work | PO S0 | [`01-dip-dokument-inicjujacy.md`](../01-dip-dokument-inicjujacy.md) | lista obowiązków każdej osoby |
-| 0:30–0:45 | **Architektura i repozytorium:** warstwy, 5 kontraktów, serwer autorytatywny, pokaz `dotnet run --project src/Rejoltance.AppHost` | architekt | [`05-sad-architektura-systemu.md`](../../01-dokumentacja-systemowa/05-sad-architektura-systemu.md), [`08-mapa-kodu-i-modulow.md`](../../01-dokumentacja-systemowa/08-mapa-kodu-i-modulow.md) | zrozumienie granic modułów |
+| 0:30–0:45 | **Architektura i repozytorium:** warstwy, 5 kontraktów, serwer autorytatywny, pokaz `npm run dev` | architekt | [`05-sad-architektura-systemu.md`](../../01-dokumentacja-systemowa/05-sad-architektura-systemu.md), [`08-mapa-kodu-i-modulow.md`](../../01-dokumentacja-systemowa/08-mapa-kodu-i-modulow.md) | zrozumienie granic modułów |
 | 0:45–1:00 | **Proces SDD i agenci AI:** Jira → gałąź → OpenSpec → test → PR (pull request) → review; katalog ról i skilli | lider SDD | [`03-proces-pracy-i-git-scrum.md`](../../00-przewodnik-i-setup/03-proces-pracy-i-git-scrum.md), [`04-system-agentow-ai/`](../../04-system-agentow-ai/README.md) | każdy wie, jak zacząć zadanie |
 | 1:00–1:20 | **Zamknięcie decyzji otwartych** (tabela poniżej) | wszyscy | [`06-decyzje-otwarte-i-zalozenia.md`](../../00-przewodnik-i-setup/06-decyzje-otwarte-i-zalozenia.md), [`04-rozbieznosci-prototypu.md`](../../01-dokumentacja-systemowa/04-rozbieznosci-prototypu.md) | wypełniona tabela decyzji |
 | 1:20–1:30 | **Podział epików i zadań Sprintu 0:** właściciele E1–E6, harmonogram PO, zadania S0 | PO S0 | [`02-backlog/BACKLOG.md`](../02-backlog/BACKLOG.md) | przypisani właściciele i terminy |
@@ -49,7 +49,7 @@
 
 | Zadanie | Odpowiedzialny | Klucz Story |
 |---|---|---|
-| Uruchomienie środowiska (`tools/setup.ps1`) na każdym laptopie | Wszyscy | `E0-S01` |
+| Uruchomienie środowiska (`npm run setup`) na każdym laptopie | Wszyscy | `E0-S01` |
 | Konfiguracja ochrony gałęzi, sekretów mirrora Bitbucket i GitHub Pages | Administrator repozytorium | `E0-S01` |
 | Testowy import CSV do Jiry PB → pełny import backlogu | PO Sprintu 0 | `E0-S01` |
 | Uzupełnienie autorskich sekcji epików E1–E6 w `01-dip-dokument-inicjujacy.md` | Właściciele epików E1–E6 | `E0-S02` |

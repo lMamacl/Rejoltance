@@ -13,7 +13,7 @@ Każda reguła domenowa ma:
 - test jednostkowy, którego nazwa zaczyna się od numeru reguły (`R14_…`),
 - powiązane zadanie w backlogu.
 
-Test jednej reguły uruchomisz tak: `dotnet test --filter "FullyQualifiedName~R14"`.
+Test jednej reguły uruchomisz tak: `npx vitest run -t R14_`.
 
 Wymagania niefunkcjonalne `NFR‑nn` (NFR, Non-Functional Requirement; norma ISO/IEC 25010) są w `openspec/specs/quality-attributes/spec.md`. Ich testy mają nazwy `NFRnn_…`.
 
@@ -27,20 +27,20 @@ Legenda statusu: ✅ zaimplementowane i przetestowane · 🟡 częściowo · ⏳
 
 | ID | Reguła | Źródło `engine.js` | Test | Story | Status |
 |---|---|---|---|---|---|
-| R-01 | Legalna talia: 30 kart, ≤ 3 kopie, bez tokenów | `ui.js` deck builder | `ContentTests.R01_*` | E6-S04 | ✅ walidacja |
-| R-02 | Stan początkowy: 20 HP, 4 karty, bez wyzwalaczy | `newGame` | `SetupRulesTests.R02_*` | — | ✅ |
-| R-03 | Mulligan: dowolna liczba, zamienniki z góry, odrzucone wracają, tasowanie | `mulligan` | `SetupRulesTests.R03_*` | — | ✅ ❓ D-02 |
+| R-01 | Legalna talia: 30 kart, ≤ 3 kopie, bez tokenów | `ui.js` deck builder | `content.test.ts: R01_*` | E6-S04 | ✅ walidacja |
+| R-02 | Stan początkowy: 20 HP, 4 karty, bez wyzwalaczy | `newGame` | `setup-rules.test.ts: R02_*` | — | ✅ |
+| R-03 | Mulligan: dowolna liczba, zamienniki z góry, odrzucone wracają, tasowanie | `mulligan` | `setup-rules.test.ts: R03_*` | — | ✅ ❓ D-02 |
 | R-04 | Wybór kolejności; remis wyboru → losowanie z seeda | `decideStart` | — | E1-S01 | ⏳ |
 
 ## R-1x Przebieg rundy — `openspec/specs/round-flow`
 
 | ID | Reguła | Źródło | Test | Story | Status |
 |---|---|---|---|---|---|
-| R-10 | Max Blood = min(10, runda), odnawiane; dobranie od rundy 2 | `startRound` | `SetupRulesTests.R10_*` | E1-S01 | 🟡 formuła |
+| R-10 | Max Blood = min(10, runda), odnawiane; dobranie od rundy 2 | `startRound` | `setup-rules.test.ts: R10_*` | E1-S01 | 🟡 formuła |
 | R-11 | Rozpoczynający naprzemiennie | `startRound` | — | E1-S01 | ⏳ |
 | R-12 | Kroki: jednostki (A) → mieszany (B) → akcje (A) → walka | `setStep`, `nextStep` | — | E1-S02 | ⏳ |
-| R-13 | Ręka ≤ 8; nadmiar na stos odrzuconych; wyzwalacze dobrania | `draw` | `SetupRulesTests.R13_*` | E2-S04 | 🟡 bez wyzwalaczy |
-| R-14 | Pusta talia: fatigue 1, 2, 3…; bez tasowania odrzuconych | `draw` | `SetupRulesTests.R14_*` | — | ✅ |
+| R-13 | Ręka ≤ 8; nadmiar na stos odrzuconych; wyzwalacze dobrania | `draw` | `setup-rules.test.ts: R13_*` | E2-S04 | 🟡 bez wyzwalaczy |
+| R-14 | Pusta talia: fatigue 1, 2, 3…; bez tasowania odrzuconych | `draw` | `setup-rules.test.ts: R14_*` | — | ✅ |
 | R-15 | Koniec rundy: Burning `max(0, 1 − pancerz)`, śmierć, zwycięstwo | `endRound` | — | E1-S04 | ⏳ ❓ D-08 |
 
 ## R-2x Zagrywanie kart — `openspec/specs/playing-cards`
@@ -101,24 +101,24 @@ Legenda statusu: ✅ zaimplementowane i przetestowane · 🟡 częściowo · ⏳
 | R-65 | AddResource ≤ 10 | `act` | — | E2-S04 | ⏳ |
 | R-66 | Warunki; wyzwalacze własne bez warunku | `cond`, `fire` | — | E2-S01 | ⏳ |
 | R-67 | Pasywne (Tea Maid, Wyvern, Survivalist) w danych | `cost`, `aura` | — | E2-S07 | ⏳ ❓ D-11 |
-| R-68 | Fail loud: nieznane słowo DSL / niezaimplementowana akcja | `tg` (`return []`) | `ContentTests.R68_*`, `SetupRulesTests.R68_*` | E2-S01 | 🟡 ładowanie |
+| R-68 | Fail loud: nieznane słowo DSL / niezaimplementowana akcja | `tg` (`return []`) | `content.test.ts: R68_*`, `setup-rules.test.ts: R68_*` | E2-S01 | 🟡 ładowanie |
 | R-69 | Transform (z Partner) | `transformUnit` | — | E2-S08 | ⏳ |
 
 ## R-7x Koniec meczu — `openspec/specs/match-end`
 
 | ID | Reguła | Źródło | Test | Story | Status |
 |---|---|---|---|---|---|
-| R-70 | HP ≤ 0 → przegrana, natychmiast, bez limitu rund | `chk` | `SetupRulesTests.R70_*` | E1-S03 | 🟡 fatigue |
+| R-70 | HP ≤ 0 → przegrana, natychmiast, bez limitu rund | `chk` | `setup-rules.test.ts: R70_*` | E1-S03 | 🟡 fatigue |
 | R-71 | Jednoczesna śmierć bohaterów = remis | `chk` | — | E1-S03 | 🟡 ❓ D-01 |
-| R-72 | Poddanie się | UI | `SetupRulesTests.R72_*` | — | ✅ |
+| R-72 | Poddanie się | UI | `setup-rules.test.ts: R72_*` | — | ✅ |
 | R-73 | Rozłączenie: 60 s na powrót, potem walkower | `net.js` (brak) | — | E3-S05 | ⏳ |
 
 ## R-8x Autorytet serwera — `openspec/specs/server-authority`
 
 | ID | Reguła | Źródło | Test | Story | Status |
 |---|---|---|---|---|---|
-| R-80 | Fog of war: ręka i talia przeciwnika tylko jako liczby | (prototyp łamie) | `ProjectionTests.R80_*` | — | ✅ |
+| R-80 | Fog of war: ręka i talia przeciwnika tylko jako liczby | (prototyp łamie) | `projection.test.ts: R80_*` | — | ✅ |
 | R-81 | Identyfikatory instancji nie zdradzają kolejności talii | (prototyp łamie) | — (konstrukcja `Draw`) | E3-S02 | 🟡 |
 | R-82 | Walidacja intencji i miejsca; sekwencyjnie per mecz | — | `ServerTests` (częściowo) | E3-S02 | 🟡 |
-| R-83 | Determinizm: seed + intencje = ten sam stan | (prototyp: `Math.random`) | `DeterminismTests.R83_*` | E5-S02 | ✅ |
-| R-84 | Decyzje przez `PendingInteraction`, bez losowania | (prototyp: `botPick`) | `ProjectionTests.R84_*` | E1-S08 | 🟡 mulligan |
+| R-83 | Determinizm: seed + intencje = ten sam stan | (prototyp: `Math.random`) | `determinism.test.ts: R83_*` | E5-S02 | ✅ |
+| R-84 | Decyzje przez `PendingInteraction`, bez losowania | (prototyp: `botPick`) | `projection.test.ts: R84_*` | E1-S08 | 🟡 mulligan |

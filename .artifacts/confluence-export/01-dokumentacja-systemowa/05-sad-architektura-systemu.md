@@ -18,7 +18,7 @@ Biblioteki i ich wersje opisuje dokument [1.6 Stos technologiczny i roadmapa IT]
 Prototyp przeglądarkowy działał w modelu P2P (Peer-to-Peer, JavaScript / PeerJS). Był podatny na oszustwa i niedeterministyczny. Zastępujemy go aplikacją webową klient–serwer, w której:
 
 1. **Serwer jest jedynym autorytetem stanu gry.** Żaden klient nie widzi ukrytych informacji przeciwnika (*Fog of War*). Żaden klient nie może wykonać nielegalnego ruchu.
-2. **Silnik reguł (`Rejoltance.Kernel`) jest deterministyczny i oddzielony od infrastruktury.** Dzięki temu łatwo testujemy 55 reguł domenowych i uruchamiamy symulacje bot-vs-bot. Powtórkę meczu (*replay*) odtwarzamy z samego ziarna losowości (`Seed`) i listy intencji graczy.
+2. **Silnik reguł (`packages/engine`) jest deterministyczny i oddzielony od infrastruktury.** Dzięki temu łatwo testujemy 55 reguł domenowych i uruchamiamy symulacje bot-vs-bot. Powtórkę meczu (*replay*) odtwarzamy z samego ziarna losowości (`Seed`) i listy intencji graczy.
 3. **Sześć osób pracuje równolegle i nie blokuje się nawzajem.** Pozwalają na to zamrożone kontrakty komunikacyjne i automatyczne testy granic architektonicznych.
 
 ### 1.2 Najważniejsze cele jakościowe
@@ -27,10 +27,10 @@ Pełne drzewo wymagań jakościowych wg normy ISO/IEC 25010:2023 (`NFR-01..NFR-7
 
 | Priorytet | Cel jakościowy | Wymagania | Jak architektura to realizuje |
 |---|---|---|---|
-| **1** | Uczciwość rozgrywki i bezpieczeństwo stanu (*Server Authority & Fog of War*) | `R-80..R-82`, `NFR-40..NFR-42` | Pełny stan `MatchState` nigdy nie opuszcza serwera. Klient dostaje tylko przefiltrowaną projekcję `MatchView` (`Projection.ToView`) i wysyła tylko intencje (`Intent`). |
-| **2** | Determinizm i testowalność reguł (*Determinism & Testability*) | `R-83`, `R-84`, `NFR-51` | Czysty reduktor `MatchEngine.Reduce`, deterministyczny generator `SeededRng` (SplitMix64) i zakaz `System.Random`, zegara oraz I/O. Zakaz pilnuje kompilator (`BannedSymbols.txt`). |
-| **3** | Modułowość i równoległa praca zespołu (*Modularity*) | `NFR-11`, `NFR-50` | Modularny monolit z jednokierunkowym grafem zależności. `NetArchTest` (`BoundaryTests.cs`) sprawdza go w każdym PR. Zgodność kontraktów C# ↔ TS sprawdza próbka JSON. |
-| **4** | Niski próg wejścia i łatwe uruchomienie (*Operability & Portability*) | `NFR-20`, `NFR-60`, `NFR-61` | .NET Aspire (`AppHost`) uruchamia lokalnie serwer, klienta Vite i bazę SQLite jednym poleceniem. W pierwszych sprintach nie trzeba instalować Dockera. |
+| **1** | Uczciwość rozgrywki i bezpieczeństwo stanu (*Server Authority & Fog of War*) | `R-80..R-82`, `NFR-40..NFR-42` | Pełny stan `MatchState` nigdy nie opuszcza serwera. Klient dostaje tylko przefiltrowaną projekcję `MatchView` (`toView`) i wysyła tylko intencje (`Intent`). |
+| **2** | Determinizm i testowalność reguł (*Determinism & Testability*) | `R-83`, `R-84`, `NFR-51` | Czysty reduktor `engine.reduce`, deterministyczny RNG (SplitMix64, `rng.ts`) i zakaz `Math.random`, zegara oraz I/O. Zakaz pilnuje ESLint. |
+| **3** | Modułowość i równoległa praca zespołu (*Modularity*) | `NFR-11`, `NFR-50` | Modularny monolit (npm workspaces) z jednokierunkowym grafem zależności; ESLint i `tools/architecture.test.ts` sprawdzają go w każdym PR. Kontrakty to jeden pakiet TypeScript dla serwera i klienta. |
+| **4** | Niski próg wejścia i łatwe uruchomienie (*Operability & Portability*) | `NFR-20`, `NFR-60`, `NFR-61` | `npm run dev` uruchamia lokalnie serwer i klienta Vite jednym poleceniem. W pierwszych sprintach nie trzeba instalować Dockera. |
 
 ---
 
@@ -42,7 +42,7 @@ System obsługuje cały cykl życia meczu karcianego 1 na 1 na czterech liniach:
 
 - ładuje i sprawdza katalog 159 kart (130 kolekcjonerskich + 29 tokenów) i 4 talie startowe z plików JSON wygenerowanych z prototypu,
 - zarządza sesjami meczowymi w pamięci serwera (piaskownica, gra z botem AI, pokoje 1v1 przez kod zaproszenia),
-- komunikuje się z klientem w obie strony w czasie rzeczywistym przez WebSocket (SignalR),
+- komunikuje się z klientem w obie strony w czasie rzeczywistym przez WebSocket (Socket.IO),
 - trwale przechowuje w relacyjnej bazie danych konta, własne talie i zapisy zakończonych meczów.
 
 ### 2.2 Ograniczenia techniczne i organizacyjne
@@ -51,7 +51,7 @@ System obsługuje cały cykl życia meczu karcianego 1 na 1 na czterech liniach:
 |---|---|---|
 | **Czas zespołu** | 6 studentów × ok. 5 h tygodniowo przez 5 dwutygodniowych sprintów w Semestrze 1. | Rezygnujemy ze złożonych wzorców rozproszonych (mikroserwisy, zewnętrzny Event Store). Wybieramy prosty modularny monolit ([ADR-0001](07-decyzje-adr/0001-stos-technologiczny.md), Konstytucja Art. VIII). |
 | **Infrastruktura uczelniana** | Musimy korzystać z uczelnianych instancji Jira, Confluence i Bitbucket Data Center PB. | Na co dzień pracujemy i uruchamiamy CI/CD na GitHubie, z automatycznym mirrorem do Bitbucket PB ([ADR-0002](07-decyzje-adr/0002-github-i-mirror-bitbucket.md)). Struktura `docs/` odpowiada 1:1 drzewu Confluence ([ADR-0011](07-decyzje-adr/0011-dokumentacja-hybryda-repo-confluence.md)). |
-| **Komputery studentów** | Różne laptopy z Windows 11 (polityka Smart App Control, na części maszyn brak Dockera). | W Sprintach 0–3 używamy bazy SQLite. Kontener PostgreSQL wchodzi dopiero od Sprintu 4 ([ADR-0007](07-decyzje-adr/0007-sqlite-potem-postgresql.md)). |
+| **Komputery studentów** | Różne laptopy z Windows 11, macOS i Linuxem (na części maszyn brak Dockera). | W Sprintach 0–3 używamy bazy SQLite. Kontener PostgreSQL wchodzi dopiero od Sprintu 4 ([ADR-0007](07-decyzje-adr/0007-sqlite-potem-postgresql.md)). |
 
 CI/CD (Continuous Integration / Continuous Delivery) to automatyczne budowanie, testowanie i wdrażanie kodu.
 
@@ -65,9 +65,9 @@ Diagram pokazuje system jako jedną całość oraz ludzi i systemy zewnętrzne, 
 
 ```mermaid
 flowchart LR
-  P1["👤 Gracz 1 / Gracz 2<br/>(Przeglądarka internetowa)"] -- "Intencje gracza (Intent)<br/>Widok meczu (MatchView)<br/>[HTTPS + WebSocket SignalR]" --> SYS["🎮 System RE:JOLTANCE<br/>(Serwer ASP.NET Core + Klient React)"]
+  P1["👤 Gracz 1 / Gracz 2<br/>(Przeglądarka internetowa)"] -- "Intencje gracza (Intent)<br/>Widok meczu (MatchView)<br/>[HTTPS + WebSocket Socket.IO]" --> SYS["🎮 System RE:JOLTANCE<br/>(Serwer Node.js + Klient React)"]
   P2["👤 Rada Graczy Testowych<br/>(Użytkownicy końcowi EU1/EU2)"] -- "Sesje testowe i odbiór<br/>[HTTPS / WebSocket]" --> SYS
-  SYS -. "Telemetria OTLP<br/>(logi, metryki, ślady)" .-> DASH["📊 Panel .NET Aspire<br/>/ Monitoring"]
+  SYS -. "Logi strukturalne serwera" .-> DASH["📊 Logi / monitoring"]
   DEV["👥 Zespół (6 osób) + Agenci AI"] -- "Kod, testy, specyfikacje OpenSpec" --> GH["🐙 GitHub<br/>(Repozytorium, Actions CI, Pages)"]
   GH -- "Automatyczny mirror<br/>(main, develop, tagi sprint-*)" --> BB["🪣 Bitbucket Data Center PB"]
   GH -. "Publikacja prototypu JS" .-> GP["🌐 GitHub Pages<br/>(Prototyp referencyjny)"]
@@ -81,30 +81,27 @@ Serwer to modularny monolit: jeden proces podzielony na moduły z jasnymi granic
 ```mermaid
 flowchart TB
   subgraph Browser["Przeglądarka Gracza"]
-    Web["Klient Webowy (src/web)<br/>React 19 + TypeScript 5.9 + Vite + Zustand<br/>Renderuje wyłącznie MatchView i emituje Intent"]
+    Web["Klient Webowy (apps/web)<br/>React 19 + TypeScript + Vite + Zustand<br/>Renderuje wyłącznie MatchView i emituje Intent"]
   end
 
-  subgraph ServerProcess["Proces Serwera — Rejoltance.Server (ASP.NET Core 10)"]
-    Hub["MatchHub (SignalR)<br/>/api/hubs/match + Endpoints REST /api/*"]
-    Sess["MatchSessionManager<br/>Aktywne mecze w pamięci + SemaphoreSlim per mecz"]
-    Kernel["Rejoltance.Kernel<br/>MatchEngine (Reduce / LegalActions)<br/>Projection (Fog of War) · SeededRng"]
-    Content["Rejoltance.Content<br/>CardCatalog · ContentValidator · Vocabulary<br/>(wbudowane cards.json i decks.json)"]
-    Contracts["Rejoltance.Contracts<br/>5 zamrożonych kontraktów DTO<br/>(Intent, LegalAction, Pending, MatchView, DomainEvent)"]
+  subgraph ServerProcess["Proces Serwera — apps/server (Node.js 24)"]
+    Io["Socket.IO + Fastify<br/>zdarzenia startSandbox / sendIntent / matchUpdated<br/>REST /health, /api/*"]
+    Sess["MatchSessionManager<br/>Aktywne mecze w pamięci"]
+    Engine["packages/engine<br/>reduce / legalActions<br/>toView (Fog of War) · RNG z ziarnem"]
+    Content["packages/content<br/>catalog · validator · vocabulary<br/>(data/cards.json, data/decks.json)"]
+    Contracts["packages/contracts<br/>5 zamrożonych kontraktów<br/>(Intent — zod, LegalAction, Pending, MatchView, DomainEvent)"]
   end
 
-  Db[("Baza Danych (EF Core)<br/>SQLite (.data/rejoltance.db)<br/>→ PostgreSQL (od Sprintu 4)")]
-  AppHost["Rejoltance.AppHost (.NET Aspire)<br/>Orkiestracja lokalna, proxy i ServiceDefaults"]
+  Db[("Baza danych<br/>SQLite → PostgreSQL (od Sprintu 4)")]
 
-  Web -- "SendIntent / StartSandbox<br/>(WebSocket SignalR)" --> Hub
-  Hub -- "MatchUpdated(MatchView, DomainEvent[])" --> Web
-  Hub --> Sess
-  Sess --> Kernel
-  Kernel --> Content
-  Kernel --> Contracts
-  Content --> Contracts
-  Hub --> Db
-  AppHost -. "uruchamia i monitoruje" .-> ServerProcess
-  AppHost -. "uruchamia z proxy /api" .-> Web
+  Web -- "sendIntent / startSandbox<br/>(WebSocket Socket.IO)" --> Io
+  Io -- "matchUpdated(view, events)" --> Web
+  Web -. "typy" .-> Contracts
+  Io --> Sess
+  Sess --> Engine
+  Engine --> Content
+  Engine --> Contracts
+  Io --> Db
 ```
 
 ---
@@ -113,29 +110,28 @@ flowchart TB
 
 ### 4.1 Moduły i reguły zależności
 
-Każdy moduł ma jasno określoną odpowiedzialność. Zależności mogą prowadzić **tylko w dół tabeli**: od prezentacji i transportu w stronę czystych kontraktów. Pilnują tego testy `tests/Rejoltance.Architecture.Tests/BoundaryTests.cs`.
+Każdy moduł ma jasno określoną odpowiedzialność. Zależności mogą prowadzić **tylko w dół tabeli**: od prezentacji i transportu w stronę czystych kontraktów. Pilnują tego ESLint (`eslint.config.js`) i test `tools/architecture.test.ts`.
 
-| Moduł / projekt | Warstwa | Odpowiedzialność i główne klasy | Dozwolone zależności | Właściciel (epik) |
+| Moduł / pakiet | Warstwa | Odpowiedzialność i główne pliki | Dozwolone zależności | Właściciel (epik) |
 |---|---|---|---|---|
-| **`src/web`** | Prezentacja (klient TS) | Renderuje `MatchView`, podświetla dozwolone akcje z `legalActions`, obsługuje połączenie SignalR (`MatchTransport`) i stan lokalny (`Zustand`). **Klient nie zawiera logiki reguł gry.** | Kontrakt JSON (`src/web/src/contracts`) | Epik E4 |
-| **`Rejoltance.AppHost`** i **`ServiceDefaults`** | Orkiestracja i telemetria | Konfiguracja lokalnego środowiska .NET Aspire, OpenTelemetry (logi, metryki, ślady) i punktów kontrolnych `/health` oraz `/alive`. | `Rejoltance.Server` | Epik E6 |
-| **`Rejoltance.Server`** | Transport, sesje i trwałość | Hub SignalR (`MatchHub`), sesje meczowe w pamięci z synchronizacją per mecz (`MatchSessionManager`), endpointy REST (`/api/cards`, `/api/decks`, `/api/info`), kontekst EF Core (`RejoltanceDb`). | `Kernel`, `Content`, `Contracts`, `ServiceDefaults` | Epik E3 / E6 |
-| **`Rejoltance.Sim`** *(planowany od S2)* | Sztuczna inteligencja i symulacje | Polityki botów (`IBotPolicy`), symulator wielu gier bot-vs-bot, wyrocznia testów różnicowych względem prototypu JS. | `Kernel`, `Content`, `Contracts` | Epik E5 |
-| **`Rejoltance.Kernel`** | Czysta domena (silnik reguł) | Niemutowalny stan meczu (`MatchState`), czysty reduktor `MatchEngine.Reduce(state, seat, intent)`, generator ruchów `MatchEngine.LegalActions`, projekcja *Fog of War* (`Projection.ToView`), deterministyczny `SeededRng`. | `Content`, `Contracts` *(zakaz I/O, zegara i `System.Random`)* | Epik E1 |
-| **`Rejoltance.Content`** | Dane domenowe i walidacja DSL | Ładuje wbudowane `cards.json` i `decks.json` (`CardCatalog`). Zawiera słownik słów kluczowych, wyzwalaczy i akcji (`Vocabulary`) oraz walidator kart i talii (`ContentValidator`). | `Contracts` | Epik E2 |
-| **`Rejoltance.Contracts`** | Zamrożone kontrakty (DTO) | Proste rekordy danych przesyłane przez sieć, bez logiki biznesowej. Sprawdza to test refleksyjny `Contracts_contain_no_logic_types`. | **Brak zależności** | Wspólny (backend + frontend) |
+| **`apps/web`** | Prezentacja (klient) | Renderuje `MatchView`, podświetla dozwolone akcje z `legalActions`, połączenie Socket.IO (`MatchTransport`) i stan lokalny (Zustand). **Klient nie zawiera logiki reguł gry.** | `contracts` | Epik E4 |
+| **`apps/server`** | Transport, sesje i trwałość | Fastify (REST: `/health`, `/api/cards`, `/api/decks`, `/api/info`), Socket.IO (`startSandbox`, `sendIntent`, `matchUpdated`), sesje meczów w pamięci (`MatchSessionManager`), walidacja `Intent` schematem zod. | `engine`, `content`, `contracts` | Epik E3 / E6 |
+| **Bot i symulator** *(planowane)* | Sztuczna inteligencja i symulacje | Polityki botów, symulator gier bot-vs-bot, wyrocznia testów różnicowych z prototypem JS w tym samym procesie. | `engine`, `content`, `contracts` | Epik E5 |
+| **`packages/engine`** | Czysta domena (silnik reguł) | Niemutowalny stan meczu (`MatchState`), reduktor `reduce(state, seat, intent)`, `legalActions`, projekcja *Fog of War* (`toView`, `toViewerEvents`), RNG z ziarnem (`rng.ts`). | `content`, `contracts` *(zakaz I/O, zegara i `Math.random`)* | Epik E1 |
+| **`packages/content`** | Dane domenowe i walidacja DSL | `data/cards.json` i `data/decks.json` (z prototypu), słownik słów DSL (`vocabulary.ts`), walidator kart i talii (`validator.ts`), katalog (`loadCatalog`). | — | Epik E2 |
+| **`packages/contracts`** | Zamrożone kontrakty | Typy przesyłane przez sieć i protokół Socket.IO; `Intent` jako schemat zod. Bez logiki gry. | — | Wspólny (backend + frontend) |
 
 DTO (Data Transfer Object) to obiekt, który tylko przenosi dane. DSL (Domain-Specific Language) to nasz mały język opisu efektów kart.
 
 ### 4.2 Pięć zamrożonych kontraktów komunikacyjnych
 
-Klient webowy, bot AI, serwer i silnik reguł komunikują się wyłącznie przez pięć niemutowalnych struktur. Są zdefiniowane w `Rejoltance.Contracts`, a ich odpowiedniki w TypeScript są w `src/web/src/contracts/index.ts`:
+Klient webowy, bot AI, serwer i silnik reguł komunikują się wyłącznie przez pięć niemutowalnych struktur. Są zdefiniowane raz, w `packages/contracts`, i importują je serwer, silnik i klient:
 
-1. **`Intent` (klient / bot → serwer → Kernel).** Jedyny sposób, w jaki gracz mówi, co chce zrobić (`MulliganIntent`, `ChooseOrderIntent`, `PlayCardIntent`, `EndStepIntent`, `AnswerPendingIntent`, `SurrenderIntent`).
-2. **`LegalAction` (Kernel → serwer → klient / bot).** Lista ruchów dozwolonych w danej chwili, z poprawnymi celami i liniami. To **jedyne źródło prawdy o legalności ruchu**. Interfejs nigdy sam nie liczy, czy ruch jest legalny.
-3. **`PendingInteraction` (Kernel → serwer → klient / bot).** Pytanie, które silnik zadaje graczowi, np. które karty wymienić w mulliganie albo jaki cel wybrać dla efektu. Dzięki temu Kernel nigdy nie blokuje wątku w oczekiwaniu na gracza.
-4. **`MatchView` (`Projection` w Kernelu → serwer → klient / bot).** Przefiltrowany widok meczu dla jednego miejsca przy stole (`yourSeat`). Zawiera pełną rękę gracza. O przeciwniku (`OpponentView`) podaje tylko liczbę kart w ręce, w talii i na stosie odrzuconych (*Fog of War*).
-5. **`DomainEvent` (Kernel → `Projection` → serwer → klient).** Uporządkowana lista faktów, które wydarzyły się po intencji (np. `CardDrawn`, `FatigueDamage`, `MatchFinished`). Klient na jej podstawie odtwarza animacje i dźwięki. Nie musi porównywać stanów (*diffing*).
+1. **`Intent` (klient / bot → serwer → silnik).** Jedyny sposób, w jaki gracz mówi, co chce zrobić (`type`: `mulligan`, `chooseOrder`, `playCard`, `endStep`, `answerPending`, `surrender`; serwer sprawdza każdą intencję schematem zod).
+2. **`LegalAction` (silnik → serwer → klient / bot).** Lista ruchów dozwolonych w danej chwili, z poprawnymi celami i liniami. To **jedyne źródło prawdy o legalności ruchu**. Interfejs nigdy sam nie liczy, czy ruch jest legalny.
+3. **`PendingInteraction` (silnik → serwer → klient / bot).** Pytanie, które silnik zadaje graczowi, np. które karty wymienić w mulliganie albo jaki cel wybrać dla efektu. Dzięki temu silnik nigdy nie blokuje wątku w oczekiwaniu na gracza.
+4. **`MatchView` (`toView` w silniku → serwer → klient / bot).** Przefiltrowany widok meczu dla jednego miejsca przy stole (`yourSeat`). Zawiera pełną rękę gracza. O przeciwniku (`OpponentView`) podaje tylko liczbę kart w ręce, w talii i na stosie odrzuconych (*Fog of War*).
+5. **`DomainEvent` (silnik → `toViewerEvents` → serwer → klient).** Uporządkowana lista faktów, które wydarzyły się po intencji (np. `cardDrawn`, `fatigueDamage`, `matchFinished`). Klient na jej podstawie odtwarza animacje i dźwięki. Nie musi porównywać stanów (*diffing*).
 
 ### 4.3 Widok wykonania — jeden ruch gracza
 
@@ -144,26 +140,25 @@ Diagram pokazuje, co dzieje się od kliknięcia karty do odświeżenia widoku u 
 ```mermaid
 sequenceDiagram
   autonumber
-  participant UI as Klient Web (React/TS)
-  participant Hub as MatchHub (SignalR)
+  participant UI as Klient Web (React)
+  participant Io as Serwer (Socket.IO)
   participant Mgr as MatchSessionManager
-  participant Eng as MatchEngine (Kernel)
-  participant Proj as Projection (Fog of War)
+  participant Eng as engine.reduce
+  participant Proj as toView (Fog of War)
 
-  UI->>Hub: SendIntent(matchId, { type: "playCard", cardInstanceId: 4, lane: 1 })
-  Hub->>Mgr: ApplyAsync(matchId, callerSeat, intent)
-  Note over Mgr: Sekcja krytyczna: SemaphoreSlim per mecz
-  Mgr->>Eng: Reduce(currentState, callerSeat, intent)
+  UI->>Io: sendIntent({ matchId, intent: { type: "playCard", cardInstanceId: 4, lane: 1, targets: [] } })
+  Io->>Io: IntentSchema.safeParse(intent) (zod)
+  Io->>Mgr: apply(matchId, playerId, intent)
+  Mgr->>Eng: reduce(currentState, seat, intent)
   alt Intencja jest legalna i wspierana
     Eng-->>Mgr: (newState, domainEvents[])
-    Mgr->>Proj: ToView(newState, seat=0) / ToView(newState, seat=1)
-    Mgr->>Proj: ToViewerEvents(domainEvents, seat)
+    Mgr->>Proj: toView(newState, seat) + toViewerEvents(events, seat)
     Proj-->>Mgr: Przefiltrowany MatchView + zanonimizowane DomainEvent[]
-    Mgr-->>Hub: Wynik redukcji
-    Hub-->>UI: MatchUpdated(view, events) + zwrot MatchView
-  else Ruch nielegalny lub reguła niezaimplementowana
-    Eng-->>Hub: IllegalIntentException / NotImplementedException
-    Hub-->>UI: HubException z czytelnym komunikatem błędu (stan meczu pozostaje nienaruszony)
+    Mgr-->>Io: wynik
+    Io-->>UI: matchUpdated(view, events) + potwierdzenie { ok: true, value: view }
+  else Ruch nielegalny, niepoprawny lub reguła niezaimplementowana
+    Eng-->>Io: IllegalIntentError / NotImplementedError
+    Io-->>UI: potwierdzenie { ok: false, error } (stan meczu pozostaje nienaruszony)
   end
 ```
 
@@ -171,8 +166,8 @@ sequenceDiagram
 
 Oddzielamy **ulotny stan trwającego meczu** od **danych trwałych**:
 
-- **Trwające mecze (`MatchState`)** są w pamięci serwera (`ConcurrentDictionary` w `MatchSessionManager`). Nie zapisujemy ich do bazy przy każdym kliknięciu, więc opóźnienia są minimalne.
-- **Dane trwałe (`RejoltanceDb` — Entity Framework Core)** to konta użytkowników, zapisane talie i archiwum zakończonych meczów. Dla każdego meczu zapisujemy ziarno losowości (`Seed`) i listę intencji, żeby móc odtworzyć powtórkę (*replay*).
+- **Trwające mecze (`MatchState`)** są w pamięci serwera (`Map` w `MatchSessionManager`). Nie zapisujemy ich do bazy przy każdym kliknięciu, więc opóźnienia są minimalne.
+- **Dane trwałe (baza SQLite, potem PostgreSQL — ADR-0007)** to konta użytkowników, zapisane talie i archiwum zakończonych meczów. Dla każdego meczu zapisujemy ziarno losowości (`Seed`) i listę intencji, żeby móc odtworzyć powtórkę (*replay*).
 
 ```mermaid
 erDiagram
@@ -183,7 +178,7 @@ erDiagram
   MATCH_RECORD {
     int Id PK
     string MatchId
-    ulong Seed
+    bigint Seed
     int WinnerSeat
     string IntentsJson "Zapis intencji do Replayu"
     datetime FinishedAt
@@ -212,12 +207,12 @@ erDiagram
 
 | Zagadnienie | Strategia i rozwiązanie |
 |---|---|
-| **Determinizm i odtwarzalność (replay)** | Cała losowość w `Rejoltance.Kernel` pochodzi z niemutowalnej struktury `SeededRng` (algorytm *SplitMix64*). Jej stan (`State: ulong`) jest częścią `MatchState`. Użycie `System.Random`, `DateTime` lub `Guid.NewGuid()` w Kernelu kończy się błędem kompilacji. Pilnują tego analizator `Microsoft.CodeAnalysis.BannedApiAnalyzers` i plik `BannedSymbols.txt`. |
-| **Ochrona przed podglądaniem kart (*Fog of War*, R-80…R-82)** | Talia przechowuje tylko definicje kart (`CardId`). Karta dostaje identyfikator egzemplarza (`InstanceId`) dopiero wtedy, gdy wychodzi z talii do ręki lub na planszę (`R-81`). Dzięki temu kolejność numerów `InstanceId` nie zdradza układu talii. `Projection.ToViewerEvents` zamienia identyfikatory kart dobieranych przez przeciwnika na `0`. |
-| **Współbieżność i izolacja meczów** | Każda sesja w `MatchSessionManager` ma własny `SemaphoreSlim(1, 1)`. Żądania z różnych meczów wykonują się równolegle na wielu wątkach. Intencje w jednym meczu wykonują się ściśle po kolei. Wyjątek w jednym meczu jest przechwytywany i logowany z `matchId` i `seed`. Nie wpływa na inne mecze (`NFR-31`). |
-| **Zasada głośnej porażki (*fail loud*)** | Zabraniamy cichego obchodzenia błędów, np. zwracania pustej tablicy celów albo losowania celu, gdy gracz go nie wybrał. Nieznane słowo w danych kart zatrzymuje start serwera wyjątkiem `ContentValidationException`. Niezaimplementowana akcja lub nielegalna intencja zwraca czytelny `HubException`. |
-| **Zgodność kontraktów C# ↔ TypeScript** | Test integracyjny `ContractSampleTests` serializuje prawdziwy `MatchView` z Kernela C# do pliku `src/web/src/contracts/match-view.sample.json`. Test `contracts.test.ts` sprawdza zgodność tego pliku z typami TypeScript. Każda rozbieżność pól zatrzymuje potok CI ([ADR-0010](07-decyzje-adr/0010-kontrakt-csharp-ts-przez-probke.md)). |
-| **Obserwowalność i telemetria (*observability*)** | Projekt `Rejoltance.ServiceDefaults` konfiguruje **OpenTelemetry**: logi strukturalne, metryki czasu odpowiedzi HTTP/SignalR i ślady rozproszone widoczne w panelu .NET Aspire. Konfiguruje też punkty kontrolne `/health` i `/alive`. |
+| **Determinizm i odtwarzalność (replay)** | Cała losowość w `packages/engine` pochodzi z RNG SplitMix64 (`rng.ts`, 64-bitowy stan na `BigInt`), którego stan jest częścią `MatchState`. ESLint zabrania w silniku `Math.random`, `Date`, timerów i modułów `node:*`; test `R83_…` sprawdza, że to samo ziarno daje ten sam mecz. |
+| **Ochrona przed podglądaniem kart (*Fog of War*, R-80…R-82)** | Talia przechowuje tylko identyfikatory kart (`cardId`). Karta dostaje identyfikator egzemplarza (`instanceId`) dopiero wtedy, gdy wychodzi z talii do ręki lub na planszę (`R-81`). Dzięki temu kolejność numerów `instanceId` nie zdradza układu talii. `toViewerEvents` zamienia identyfikatory kart dobieranych przez przeciwnika na `0`. |
+| **Współbieżność i izolacja meczów** | Node wykonuje kod jednego meczu po kolei, a silnik jest synchroniczny, więc dwie intencje jednego meczu nigdy się nie przeplatają. Błąd reguły wraca do gracza jako `{ ok: false, error }`; nieoczekiwany wyjątek jest logowany i nie wpływa na inne mecze (`NFR-31`). |
+| **Zasada głośnej porażki (*fail loud*)** | Zabraniamy cichego obchodzenia błędów, np. zwracania pustej tablicy celów albo losowania celu, gdy gracz go nie wybrał. Nieznane słowo w danych kart zatrzymuje start serwera błędem `ContentValidationError`. Niezaimplementowana akcja lub nielegalna intencja wraca jako czytelny komunikat `{ ok: false, error }`. |
+| **Zgodność kontraktów serwer ↔ klient** | Kontrakty są jednym pakietem (`packages/contracts`), więc zmiana typu to błąd `tsc` po obu stronach. Serwer sprawdza intencje schematem zod. Test silnika porównuje projekcję z próbką `match-view.sample.json`, z której korzystają testy klienta ([ADR-0015](07-decyzje-adr/0015-backend-node-typescript.md)). |
+| **Obserwowalność (*observability*)** | Fastify zapisuje logi strukturalne (JSON) każdego żądania; `/health` służy do sprawdzania gotowości. Metryki i ślady (np. OpenTelemetry) dodamy przy wdrożeniu demo. |
 
 ---
 
@@ -228,24 +223,24 @@ System działa w trzech środowiskach. Dodatkowo publikujemy statycznie prototyp
 ```mermaid
 flowchart LR
   subgraph DevEnv["1. Środowisko Lokalne Dewelopera"]
-    AH["dotnet run --project AppHost"] --> S_Dev["Rejoltance.Server (Kestrel)"]
+    AH["npm run dev"] --> S_Dev["apps/server (Node.js)"]
     AH --> W_Dev["Vite Dev Server (React)"]
-    S_Dev --> SQLite[("SQLite (.data/rejoltance.db)")]
+    S_Dev --> SQLite[("SQLite")]
   end
 
   subgraph ProdEnv["2. Środowisko Demo / Produkcyjne (od S4/S5)"]
     Browser["Przeglądarka Gracza"] -- "HTTPS / WSS (TLS 1.3)" --> Proxy["Reverse Proxy / Ingress"]
-    Proxy --> Container["Kontener OCI: Rejoltance.Server<br/>+ zbudowany klient w wwwroot/"]
+    Proxy --> Container["Kontener OCI: apps/server (Node.js)<br/>+ zbudowany klient (pliki statyczne)"]
     Container --> PG[("PostgreSQL 16+")]
   end
 ```
 
 | Środowisko | Jak działa | Baza danych | Do czego służy |
 |---|---|---|---|
-| **1. Lokalne środowisko deweloperskie** | `Rejoltance.AppHost` uruchamia natywnie serwer Kestrel i serwer deweloperski Vite z proxy `/api`. | Plik SQLite `.data/rejoltance.db` (Sprinty 0–3) albo lokalny kontener PostgreSQL zarządzany przez Aspire (od Sprintu 4). | Codzienne programowanie i ręczne testy nowych funkcji. |
-| **2. Środowisko CI (GitHub Actions)** | Maszyny `ubuntu-latest` uruchamiają 3 równoległe zadania: `.NET build & tests` (z testem integracyjnym `AppHostSmokeTests`), `Web lint, typecheck, tests, build` oraz `Specs, docs, agents, content`. | Baza w pamięci albo tymczasowy plik SQLite na czas testów. | Automatyczna bramka jakości dla każdego Pull Requesta i commita na `develop`/`main`. |
-| **3. Środowisko demonstracyjne (demo)** | Jeden obraz kontenera budowany przez .NET (`PublishWithContainerFiles`). Serwer ASP.NET Core serwuje API/SignalR i statyczne pliki klienta React z `wwwroot/`. | Zarządzana instancja lub kontener PostgreSQL 16+. | Testy użyteczności z Radą Graczy i prezentacje na *Sprint Review*. |
-| **4. Hosting prototypu referencyjnego** | Workflow `.github/workflows/prototype-pages.yml` publikuje katalog `prototype/game/` na **GitHub Pages**. | Brak (aplikacja działa tylko w przeglądarce). | Stały punkt odniesienia przy sprawdzaniu zasad gry v11. |
+| **1. Lokalne środowisko deweloperskie** | `npm run dev` uruchamia serwer gry (Node, restart po zmianie) i serwer deweloperski Vite z proxy `/api` i `/socket.io`. | SQLite (do Sprintu 3), potem lokalny PostgreSQL. | Codzienne programowanie i ręczne testy nowych funkcji. |
+| **2. Środowisko CI (GitHub Actions)** | Maszyny `ubuntu-latest` uruchamiają 3 zadania: `Lint, typecheck, tests, build` (w tym testy serwera przez prawdziwe połączenie Socket.IO), `Specs, docs, agents, content` (`npm run check`) i `naming` (konwencje PR). | Brak albo baza w pamięci na czas testów. | Automatyczna bramka jakości dla każdego Pull Requesta i commita na `develop`/`main`. |
+| **3. Środowisko demonstracyjne (demo)** | Jeden obraz kontenera z serwerem Node.js, który serwuje API, Socket.IO i zbudowany klient React. | Zarządzana instancja lub kontener PostgreSQL 16+. | Testy użyteczności z Radą Graczy i prezentacje na *Sprint Review*. |
+| **4. Hosting prototypu referencyjnego** | Workflow `.github/workflows/prototype-pages.yml` publikuje katalog `prototype/game/` na **GitHub Pages**. | Brak (aplikacja działa tylko w przeglądarce). | Stały punkt odniesienia przy sprawdzaniu zasad gry (ADR-0013). |
 
 ---
 
@@ -254,6 +249,6 @@ flowchart LR
 | Ryzyko lub dług techniczny | Możliwy skutek | Jak ograniczamy ryzyko |
 |---|---|---|
 | **Trwające mecze żyją tylko w pamięci jednego procesu serwera** | Restart serwera przerywa trwające pojedynki. | W projekcie uczelnianym to akceptowalne. Przebieg meczu odtworzymy deterministycznym replayem z zapisanego `Seed` i listy intencji (`E6-S07`). |
-| **Typy TypeScript utrzymujemy ręcznie, równolegle do rekordów C#** | Łatwo o pomyłkę przy dodawaniu nowych zdarzeń i efektów. | Chroni nas test próbki JSON w CI (`ContractSampleTests` + `contracts.test.ts`). Po Sprincie 2 wrócimy do decyzji [ADR-0010](07-decyzje-adr/0010-kontrakt-csharp-ts-przez-probke.md) i rozważymy generator typów. |
+| **Brak gotowego panelu telemetrii (po rezygnacji z Aspire)** | Trudniej diagnozować problemy wydajności na demo. | Logi strukturalne Fastify od początku; metryki i ślady dodamy w zadaniu wdrożenia demo (`E6-S05`). |
 | **Prototyp JS ma na sztywno zakodowane efekty pasywne 3 kart (`Tea Maid`, `Wyvern`, `Survivalist`)** | Nowych kart z efektami pasywnymi lub aurami nie da się dodać bez zmiany kodu silnika. | W zadaniu `E2-S07` przeniesiemy efekty pasywne do schematu DSL w `cards.json` (rozbieżność `D-11`). |
-| **Smart App Control blokuje biblioteki DLL na części laptopów z Windows 11** | Na niektórych komputerach nie da się uruchomić Aspire jednym poleceniem. | Mamy skrypt diagnostyczny `tools/doctor.ps1`. Opisaliśmy też uruchamianie serwera i klienta w dwóch osobnych terminalach, bez DCP (Developer Control Plane — komponent Aspire, który uruchamia procesy) (`01-szybki-start-i-instalacja.md`). |
+| **Zespół dopiero uczy się backendu w TypeScript** | Wolniejsze pierwsze zadania serwerowe. | Mały, czytelny serwer (`apps/server`), testy jako przykłady użycia, zasady w `.agents/rules/30` i `40`, [ADR-0015](07-decyzje-adr/0015-backend-node-typescript.md). |

@@ -59,7 +59,7 @@
 <td><p>Produkt / reguły</p></td>
 <td><p>Jak rozstrzygamy 20 znalezionych rozbieżności prototypu JS (<code>D-01..D-20</code>)? Chodzi m.in. o remis bohaterów, Flying a jednostki naziemne i Breakthrough.</p></td>
 <td><p>Zespół + autorzy gry</p></td>
-<td><p><code>04-rozbieznosci-prototypu.md</code>, <code>openspec/specs/*</code>, testy w <code>Rejoltance.Kernel.Tests</code></p></td>
+<td><p><code>04-rozbieznosci-prototypu.md</code>, <code>openspec/specs/*</code>, testy w <code>packages/engine/test</code></p></td>
 <td><p><em>Zadanie <code>E0-S04</code> w Sprincie 0</em></p></td>
 </tr>
 <tr>
@@ -151,9 +151,9 @@
 </tr>
 <tr>
 <td><p><strong>Z-12</strong></p></td>
-<td><p><em>Smart App Control</em> w Windows 11 blokuje lokalne biblioteki DLL tylko na części komputerów zespołu.</p></td>
-<td><p>Każdy uruchamia <code>tools/doctor.ps1</code> (zadanie <code>E0-S01</code>).</p></td>
-<td><p>Uruchamiamy serwer i klienta w dwóch terminalach (Wariant B w instrukcji startowej). Testy integracyjne opieramy na GitHub Actions CI.</p></td>
+<td><p><em>Smart App Control</em> w Windows 11 blokował lokalnie zbudowane biblioteki .NET. Po przejściu na Node.js (ADR-0015) problem nie dotyczy projektu.</p></td>
+<td><p>Nieaktualne od 2026-11-21.</p></td>
+<td><p>—</p></td>
 </tr>
 </tbody></table>
 <h3>C. Założenia produktowe i domenowe</h3>
@@ -185,12 +185,12 @@
 </tr></thead><tbody>
 <tr>
 <td><p>Stos technologiczny</p></td>
-<td><p>Backend C# .NET 10 (ASP.NET Core + SignalR), frontend React 19 + TypeScript + Vite, orkiestracja .NET Aspire 13.</p></td>
-<td><p>2026-10-27 · <strong>ADR-0001</strong> (<code>../01-dokumentacja-systemowa/07-decyzje-adr/0001-stos-technologiczny.md</code>)</p></td>
+<td><p>TypeScript na Node.js 24 w całym repozytorium: serwer Fastify + Socket.IO, klient React 19 + Vite, npm workspaces.</p></td>
+<td><p>2026-11-21 · <strong>ADR-0015</strong> (<code>../01-dokumentacja-systemowa/07-decyzje-adr/0015-backend-node-typescript.md</code>) (zastąpił backend .NET z ADR-0001)</p></td>
 </tr>
 <tr>
 <td><p>Architektura silnika</p></td>
-<td><p>Silnik reguł (<code>Rejoltance.Kernel</code>) piszemy od nowa jako czysty, deterministyczny reduktor stanu. Prototyp JS jest kanonem reguł.</p></td>
+<td><p>Silnik reguł (<code>packages/engine</code>) piszemy od nowa jako czysty, deterministyczny reduktor stanu. Prototyp JS jest kanonem reguł.</p></td>
 <td><p>2026-10-27 · <strong>ADR-0004</strong> (<code>../01-dokumentacja-systemowa/07-decyzje-adr/0004-kernel-od-nowa-deterministyczny.md</code>), <strong>ADR-0005</strong> (<code>../01-dokumentacja-systemowa/07-decyzje-adr/0005-kanon-regul-prototyp-js.md</code>)</p></td>
 </tr>
 <tr>

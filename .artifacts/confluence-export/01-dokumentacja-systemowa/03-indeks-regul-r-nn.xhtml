@@ -3,7 +3,7 @@
 <p>Ta strona to macierz śledzenia: dla każdej reguły gry pokazuje, skąd pochodzi, gdzie jest opisana i czym ją testujemy. SDD (Spec-Driven Development) to nasz sposób pracy, w którym specyfikacja powstaje przed kodem.</p>
 <p>Każda reguła domenowa ma:</p>
 <ul><li>unikalny numer <code>R-nn</code>,</li><li>formalne wymaganie ze scenariuszami w <code>openspec/specs/&lt;obszar&gt;/spec.md</code>,</li><li>odwołanie do prototypu (<strong>ADR-0005</strong> (<code>07-decyzje-adr/0005-kanon-regul-prototyp-js.md</code>)),</li><li>test jednostkowy, którego nazwa zaczyna się od numeru reguły (<code>R14_…</code>),</li><li>powiązane zadanie w backlogu.</li></ul>
-<p>Test jednej reguły uruchomisz tak: <code>dotnet test --filter &quot;FullyQualifiedName~R14&quot;</code>.</p>
+<p>Test jednej reguły uruchomisz tak: <code>npx vitest run -t R14_</code>.</p>
 <p>Wymagania niefunkcjonalne <code>NFR‑nn</code> (NFR, Non-Functional Requirement; norma ISO/IEC 25010) są w <code>openspec/specs/quality-attributes/spec.md</code>. Ich testy mają nazwy <code>NFRnn_…</code>.</p>
 <p>W numeracji celowo zostawiamy odstępy. Nowa reguła dostaje kolejny wolny numer w swoim obszarze (np. <code>R-16</code>). Istniejących numerów nigdy nie zmieniamy.</p>
 <p>Kolumna „Źródło” wskazuje funkcję w prototypie (<code>engine.js</code>, chyba że podano inny plik). Kolumna „Story” to zadanie w backlogu.</p>
@@ -21,7 +21,7 @@
 <td><p>R-01</p></td>
 <td><p>Legalna talia: 30 kart, ≤ 3 kopie, bez tokenów</p></td>
 <td><p><code>ui.js</code> deck builder</p></td>
-<td><p><code>ContentTests.R01_*</code></p></td>
+<td><p><code>content.test.ts: R01_*</code></p></td>
 <td><p>E6-S04</p></td>
 <td><p>✅ walidacja</p></td>
 </tr>
@@ -29,7 +29,7 @@
 <td><p>R-02</p></td>
 <td><p>Stan początkowy: 20 HP, 4 karty, bez wyzwalaczy</p></td>
 <td><p><code>newGame</code></p></td>
-<td><p><code>SetupRulesTests.R02_*</code></p></td>
+<td><p><code>setup-rules.test.ts: R02_*</code></p></td>
 <td><p>—</p></td>
 <td><p>✅</p></td>
 </tr>
@@ -37,7 +37,7 @@
 <td><p>R-03</p></td>
 <td><p>Mulligan: dowolna liczba, zamienniki z góry, odrzucone wracają, tasowanie</p></td>
 <td><p><code>mulligan</code></p></td>
-<td><p><code>SetupRulesTests.R03_*</code></p></td>
+<td><p><code>setup-rules.test.ts: R03_*</code></p></td>
 <td><p>—</p></td>
 <td><p>✅ ❓ D-02</p></td>
 </tr>
@@ -63,7 +63,7 @@
 <td><p>R-10</p></td>
 <td><p>Max Blood = min(10, runda), odnawiane; dobranie od rundy 2</p></td>
 <td><p><code>startRound</code></p></td>
-<td><p><code>SetupRulesTests.R10_*</code></p></td>
+<td><p><code>setup-rules.test.ts: R10_*</code></p></td>
 <td><p>E1-S01</p></td>
 <td><p>🟡 formuła</p></td>
 </tr>
@@ -87,7 +87,7 @@
 <td><p>R-13</p></td>
 <td><p>Ręka ≤ 8; nadmiar na stos odrzuconych; wyzwalacze dobrania</p></td>
 <td><p><code>draw</code></p></td>
-<td><p><code>SetupRulesTests.R13_*</code></p></td>
+<td><p><code>setup-rules.test.ts: R13_*</code></p></td>
 <td><p>E2-S04</p></td>
 <td><p>🟡 bez wyzwalaczy</p></td>
 </tr>
@@ -95,7 +95,7 @@
 <td><p>R-14</p></td>
 <td><p>Pusta talia: fatigue 1, 2, 3…; bez tasowania odrzuconych</p></td>
 <td><p><code>draw</code></p></td>
-<td><p><code>SetupRulesTests.R14_*</code></p></td>
+<td><p><code>setup-rules.test.ts: R14_*</code></p></td>
 <td><p>—</p></td>
 <td><p>✅</p></td>
 </tr>
@@ -433,7 +433,7 @@
 <td><p>R-68</p></td>
 <td><p>Fail loud: nieznane słowo DSL / niezaimplementowana akcja</p></td>
 <td><p><code>tg</code> (<code>return []</code>)</p></td>
-<td><p><code>ContentTests.R68_*</code>, <code>SetupRulesTests.R68_*</code></p></td>
+<td><p><code>content.test.ts: R68_*</code>, <code>setup-rules.test.ts: R68_*</code></p></td>
 <td><p>E2-S01</p></td>
 <td><p>🟡 ładowanie</p></td>
 </tr>
@@ -459,7 +459,7 @@
 <td><p>R-70</p></td>
 <td><p>HP ≤ 0 → przegrana, natychmiast, bez limitu rund</p></td>
 <td><p><code>chk</code></p></td>
-<td><p><code>SetupRulesTests.R70_*</code></p></td>
+<td><p><code>setup-rules.test.ts: R70_*</code></p></td>
 <td><p>E1-S03</p></td>
 <td><p>🟡 fatigue</p></td>
 </tr>
@@ -475,7 +475,7 @@
 <td><p>R-72</p></td>
 <td><p>Poddanie się</p></td>
 <td><p>UI</p></td>
-<td><p><code>SetupRulesTests.R72_*</code></p></td>
+<td><p><code>setup-rules.test.ts: R72_*</code></p></td>
 <td><p>—</p></td>
 <td><p>✅</p></td>
 </tr>
@@ -501,7 +501,7 @@
 <td><p>R-80</p></td>
 <td><p>Fog of war: ręka i talia przeciwnika tylko jako liczby</p></td>
 <td><p>(prototyp łamie)</p></td>
-<td><p><code>ProjectionTests.R80_*</code></p></td>
+<td><p><code>projection.test.ts: R80_*</code></p></td>
 <td><p>—</p></td>
 <td><p>✅</p></td>
 </tr>
@@ -525,7 +525,7 @@
 <td><p>R-83</p></td>
 <td><p>Determinizm: seed + intencje = ten sam stan</p></td>
 <td><p>(prototyp: <code>Math.random</code>)</p></td>
-<td><p><code>DeterminismTests.R83_*</code></p></td>
+<td><p><code>determinism.test.ts: R83_*</code></p></td>
 <td><p>E5-S02</p></td>
 <td><p>✅</p></td>
 </tr>
@@ -533,7 +533,7 @@
 <td><p>R-84</p></td>
 <td><p>Decyzje przez <code>PendingInteraction</code>, bez losowania</p></td>
 <td><p>(prototyp: <code>botPick</code>)</p></td>
-<td><p><code>ProjectionTests.R84_*</code></p></td>
+<td><p><code>projection.test.ts: R84_*</code></p></td>
 <td><p>E1-S08</p></td>
 <td><p>🟡 mulligan</p></td>
 </tr>

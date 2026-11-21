@@ -3,19 +3,19 @@ E0,Epic,E0 Fundamenty i proces,E0 Fundamenty i proces,"Środowisko, DIP, ceremon
 
 Właściciel: PO sprintu (rotacyjnie)
 Źródło: docs/03-dokumentacja-procesowa/02-backlog/backlog.toml",rejoltance,Process
-E1,Epic,E1 Silnik reguł (Kernel),E1 Silnik reguł (Kernel),"Deterministyczne reguły gry: runda, kroki, walka, słowa kluczowe, śmierć. src/Rejoltance.Kernel, reguły R-0x…R-5x, R-7x.
+E1,Epic,E1 Silnik reguł (Kernel),E1 Silnik reguł (Kernel),"Deterministyczne reguły gry: runda, kroki, walka, słowa kluczowe, śmierć. packages/engine, reguły R-0x…R-5x, R-7x.
 
 Właściciel: do przydzielenia (#9)
 Źródło: docs/03-dokumentacja-procesowa/02-backlog/backlog.toml",rejoltance,Kernel
-E2,Epic,E2 Interpreter efektów kart (DSL),E2 Interpreter efektów kart (DSL),"Karty jako dane: rejestr akcji, wyzwalacze, warunki, cele, koszt. src/Rejoltance.Content + handlery w Kernelu, reguły R-2x, R-6x.
+E2,Epic,E2 Interpreter efektów kart (DSL),E2 Interpreter efektów kart (DSL),"Karty jako dane: rejestr akcji, wyzwalacze, warunki, cele, koszt. packages/content + handlery w silniku, reguły R-2x, R-6x.
 
 Właściciel: do przydzielenia (#9)
 Źródło: docs/03-dokumentacja-procesowa/02-backlog/backlog.toml",rejoltance,Content
-E3,Epic,E3 Serwer i sieć czasu rzeczywistego,E3 Serwer i sieć czasu rzeczywistego,"Pokoje PvP, SignalR, walidacja i autoryzacja, zdarzenia per gracz, reconnect, timer. src/Rejoltance.Server, reguły R-7x, R-8x.
+E3,Epic,E3 Serwer i sieć czasu rzeczywistego,E3 Serwer i sieć czasu rzeczywistego,"Pokoje PvP, Socket.IO, walidacja i autoryzacja, zdarzenia per gracz, reconnect, timer. apps/server, reguły R-7x, R-8x.
 
 Właściciel: do przydzielenia (#9)
 Źródło: docs/03-dokumentacja-procesowa/02-backlog/backlog.toml",rejoltance,Server
-E4,Epic,E4 Klient web,E4 Klient web,"React + TypeScript: plansza, ręka, prompty, lobby, animacje, dźwięk. src/web — renderuje MatchView, wysyła Intent.
+E4,Epic,E4 Klient web,E4 Klient web,"React + TypeScript: plansza, ręka, prompty, lobby, animacje, dźwięk. apps/web — renderuje MatchView, wysyła Intent.
 
 Właściciel: do przydzielenia (#9)
 Źródło: docs/03-dokumentacja-procesowa/02-backlog/backlog.toml",rejoltance,Web

@@ -128,34 +128,34 @@
 <td><p><code>03-indeks-regul-r-nn.md</code>, <code>openspec/specs/</code></p></td>
 </tr>
 <tr>
-<td><p><strong>Kernel (<code>Rejoltance.Kernel</code>)</strong></p></td>
-<td><p>Silnik reguł w C#. Jest czysty i deterministyczny: nie używa wejścia/wyjścia, zegara systemowego ani niedeterministycznej losowości.</p></td>
-<td><p><code>src/Rejoltance.Kernel/</code></p></td>
+<td><p><strong>Silnik reguł (<code>packages/engine</code>)</strong></p></td>
+<td><p>Silnik reguł w TypeScript (wcześniej nazywany Kernelem). Jest czysty i deterministyczny: nie używa wejścia/wyjścia, zegara systemowego ani niedeterministycznej losowości.</p></td>
+<td><p><code>packages/engine/README.md</code></p></td>
 </tr>
 <tr>
 <td><p><strong><code>Intent</code></strong></p></td>
-<td><p>Kontrakt opisujący intencję gracza, np. zagranie karty, zakończenie kroku, wybór celu. Klient wysyła go do serwera, który rozstrzyga o wszystkim (serwer autorytatywny).</p></td>
-<td><p><code>src/Rejoltance.Contracts/Intents.cs</code></p></td>
+<td><p>Kontrakt opisujący intencję gracza, np. zagranie karty, zakończenie kroku, wybór celu. Klient wysyła go do serwera, który rozstrzyga o wszystkim (serwer autorytatywny); serwer sprawdza go schematem zod.</p></td>
+<td><p><code>packages/contracts/src/intents.ts</code></p></td>
 </tr>
 <tr>
 <td><p><strong><code>MatchView</code></strong></p></td>
-<td><p>Widok stanu meczu, który serwer przygotowuje dla jednego miejsca przy stole (<code>Seat</code>). Ukrywa rękę przeciwnika i kolejność jego talii (<em>Fog of War</em>).</p></td>
-<td><p><code>src/Rejoltance.Contracts/MatchView.cs</code></p></td>
+<td><p>Widok stanu meczu, który serwer przygotowuje dla jednego miejsca przy stole (<code>seat</code>). Ukrywa rękę przeciwnika i kolejność jego talii (<em>Fog of War</em>).</p></td>
+<td><p><code>packages/contracts/src/view.ts</code></p></td>
 </tr>
 <tr>
 <td><p><strong><code>LegalAction</code></strong></p></td>
-<td><p>Dozwolony ruch w bieżącym stanie meczu, wyliczony przez Kernel. To jedyne źródło prawdy o legalności zagrań dla interfejsu, serwera i bota.</p></td>
-<td><p><code>src/Rejoltance.Contracts/</code></p></td>
+<td><p>Dozwolony ruch w bieżącym stanie meczu, wyliczony przez silnik. To jedyne źródło prawdy o legalności zagrań dla interfejsu, serwera i bota.</p></td>
+<td><p><code>packages/contracts/src/view.ts</code></p></td>
 </tr>
 <tr>
 <td><p><strong><code>PendingInteraction</code></strong></p></td>
-<td><p>Pytanie silnika do gracza, np. o karty do mulliganu albo o cel efektu. Dzięki niemu Kernel pozostaje czystą funkcją i nie blokuje wątków.</p></td>
-<td><p><code>src/Rejoltance.Contracts/</code></p></td>
+<td><p>Pytanie silnika do gracza, np. o karty do mulliganu albo o cel efektu. Dzięki niemu silnik pozostaje czystą funkcją i nie czeka na gracza.</p></td>
+<td><p><code>packages/contracts/src/view.ts</code></p></td>
 </tr>
 <tr>
 <td><p><strong><code>DomainEvent</code></strong></p></td>
-<td><p>Zdarzenie domenowe emitowane przy zmianie stanu w Kernelu, np. dobranie karty albo zadanie obrażeń. Klient odtwarza na jego podstawie animacje.</p></td>
-<td><p><code>src/Rejoltance.Contracts/Events.cs</code></p></td>
+<td><p>Zdarzenie domenowe emitowane przy zmianie stanu w silniku, np. dobranie karty albo zadanie obrażeń. Klient odtwarza na jego podstawie animacje.</p></td>
+<td><p><code>packages/contracts/src/events.ts</code></p></td>
 </tr>
 <tr>
 <td><p><strong>Rola agenta (<code>Agent Role</code>)</strong></p></td>

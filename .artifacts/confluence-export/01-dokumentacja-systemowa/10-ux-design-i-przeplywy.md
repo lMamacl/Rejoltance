@@ -3,7 +3,7 @@
 
 > **Źródło prawdy:** repozytorium (`docs/01-dokumentacja-systemowa/10-ux-design-i-przeplywy.md`) · **Kategoria dokumentacji:** Dokumentacja produktowa — systemowa (projekt UX i przewodnik stylu) · **Etap SDD:** Planowanie
 
-Ten dokument opisuje UX (User Experience, czyli doświadczenie użytkownika) klienta webowego RE:JOLTANCE (`src/web`). Znajdziesz tu:
+Ten dokument opisuje UX (User Experience, czyli doświadczenie użytkownika) klienta webowego RE:JOLTANCE (`apps/web`). Znajdziesz tu:
 
 - architekturę informacji i mapę ekranów,
 - szkielet układu planszy (*wireframe*),
@@ -43,13 +43,13 @@ flowchart TD
 
 ### Ekrany i powiązane zadania w backlogu
 
-| Ekran / widok | Odpowiednik w prototypie (`index.html`) | Stan w kliencie React (`src/web`) | Zadanie (Jira / backlog) |
+| Ekran / widok | Odpowiednik w prototypie (`index.html`) | Stan w kliencie React (`apps/web`) | Zadanie (Jira / backlog) |
 |---|---|---|---|
 | **Menu główne** | `#menu` | W backlogu (na razie gra startuje od razu w piaskownicy) | `E4-S07` |
 | **Logowanie i rejestracja** | *(brak w prototypie)* | W backlogu | `E6-S02`, `E6-S09` |
 | **Lobby 1v1 (kod pokoju, link)** | `#lobby` | W backlogu | `E3-S01`, `E4-S07` |
 | **Wybór talii i mecz z botem** | `#botmenu` | W backlogu | `E5-S05` |
-| **Plansza meczowa (4 linie, HP, Blood, ręka)** | `#game` | Szkielet zaimplementowany w `src/web` | `E4-S01`, `E4-S02` |
+| **Plansza meczowa (4 linie, HP, Blood, ręka)** | `#game` | Szkielet zaimplementowany w `apps/web` | `E4-S01`, `E4-S02` |
 | **Nakładki wyboru (`PendingInteraction`)** | `#mul` | Mulligan zaimplementowany, reszta w backlogu | `E4-S03` |
 | **Powiększenie karty i glosariusz słów kluczowych** | `#zoom` | W backlogu | `E4-S04` |
 | **Dziennik rozgrywki (Log zdarzeń)** | `#hist` | W backlogu | `E4-S05` |
@@ -104,7 +104,7 @@ sequenceDiagram
   autonumber
   actor A as Gracz A (Twórca pokoju)
   actor B as Gracz B (Zaproszony kolega)
-  participant UI as Klient Webowy (src/web)
+  participant UI as Klient Webowy (apps/web)
   participant S as Serwer (MatchHub)
 
   A->>UI: Wybiera „Graj z kolegą” i talię startową

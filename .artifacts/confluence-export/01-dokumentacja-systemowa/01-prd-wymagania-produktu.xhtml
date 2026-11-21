@@ -36,15 +36,15 @@
 <td><p>EU1, EU2, EU5, EU6</p></td>
 </tr>
 <tr>
-<td><p><strong>Właściciel epiku E3 (serwer i sieć SignalR)</strong></p></td>
+<td><p><strong>Właściciel epiku E3 (serwer i sieć czasu rzeczywistego)</strong></p></td>
 <td><p>Członek zespołu #3 <em>(do wpisania po zatwierdzeniu #9)</em></p></td>
-<td><p>Autorytatywny serwer meczu (<code>MatchHub</code>, <code>MatchSessionManager</code>), pokoje PvP, rozłączenia i powroty do meczu (<code>R-73</code>, <code>R-80..R-84</code>).</p></td>
+<td><p>Autorytatywny serwer meczu (<code>apps/server</code>, <code>MatchSessionManager</code>), pokoje PvP, rozłączenia i powroty do meczu (<code>R-73</code>, <code>R-80..R-84</code>).</p></td>
 <td><p>EU1, EU2, EU5, EU6</p></td>
 </tr>
 <tr>
 <td><p><strong>Właściciel epiku E4 (klient webowy i UX)</strong></p></td>
 <td><p>Członek zespołu #4 <em>(do wpisania po zatwierdzeniu #9)</em></p></td>
-<td><p>Interfejs w React + TypeScript (<code>src/web</code>), plansza 4 linii, interakcje (<code>PendingInteraction</code>), animacje, podręcznik gracza.</p></td>
+<td><p>Interfejs w React + TypeScript (<code>apps/web</code>), plansza 4 linii, interakcje (<code>PendingInteraction</code>), animacje, podręcznik gracza.</p></td>
 <td><p>EU1, EU2, EU5, EU6</p></td>
 </tr>
 <tr>
@@ -56,7 +56,7 @@
 <tr>
 <td><p><strong>Właściciel epiku E6 (platforma, dane i jakość)</strong></p></td>
 <td><p>Członek zespołu #6 <em>(do wpisania po zatwierdzeniu #9)</em></p></td>
-<td><p>Orkiestracja Aspire, konta graczy, kreator talii (<em>Deckbuilder</em>), migracja SQLite → PostgreSQL, CI/CD, testy E2E w Playwright, wersja demo.</p></td>
+<td><p>Uruchamianie i wdrożenie, konta graczy, kreator talii (<em>Deckbuilder</em>), migracja SQLite → PostgreSQL, CI/CD, testy E2E w Playwright, wersja demo.</p></td>
 <td><p>EU1, EU2, EU5, EU6</p></td>
 </tr>
 <tr>
@@ -73,7 +73,7 @@
 <p>RE:JOLTANCE to autorska gra karciana dla dwóch osób typu <em>lane battler</em>. Gracze walczą na 4 liniach, korzystają z odnawialnego zasobu <em>Blood</em>, mają talie po 30 kart, a bohater ma 20 punktów zdrowia. Przed naszym projektem powstały dwa prototypy:</p>
 <ol><li><strong>Wersja desktopowa (C# / Godot).</strong> Trzeba ją było zainstalować lokalnie. Nie miała gry przez internet.</li><li><strong>Prototyp przeglądarkowy w czystym JavaScripcie (<code>prototype/game</code>, repo <code>PanCoto/rejoltance-prototype</code>).</strong> Ma 130 kart kolekcjonerskich i 29 tokenów i działa w przeglądarce. Komunikacja sieciowa działa jednak Peer-to-Peer (PeerJS), bez serwera. Z tego wynikają problemy: - klient gościa widział identyfikatory, które zdradzały rękę i kolejność talii hosta (brak <em>Fog of War</em>, czyli ukrywania informacji przed przeciwnikiem), - serwer nie sprawdzał celów, więc klient mógł zmienić komunikat i poświęcić jednostkę przeciwnika, - kod był podatny na XSS (<code>innerHTML</code>), - losowość z <code>Math.random()</code> była niedeterministyczna, więc nie dało się odtworzyć powtórki (<em>replay</em>), - nie było żadnych testów automatycznych.</li></ol>
 <h3>2.2 Cel główny produktu i miary sukcesu</h3>
-<p>Budujemy webową wersję gry RE:JOLTANCE z autorytatywnym serwerem w .NET 10 i klientem w React + TypeScript. Gra ma być bezpieczna, deterministyczna i przetestowana. Gracz otwiera link w przeglądarce i od razu gra 1v1 albo trenuje z botem AI. Nie musi niczego instalować.</p>
+<p>Budujemy webową wersję gry RE:JOLTANCE z autorytatywnym serwerem i klientem w TypeScript (Node.js + React). Gra ma być bezpieczna, deterministyczna i przetestowana. Gracz otwiera link w przeglądarce i od razu gra 1v1 albo trenuje z botem AI. Nie musi niczego instalować.</p>
 <table><thead><tr>
 <th><p>Wymiar celu</p></th>
 <th><p>Miara sukcesu (KPI / kryterium odbioru)</p></th>
@@ -86,12 +86,12 @@
 </tr>
 <tr>
 <td><p><strong>Uczciwość i bezpieczeństwo (Server Authority)</strong></p></td>
-<td><p><strong>0% wycieku ukrytych informacji</strong> w pakietach SignalR. Klient dostaje tylko projekcję <code>MatchView</code>, bez ręki i kolejności talii przeciwnika (R-80, R-81, NFR-41).</p></td>
+<td><p><strong>0% wycieku ukrytych informacji</strong> w wiadomościach Socket.IO. Klient dostaje tylko projekcję <code>MatchView</code>, bez ręki i kolejności talii przeciwnika (R-80, R-81, NFR-41).</p></td>
 <td><p>Każdy sprint (testy <code>ProjectionTests</code>)</p></td>
 </tr>
 <tr>
 <td><p><strong>Poprawność i determinizm reguł</strong></p></td>
-<td><p><strong>100% zaimplementowanych reguł (<code>R-nn</code>)</strong> ma testy jednostkowe xUnit. Ten sam <code>seed</code> i ta sama lista intencji zawsze dają ten sam stan końcowy meczu (R-83, NFR-51).</p></td>
+<td><p><strong>100% zaimplementowanych reguł (<code>R-nn</code>)</strong> ma testy jednostkowe (Vitest). Ten sam <code>seed</code> i ta sama lista intencji zawsze dają ten sam stan końcowy meczu (R-83, NFR-51).</p></td>
 <td><p>Każdy PR w GitHub Actions CI</p></td>
 </tr>
 <tr>
@@ -152,42 +152,42 @@
 <td><p>Fundamenty i środowisko SDD</p></td>
 <td><p>Repo, <code>tools/</code>, <code>docs/</code></p></td>
 <td><p>4 story (Sprint 0)</p></td>
-<td><p>Działający szkielet Aspire, CI/CD, uzgodnienie rozbieżności reguł z Radą Graczy, import backlogu do Jiry.</p></td>
+<td><p>Działający szkielet aplikacji, CI/CD, uzgodnienie rozbieżności reguł z Radą Graczy, import backlogu do Jiry.</p></td>
 </tr>
 <tr>
 <td><p><strong>E1</strong></p></td>
-<td><p>Silnik reguł gry (Kernel)</p></td>
-<td><p><code>src/Rejoltance.Kernel</code></p></td>
+<td><p>Silnik reguł gry</p></td>
+<td><p><code>packages/engine</code></p></td>
 <td><p>8 story</p></td>
 <td><p>Deterministyczny przebieg rundy, zagrywanie jednostek, walka na 4 liniach, słowa kluczowe, koniec meczu.</p></td>
 </tr>
 <tr>
 <td><p><strong>E2</strong></p></td>
 <td><p>Katalog kart i interpreter efektów (DSL)</p></td>
-<td><p><code>src/Rejoltance.Content</code>, <code>Kernel</code></p></td>
+<td><p><code>packages/content</code>, <code>packages/engine</code></p></td>
 <td><p>8 story</p></td>
-<td><p>Walidacja danych 78 kart, wyzwalacze (<code>OnPlayed</code>, <code>OnDeath</code>, <code>OnSacrificed</code>), wybór celów, akcje kart.</p></td>
+<td><p>Walidacja danych 159 kart, wyzwalacze (<code>OnPlayed</code>, <code>OnDeath</code>, <code>OnSacrificed</code>), wybór celów, akcje kart.</p></td>
 </tr>
 <tr>
 <td><p><strong>E3</strong></p></td>
 <td><p>Autorytatywny serwer i sieć czasu rzeczywistego</p></td>
-<td><p><code>src/Rejoltance.Server</code></p></td>
+<td><p><code>apps/server</code></p></td>
 <td><p>6 story</p></td>
-<td><p>Pokoje 1v1 przez SignalR, projekcja <code>MatchView</code> (<em>Fog of War</em>), zegar tury, rozłączenie i powrót gracza.</p></td>
+<td><p>Pokoje 1v1 przez Socket.IO, projekcja <code>MatchView</code> (<em>Fog of War</em>), zegar tury, rozłączenie i powrót gracza.</p></td>
 </tr>
 <tr>
 <td><p><strong>E4</strong></p></td>
 <td><p>Klient webowy i doświadczenie gracza (UI/UX)</p></td>
-<td><p><code>src/web</code></p></td>
+<td><p><code>apps/web</code></p></td>
 <td><p>7 story</p></td>
 <td><p>Plansza 4 linii, wachlarz ręki, podświetlanie <code>legalActions</code>, okna <code>PendingInteraction</code>, dziennik meczu, dźwięki, animacje.</p></td>
 </tr>
 <tr>
 <td><p><strong>E5</strong></p></td>
 <td><p>Bot AI, wyrocznia testowa i symulator</p></td>
-<td><p><code>src/Rejoltance.Sim</code> <em>(planowany)</em></p></td>
+<td><p>bot i symulator <em>(planowane)</em></p></td>
 <td><p>5 story</p></td>
-<td><p>Wyrocznia porównująca Kernel C# z prototypem JS, bot AI grający przez kontrakt <code>Intent</code>, symulator bot-vs-bot.</p></td>
+<td><p>Wyrocznia porównująca silnik z prototypem JS, bot AI grający przez kontrakt <code>Intent</code>, symulator bot-vs-bot.</p></td>
 </tr>
 <tr>
 <td><p><strong>E6</strong></p></td>
@@ -266,7 +266,7 @@
 </tr>
 </tbody></table>
 <h3>5.2 Wymagania funkcjonalne platformy webowej</h3>
-<ol><li><strong>Piaskownica i trening z botem (<code>StartSandbox</code> / <code>StartBotMatch</code>).</strong> Gracz od razu uruchamia mecz testowy albo pojedynek z botem AI. Wybiera jedną z 5 gotowych talii startowych.</li><li><strong>Lobby i prywatne pokoje 1v1 (<code>CreateRoom</code> / <code>JoinRoom</code>).</strong> Gracz tworzy pokój z krótkim kodem i linkiem zapraszającym. System łączy dwóch graczy w parę.</li><li><strong>Odporność na chwilową utratę połączenia (<code>Reconnect</code>).</strong> Serwer trzyma sesję meczu przez 60 sekund od zerwania połączenia WebSocket. Po powrocie gracz dostaje pełny widok <code>MatchView</code>.</li><li><strong>Konta użytkowników i logowanie (od Sprintu 2).</strong> Rejestracja i logowanie działają na bezpiecznych ciasteczkach <code>HttpOnly</code> (ASP.NET Core Identity). Można też zagrać szybko jako gość.</li><li>**Kreator talii (<em>Deckbuilder</em>, fala W2).** Gracz tworzy, sprawdza (30 kart, maks. 3 kopie, bez tokenów) i zapisuje własne talie na swoim koncie.</li><li><strong>Historia meczów i deterministyczny replay (fala W2).</strong> Baza danych przechowuje ziarno losowości (<code>Seed</code>) i uporządkowaną listę intencji (<code>Intent[]</code>). Z tych danych odtwarzamy przebieg zakończonego meczu.</li></ol>
+<ol><li><strong>Piaskownica i trening z botem (<code>StartSandbox</code> / <code>StartBotMatch</code>).</strong> Gracz od razu uruchamia mecz testowy albo pojedynek z botem AI. Wybiera jedną z 5 gotowych talii startowych.</li><li><strong>Lobby i prywatne pokoje 1v1 (<code>CreateRoom</code> / <code>JoinRoom</code>).</strong> Gracz tworzy pokój z krótkim kodem i linkiem zapraszającym. System łączy dwóch graczy w parę.</li><li><strong>Odporność na chwilową utratę połączenia (<code>Reconnect</code>).</strong> Serwer trzyma sesję meczu przez 60 sekund od zerwania połączenia WebSocket. Po powrocie gracz dostaje pełny widok <code>MatchView</code>.</li><li><strong>Konta użytkowników i logowanie (od Sprintu 2).</strong> Rejestracja i logowanie działają na bezpiecznych ciasteczkach <code>HttpOnly</code> (hasła przechowywane jako skrót). Można też zagrać szybko jako gość.</li><li>**Kreator talii (<em>Deckbuilder</em>, fala W2).** Gracz tworzy, sprawdza (30 kart, maks. 3 kopie, bez tokenów) i zapisuje własne talie na swoim koncie.</li><li><strong>Historia meczów i deterministyczny replay (fala W2).</strong> Baza danych przechowuje ziarno losowości (<code>Seed</code>) i uporządkowaną listę intencji (<code>Intent[]</code>). Z tych danych odtwarzamy przebieg zakończonego meczu.</li></ol>
 <hr />
 <h2>6. Wymagania niefunkcjonalne (wg normy ISO/IEC 25010:2023)</h2>
 <p>Pełna specyfikacja 18 wymagań niefunkcjonalnych (NFR) ze scenariuszami testowymi jest w pliku <strong><code>openspec/specs/quality-attributes/spec.md</code></strong> (<code>../../openspec/specs/quality-attributes/spec.md</code>). Tabela poniżej to skrót najważniejszych parametrów.</p>
@@ -283,7 +283,7 @@
 <tr>
 <td><p>**Kompatybilność (<em>Compatibility</em>)**</p></td>
 <td><p><code>NFR-10</code>, <code>NFR-11</code></p></td>
-<td><p>Działa w 2 ostatnich wersjach Chrome, Edge, Firefox i Safari (od <code>1280×720</code>). Build zatrzymuje się, gdy kontrakt C# ↔ TS się nie zgadza.</p></td>
+<td><p>Działa w 2 ostatnich wersjach Chrome, Edge, Firefox i Safari (od <code>1280×720</code>). Build zatrzymuje się, gdy kontrakt serwer ↔ klient się nie zgadza.</p></td>
 </tr>
 <tr>
 <td><p>**Użyteczność i dostępność (<em>Usability</em>)**</p></td>
@@ -303,7 +303,7 @@
 <tr>
 <td><p>**Utrzymywalność (<em>Maintainability</em>)**</p></td>
 <td><p><code>NFR-50..NFR-52</code></p></td>
-<td><p>Testy <code>NetArchTest</code> pilnują jednokierunkowych granic modułów. Pokrycie kodu <code>Rejoltance.Kernel</code> testami <strong>≥ 80%</strong>. Zero ostrzeżeń kompilatora w CI (<code>TreatWarningsAsErrors</code>).</p></td>
+<td><p>ESLint i test architektury pilnują jednokierunkowych granic modułów. Pokrycie kodu silnika testami <strong>≥ 80%</strong>. Zero ostrzeżeń kompilatora w CI (<code>TreatWarningsAsErrors</code>).</p></td>
 </tr>
 <tr>
 <td><p>**Przenośność (<em>Portability</em>)**</p></td>
@@ -322,4 +322,4 @@
 <hr />
 <h2>8. Poza zakresem projektu</h2>
 <p>Żeby zakres nie rozrastał się bez kontroli (<em>scope creep</em>), świadomie <strong>nie robimy</strong> tych rzeczy:</p>
-<ol><li><strong>Natywne aplikacje mobilne (iOS / Android) i pionowy układ dla smartfonów.</strong> Gra jest dla przeglądarek na komputerach, w orientacji poziomej (od <code>1280×720</code>).</li><li><strong>Mikropłatności, sklep z paczkami kart i waluty premium.</strong> Wszystkie karty są odblokowane dla każdego gracza w kreatorze talii.</li><li><strong>Architektura wieloserwerowa (klastry Kubernetes, szyna komunikatów Redis/RabbitMQ) w Semestrze 1.</strong> Zgodnie z Konstytucją (Art. VIII) budujemy modularny monolit. Aktywne mecze żyją w pamięci jednego procesu serwera.</li><li><strong>Czat tekstowy i głosowy w grze.</strong> Gracze rozmawiają przez zewnętrzne komunikatory (np. Discord). Dzięki temu nie musimy budować moderacji treści.</li><li><strong>Tryby dla więcej niż 2 graczy (2v2, Free-for-All).</strong> Silnik reguł <code>Rejoltance.Kernel</code> jest zaprojektowany pod pojedynek 1 na 1.</li></ol>
+<ol><li><strong>Natywne aplikacje mobilne (iOS / Android) i pionowy układ dla smartfonów.</strong> Gra jest dla przeglądarek na komputerach, w orientacji poziomej (od <code>1280×720</code>).</li><li><strong>Mikropłatności, sklep z paczkami kart i waluty premium.</strong> Wszystkie karty są odblokowane dla każdego gracza w kreatorze talii.</li><li><strong>Architektura wieloserwerowa (klastry Kubernetes, szyna komunikatów Redis/RabbitMQ) w Semestrze 1.</strong> Zgodnie z Konstytucją (Art. VIII) budujemy modularny monolit. Aktywne mecze żyją w pamięci jednego procesu serwera.</li><li><strong>Czat tekstowy i głosowy w grze.</strong> Gracze rozmawiają przez zewnętrzne komunikatory (np. Discord). Dzięki temu nie musimy budować moderacji treści.</li><li><strong>Tryby dla więcej niż 2 graczy (2v2, Free-for-All).</strong> Silnik reguł (<code>packages/engine</code>) jest zaprojektowany pod pojedynek 1 na 1.</li></ol>

@@ -49,7 +49,7 @@
 <tr>
 <td><p>S4</p></td>
 <td><p>2026-12-15 – 2027-01-11</p></td>
-<td><p>Słowa kluczowe walki działają; lobby z pokojami; baza PostgreSQL w Aspire.</p></td>
+<td><p>Słowa kluczowe walki działają; lobby z pokojami; baza PostgreSQL.</p></td>
 <td><p>60</p></td>
 <td><p>50</p></td>
 <td><p>25</p></td>
@@ -178,7 +178,7 @@
 </tr>
 </tbody></table>
 <h2>E1 Silnik reguł (Kernel)</h2>
-<p>Deterministyczne reguły gry: runda, kroki, walka, słowa kluczowe, śmierć. src/Rejoltance.Kernel, reguły R-0x…R-5x, R-7x. Właściciel: do przydzielenia (#9).</p>
+<p>Deterministyczne reguły gry: runda, kroki, walka, słowa kluczowe, śmierć. packages/engine, reguły R-0x…R-5x, R-7x. Właściciel: do przydzielenia (#9).</p>
 <table><thead><tr>
 <th><p>Story</p></th>
 <th><p>Tytuł</p></th>
@@ -262,7 +262,7 @@
 </tr>
 </tbody></table>
 <h2>E2 Interpreter efektów kart (DSL)</h2>
-<p>Karty jako dane: rejestr akcji, wyzwalacze, warunki, cele, koszt. src/Rejoltance.Content + handlery w Kernelu, reguły R-2x, R-6x. Właściciel: do przydzielenia (#9).</p>
+<p>Karty jako dane: rejestr akcji, wyzwalacze, warunki, cele, koszt. packages/content + handlery w silniku, reguły R-2x, R-6x. Właściciel: do przydzielenia (#9).</p>
 <table><thead><tr>
 <th><p>Story</p></th>
 <th><p>Tytuł</p></th>
@@ -355,7 +355,7 @@
 </tr>
 </tbody></table>
 <h2>E3 Serwer i sieć czasu rzeczywistego</h2>
-<p>Pokoje PvP, SignalR, walidacja i autoryzacja, zdarzenia per gracz, reconnect, timer. src/Rejoltance.Server, reguły R-7x, R-8x. Właściciel: do przydzielenia (#9).</p>
+<p>Pokoje PvP, Socket.IO, walidacja i autoryzacja, zdarzenia per gracz, reconnect, timer. apps/server, reguły R-7x, R-8x. Właściciel: do przydzielenia (#9).</p>
 <table><thead><tr>
 <th><p>Story</p></th>
 <th><p>Tytuł</p></th>
@@ -430,7 +430,7 @@
 </tr>
 </tbody></table>
 <h2>E4 Klient web</h2>
-<p>React + TypeScript: plansza, ręka, prompty, lobby, animacje, dźwięk. src/web — renderuje MatchView, wysyła Intent. Właściciel: do przydzielenia (#9).</p>
+<p>React + TypeScript: plansza, ręka, prompty, lobby, animacje, dźwięk. apps/web — renderuje MatchView, wysyła Intent. Właściciel: do przydzielenia (#9).</p>
 <table><thead><tr>
 <th><p>Story</p></th>
 <th><p>Tytuł</p></th>
@@ -610,7 +610,7 @@
 </tr>
 <tr>
 <td><p>E6-S03</p></td>
-<td><p>PostgreSQL w Aspire</p></td>
+<td><p>PostgreSQL (kontener lokalny i na demo)</p></td>
 <td><p>S4</p></td>
 <td><p>W1</p></td>
 <td><p>3</p></td>

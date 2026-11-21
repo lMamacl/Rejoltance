@@ -120,7 +120,7 @@
 </tr>
 </tbody></table>
 <h3>Co sprawdza automatycznie CI (<code>pr-conventions.yml</code>)</h3>
-<ul><li><strong>Nazwa gałęzi</strong> musi pasować do wyrażenia: <code>^(feature|fix|docs|chore|spike)/REJ-[0-9]+-[a-z0-9-]+$</code></li><li><strong>Tytuł PR i wiadomości commitów</strong> zaczynają się od klucza zadania z Jiry i dwukropka. Dalej jest opis po angielsku w trybie rozkazującym, np.:</li><li><code>REJ-45: add turn order selection after mulligan</code></li><li><code>REJ-12: update SAD deployment diagram for Aspire</code></li></ul>
+<ul><li><strong>Nazwa gałęzi</strong> musi pasować do wyrażenia: <code>^(feature|fix|docs|chore|spike)/REJ-[0-9]+-[a-z0-9-]+$</code></li><li><strong>Tytuł PR i wiadomości commitów</strong> zaczynają się od klucza zadania z Jiry i dwukropka. Dalej jest opis po angielsku w trybie rozkazującym, np.:</li><li><code>REJ-45: add turn order selection after mulligan</code></li><li><code>REJ-12: update SAD deployment diagram</code></li></ul>
 <hr />
 <h2>3. Bezpieczna praca z agentami AI</h2>
 <p>Agenci AI (Claude Code, Codex, Cursor, Antigravity) to dla nas wyspecjalizowani asystenci. <strong>Za kod, dokumentację i ocenę z przedmiotu odpowiada jednak człowiek.</strong></p>
@@ -134,7 +134,7 @@
 <td><p>Wydajesz ogólne polecenie bez specyfikacji: <em>„Zaprogramuj walkę w grze”</em>.</p></td>
 </tr>
 <tr>
-<td><p>Wymagasz, żeby agent naprawdę uruchomił testy (<code>dotnet test</code>, <code>npm test</code>) i pokazał wynik w raporcie.</p></td>
+<td><p>Wymagasz, żeby agent naprawdę uruchomił testy (<code>npm run verify</code>) i pokazał wynik w raporcie.</p></td>
 <td><p>Wierzysz agentowi na słowo, gdy pisze <em>„kod powinien działać poprawnie”</em>.</p></td>
 </tr>
 <tr>
@@ -158,4 +158,4 @@
 <h3>DoR — kiedy zadanie może wejść do sprintu?</h3>
 <ol><li>Zadanie ma wpis w Jirze z przypisanym epikiem. Ma opis w formacie <em>User Story</em> (<em>Jako… chcę… aby…</em>). Ma mierzalne kryteria akceptacji <code>GIVEN / WHEN / THEN</code>.</li><li>Zespół oszacował zadanie w <em>Story Points</em> (skala Fibonacciego). Zadanie jest podzielone na podzadania (<em>Sub-tasks</em>) po <strong>≤ 4 h</strong>.</li><li>Zadania ≥ 3 SP i zadania zmieniające reguły gry mają wskazane numery reguł <code>R-nn</code> / <code>NFR-nn</code>.</li><li>Znamy zależności od innych modułów. Osoby współpracujące potwierdziły, że kontrakty wejścia i wyjścia są jasne.</li></ol>
 <h3>DoD — kiedy zadanie jest ukończone?</h3>
-<ol><li>Kod jest na gałęzi nazwanej według wzorca <code>typ/REJ-123-opis</code>. Commity zawierają klucz Jiry.</li><li>Nowe reguły gry i wymagania mają testy automatyczne (<code>Rnn_...</code> / <code>NFRnn_...</code>). Całe CI na GitHubie jest zielone (<code>dotnet test</code>, <code>npm test</code>, <code>npm run check</code>).</li><li>W zadaniach ≥ 3 SP zmiana w <code>openspec/</code> jest zwalidowana i po wdrożeniu zarchiwizowana.</li><li>Co najmniej jedna inna osoba z zespołu sprawdziła i zaakceptowała PR. PR jest scalony do <code>develop</code> i zsynchronizowany z Bitbucket PB.</li><li>Zaktualizowane są: dokumentacja modułu (<code>src/&lt;moduł&gt;/README.md</code>), indeks reguł (<code>03-indeks-regul-r-nn.md</code>) i odpowiednia strona w <strong>Confluence PB</strong>.</li><li>Rzeczywisty czas pracy jest zapisany w Jirze przez <strong>Log Work</strong>. Przyrost został pokazany i zaakceptowany przez przedstawicieli użytkowników (Radę Graczy).</li></ol>
+<ol><li>Kod jest na gałęzi nazwanej według wzorca <code>typ/REJ-123-opis</code>. Commity zawierają klucz Jiry.</li><li>Nowe reguły gry i wymagania mają testy automatyczne (<code>Rnn_...</code> / <code>NFRnn_...</code>). Całe CI na GitHubie jest zielone (<code>npm run verify</code>, <code>npm run check</code>).</li><li>W zadaniach ≥ 3 SP zmiana w <code>openspec/</code> jest zwalidowana i po wdrożeniu zarchiwizowana.</li><li>Co najmniej jedna inna osoba z zespołu sprawdziła i zaakceptowała PR. PR jest scalony do <code>develop</code> i zsynchronizowany z Bitbucket PB.</li><li>Zaktualizowane są: dokumentacja modułu (<code>src/&lt;moduł&gt;/README.md</code>), indeks reguł (<code>03-indeks-regul-r-nn.md</code>) i odpowiednia strona w <strong>Confluence PB</strong>.</li><li>Rzeczywisty czas pracy jest zapisany w Jirze przez <strong>Log Work</strong>. Przyrost został pokazany i zaakceptowany przez przedstawicieli użytkowników (Radę Graczy).</li></ol>

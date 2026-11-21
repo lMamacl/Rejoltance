@@ -39,7 +39,7 @@ Celem projektu (dwa semestry) jest gra webowa, w której:
 
 ### 1.3 Ograniczenia i założenia
 
-- Stos: .NET 10 + ASP.NET Core + SignalR, React + TypeScript + Vite, Aspire, SQLite → PostgreSQL (ADR-0001, ADR-0007).
+- Stos: TypeScript na Node.js 24 (Fastify + Socket.IO), React + Vite, SQLite → PostgreSQL (ADR-0015, ADR-0007; pierwotnie .NET wg ADR-0001).
 - Narzędzia uczelni: Jira, Confluence, Bitbucket PB; kod i CI na GitHubie (ADR-0002).
 - Czas: 6 osób × ok. 5 h tygodniowo; Sprint 0 (1 tydzień) + 5 sprintów dwutygodniowych w semestrze 1.
 - Kanon zasad: prototyp JS `prototype/game` (ADR-0013, wcześniej v11 wg ADR-0005); sporne miejsca w [`01-dokumentacja-systemowa/04-rozbieznosci-prototypu.md`](../01-dokumentacja-systemowa/04-rozbieznosci-prototypu.md).
@@ -69,13 +69,13 @@ Reprezentanci: rada graczy testowych — 3 osoby spoza zespołu ⟨imiona⟩ (st
 Budujemy modularny monolit: jedną aplikację podzieloną na moduły, których granic pilnują testy architektury (`tests/Rejoltance.Architecture.Tests`). Szczegóły: [`01-dokumentacja-systemowa/05-sad-architektura-systemu.md`](../01-dokumentacja-systemowa/05-sad-architektura-systemu.md) oraz [`08-mapa-kodu-i-modulow.md`](../01-dokumentacja-systemowa/08-mapa-kodu-i-modulow.md).
 
 ```text
-src/web (React/TS)  ── Intent ──►  Rejoltance.Server (SignalR, sesje, API, baza)
+apps/web (React/TS)  ── Intent ──►  apps/server (Socket.IO, sesje, API, baza)
         ▲                                  │
         └──── MatchView + DomainEvent ─────┤
                                            ▼
-                             Rejoltance.Kernel (reguły, deterministyczny)
+                             packages/engine (reguły, deterministyczny)
                                            ▼
-                             Rejoltance.Content (karty jako dane) → Rejoltance.Contracts (5 kontraktów)
+                             packages/content (karty jako dane) → packages/contracts (5 kontraktów)
 ```
 
 - **Kontrakty zamrożone:** `Intent`, `LegalAction`, `PendingInteraction`, `MatchView`, `DomainEvent`. Każda zmiana wymaga ADR (konstytucja, art. IV).
@@ -88,7 +88,7 @@ src/web (React/TS)  ── Intent ──►  Rejoltance.Server (SignalR, sesje, 
 
 ### Epik 1: Silnik reguł (Kernel)
 
-- **Autor (EU1):** ⟨student 1⟩ · **Klucz Jira:** ⟨REJ-…⟩ · **Moduł:** `src/Rejoltance.Kernel`
+- **Autor (EU1):** ⟨student 1⟩ · **Klucz Jira:** ⟨REJ-…⟩ · **Moduł:** `packages/engine`
 - **Zakres:** runda i kroki, zagrywanie jednostek, walka 4 linii, słowa kluczowe, ochrony przed śmiercią, koniec meczu (R-0x…R-5x, R-7x).
 - **Historyjki:**
   - `E1-S01` Jako gracz chcę po mulliganie zdecydować, czy zaczynam, i rozpocząć rundę 1, aby mecz przeszedł do gry.
@@ -100,7 +100,7 @@ src/web (React/TS)  ── Intent ──►  Rejoltance.Server (SignalR, sesje, 
 
 ### Epik 2: Interpreter efektów kart (DSL)
 
-- **Autor (EU1):** ⟨student 2⟩ · **Klucz Jira:** ⟨REJ-…⟩ · **Moduł:** `src/Rejoltance.Content` + handlery efektów
+- **Autor (EU1):** ⟨student 2⟩ · **Klucz Jira:** ⟨REJ-…⟩ · **Moduł:** `packages/content` + handlery efektów
 - **Zakres:** rejestr akcji, wyzwalacze, warunki, wybór i walidacja celów, koszt, talia MVP (Minimum Viable Product, najmniejsza grywalna wersja) z 12 kart (R-2x, R-6x).
 - **Historyjki:**
   - `E2-S01` Jako twórca kart chcę, żeby efekt był wykonywany z danych przez rejestr handlerów, aby nowa karta nie wymagała zmiany silnika.
@@ -112,8 +112,8 @@ src/web (React/TS)  ── Intent ──►  Rejoltance.Server (SignalR, sesje, 
 
 ### Epik 3: Serwer i sieć czasu rzeczywistego
 
-- **Autor (EU1):** ⟨student 3⟩ · **Klucz Jira:** ⟨REJ-…⟩ · **Moduł:** `src/Rejoltance.Server`
-- **Zakres:** pokoje PvP, SignalR, autoryzacja miejsca, zdarzenia per gracz, limit czasu tury, ochrona hubu (R-7x, R-8x).
+- **Autor (EU1):** ⟨student 3⟩ · **Klucz Jira:** ⟨REJ-…⟩ · **Moduł:** `apps/server`
+- **Zakres:** pokoje PvP, Socket.IO, autoryzacja miejsca, zdarzenia per gracz, limit czasu tury, ochrona serwera (R-7x, R-8x).
 - **Historyjki:**
   - `E3-S01` Jako gracz chcę utworzyć pokój i wysłać koledze kod, aby zagrać w dwóch przeglądarkach.
     *GIVEN* pełny pokój *WHEN* trzecia osoba wpisze kod *THEN* dostaje komunikat „pokój pełny”.
@@ -124,7 +124,7 @@ src/web (React/TS)  ── Intent ──►  Rejoltance.Server (SignalR, sesje, 
 
 ### Epik 4: Klient web
 
-- **Autor (EU1):** ⟨student 4⟩ · **Klucz Jira:** ⟨REJ-…⟩ · **Moduł:** `src/web`
+- **Autor (EU1):** ⟨student 4⟩ · **Klucz Jira:** ⟨REJ-…⟩ · **Moduł:** `apps/web`
 - **Zakres:** plansza i ręka, zagrywanie z podświetleniem legalnych ruchów, prompty, lobby, animacje i dźwięk.
 - **Historyjki:**
   - `E4-S01` Jako gracz chcę widzieć planszę, rękę, HP i Blood jak w prototypie, aby rozumieć stan gry.
@@ -136,7 +136,7 @@ src/web (React/TS)  ── Intent ──►  Rejoltance.Server (SignalR, sesje, 
 
 ### Epik 5: Bot AI i symulator
 
-- **Autor (EU1):** ⟨student 5⟩ · **Klucz Jira:** ⟨REJ-…⟩ · **Moduł:** `tools/oracle`, `src/Rejoltance.Sim` (powstanie)
+- **Autor (EU1):** ⟨student 5⟩ · **Klucz Jira:** ⟨REJ-…⟩ · **Moduł:** bot, symulator i wyrocznia (powstaną)
 - **Zakres:** wyrocznia z prototypu (silnik JS jako wzorzec poprawnych wyników), testy różnicowe, bot na `LegalActions`, symulator bez interfejsu (*headless*), tryb gry z botem.
 - **Historyjki:**
   - `E5-S01` Jako inżynier reguł chcę uruchomić silnik prototypu w Node z seedem, aby mieć wzorcowe wyniki.
@@ -211,10 +211,10 @@ Macierz RACI mówi, kto przy danej czynności: **R** (*Responsible*) wykonuje pr
 |---|---|---|---|---|---|
 | R-1 | Zakres reguł większy niż pojemność (MVP ≈ 291 h w semestrze 1) | wysokie | wysoki | linia cięcia W0–W3; talia MVP 12 kart; cięcie od dołu | PO sprintu |
 | R-2 | Bus factor 1 w Kernelu (ścieżka krytyczna E1) | wysokie | wysoki | sub‑taski E1 dla 2 osób; review każdego PR; testy R‑nn i wyrocznia | autor E1 |
-| R-3 | Rozjazd kontraktów C#↔TS | średnie | wysoki | ADR-0010: próbka JSON sprawdzana w obu językach; PR z recenzentem z drugiej strony | autor E3/E4 |
+| R-3 | Rozjazd kontraktów serwer↔klient | niskie | wysoki | ADR-0015: jeden pakiet `packages/contracts`, walidacja zod, próbka JSON w testach; PR z recenzentem z drugiej strony | autor E3/E4 |
 | R-4 | Błędne reguły przepisane z prototypu | średnie | średni | [`04-rozbieznosci-prototypu.md`](../01-dokumentacja-systemowa/04-rozbieznosci-prototypu.md) + decyzje E0-S04; testy różnicowe z wyrocznią (E5-S02) | autor E1/E5 |
 | R-5 | Utrata kontaktu z graczami testowymi | średnie | krytyczny | 3 osoby + zastępstwo; termin Review potwierdzany 3 dni wcześniej | PO sprintu |
-| R-6 | Problemy środowiska Windows (Smart App Control, OneDrive, długie ścieżki) | średnie | średni | `tools/doctor.ps1`, [`01-szybki-start-i-instalacja.md`](../00-przewodnik-i-setup/01-szybki-start-i-instalacja.md), CI jako dowód działania | autor E6 |
+| R-6 | Problemy środowiska Windows (OneDrive, długie ścieżki) | niskie | średni | `npm run doctor`, [`01-szybki-start-i-instalacja.md`](../00-przewodnik-i-setup/01-szybki-start-i-instalacja.md), CI jako dowód działania | autor E6 |
 | R-7 | Agent AI wprowadza błąd lub zmyśla | średnie | średni | konstytucja (art. X), recenzja człowieka, testy obowiązkowe, etykiety [V]/[Z] | wszyscy |
 | R-8 | Nierówne zaangażowanie | średnie | średni | jawne raporty ze spotkań dziennych, rejestrowanie czasu w Jirze, zadania dla każdego w każdym sprincie | PO sprintu |
 

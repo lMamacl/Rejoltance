@@ -1,74 +1,38 @@
 # RE:JOLTANCE
 
-**Sieciowa taktyczna gra karciana (*lane battler*) z autorytatywnym serwerem Node.js/TypeScript, klientem React/TypeScript i procesem Spec-Driven Development (SDD).**
+Sieciowa, taktyczna gra karciana w przeglądarce: dwóch graczy, cztery linie walki, talie po 30 kart. Projekt zespołowy (6 osób, 2 semestry) na Wydziale Informatyki Politechniki Białostockiej. Całość w TypeScript na Node.js 24.
 
-Projekt zespołowy (6 osób, 2 semestry) realizowany na Wydziale Informatyki Politechniki Białostockiej.
+**Nowa osoba w zespole? Zacznij od [`START.md`](START.md)** — plan pierwszego dnia, od instalacji do pierwszego PR.
 
----
+## Uruchomienie
 
-## Szybki start (3 komendy)
-
-Wymagania wstępne: **Node.js 24** i **Git**.
+Wymagania: **Node.js 24** i **Git**.
 
 ```powershell
-# 1. Jednorazowa konfiguracja: sprawdzenie narzędzi, instalacja zależności, plik .env, testy
-npm run setup
-
-# 2. Uruchomienie gry: serwer (Fastify + Socket.IO) i klient (Vite) razem
-npm run dev
-
-# 3. Pełne sprawdzenie przed PR: lint, typecheck, testy, build + OpenSpec i dokumentacja
-npm run verify
-npm run check
+npm run setup    # jednorazowo: narzędzia, zależności, plik .env, testy
+npm run dev      # gra lokalnie: serwer + klient w przeglądarce
+npm run verify   # przed PR: lint, typecheck, testy, build
+npm run check    # przed PR: specyfikacje, dokumentacja, generatory
 ```
 
-> Szczegółowa instrukcja instalacji i rozwiązywania problemów (Windows Smart App Control, OneDrive, długie ścieżki): [`docs/00-przewodnik-i-setup/01-szybki-start-i-instalacja.md`](docs/00-przewodnik-i-setup/01-szybki-start-i-instalacja.md).
+## Gdzie co jest
 
----
-
-## Architektura Dokumentacji Technicznej (1:1 z Confluence PB — AltexSoft + SDD)
-
-Cała dokumentacja projektu w katalogu [`docs/`](docs/README.md) została zaprojektowana według klasyfikacji **AltexSoft** (*Technical Documentation in Software Development: Types, Best Practices, and Tools*) oraz powiązana z etapami cyklu życia **Spec-Driven Development (SDD)**. Układ katalogów **odpowiada 1:1 drzewu stron w przestrzeni Confluence PB**:
-
-| Katalog w `docs/` (1:1 ze stroną nadrzędną w Confluence) | Kategoria wg AltexSoft | Najważniejsze dokumenty w sekcji |
-|---|---|---|
-| **[`00-przewodnik-i-setup/`](docs/00-przewodnik-i-setup/README.md)** | *Standardy i konfiguracja* | [Szybki start](docs/00-przewodnik-i-setup/01-szybki-start-i-instalacja.md) · [Architektura dokumentacji SDD](docs/00-przewodnik-i-setup/02-architektura-dokumentacji-sdd.md) · [Proces Git/Jira/Scrum](docs/00-przewodnik-i-setup/03-proces-pracy-i-git-scrum.md) · [Ściąga komend](docs/00-przewodnik-i-setup/04-sciaga-komend.md) · [Słownik](docs/00-przewodnik-i-setup/05-slownik-pojec.md) · [Decyzje otwarte](docs/00-przewodnik-i-setup/06-decyzje-otwarte-i-zalozenia.md) · **[Plan wdrożenia i migracji](docs/00-przewodnik-i-setup/07-plan-wdrozenia-i-migracji.md)** |
-| **[`01-dokumentacja-systemowa/`](docs/01-dokumentacja-systemowa/README.md)** | *Dokumentacja produktowa — systemowa* | **[PRD — Wymagania produktu](docs/01-dokumentacja-systemowa/01-prd-wymagania-produktu.md)** · [Specyfikacja reguł gry](docs/01-dokumentacja-systemowa/02-specyfikacja-regul-gry.md) · [Indeks R-nn](docs/01-dokumentacja-systemowa/03-indeks-regul-r-nn.md) · **[SAD — Architektura systemu](docs/01-dokumentacja-systemowa/05-sad-architektura-systemu.md)** · **[Stos technologiczny i roadmapa IT](docs/01-dokumentacja-systemowa/06-stos-technologiczny.md)** · [Decyzje ADR 0001–0011](docs/01-dokumentacja-systemowa/07-decyzje-adr/README.md) · [Mapa kodu](docs/01-dokumentacja-systemowa/08-mapa-kodu-i-modulow.md) · [Kontrakty i API](docs/01-dokumentacja-systemowa/09-kontrakty-i-api.md) · [Projekt UX](docs/01-dokumentacja-systemowa/10-ux-design-i-przeplywy.md) · [Strategia testów QA](docs/01-dokumentacja-systemowa/11-strategia-testow-qa.md) |
-| **[`02-dokumentacja-uzytkownika/`](docs/02-dokumentacja-uzytkownika/README.md)** | *Dokumentacja produktowa — użytkownika* | [Podręcznik gracza](docs/02-dokumentacja-uzytkownika/01-podrecznik-gracza.md) · [Instrukcja wdrożenia i utrzymania (dla administratora)](docs/02-dokumentacja-uzytkownika/02-instrukcja-wdrozenia-i-utrzymania.md) |
-| **[`03-dokumentacja-procesowa/`](docs/03-dokumentacja-procesowa/README.md)** | *Dokumentacja procesowa* | [Dokument Inicjujący Projekt (DIP)](docs/03-dokumentacja-procesowa/01-dip-dokument-inicjujacy.md) · [Rejestr produktu i pliki CSV do Jiry](docs/03-dokumentacja-procesowa/02-backlog/BACKLOG.md) · [Scrum i spotkania](docs/03-dokumentacja-procesowa/03-scrum-i-spotkania/README.md) · [Badania i analizy](docs/03-dokumentacja-procesowa/04-badania-i-analizy/README.md) |
-| **[`04-system-agentow-ai/`](docs/04-system-agentow-ai/README.md)** | *Podręcznik inżynierii agentowej i SDD* | [Architektura i konfiguracja agentów](docs/04-system-agentow-ai/01-architektura-i-konfiguracja-agentow.md) · [Rola recenzenta i katalog skilli](docs/04-system-agentow-ai/02-katalog-rol-i-wbudowanych-skilli.md) · [Jak pisać specyfikacje OpenSpec](docs/04-system-agentow-ai/03-jak-pisac-specyfikacje-openspec.md) · [Warsztat: skille, dokumentacja, ADR i karty](docs/04-system-agentow-ai/04-warsztat-tworzenie-agentow-skilli-i-kart.md) |
-| **[`05-szablony/`](docs/05-szablony/README.md)** | *Biblioteka szablonów dokumentacji* | Szablony: [PRD](docs/05-szablony/szablon-prd.md), [SAD](docs/05-szablony/szablon-sad.md), [Projekt techniczny TDD](docs/05-szablony/szablon-tdd.md), [Persona UX](docs/05-szablony/szablon-ux-persona-scenariusz.md), [Test użyteczności UX](docs/05-szablony/szablon-ux-test-uzytecznosci.md), [Karta modułu (EU5)](docs/05-szablony/szablon-karta-modulu.md), [Plan i raport testów QA (EU6)](docs/05-szablony/szablon-qa-plan-testow.md), [Informacja o wydaniu](docs/05-szablony/szablon-informacja-o-wydaniu.md) |
-
----
-
-## Struktura repozytorium
-
-```text
-Rejoltance/
-├── docs/                       ← Dokumentacja techniczna i procesowa (układ 1:1 z Confluence PB)
-├── openspec/                   ← Spec-Driven Development: żywe specyfikacje (specs/) i propozycje zmian (changes/)
-├── .agents/                    ← Kanon systemu agentów AI (rules/, agents/, skills/) + adaptery IDE
-├── packages/
-│   ├── contracts/              ← 5 zamrożonych kontraktów (Intent, LegalAction, PendingInteraction, MatchView, DomainEvent) + protokół Socket.IO
-│   ├── content/                ← Katalog 130 kart + 29 tokenów (data/cards.json), słownik DSL i walidator
-│   └── engine/                 ← Czysty, deterministyczny silnik reguł gry w TypeScript (zero I/O, RNG z ziarnem)
-├── apps/
-│   ├── server/                 ← Autorytatywny serwer Node.js: Fastify (REST) + Socket.IO, projekcja Fog of War
-│   └── web/                    ← Klient przeglądarkowy React 19 + TypeScript + Vite
-├── prototype/                  ← Prototyp JS (git subtree z PanCoto/rejoltance-prototype): game/, lab/, tools/
-│   └── game/                   ← Gra referencyjna (wyrocznia zachowania reguł gry, ADR-0013)
-└── tools/                      ← Skrypty automatyzacji: agents/, backlog/, content/, confluence/
-```
-
----
-
-## Najważniejsze strażniki jakości (CI / Lokalnie)
-
-| Komenda | Co weryfikuje? |
+| Katalog | Co zawiera |
 |---|---|
-| `npm run verify` | Lint (z granicami modułów i determinizmem silnika), typecheck, testy (`Rnn_`, serwer przez Socket.IO, klient) i build klienta |
-| `npm run check` | Walidacja `openspec validate --all --strict` oraz linter dokumentacji `markdownlint-cli2` |
-| `npm run agents:check` | Spójność reguł, roli recenzenta, skilli i adapterów Claude Code |
-| `npm run backlog:check` | Dwukierunkowa spójność `backlog.toml`, `BACKLOG.md`, plików CSV Jiry i `03-indeks-regul-r-nn.md` |
-| `npm run cards:check` | Zgodność katalogu `packages/content/data/cards.json` z referencyjnym prototypem JS (`prototype/game`) |
-| `npm run docs:check` | Gotowość drzewa `docs/` do eksportu 1:1 do przestrzeni Confluence PB |
+| [`apps/web`](apps/web/README.md) | klient React — wyświetla stan meczu i wysyła ruchy gracza |
+| [`apps/server`](apps/server/README.md) | serwer gry — jedyny sędzia meczu (Fastify + Socket.IO) |
+| [`packages/engine`](packages/engine/README.md) | reguły gry: czysty, deterministyczny silnik |
+| [`packages/content`](packages/content/README.md) | karty i talie (generowane z prototypu) |
+| [`packages/contracts`](packages/contracts/README.md) | typy wymieniane przez serwer i klienta |
+| [`prototype/`](prototype/README.md) | prototyp gry w JS — wzorzec zasad (git subtree) |
+| [`openspec/`](openspec) | specyfikacje reguł `R-nn` i wymagań jakościowych `NFR-nn` |
+| [`docs/`](docs/README.md) | dokumentacja projektu (układ 1:1 z Confluence PB) |
+| [`tools/`](tools/README.md) | skrypty `npm run …` (setup, generatory, publikacja w Confluence) |
+| `AGENTS.md`, `.agents/` | zasady i skille dla narzędzi AI (Claude Code, Codex, Cursor, Antigravity) |
+
+## Najczęściej potrzebne
+
+- [Mapa kodu i „gdzie dodać nową funkcję”](docs/01-dokumentacja-systemowa/08-mapa-kodu-i-modulow.md)
+- [Proces pracy: gałęzie, PR, Scrum](docs/00-przewodnik-i-setup/03-proces-pracy-i-git-scrum.md)
+- [Ściąga poleceń](docs/00-przewodnik-i-setup/04-sciaga-komend.md)
+- [Konstytucja projektu](.agents/rules/00-konstytucja.md) i [decyzje architektoniczne (ADR)](docs/01-dokumentacja-systemowa/07-decyzje-adr/README.md)

@@ -46,7 +46,7 @@ id = "S4"
 start = "2026-12-15"
 end = "2027-01-11"
 weeks = 2           # 4 tygodnie kalendarzowe, ale przerwa świąteczna — liczymy 2 tygodnie pracy
-goal = "Słowa kluczowe walki działają; lobby z pokojami; baza PostgreSQL w Aspire."
+goal = "Słowa kluczowe walki działają; lobby z pokojami; baza PostgreSQL."
 
 [[sprint]]
 id = "S5"
@@ -83,7 +83,7 @@ as_a = "członek zespołu"
 i_want = "mieć działające repo, CI, Jirę i Confluence"
 so_that = "od pierwszego dnia pracować według jednych zasad"
 acceptance = [
-  "GIVEN czysty klon repo WHEN uruchamiam tools/setup.ps1 THEN testy przechodzą, a dotnet run --project src/Rejoltance.AppHost uruchamia grę",
+  "GIVEN czysty klon repo WHEN uruchamiam npm run setup THEN testy przechodzą, a npm run dev uruchamia grę",
   "GIVEN PR do develop WHEN CI się zakończy THEN wszystkie joby są zielone, a gałąź main/develop jest chroniona",
   "GIVEN backlog zaimportowany do Jiry WHEN otwieram tablicę THEN widzę epiki E0–E6 ze story i szacunkami",
 ]
@@ -257,7 +257,7 @@ id = "E1"
 name = "Silnik reguł (Kernel)"
 component = "Kernel"
 owner = "do przydzielenia (#9)"
-description = "Deterministyczne reguły gry: runda, kroki, walka, słowa kluczowe, śmierć. src/Rejoltance.Kernel, reguły R-0x…R-5x, R-7x."
+description = "Deterministyczne reguły gry: runda, kroki, walka, słowa kluczowe, śmierć. packages/engine, reguły R-0x…R-5x, R-7x."
 
 [[epic.story]]
 id = "E1-S01"
@@ -411,7 +411,7 @@ id = "E2"
 name = "Interpreter efektów kart (DSL)"
 component = "Content"
 owner = "do przydzielenia (#9)"
-description = "Karty jako dane: rejestr akcji, wyzwalacze, warunki, cele, koszt. src/Rejoltance.Content + handlery w Kernelu, reguły R-2x, R-6x."
+description = "Karty jako dane: rejestr akcji, wyzwalacze, warunki, cele, koszt. packages/content + handlery w silniku, reguły R-2x, R-6x."
 
 [[epic.story]]
 id = "E2-S01"
@@ -570,7 +570,7 @@ id = "E3"
 name = "Serwer i sieć czasu rzeczywistego"
 component = "Server"
 owner = "do przydzielenia (#9)"
-description = "Pokoje PvP, SignalR, walidacja i autoryzacja, zdarzenia per gracz, reconnect, timer. src/Rejoltance.Server, reguły R-7x, R-8x."
+description = "Pokoje PvP, Socket.IO, walidacja i autoryzacja, zdarzenia per gracz, reconnect, timer. apps/server, reguły R-7x, R-8x."
 
 [[epic.story]]
 id = "E3-S01"
@@ -591,10 +591,10 @@ rules = ["R-80", "R-82"]
 title = "Model pokoju: kod 5 znaków, dwa miejsca, przypisanie połączeń"
 h = 3
 [[epic.story.task]]
-title = "Hub: CreateRoom/JoinRoom, wysyłka MatchUpdated per miejsce (grupy SignalR)"
+title = "Socket.IO: createRoom/joinRoom, wysyłka matchUpdated per miejsce (pokoje Socket.IO)"
 h = 3
 [[epic.story.task]]
-title = "Testy z dwoma klientami SignalR (ServerFactory)"
+title = "Testy z dwoma klientami Socket.IO"
 h = 3
 
 [[epic.story]]
@@ -690,7 +690,7 @@ id = "E4"
 name = "Klient web"
 component = "Web"
 owner = "do przydzielenia (#9)"
-description = "React + TypeScript: plansza, ręka, prompty, lobby, animacje, dźwięk. src/web — renderuje MatchView, wysyła Intent."
+description = "React + TypeScript: plansza, ręka, prompty, lobby, animacje, dźwięk. apps/web — renderuje MatchView, wysyła Intent."
 
 [[epic.story]]
 id = "E4-S01"
@@ -851,7 +851,7 @@ title = "Testy różnicowe Kernel vs wyrocznia"
 as_a = "inżynier reguł"
 i_want = "porównywać Kernel z prototypem na tych samych scenariuszach"
 so_that = "wyłapywać odstępstwa od kanonu"
-acceptance = ["GIVEN fixtury z wyroczni (start, mulligan, dobieranie) WHEN uruchamiam testy C# THEN stan Kernela zgadza się z fixturą lub różnica jest na liście ROZBIEZNOSCI"]
+acceptance = ["GIVEN fixtury z wyroczni (start, mulligan, dobieranie) WHEN uruchamiam testy THEN stan silnika zgadza się z fixturą lub różnica jest na liście ROZBIEZNOSCI"]
 sp = 3
 sprint = "S2"
 wave = "W1"
@@ -863,7 +863,7 @@ h = 2
 title = "Generator fixtur ze scenariuszy R-0x/R-1x"
 h = 3
 [[epic.story.task]]
-title = "Test xUnit czytający fixtury (z listą znanych rozbieżności)"
+title = "Test Vitest czytający fixtury (z listą znanych rozbieżności)"
 h = 3
 
 [[epic.story]]
@@ -942,7 +942,7 @@ as_a = "zespół"
 i_want = "zielone CI z testem E2E uruchamiającym grę w przeglądarce"
 so_that = "każdy PR był automatycznie sprawdzony (EU6)"
 acceptance = [
-  "GIVEN PR WHEN CI się uruchamia THEN przechodzą joby dotnet, web, repo oraz smoke AppHost",
+  "GIVEN PR WHEN CI się uruchamia THEN przechodzą joby lint/typecheck/testy/build, repo i testy serwera przez Socket.IO",
   "GIVEN uruchomiony AppHost WHEN Playwright otwiera klienta THEN startuje sandbox i wykonuje mulligan",
 ]
 sp = 3
@@ -972,7 +972,7 @@ sp = 3
 sprint = "S2"
 wave = "W1"
 [[epic.story.task]]
-title = "ASP.NET Core Identity na SQLite + migracja EF"
+title = "Konta graczy na SQLite (hasła jako skrót, sesja w ciasteczku HttpOnly)"
 h = 3
 [[epic.story.task]]
 title = "Endpointy rejestracji/logowania (cookie HttpOnly) + rate limiting"
@@ -983,7 +983,7 @@ h = 2
 
 [[epic.story]]
 id = "E6-S03"
-title = "PostgreSQL w Aspire"
+title = "PostgreSQL (kontener lokalny i na demo)"
 as_a = "deweloper"
 i_want = "uruchamiać bazę PostgreSQL jednym poleceniem"
 so_that = "środowisko odpowiadało produkcji"
