@@ -33,7 +33,7 @@ Sklonuj repozytorium do **krótkiej ścieżki poza folderem OneDrive**, np. `C:\
 ### Windows (PowerShell)
 
 ```powershell
-git clone https://github.com/lMamacl/Rejoltance.git C:\dev\Rejoltance
+git clone https://github.com/rejoltance/Rejoltance.git C:\dev\Rejoltance
 cd C:\dev\Rejoltance
 powershell -ExecutionPolicy Bypass -File tools/setup.ps1 -TrustDevCert
 ```
@@ -41,7 +41,7 @@ powershell -ExecutionPolicy Bypass -File tools/setup.ps1 -TrustDevCert
 ### macOS i Linux (Bash)
 
 ```bash
-git clone https://github.com/lMamacl/Rejoltance.git ~/dev/Rejoltance
+git clone https://github.com/rejoltance/Rejoltance.git ~/dev/Rejoltance
 cd ~/dev/Rejoltance
 bash tools/setup.sh
 ```

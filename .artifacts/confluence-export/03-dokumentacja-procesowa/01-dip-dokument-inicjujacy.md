@@ -1,4 +1,4 @@
-<!-- CONFLUENCE 1:1 EXPORT | Source: docs/03-dokumentacja-procesowa/01-dip-dokument-inicjujacy.md @ 28d2248 (2026-11-21) -->
+<!-- CONFLUENCE 1:1 EXPORT | Source: docs/03-dokumentacja-procesowa/01-dip-dokument-inicjujacy.md @ 59f39d9 (2026-11-21) -->
 # Dokument Inicjujący Projekt (DIP) — RE:JOLTANCE
 
 > Wymóg zaliczenia (semestr 1): DIP nie dostaje oceny liczbowej, ale bez niego dostajemy ocenę niedostateczną.
@@ -16,7 +16,7 @@
 | Wersja dokumentu | v0.9 (projekt do zatwierdzenia) |
 | Data zatwierdzenia | ⟨RRRR-MM-DD⟩ |
 | Prowadzący / Scrum Master | ⟨tytuł, imię i nazwisko⟩ |
-| Repozytorium | <https://github.com/lMamacl/Rejoltance> (mirror: Bitbucket PB — ADR-0002) |
+| Repozytorium | <https://github.com/rejoltance/Rejoltance> (mirror: Bitbucket PB — ADR-0002) |
 | Skład zespołu | 1. ⟨imię⟩ — E1 · 2. ⟨imię⟩ — E2 · 3. ⟨imię⟩ — E3 · 4. ⟨imię⟩ — E4 · 5. ⟨imię⟩ — E5 · 6. ⟨imię⟩ — E6 |
 
 ## 1. Wstęp, kontekst i cele
