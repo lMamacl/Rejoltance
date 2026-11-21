@@ -14,8 +14,8 @@ Uruchamiaj przy przenoszeniu karty z prototypu JS do silnika C# (np. kart z tali
 ## Kroki wykonawcze (Krok po kroku)
 
 1. **Sprawdź definicję karty w prototypie i w `cards.json`:**
-   - Wyszukaj kartę po identyfikatorze `id` w `prototype/revibance/cards.js` oraz `src/Rejoltance.Content/cards.json` (`grep -n '"id": <N>' src/Rejoltance.Content/cards.json`).
-   - Jeśli zmieniano dane w `prototype/revibance/cards.js`, wygeneruj ponownie katalog kart:
+   - Wyszukaj kartę po identyfikatorze `id` w `prototype/game/cards.js` oraz `src/Rejoltance.Content/cards.json` (`grep -n '"id": <N>' src/Rejoltance.Content/cards.json`).
+   - Dane kart zmieniamy w repo `PanCoto/rejoltance-prototype`, a nie w kopii `prototype/` (git subtree, ADR-0013). Po `git subtree pull --prefix=prototype https://github.com/PanCoto/rejoltance-prototype.git main` wygeneruj ponownie katalog kart:
 
      ```bash
      python tools/content/extract_cards.py

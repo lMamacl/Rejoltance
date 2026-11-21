@@ -55,7 +55,7 @@ Przyjęliśmy te założenia przy projektowaniu architektury i planowaniu backlo
 
 | Kod | Założenie | Jak sprawdzamy | Plan awaryjny (gdy założenie okaże się błędne) |
 |---|---|---|---|
-| **Z-20** | Kanonem reguł gry jest prototyp JavaScript `prototype/revibance` (v11 z 27.10.2026). Wyjątkiem są opisane błędy implementacji (`D-01..D-20`). | Warsztat z autorami gry w Sprincie 0 (`E0-S04`). | Aktualizujemy specyfikację w `openspec/specs/` i indeks `03-indeks-regul-r-nn.md`. |
+| **Z-20** | Kanonem reguł gry jest prototyp JavaScript `prototype/game` (`PanCoto/rejoltance-prototype`, od 21.11.2026 — ADR-0013; wcześniej v11 z 27.10.2026). Wyjątkiem są opisane błędy implementacji (`D-01..D-20`). | Warsztat z autorami gry w Sprincie 0 (`E0-S04`). | Aktualizujemy specyfikację w `openspec/specs/` i indeks `03-indeks-regul-r-nn.md`. |
 | **Z-21** | Grafiki (`img/*.webp`), dźwięki (`sfx/*.wav`, `audio/music.mp3`) i czcionki z prototypu możemy legalnie trzymać w repozytorium. | Potwierdzili to autorzy prototypu z zespołu (27.10.2026). | — |
 
 ---

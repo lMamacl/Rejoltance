@@ -12,7 +12,7 @@ W ADR-ach oznaczamy fakty: [V] — zweryfikowane, [Z] — założenie.
 
 ---
 
-## Rejestr decyzji (ADR-0001 – ADR-0012)
+## Rejestr decyzji (ADR-0001 – ADR-0013)
 
 | Numer ADR | Tytuł decyzji | Status | Główny obszar |
 |---|---|---|---|
@@ -20,7 +20,7 @@ W ADR-ach oznaczamy fakty: [V] — zweryfikowane, [Z] — założenie.
 | [ADR-0002](0002-github-i-mirror-bitbucket.md) | GitHub jako główne repozytorium robocze i automatyczny mirror do Bitbucket PB | Zatwierdzona (`accepted`) | Proces i repozytoria |
 | [ADR-0003](0003-openspec-i-konstytucja.md) | OpenSpec 1.15 jako narzędzie spec-driven development i własna konstytucja projektu | Zatwierdzona (`accepted`) | SDD i agenci AI |
 | [ADR-0004](0004-kernel-od-nowa-deterministyczny.md) | Czysty, deterministyczny silnik reguł (`Rejoltance.Kernel`) pisany od nowa w C# | Zatwierdzona (`accepted`) | Architektura domeny |
-| [ADR-0005](0005-kanon-regul-prototyp-js.md) | Zachowanie prototypu JS v11 jako kanon zasad gry i wyrocznia testów różnicowych | Zatwierdzona (`accepted`) | Specyfikacja reguł |
+| [ADR-0005](0005-kanon-regul-prototyp-js.md) | Zachowanie prototypu JS v11 jako kanon zasad gry i wyrocznia testów różnicowych | Zastąpiona (`superseded by ADR-0013`) | Specyfikacja reguł |
 | [ADR-0006](0006-serwer-autorytatywny-fog-of-war.md) | Serwer autorytatywny z projekcją stanu dla każdego gracza (ochrona ukrytych informacji) | Zatwierdzona (`accepted`) | Bezpieczeństwo i sieć |
 | [ADR-0007](0007-sqlite-potem-postgresql.md) | Baza danych: SQLite na start (Sprinty 0–3), PostgreSQL od Sprintu 4 | Zatwierdzona (`accepted`) | Architektura danych |
 | [ADR-0008](0008-spine-first-pionowe-plastry.md) | Najpierw rdzeń (*spine-first*), potem pionowe plastry funkcji | Proponowana (`proposed`) | Planowanie i integracja |
@@ -28,3 +28,4 @@ W ADR-ach oznaczamy fakty: [V] — zweryfikowane, [Z] — założenie.
 | [ADR-0010](0010-kontrakt-csharp-ts-przez-probke.md) | Spójność kontraktu C# ↔ TypeScript sprawdzana kanonicznymi próbkami JSON | Proponowana (`proposed`) | Kontrakty i testy |
 | [ADR-0011](0011-dokumentacja-hybryda-repo-confluence.md) | Dokumentacja w układzie 1:1 (taksonomia AltexSoft, cykl życia SDD, synchronizacja z Confluence) | Zatwierdzona (`accepted`) | Dokumentacja i SDD |
 | [ADR-0012](0012-konstytucja-v2.md) | Konstytucja v2: nowy układ artykułów, zachowane zakazy dla agentów AI i zasada języka | Zatwierdzona (`accepted`) | Proces i agenci AI |
+| [ADR-0013](0013-kanon-regul-rejoltance-prototype.md) | Prototyp `PanCoto/rejoltance-prototype` (git subtree w `prototype/`) jako kanon zasad gry zamiast v11 | Zatwierdzona (`accepted`) | Specyfikacja reguł |

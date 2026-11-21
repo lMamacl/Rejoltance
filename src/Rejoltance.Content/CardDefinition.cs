@@ -1,7 +1,10 @@
+using System.Text.Json.Serialization;
+
 namespace Rejoltance.Content;
 
 /// <summary>
-/// A card as data (DSL). Field names mirror prototype/revibance/cards.js so the JSON stays copy-compatible.
+/// A card as data (DSL). Field names mirror prototype/game/cards.js so the JSON stays copy-compatible.
+/// Fields the kernel does not read yet are ignored when the JSON is loaded.
 /// Adding a card = adding JSON; adding a new action/trigger = registry change + tests (docs/00-start/jak-dodac-karte.md).
 /// </summary>
 public sealed record CardDefinition
@@ -28,7 +31,9 @@ public sealed record CardDefinition
 public sealed record EffectDefinition
 {
     public required string Trigger { get; init; }
-    public string? Zone { get; init; }
+    /// <summary>Zones where the effect is active; the prototype writes one zone as a string or several as an array.</summary>
+    [JsonConverter(typeof(StringOrListConverter))]
+    public IReadOnlyList<string> Zone { get; init; } = [];
     public string? Targeting { get; init; }
     public IReadOnlyList<string> ChoiceLabels { get; init; } = [];
     public ConditionDefinition? Condition { get; init; }
@@ -46,9 +51,9 @@ public sealed record ActionDefinition
 {
     public required string Type { get; init; }
     public string? Target { get; init; }
-    public int? Amount { get; init; }
-    public int? BuffAtk { get; init; }
-    public int? BuffHp { get; init; }
+    public DslNumber? Amount { get; init; }
+    public DslNumber? BuffAtk { get; init; }
+    public DslNumber? BuffHp { get; init; }
     public string? StatusKeyword { get; init; }
     public int? ValueParam { get; init; }
     public string? StringParam { get; init; }

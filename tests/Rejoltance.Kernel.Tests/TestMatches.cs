@@ -9,9 +9,9 @@ internal static class TestMatches
 
     public static MatchEngine Engine() => new(Catalog);
 
-    public static IReadOnlyList<int> Deck(string name = "MachineAggro") =>
+    public static IReadOnlyList<int> Deck(string name = "OG. M") =>
         Catalog.StarterDecks.Single(d => d.Name == name).Cards;
 
     public static ReduceResult Start(ulong seed = 42) =>
-        Engine().NewMatch(new MatchSetup("test", seed, Deck(), Deck("TeaMaidCombo")));
+        Engine().NewMatch(new MatchSetup("test", seed, Deck(), Deck("OG C.")));
 }

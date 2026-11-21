@@ -41,7 +41,7 @@ Celem projektu (dwa semestry) jest gra webowa, w której:
 - Stos: .NET 10 + ASP.NET Core + SignalR, React + TypeScript + Vite, Aspire, SQLite → PostgreSQL (ADR-0001, ADR-0007).
 - Narzędzia uczelni: Jira, Confluence, Bitbucket PB; kod i CI na GitHubie (ADR-0002).
 - Czas: 6 osób × ok. 5 h tygodniowo; Sprint 0 (1 tydzień) + 5 sprintów dwutygodniowych w semestrze 1.
-- Kanon zasad: prototyp JS v11 (ADR-0005); sporne miejsca w [`01-dokumentacja-systemowa/04-rozbieznosci-prototypu.md`](../01-dokumentacja-systemowa/04-rozbieznosci-prototypu.md).
+- Kanon zasad: prototyp JS `prototype/game` (ADR-0013, wcześniej v11 wg ADR-0005); sporne miejsca w [`01-dokumentacja-systemowa/04-rozbieznosci-prototypu.md`](../01-dokumentacja-systemowa/04-rozbieznosci-prototypu.md).
 - Pracujemy z pomocą agentów AI według konstytucji projektu (`.agents/rules/00-konstytucja.md`). Decyzje podejmują i odpowiadają za nie ludzie.
 
 ## 2. Użytkownik końcowy i pętla walidacji (EU1, EU2)

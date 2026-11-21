@@ -1,7 +1,10 @@
 version: 2
+# Dependency update PRs go to develop, like all other work (see .agents/rules/50-git-i-jira.md).
+# Note: Dependabot reads this file from the default branch (main), so changes apply after develop -> main.
 updates:
   - package-ecosystem: nuget
     directory: "/"
+    target-branch: develop
     schedule:
       interval: weekly
     open-pull-requests-limit: 5
@@ -12,10 +15,16 @@ updates:
         patterns: ["Microsoft.*", "System.*"]
   - package-ecosystem: npm
     directory: "/src/web"
+    target-branch: develop
     schedule:
       interval: weekly
     open-pull-requests-limit: 5
+    ignore:
+      # A new TypeScript major breaks the client build; upgrade it on purpose, not via a weekly bump.
+      - dependency-name: "typescript"
+        update-types: ["version-update:semver-major"]
   - package-ecosystem: github-actions
     directory: "/"
+    target-branch: develop
     schedule:
       interval: monthly

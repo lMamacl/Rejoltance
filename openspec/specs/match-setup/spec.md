@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Przygotowanie meczu: legalne talie, stan początkowy, mulligan i wybór kolejności. Kanon: `prototype/revibance/engine.js` (`newGame`, `mulligan`, `decideStart`) — ADR-0005.
+Przygotowanie meczu: legalne talie, stan początkowy, mulligan i wybór kolejności. Kanon: `prototype/game/engine.js` (`newGame`, `mulligan`, `decideStart`) — ADR-0013. Scenariusze spisano dla v11 (ADR-0005).
 
 ## Requirements
 
@@ -34,7 +34,7 @@ Na starcie każdy gracz SHALL mieć 20 HP, 0 Blood, przetasowaną talię i 4 kar
 
 ### Requirement: R-03 Mulligan
 
-Każdy gracz SHALL raz wskazać dowolną liczbę kart z ręki do wymiany. Kolejność (prototyp v11): najpierw dobiera tyle samo kart z góry talii, potem odrzucone karty wracają do talii i talia jest tasowana. Mulligan MUST odbyć się przez `PendingInteraction`, a karta spoza ręki MUST zostać odrzucona jako nielegalna.
+Każdy gracz SHALL raz wskazać dowolną liczbę kart z ręki do wymiany. Kolejność (prototyp v11, do sprawdzenia na `prototype/game` — ADR-0013): najpierw dobiera tyle samo kart z góry talii, potem odrzucone karty wracają do talii i talia jest tasowana. Mulligan MUST odbyć się przez `PendingInteraction`, a karta spoza ręki MUST zostać odrzucona jako nielegalna.
 
 #### Scenario: Wymiana dwóch kart
 

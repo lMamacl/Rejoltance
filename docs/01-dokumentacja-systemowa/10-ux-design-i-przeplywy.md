@@ -9,7 +9,7 @@ Ten dokument opisuje UX (User Experience, czyli doświadczenie użytkownika) kli
 - najważniejsze przepływy użytkownika (*user flows*),
 - przewodnik stylu wizualnego (*UI style guide*).
 
-Wzorem interakcji, grafiki i dźwięku jest działający prototyp w katalogu [`prototype/revibance/`](../../prototype/README.md). SDD (Spec-Driven Development) to nasz sposób pracy: najpierw specyfikacja, potem kod.
+Wzorem interakcji, grafiki i dźwięku jest działający prototyp w katalogu [`prototype/game/`](../../prototype/README.md). SDD (Spec-Driven Development) to nasz sposób pracy: najpierw specyfikacja, potem kod.
 
 Szablony do opisu badań z użytkownikami są w katalogu [`05-szablony/`](../05-szablony/README.md):
 
@@ -125,7 +125,7 @@ sequenceDiagram
 
 ## 4. Przewodnik stylu wizualnego
 
-Gra ma mroczną, kontrastową stylistykę *dark tactical pixel-art*. Przenosimy ją wprost z prototypu `prototype/revibance/style.css`.
+Gra ma mroczną, kontrastową stylistykę *dark tactical pixel-art*. Przenosimy ją wprost z prototypu `prototype/game/style.css`.
 
 ### 4.1 Paleta barw i kontrast WCAG 2.1 AA (`NFR-22`)
 
@@ -142,6 +142,6 @@ WCAG (Web Content Accessibility Guidelines) to standard dostępności stron. Poz
 
 ### 4.2 Typografia, grafika i udźwiękowienie
 
-- **Czcionki (`prototype/revibance/fonts/`).** Mamy dwa style do wyboru w ustawieniach dostępności. Styl pikselowy: *Pixelify Sans*, *Silkscreen*, *DotGothic16*, *Jersey 15*. Czytelny styl klasyczny: *Cinzel* dla nagłówków i *Alegreya Sans* dla opisów kart.
-- **Grafiki kart (`prototype/revibance/img/`).** Ilustracje kart w formacie WebP (`1.webp` .. `69.webp`, tokeny `900.webp` .. `908.webp`), rewers karty `back.webp` i ramka awersu `CardFront.png`.
+- **Czcionki (`prototype/game/fonts/`).** Mamy dwa style do wyboru w ustawieniach dostępności. Styl pikselowy: *Pixelify Sans*, *Silkscreen*, *DotGothic16*, *Jersey 15*. Czytelny styl klasyczny: *Cinzel* dla nagłówków i *Alegreya Sans* dla opisów kart.
+- **Grafiki kart (`prototype/game/img/`).** Ilustracje kart w formacie WebP (nazwa zaczyna się od numeru karty, np. `101_Deadbeat.webp`; indeks w `img-index.js`), rewers karty `back.webp` i ramka awersu `CardFront.png`.
 - **Bezpieczeństwo wizualne (`NFR-70`).** Animacje uderzeń i podpaleń nie mają błysków częstszych niż 3 Hz. Gra skraca je automatycznie, gdy system ustawia `@media (prefers-reduced-motion: reduce)`.

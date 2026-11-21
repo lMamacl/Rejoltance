@@ -14,7 +14,7 @@ Ten plik jest odczytywany automatycznie przez wszystkie wspierane narzędzia AI 
 | Warstwa | Katalog | Kluczowe niezmienniki architektoniczne |
 |---|---|---|
 | **Kontrakty (DTO)** | `src/Rejoltance.Contracts` ↔ `src/web/src/contracts` | 5 zamrożonych typów (`Intent`, `LegalAction`, `PendingInteraction`, `MatchView`, `DomainEvent`). Zmiana wymaga **ADR** i aktualizacji testów próbek JSON (`ContractSampleTests`). |
-| **Katalog kart** | `src/Rejoltance.Content` | Dane 69 kart w `cards.json` generowane z `prototype/revibance/cards.js` (`tools/content/extract_cards.py`). Brak logiki gry. |
+| **Katalog kart** | `src/Rejoltance.Content` | Dane 130 kart i 29 tokenów w `cards.json` generowane z `prototype/game/cards.js` (`tools/content/extract_cards.py`). Brak logiki gry. |
 | **Silnik reguł (Kernel)** | `src/Rejoltance.Kernel` | Czysty C# (`.NET 10`), zero I/O, zero zegara systemowego, zero `System.Random`. Wyłącznie deterministyczny `SeededRng`. |
 | **Serwer autorytatywny** | `src/Rejoltance.Server` | ASP.NET Core + SignalR (`/api/hubs/match`). Waliduje intencje przez `Kernel.LegalActions` i rozsyła spersonalizowany `MatchView` (*Fog of War* — `R-80…R-82`). |
 | **Klient webowy** | `src/web` | React 19 + TypeScript 5 + Vite. Renderuje wyłącznie `MatchView` i wysyła `Intent`. Nie liczy obrażeń ani reguł gry. |
@@ -30,7 +30,7 @@ Ten plik jest odczytywany automatycznie przez wszystkie wspierane narzędzia AI 
 3. **Specyfikacja domeny zadania:** `openspec/specs/<domena>/spec.md` oraz [`Indeks reguł R-nn`](docs/01-dokumentacja-systemowa/03-indeks-regul-r-nn.md).
 4. **Kod docelowego modułu i jego `README.md`:** `src/<moduł>/README.md`.
 
-> **Zasada ochrony okna kontekstowego:** Nie wczytuj naraz całego pliku `prototype/revibance/engine.js` (~3500 linii) ani pełnego `cards.json`. Wyszukuj konkretne funkcje przez `grep` lub korzystaj z wyekstrahowanych reguł w `openspec/specs/`.
+> **Zasada ochrony okna kontekstowego:** Nie wczytuj naraz całego pliku `prototype/game/engine.js` (~3000 linii) ani pełnego `cards.json`. Wyszukuj konkretne funkcje przez `grep` lub korzystaj z wyekstrahowanych reguł w `openspec/specs/`.
 
 ---
 

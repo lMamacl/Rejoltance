@@ -17,7 +17,7 @@ context: |
   Stos technologiczny (ADR-0001):
   - Backend: .NET 10, C# 13, ASP.NET Core, SignalR (/api/hubs/match), EF Core (SQLite w S0-S3 -> PostgreSQL od S4), .NET Aspire 13, xUnit.
   - Frontend: React 19, TypeScript 5, Vite 6, Vitest, Playwright.
-  - Wyrocznia referencyjna: prototype/revibance/engine.js (v11, kanon zasad wg ADR-0005).
+  - Wyrocznia referencyjna: prototype/game/engine.js (kanon zasad wg ADR-0013).
 
   Granice architektoniczne (wymuszane przez tests/Rejoltance.Architecture.Tests):
   - Rejoltance.Contracts: 5 zamrożonych kontraktów (Intent, LegalAction, PendingInteraction, MatchView, DomainEvent). Zmiana wymaga ADR.

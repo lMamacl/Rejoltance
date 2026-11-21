@@ -10,7 +10,7 @@
 
 ## Przed spotkaniem (15 min przygotowania na własną rękę)
 
-1. Zagraj jedną partię z botem w prototypie (`npx serve prototype/revibance` albo przez GitHub Pages).
+1. Zagraj jedną partię z botem w prototypie (`npx serve prototype/game` albo przez GitHub Pages).
 2. Przeczytaj [`README.md`](../../../README.md), [`01-prd-wymagania-produktu.md`](../../01-dokumentacja-systemowa/01-prd-wymagania-produktu.md) oraz [`02-specyfikacja-regul-gry.md`](../../01-dokumentacja-systemowa/02-specyfikacja-regul-gry.md) §1–6.
 3. Uruchom skrypt `tools/setup.ps1`. Jeśli coś nie działa, zanotuj problem razem z wynikiem `tools/doctor.ps1`.
 

@@ -94,10 +94,10 @@ Jeśli zasady bezpieczeństwa Windows blokują Aspire, uruchom oba procesy osobn
 
 ### Prototyp referencyjny w JS
 
-Prototyp `prototype/revibance` jest kanonem zasad gry. Żeby w niego zagrać, uruchom:
+Prototyp `prototype/game` jest kanonem zasad gry. Żeby w niego zagrać, uruchom:
 
 ```powershell
-npx serve prototype/revibance
+npx serve prototype/game
 ```
 
 ---
