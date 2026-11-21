@@ -11,23 +11,23 @@
     "hand": [
       {
         "instanceId": 1,
-        "cardId": 15,
-        "cost": 2
+        "cardId": 16,
+        "cost": 5
       },
       {
         "instanceId": 2,
-        "cardId": 52,
+        "cardId": 86,
         "cost": 1
       },
       {
         "instanceId": 3,
         "cardId": 15,
-        "cost": 2
+        "cost": 3
       },
       {
         "instanceId": 4,
-        "cardId": 31,
-        "cost": 1
+        "cardId": 25,
+        "cost": 4
       }
     ],
     "deckCount": 26,
