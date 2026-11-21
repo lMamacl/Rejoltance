@@ -11,7 +11,7 @@ context: |
   Stos technologiczny i Roadmapa IT: docs/01-dokumentacja-systemowa/06-stos-technologiczny.md
   Pełna specyfikacja zasad gry: docs/01-dokumentacja-systemowa/02-specyfikacja-regul-gry.md
   Indeks reguł R-nn (macierz śledzenia): docs/01-dokumentacja-systemowa/03-indeks-regul-r-nn.md
-  Rozbieżności z prototypem JS (D-01..D-20): docs/01-dokumentacja-systemowa/04-rozbieznosci-prototypu.md
+  Rozbieżności z prototypem JS (D-01..D-22): docs/01-dokumentacja-systemowa/04-rozbieznosci-prototypu.md
   Podręcznik systemu agentów AI i SDD: docs/04-system-agentow-ai/README.md
 
   Stos technologiczny (ADR-0015, zastępuje backend z ADR-0001):

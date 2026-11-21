@@ -1,6 +1,6 @@
 ---
 trigger: always_on
-description: "Kolejność źródeł prawdy (OpenSpec, prototyp JS `prototype/game`, indeks R-nn), zakaz zgadywania przez AI i postępowanie przy rozbieżnościach D-01..D-20."
+description: "Kolejność źródeł prawdy (OpenSpec, prototyp JS `prototype/game`, indeks R-nn), zakaz zgadywania przez AI i postępowanie przy rozbieżnościach D-01..D-22."
 ---
 
 # 10. Prawda, hierarchia źródeł i postępowanie z niepewnością
@@ -9,7 +9,7 @@ description: "Kolejność źródeł prawdy (OpenSpec, prototyp JS `prototype/gam
 
 W przypadku pozornej sprzeczności pomiędzy dokumentami obowiązuje następująca kolejność pierwszeństwa:
 
-1. **Rozstrzygnięta decyzja zespołu** wpisana w [`docs/01-dokumentacja-systemowa/04-rozbieznosci-prototypu.md`](../../docs/01-dokumentacja-systemowa/04-rozbieznosci-prototypu.md) (`D-01..D-20`) oraz zatwierdzona specyfikacja w `openspec/specs/<domena>/spec.md`.
+1. **Rozstrzygnięta decyzja zespołu** wpisana w [`docs/01-dokumentacja-systemowa/04-rozbieznosci-prototypu.md`](../../docs/01-dokumentacja-systemowa/04-rozbieznosci-prototypu.md) (`D-01..D-22`) oraz zatwierdzona specyfikacja w `openspec/specs/<domena>/spec.md`.
 2. **Zachowanie referencyjnego prototypu JS** (`prototype/game/engine.js` oraz `prototype/game/cards.js`).
 3. **Indeks i specyfikacja reguł:** [`03-indeks-regul-r-nn.md`](../../docs/01-dokumentacja-systemowa/03-indeks-regul-r-nn.md) oraz [`02-specyfikacja-regul-gry.md`](../../docs/01-dokumentacja-systemowa/02-specyfikacja-regul-gry.md).
 4. **Archiwalne materiały źródłowe** w `docs/99-archiwum-zrodel/` (wyłącznie poglądowe — nie nadpisują kanonu).

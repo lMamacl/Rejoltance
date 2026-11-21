@@ -38,6 +38,8 @@ export interface PlayerState {
   readonly lanes: readonly (UnitState | null)[];
   readonly fatigueCounter: number;
   readonly mulliganDone: boolean;
+  /** R-04: the answer to "do you want to go first?"; null until the player answers. */
+  readonly wantsFirst: boolean | null;
 }
 
 /**
@@ -51,6 +53,8 @@ export interface MatchState {
   readonly round: number;
   readonly phase: MatchPhase;
   readonly activeSeat: number | null;
+  /** R-04/R-11: the seat that started round 1; set once both players chose the order. */
+  readonly firstSeat: number | null;
   readonly nextInstanceId: number;
   readonly result: MatchResult | null;
 }
@@ -66,7 +70,11 @@ export const newPlayer = (seat: number, deck: readonly number[]): PlayerState =>
   lanes: Array.from({ length: GameRules.LaneCount }, () => null),
   fatigueCounter: 0,
   mulliganDone: false,
+  wantsFirst: null,
 });
+
+/** R-11: round 1 is started by `firstSeat`, then the role alternates every round. */
+export const startingSeat = (firstSeat: number, round: number): number => (round % 2 === 1 ? firstSeat : 1 - firstSeat);
 
 export const playerOf = (state: MatchState, seat: number): PlayerState => state.players[seat === 0 ? 0 : 1];
 

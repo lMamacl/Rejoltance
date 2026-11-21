@@ -74,7 +74,7 @@ Testy leżą przy kodzie: `packages/*/test`, `apps/server/test`, `apps/web/src/*
 
 | Obszar | Stan w kodzie | Testy automatyczne |
 |---|---|---|
-| **Start meczu, tasowanie z ziarna, dobieranie, mulligan, obrażenia Fatigue, limit ręki (8 kart), poddanie się, projekcja Fog of War** | **Zaimplementowane w `packages/engine`** | Testy `R-01`, `R-02`, `R-03`, `R-10`, `R-13`, `R-14`, `R-68`, `R-70`, `R-72`, `R-80`, `R-83`, `R-84`. |
+| **Start meczu, tasowanie z ziarna, dobieranie, mulligan, wybór kolejności, start rundy (Blood, dobranie, naprzemienny rozpoczynający), obrażenia Fatigue, limit ręki (8 kart), poddanie się, projekcja Fog of War** | **Zaimplementowane w `packages/engine`** | Testy `R-01`, `R-02`, `R-03`, `R-04`, `R-10`, `R-11`, `R-13`, `R-14`, `R-68`, `R-70`, `R-72`, `R-80`, `R-83`, `R-84`. |
 | **Walidacja katalogu 159 kart i 4 talii startowych względem słownika DSL** | **Zaimplementowane w `packages/content`** | `packages/content/test`. |
 | **Tryb piaskownicy w przeglądarce przez Socket.IO (`startSandbox`, `sendIntent`)** | **Zaimplementowane w `apps/server` i `apps/web`** | `apps/server/test` (prawdziwe połączenie Socket.IO) i testy Vitest klienta. |
 | **Kroki rundy (`unitStep`, `mixedStep`, `actionStep`), zagrywanie jednostek, walka na 4 liniach, efekty kart DSL** | **Zaplanowane w backlogu (`E1`, `E2`).** Na razie rzucają czytelny błąd `NotImplementedError`. | Specyfikacje `GIVEN/WHEN/THEN` w `openspec/specs/`. |
