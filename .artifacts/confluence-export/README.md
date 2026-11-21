@@ -1,9 +1,9 @@
-<!-- CONFLUENCE 1:1 EXPORT | Source: docs/README.md @ db8ebae (2026-11-02) -->
+<!-- CONFLUENCE 1:1 EXPORT | Source: docs/README.md @ 59f39d9 (2026-11-21) -->
 # Dokumentacja projektu RE:JOLTANCE
 
 Witaj w dokumentacji projektu **RE:JOLTANCE**. To sieciowa, taktyczna gra karciana. Tworzymy ją na przedmiocie *Projekt zespołowy* na Wydziale Informatyki Politechniki Białostockiej (PB).
 
-> **Repozytorium projektu:** [github.com/lMamacl/Rejoltance](https://github.com/lMamacl/Rejoltance) · to źródło prawdy dla kodu, specyfikacji i dokumentacji · bieżąca wersja jest na gałęzi `develop`
+> **Repozytorium projektu:** [github.com/rejoltance/Rejoltance](https://github.com/rejoltance/Rejoltance) · to źródło prawdy dla kodu, specyfikacji i dokumentacji · bieżąca wersja jest na gałęzi `develop`
 
 Katalog `docs/` opiera się na dwóch założeniach:
 

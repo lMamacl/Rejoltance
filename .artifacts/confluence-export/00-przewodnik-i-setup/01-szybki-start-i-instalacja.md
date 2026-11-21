@@ -1,4 +1,4 @@
-<!-- CONFLUENCE 1:1 EXPORT | Source: docs/00-przewodnik-i-setup/01-szybki-start-i-instalacja.md @ 28d2248 (2026-11-21) -->
+<!-- CONFLUENCE 1:1 EXPORT | Source: docs/00-przewodnik-i-setup/01-szybki-start-i-instalacja.md @ 59f39d9 (2026-11-21) -->
 # 0.1 Szybki start i instalacja środowiska deweloperskiego
 
 > **Źródło prawdy:** repozytorium (`docs/00-przewodnik-i-setup/01-szybki-start-i-instalacja.md`) · **Kategoria dokumentacji:** instrukcja konfiguracji środowiska · **Etap SDD:** Fundamenty
@@ -34,7 +34,7 @@ Sklonuj repozytorium do **krótkiej ścieżki poza folderem OneDrive**, np. `C:\
 ### Windows (PowerShell)
 
 ```powershell
-git clone https://github.com/lMamacl/Rejoltance.git C:\dev\Rejoltance
+git clone https://github.com/rejoltance/Rejoltance.git C:\dev\Rejoltance
 cd C:\dev\Rejoltance
 powershell -ExecutionPolicy Bypass -File tools/setup.ps1 -TrustDevCert
 ```
@@ -42,7 +42,7 @@ powershell -ExecutionPolicy Bypass -File tools/setup.ps1 -TrustDevCert
 ### macOS i Linux (Bash)
 
 ```bash
-git clone https://github.com/lMamacl/Rejoltance.git ~/dev/Rejoltance
+git clone https://github.com/rejoltance/Rejoltance.git ~/dev/Rejoltance
 cd ~/dev/Rejoltance
 bash tools/setup.sh
 ```

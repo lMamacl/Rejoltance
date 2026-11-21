@@ -10,8 +10,8 @@
       "repo_path": "docs/README.md",
       "export_md_path": ".artifacts/confluence-export/README.md",
       "export_xhtml_path": ".artifacts/confluence-export/README.xhtml",
-      "commit": "a2bf2a4",
-      "exported_at": "2026-11-02"
+      "commit": "59f39d9",
+      "exported_at": "2026-11-21"
     },
     {
       "title": "00. Przewodnik i konfiguracja środowiska",
@@ -80,7 +80,7 @@
       "repo_path": "docs/00-przewodnik-i-setup/01-szybki-start-i-instalacja.md",
       "export_md_path": ".artifacts/confluence-export/00-przewodnik-i-setup/01-szybki-start-i-instalacja.md",
       "export_xhtml_path": ".artifacts/confluence-export/00-przewodnik-i-setup/01-szybki-start-i-instalacja.xhtml",
-      "commit": "28d2248",
+      "commit": "59f39d9",
       "exported_at": "2026-11-21"
     },
     {
@@ -280,7 +280,7 @@
       "repo_path": "docs/03-dokumentacja-procesowa/01-dip-dokument-inicjujacy.md",
       "export_md_path": ".artifacts/confluence-export/03-dokumentacja-procesowa/01-dip-dokument-inicjujacy.md",
       "export_xhtml_path": ".artifacts/confluence-export/03-dokumentacja-procesowa/01-dip-dokument-inicjujacy.xhtml",
-      "commit": "28d2248",
+      "commit": "59f39d9",
       "exported_at": "2026-11-21"
     },
     {
