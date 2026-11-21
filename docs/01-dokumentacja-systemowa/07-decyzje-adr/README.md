@@ -12,7 +12,7 @@ W ADR-ach oznaczamy fakty: [V] — zweryfikowane, [Z] — założenie.
 
 ---
 
-## Rejestr decyzji (ADR-0001 – ADR-0013)
+## Rejestr decyzji (ADR-0001 – ADR-0014)
 
 | Numer ADR | Tytuł decyzji | Status | Główny obszar |
 |---|---|---|---|
@@ -24,8 +24,9 @@ W ADR-ach oznaczamy fakty: [V] — zweryfikowane, [Z] — założenie.
 | [ADR-0006](0006-serwer-autorytatywny-fog-of-war.md) | Serwer autorytatywny z projekcją stanu dla każdego gracza (ochrona ukrytych informacji) | Zatwierdzona (`accepted`) | Bezpieczeństwo i sieć |
 | [ADR-0007](0007-sqlite-potem-postgresql.md) | Baza danych: SQLite na start (Sprinty 0–3), PostgreSQL od Sprintu 4 | Zatwierdzona (`accepted`) | Architektura danych |
 | [ADR-0008](0008-spine-first-pionowe-plastry.md) | Najpierw rdzeń (*spine-first*), potem pionowe plastry funkcji | Proponowana (`proposed`) | Planowanie i integracja |
-| [ADR-0009](0009-kanon-agentow-i-adaptery.md) | Jeden kanon konfiguracji agentów AI w `.agents/` i adaptery dla 5 narzędzi IDE | Zatwierdzona (`accepted`) | System agentów AI |
+| [ADR-0009](0009-kanon-agentow-i-adaptery.md) | Jeden kanon konfiguracji agentów AI w `.agents/` i adaptery dla 5 narzędzi IDE | Zatwierdzona (`accepted`), zakres zmieniony przez ADR-0014 | System agentów AI |
 | [ADR-0010](0010-kontrakt-csharp-ts-przez-probke.md) | Spójność kontraktu C# ↔ TypeScript sprawdzana kanonicznymi próbkami JSON | Proponowana (`proposed`) | Kontrakty i testy |
 | [ADR-0011](0011-dokumentacja-hybryda-repo-confluence.md) | Dokumentacja w układzie 1:1 (taksonomia AltexSoft, cykl życia SDD, synchronizacja z Confluence) | Zatwierdzona (`accepted`) | Dokumentacja i SDD |
 | [ADR-0012](0012-konstytucja-v2.md) | Konstytucja v2: nowy układ artykułów, zachowane zakazy dla agentów AI i zasada języka | Zatwierdzona (`accepted`) | Proces i agenci AI |
 | [ADR-0013](0013-kanon-regul-rejoltance-prototype.md) | Prototyp `PanCoto/rejoltance-prototype` (git subtree w `prototype/`) jako kanon zasad gry zamiast v11 | Zatwierdzona (`accepted`) | Specyfikacja reguł |
+| [ADR-0014](0014-odchudzenie-systemu-agentow.md) | Odchudzenie systemu agentów: adaptery tylko dla Claude Code, jedna rola recenzenta, 9 skilli zespołu | Zatwierdzona (`accepted`) | System agentów AI |

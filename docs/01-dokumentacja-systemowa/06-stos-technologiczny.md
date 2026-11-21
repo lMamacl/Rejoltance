@@ -49,7 +49,7 @@ SPA (Single Page Application) to aplikacja webowa, która działa na jednej stro
 | **Spec-Driven Development** | OpenSpec (`@fission-ai/openspec`) | `1.15.0` | Żywe specyfikacje (`openspec/specs/`) i propozycje zmian (`openspec/changes/`). CI sprawdza je poleceniem `openspec validate --strict`. |
 | **Walidacja dokumentacji** | `markdownlint-cli2` | `0.20.0` | Sprawdza formatowanie wszystkich plików Markdown w repozytorium. |
 | **Skrypty (`tools/`)** | Python (biblioteka standardowa, `tomllib`) | `3.11+` (zalecany `3.13`) | Synchronizacja adapterów agentów AI (`sync_agents.py`), ekstrakcja kart (`extract_cards.py`), CSV do Jiry (`gen_jira_csv.py`), eksport do Confluence (`sync_confluence.py`). |
-| **Agenci AI** | Claude Code, Antigravity, GitHub Copilot, Gemini CLI, OpenAI Codex | — | Wspierają proces SDD. Wszystkie korzystają z jednego źródła zasad w `.agents/` i `AGENTS.md` ([ADR-0009](07-decyzje-adr/0009-kanon-agentow-i-adaptery.md)). |
+| **Agenci AI** | Claude Code, Codex, Cursor, Antigravity | — | Wspierają proces SDD. Wszystkie korzystają z jednego źródła zasad w `.agents/` i `AGENTS.md` ([ADR-0009](07-decyzje-adr/0009-kanon-agentow-i-adaptery.md), [ADR-0014](07-decyzje-adr/0014-odchudzenie-systemu-agentow.md)). |
 
 ---
 

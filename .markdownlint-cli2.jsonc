@@ -15,13 +15,8 @@
     "docs/99-sources/**",
     "docs/99-archiwum-zrodel/**",
     ".claude/**",
-    ".gemini/**",
-    ".github/skills/**",
-    ".github/agents/**",
-    ".github/instructions/**",
     ".agents/skills/openspec-*/**",
     ".agents/workflows/opsx-*.md",
-    ".github/prompts/**",
     "**/bin/**",
     "**/obj/**"
   ]

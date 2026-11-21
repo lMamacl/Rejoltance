@@ -54,11 +54,11 @@ openspec/
 
 Utwórz gałąź `feature/REJ-45-choose-order`. Potem wywołaj w swoim narzędziu AI polecenie:
 
-- **Claude Code / Gemini CLI:** `/opsx:propose REJ-45 wybór kolejności po mulliganie i rozpoczęcie rundy 1 (R-04, R-10, R-11)`
-- **Antigravity / GitHub Copilot:** `/opsx-propose REJ-45 wybór kolejności po mulliganie i rozpoczęcie rundy 1 (R-04, R-10, R-11)`
-- **OpenAI Codex:** `$openspec-propose REJ-45 wybór kolejności po mulliganie i rozpoczęcie rundy 1 (R-04, R-10, R-11)`
+- **Claude Code:** `/opsx:propose REJ-45 wybór kolejności po mulliganie i rozpoczęcie rundy 1 (R-04, R-10, R-11)`
+- **Antigravity:** `/opsx-propose REJ-45 wybór kolejności po mulliganie i rozpoczęcie rundy 1 (R-04, R-10, R-11)`
+- **Codex:** `$openspec-propose REJ-45 wybór kolejności po mulliganie i rozpoczęcie rundy 1 (R-04, R-10, R-11)`
 
-Agent (korzystając z wiedzy ról `rj-spec-analyst` i `rj-architect`) utworzy katalog `openspec/changes/rej-45-choose-order/` ze wszystkimi plikami zmiany.
+Agent utworzy katalog `openspec/changes/rej-45-choose-order/` ze wszystkimi plikami zmiany.
 
 ### Krok 2: Sprawdź treść i uruchom walidator
 
@@ -79,7 +79,7 @@ Zapisz pliki propozycji w commicie na swojej gałęzi i pokaż je PO (Product Ow
 
 ### Krok 4: Implementuj według `tasks.md` (`/opsx:apply`)
 
-Wywołaj `/opsx:apply` albo realizuj kolejne punkty z `tasks.md` z pomocą właściwego agenta: `rj-rules-engineer` (reguły w `Rejoltance.Kernel`, jak w tym przykładzie), `rj-backend-engineer` (serwer) albo `rj-frontend-engineer` (klient web). W każdym punkcie najpierw piszesz test, potem implementację. Po skończeniu kroku oznaczasz zadanie w `tasks.md` jako `[x]`.
+Wywołaj `/opsx:apply` albo realizuj kolejne punkty z `tasks.md` samodzielnie lub z pomocą agenta. W każdym punkcie najpierw piszesz test, potem implementację. Po skończeniu kroku oznaczasz zadanie w `tasks.md` jako `[x]`.
 
 ### Krok 5: Zarchiwizuj zmianę po scaleniu pull requesta (`/opsx:archive`)
 

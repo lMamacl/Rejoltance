@@ -1,6 +1,6 @@
 # ADR-0009: Jeden kanon zasad agentów w `.agents/`, generowane adaptery
 
-- **Status:** zatwierdzona (2026-10-27, akceptacja Fazy 2)
+- **Status:** zatwierdzona (2026-10-27, akceptacja Fazy 2); zakres narzędzi i ról zmieniony przez [ADR-0014](0014-odchudzenie-systemu-agentow.md) (2026-11-21)
 - **Data:** 2026-10-27
 - **Powiązane:** `AGENTS.md`, `.agents/`, `tools/agents/sync_agents.py`
 

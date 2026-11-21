@@ -1,6 +1,6 @@
 # AGENTS.md — Punkt Wejścia dla Ludzi i Agentów AI (RE:JOLTANCE)
 
-Ten plik jest odczytywany automatycznie przez wszystkie wspierane narzędzia AI (**Claude Code**, **GitHub Copilot**, **Cursor**, **Google Antigravity**, **Gemini CLI**, **OpenAI Codex**) oraz stanowi szybką mapę orientacyjną dla członków zespołu.
+Ten plik jest odczytywany automatycznie przez narzędzia AI, z których korzysta zespół (**Claude Code** przez `CLAUDE.md`, **Codex**, **Cursor**, **Antigravity**) oraz stanowi szybką mapę orientacyjną dla członków zespołu.
 
 > **Pełny podręcznik inżynierii agentowej dla ludzi:** [`docs/04-system-agentow-ai/README.md`](docs/04-system-agentow-ai/README.md).
 > **Konstytucja projektu (nadrzędne prawo):** [`.agents/rules/00-konstytucja.md`](.agents/rules/00-konstytucja.md).
@@ -53,22 +53,14 @@ python tools/backlog/gen_jira_csv.py --check
 
 ---
 
-## 4. Katalog 10 agentów AI i ich wbudowanych umiejętności
+## 4. Agenci AI i skille
 
-Kanon konfiguracji znajduje się w `.agents/` i jest synchronizowany skryptem `python tools/agents/sync_agents.py` do `.claude/`, `.github/` i `.gemini/` (Codex i Antigravity czytają `.agents/` bezpośrednio).
+Korzystamy z **Claude Code** oraz narzędzi, które czytają ten plik i `.agents/` bezpośrednio (**Codex**, **Cursor**, **Antigravity**) — ADR-0014.
+Źródłem jest `.agents/`; adaptery dla Claude Code generuje `python tools/agents/sync_agents.py`.
 
-| Grupa tematyczna | Agent (`.agents/agents/`) | Rola | Wbudowane skille (`.agents/skills/`) |
-|---|---|---|---|
-| **A. Orkiestracja i SDD** | `rj-orchestrator` | Główny koordynator SDD: dobiera agentów, pilnuje bramek specyfikacji | `rj-start-feature`, `rj-spec-guardian`, `rj-pr-ready`, `rj-add-agent`, `rj-add-skill` |
-| **A. Orkiestracja i SDD** | `rj-spec-analyst` | Analityk wymagań PRD, reguł `R-nn` i specyfikacji OpenSpec | `rj-spec-guardian`, `rj-start-feature`, `rj-oracle-diff` |
-| **A. Orkiestracja i SDD** | `rj-architect` | Strażnik SAD, granic warstw, 5 kontraktów i decyzji ADR | `rj-write-adr`, `rj-spec-guardian`, `rj-pr-ready` |
-| **B. Inżynieria Domeny** | `rj-rules-engineer` | Inżynier czystego silnika `Rejoltance.Kernel` (C#, determinizm) | `rj-add-rule-test`, `rj-oracle-diff`, `rj-pr-ready` |
-| **B. Inżynieria Domeny** | `rj-card-author` | Twórca kart i efektów DSL w `Rejoltance.Content` | `rj-add-card`, `rj-add-rule-test`, `rj-oracle-diff` |
-| **C. Inżynieria Aplikacji** | `rj-backend-engineer` | Inżynier `Rejoltance.Server` (SignalR, autoryzacja, Fog of War, baza) | `rj-pr-ready`, `rj-add-rule-test`, `rj-start-feature` |
-| **C. Inżynieria Aplikacji** | `rj-frontend-engineer` | Inżynier klienta `src/web` (React/TS, widok stołu, animacje) | `rj-pr-ready`, `rj-start-feature` |
-| **D. Jakość i Dokumentacja** | `rj-qa-verifier` | Niezależny audytor QA, testów `R-nn`, wyroczni i NFR | `rj-pr-ready`, `rj-oracle-diff`, `rj-add-rule-test`, `rj-spec-guardian` |
-| **D. Jakość i Dokumentacja** | `rj-scrum-jira` | Asystent procesu Scrum, Product Backlogu (`backlog.toml`) i Jiry | `rj-backlog-to-jira`, `rj-daily-report`, `rj-sprint-report`, `rj-start-feature`, `rj-sync-confluence` |
-| **D. Jakość i Dokumentacja** | `rj-docs-writer` | Redaktor dokumentacji technicznej (AltexSoft + Confluence 1:1) | `rj-sync-confluence`, `rj-write-adr`, `rj-spec-guardian` |
+- **Rola:** `rj-qa-verifier` — niezależny recenzent (tylko odczyt), uruchamia testy i raportuje niezgodności.
+- **Skille zespołu:** `rj-start-feature`, `rj-spec-guardian`, `rj-add-rule-test`, `rj-add-card`, `rj-oracle-diff`, `rj-pr-ready`, `rj-write-adr`, `rj-backlog-to-jira`, `rj-sync-confluence` (opis: [`.agents/README.md`](.agents/README.md)).
+- **OpenSpec:** `/opsx:explore`, `/opsx:propose`, `/opsx:apply`, `/opsx:archive` (i pozostałe skille `openspec-*`).
 
 ---
 

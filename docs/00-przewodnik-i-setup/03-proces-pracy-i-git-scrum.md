@@ -40,7 +40,7 @@ TDD na diagramie oznacza tu Test-Driven Development: najpierw piszesz test, pote
 | **3. Specyfikacja SDD** | Przed kodem tworzysz propozycję zmiany w OpenSpec, jeśli zadanie ma **≥ 3 SP**, zmienia **regułę gry (`R-nn`)** albo **kontrakt komunikacyjny**. Propozycja to `proposal.md` i delta specyfikacji `GIVEN/WHEN/THEN`. Opcjonalnie dochodzą `design.md` i `tasks.md`. | `/opsx:propose` ([Przewodnik OpenSpec](../04-system-agentow-ai/03-jak-pisac-specyfikacje-openspec.md)) |
 | **4. Akceptacja planu** | Pokazujesz propozycję na kanale zespołu albo w krótkim PR. Kod zaczynasz pisać dopiero, gdy człowiek zatwierdzi zakres. Zatwierdza Product Owner sprintu albo właściciel modułu. | Człowiek (PO / właściciel epiku) |
 | **5. Test przed kodem** | Piszesz test automatyczny, który opisuje docelowe zachowanie. Test reguły gry zaczyna się od numeru reguły, np. `R14_drawing_from_empty_deck_deals_growing_fatigue_damage`. Sprawdzasz, że na początku test nie przechodzi, i to z oczekiwanego powodu. | Skill `/rj-add-rule-test` albo ręcznie w `tests/` |
-| **6. Implementacja** | Piszesz kod małymi krokami, aż testy przejdą. Commity mają klucz Jiry, np. `REJ-123: implement fatigue damage rule`. | Agenci `rj-backend-engineer` / `rj-frontend-engineer` (reguły w Kernelu: `rj-rules-engineer`, karty: `rj-card-author`) |
+| **6. Implementacja** | Piszesz kod małymi krokami, aż testy przejdą. Commity mają klucz Jiry, np. `REJ-123: implement fatigue damage rule`. | Skille `rj-add-rule-test`, `rj-add-card`, `rj-oracle-diff` |
 | **7. Kontrola przed PR** | Uruchamiasz listę kontrolną jakości: kompilacja, testy jednostkowe, testy granic architektury, walidacja OpenSpec, markdownlint. | Skill `/rj-pr-ready` albo `npm run check && dotnet test` |
 | **8. Pull Request i przegląd** | Wypychasz gałąź na GitHub i otwierasz PR do `develop`. Wypełniasz szablon PR. Co najmniej jedna osoba z zespołu robi merytoryczny przegląd kodu (Code Review). Może pomóc agent `rj-qa-verifier`. | GitHub PR + agent `rj-qa-verifier` |
 | **9. Scalenie (merge)** | Gdy recenzent zaakceptuje zmianę, a testy w GitHub Actions przejdą, autor robi **Squash and merge** do `develop`. Jeśli zadanie miało zmianę OpenSpec, autor ją archiwizuje (`/opsx:archive`). | Człowiek (agenci nie mogą robić merge!) |
@@ -73,7 +73,7 @@ Używamy uproszczonego **GitFlow dopasowanego do sprintów Scrum**:
 
 ## 3. Bezpieczna praca z agentami AI
 
-Agenci AI (Claude Code, Antigravity, GitHub Copilot, Gemini, Codex) to dla nas wyspecjalizowani asystenci. **Za kod, dokumentację i ocenę z przedmiotu odpowiada jednak człowiek.**
+Agenci AI (Claude Code, Codex, Cursor, Antigravity) to dla nas wyspecjalizowani asystenci. **Za kod, dokumentację i ocenę z przedmiotu odpowiada jednak człowiek.**
 
 ### Dobre praktyki i błędy
 
