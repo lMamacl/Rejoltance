@@ -1,4 +1,4 @@
-<!-- CONFLUENCE 1:1 EXPORT | Source: docs/00-przewodnik-i-setup/01-szybki-start-i-instalacja.md @ a2bf2a4 (2026-11-02) -->
+<!-- CONFLUENCE 1:1 EXPORT | Source: docs/00-przewodnik-i-setup/01-szybki-start-i-instalacja.md @ 28d2248 (2026-11-21) -->
 # 0.1 Szybki start i instalacja środowiska deweloperskiego
 
 > **Źródło prawdy:** repozytorium (`docs/00-przewodnik-i-setup/01-szybki-start-i-instalacja.md`) · **Kategoria dokumentacji:** instrukcja konfiguracji środowiska · **Etap SDD:** Fundamenty
@@ -95,10 +95,10 @@ Jeśli zasady bezpieczeństwa Windows blokują Aspire, uruchom oba procesy osobn
 
 ### Prototyp referencyjny w JS
 
-Prototyp `prototype/revibance` jest kanonem zasad gry. Żeby w niego zagrać, uruchom:
+Prototyp `prototype/game` jest kanonem zasad gry. Żeby w niego zagrać, uruchom:
 
 ```powershell
-npx serve prototype/revibance
+npx serve prototype/game
 ```
 
 ---

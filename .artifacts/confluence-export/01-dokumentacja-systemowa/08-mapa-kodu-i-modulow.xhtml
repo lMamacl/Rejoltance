@@ -1,4 +1,4 @@
-<ac:structured-macro ac:name="info"><ac:rich-text-body><p><strong>Synchronizacja 1:1 z repozytorium Git:</strong> <code>docs/01-dokumentacja-systemowa/08-mapa-kodu-i-modulow.md</code> (commit <code>a2bf2a4</code>, data eksportu: <code>2026-11-02</code>)</p></ac:rich-text-body></ac:structured-macro>
+<ac:structured-macro ac:name="info"><ac:rich-text-body><p><strong>Synchronizacja 1:1 z repozytorium Git:</strong> <code>docs/01-dokumentacja-systemowa/08-mapa-kodu-i-modulow.md</code> (commit <code>28d2248</code>, data eksportu: <code>2026-11-21</code>)</p></ac:rich-text-body></ac:structured-macro>
 <blockquote><p><strong>Źródło prawdy:</strong> repozytorium (<code>docs/01-dokumentacja-systemowa/08-mapa-kodu-i-modulow.md</code>) · <strong>Kategoria dokumentacji:</strong> Dokumentacja produktowa — systemowa (dokumentacja kodu źródłowego) · <strong>Etap SDD:</strong> Realizacja</p></blockquote>
 <p>Ta mapa pomaga ci poruszać się po kodzie RE:JOLTANCE. Jest dla członków zespołu i dla agentów AI. Zanim zmienisz jakiś moduł, przeczytaj tę mapę i plik <code>README.md</code> w katalogu modułu (<code>src/&lt;moduł&gt;/README.md</code>).</p>
 <p>SDD (Spec-Driven Development) to nasz sposób pracy: najpierw specyfikacja, potem kod. Ta strona należy do etapu <em>Realizacja</em>.</p>
@@ -94,7 +94,7 @@
 </tr></thead><tbody>
 <tr>
 <td><p><strong>Dodać nową kartę lub zmienić statystyki istniejącej</strong> (z istniejących słów DSL)</p></td>
-<td><p>1. Zmodyfikuj <code>prototype/revibance/cards.js</code><br />2. Uruchom <code>python tools/content/extract_cards.py</code><br />3. Uruchom testy <code>ContentTests</code></p></td>
+<td><p>1. Zmień <code>game/cards.js</code> w repo <code>PanCoto/rejoltance-prototype</code> (źródło prototypu)<br />2. Dociągnij zmiany: <code>git subtree pull --prefix=prototype https://github.com/PanCoto/rejoltance-prototype.git main</code><br />3. Uruchom <code>python tools/content/extract_cards.py</code><br />4. Uruchom testy <code>ContentTests</code></p></td>
 <td><p>Niski</p></td>
 <td><p><strong><code>rj-add-card</code></strong> (<code>../04-system-agentow-ai/02-katalog-rol-i-wbudowanych-skilli.md</code>)</p></td>
 </tr>

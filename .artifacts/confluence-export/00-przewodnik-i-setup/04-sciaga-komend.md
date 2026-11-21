@@ -1,4 +1,4 @@
-<!-- CONFLUENCE 1:1 EXPORT | Source: docs/00-przewodnik-i-setup/04-sciaga-komend.md @ a2bf2a4 (2026-11-02) -->
+<!-- CONFLUENCE 1:1 EXPORT | Source: docs/00-przewodnik-i-setup/04-sciaga-komend.md @ 28d2248 (2026-11-21) -->
 # 0.4 Ściąga komend deweloperskich, testowych i SDD
 
 > **Źródło prawdy:** repozytorium (`docs/00-przewodnik-i-setup/04-sciaga-komend.md`) · **Kategoria dokumentacji:** ściąga deweloperska · **Etap SDD:** Realizacja i weryfikacja
@@ -19,7 +19,7 @@ SDD (Spec-Driven Development) to nasza metoda pracy: najpierw specyfikacja, pote
 | Cała aplikacja (serwer + klient web + panel Aspire) | `dotnet run --project src/Rejoltance.AppHost` *(albo `aspire run`)* |
 | Sam serwer gry (ASP.NET Core + SignalR) | `dotnet run --project src/Rejoltance.Server` |
 | Sam klient webowy (w katalogu `src/web`) | `SERVER_HTTP=http://localhost:5000 npm run dev` |
-| Prototyp referencyjny JS w przeglądarce | `npx serve prototype/revibance` |
+| Prototyp referencyjny JS w przeglądarce | `npx serve prototype/game` |
 
 ---
 

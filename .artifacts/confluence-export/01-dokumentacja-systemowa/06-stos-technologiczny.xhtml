@@ -1,4 +1,4 @@
-<ac:structured-macro ac:name="info"><ac:rich-text-body><p><strong>Synchronizacja 1:1 z repozytorium Git:</strong> <code>docs/01-dokumentacja-systemowa/06-stos-technologiczny.md</code> (commit <code>a2bf2a4</code>, data eksportu: <code>2026-11-02</code>)</p></ac:rich-text-body></ac:structured-macro>
+<ac:structured-macro ac:name="info"><ac:rich-text-body><p><strong>Synchronizacja 1:1 z repozytorium Git:</strong> <code>docs/01-dokumentacja-systemowa/06-stos-technologiczny.md</code> (commit <code>28d2248</code>, data eksportu: <code>2026-11-21</code>)</p></ac:rich-text-body></ac:structured-macro>
 <blockquote><p><strong>Źródło prawdy:</strong> repozytorium (<code>docs/01-dokumentacja-systemowa/06-stos-technologiczny.md</code>) · <strong>Kategoria dokumentacji:</strong> Dokumentacja produktowa — systemowa (stos technologiczny i roadmapa IT) · <strong>Etap SDD:</strong> Planowanie · <strong>Powiązane decyzje:</strong> <strong>ADR-0001</strong> (<code>07-decyzje-adr/0001-stos-technologiczny.md</code>), <strong>ADR-0003</strong> (<code>07-decyzje-adr/0003-openspec-i-konstytucja.md</code>), <strong>ADR-0007</strong> (<code>07-decyzje-adr/0007-sqlite-potem-postgresql.md</code>)</p></blockquote>
 <p>Ten dokument opisuje stos technologiczny projektu RE:JOLTANCE. Podajemy dokładne wersje narzędzi i bibliotek. Sprawdziliśmy je w plikach <code>global.json</code>, <code>Directory.Packages.props</code> i <code>package.json</code>. Wyjaśniamy też, dlaczego wybraliśmy dane technologie i kiedy je wprowadzamy (<em>technology roadmap</em>).</p>
 <p>Skróty: SDD (Spec-Driven Development) to praca „najpierw specyfikacja, potem kod”. ADR (Architecture Decision Record) to zapis jednej decyzji architektonicznej.</p>
@@ -50,7 +50,7 @@
 <tr>
 <td><p><strong>Orkiestracja deweloperska</strong></p></td>
 <td><p>.NET Aspire (<code>Aspire.AppHost.Sdk</code>, <code>Aspire.Hosting.JavaScript</code>)</p></td>
-<td><p><code>13.6.4</code></p></td>
+<td><p><code>13.6.5</code></p></td>
 <td><p>Uruchamia backend i klienta Vite jednym poleceniem. Ustawia zmienne środowiskowe, proxy i panel diagnostyczny.</p></td>
 <td><p><strong>ADR-0001</strong> (<code>07-decyzje-adr/0001-stos-technologiczny.md</code>)</p></td>
 </tr>
@@ -130,7 +130,7 @@
 <tr>
 <td><p><strong>Testy dymne całej aplikacji</strong></p></td>
 <td><p><code>Aspire.Hosting.Testing</code></p></td>
-<td><p><code>13.6.4</code></p></td>
+<td><p><code>13.6.5</code></p></td>
 <td><p>Uruchamia cały graf zasobów Aspire. Sprawdza odpowiedź <code>/health</code> i proxy klienta (<code>NFR-60</code>).</p></td>
 </tr>
 <tr>

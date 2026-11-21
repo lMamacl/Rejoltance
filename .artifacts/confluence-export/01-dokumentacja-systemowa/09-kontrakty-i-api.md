@@ -1,4 +1,4 @@
-<!-- CONFLUENCE 1:1 EXPORT | Source: docs/01-dokumentacja-systemowa/09-kontrakty-i-api.md @ a2bf2a4 (2026-11-02) -->
+<!-- CONFLUENCE 1:1 EXPORT | Source: docs/01-dokumentacja-systemowa/09-kontrakty-i-api.md @ 28d2248 (2026-11-21) -->
 # 1.9 Dokumentacja kontraktów komunikacyjnych i API (REST + SignalR)
 
 > **Źródło prawdy:** repozytorium (`docs/01-dokumentacja-systemowa/09-kontrakty-i-api.md`) · **Kategoria dokumentacji:** Dokumentacja produktowa — systemowa (dokumentacja API) · **Etap SDD:** Planowanie i realizacja · **Powiązane decyzje:** [ADR-0006](07-decyzje-adr/0006-serwer-autorytatywny-fog-of-war.md), [ADR-0010](07-decyzje-adr/0010-kontrakt-csharp-ts-przez-probke.md)
@@ -27,7 +27,7 @@ Skróty z metadanych: SDD (Spec-Driven Development) to praca „najpierw specyfi
 | Metoda HTTP | Ścieżka | Do czego służy | Odpowiedź (200 OK) | Stan |
 |---|---|---|---|---|
 | `GET` | `/api/info` | Metadane serwera, wersja aplikacji i liczba trwających meczów w pamięci. | `{ "name": "Rejoltance.Server", "version": "...", "activeMatches": 0 }` | Zaimplementowane |
-| `GET` | `/api/cards` | Pełny katalog kart (69 kolekcjonerskich + 9 tokenów). | `CardDefinition[]` (schemat jak w `cards.json`) | Zaimplementowane |
+| `GET` | `/api/cards` | Pełny katalog kart (130 kolekcjonerskich + 29 tokenów). | `CardDefinition[]` (schemat jak w `cards.json`) | Zaimplementowane |
 | `GET` | `/api/decks` | Lista 5 gotowych talii startowych. | `{ "name": string, "cards": number[] }[]` | Zaimplementowane |
 | `GET` | `/health` | Sprawdza gotowość usługi (*readiness probe*). Działa w środowisku deweloperskim i w kontenerze. | Tekst `Healthy` (kod `200`) lub `503 Service Unavailable` | Zaimplementowane |
 | `GET` | `/alive` | Sprawdza, czy proces żyje (*liveness probe*). | Tekst `Healthy` (kod `200`) | Zaimplementowane |

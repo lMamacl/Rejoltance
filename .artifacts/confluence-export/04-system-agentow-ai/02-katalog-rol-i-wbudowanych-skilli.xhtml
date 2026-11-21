@@ -1,4 +1,4 @@
-<ac:structured-macro ac:name="info"><ac:rich-text-body><p><strong>Synchronizacja 1:1 z repozytorium Git:</strong> <code>docs/04-system-agentow-ai/02-katalog-rol-i-wbudowanych-skilli.md</code> (commit <code>a2bf2a4</code>, data eksportu: <code>2026-11-02</code>)</p></ac:rich-text-body></ac:structured-macro>
+<ac:structured-macro ac:name="info"><ac:rich-text-body><p><strong>Synchronizacja 1:1 z repozytorium Git:</strong> <code>docs/04-system-agentow-ai/02-katalog-rol-i-wbudowanych-skilli.md</code> (commit <code>28d2248</code>, data eksportu: <code>2026-11-21</code>)</p></ac:rich-text-body></ac:structured-macro>
 <blockquote><p><strong>Źródło prawdy:</strong> repozytorium (<code>docs/04-system-agentow-ai/02-katalog-rol-i-wbudowanych-skilli.md</code>) · <strong>Kategoria dokumentacji:</strong> Dokumentacja procesowa — katalog ról i umiejętności AI · <strong>Etap SDD:</strong> cały cykl SDD</p></blockquote>
 <p>W projekcie <strong>RE:JOLTANCE</strong> mamy <strong>10 ról agentów AI</strong> (katalog <code>.agents/agents/</code>) oraz <strong>19 skilli</strong>: 13 zespołowych <code>rj-*</code> i 6 skilli OpenSpec (katalog <code>.agents/skills/</code>). Skill to zapisana procedura krok po kroku, którą agent wykonuje na żądanie. Role dzielimy na <strong>4 grupy</strong>, które odpowiadają etapom procesu SDD (Spec-Driven Development) i warstwom architektury. Każdy agent ma jawną listę wbudowanych skilli (<code>skills:</code>) i tylko te narzędzia, których naprawdę potrzebuje (zasada najmniejszych uprawnień, <em>least privilege</em>).</p>
 <hr />
@@ -31,7 +31,7 @@
 </tr>
 <tr>
 <td><p><strong><code>rj-spec-analyst</code></strong><br /><em>(analityk wymagań PRD i OpenSpec)</em></p></td>
-<td><p>Zamienia potrzeby użytkownika i zachowanie prototypu JS v11 na scenariusze <code>GIVEN/WHEN/THEN</code> w <code>openspec/specs/</code>. Utrzymuje <code>03-indeks-regul-r-nn.md</code> i <code>04-rozbieznosci-prototypu.md</code>.</p></td>
+<td><p>Zamienia potrzeby użytkownika i zachowanie prototypu JS na scenariusze <code>GIVEN/WHEN/THEN</code> w <code>openspec/specs/</code>. Utrzymuje <code>03-indeks-regul-r-nn.md</code> i <code>04-rozbieznosci-prototypu.md</code>.</p></td>
 <td><p>Odczyt, edycja specyfikacji i dokumentów wymagań, uruchamianie walidatorów.</p></td>
 <td><p><code>rj-spec-guardian</code>, <code>rj-start-feature</code>, <code>rj-oracle-diff</code></p></td>
 </tr>
@@ -151,7 +151,7 @@
 <tr>
 <td><p><strong><code>rj-oracle-diff</code></strong></p></td>
 <td><p><code>Implement</code> / <code>Verify</code></p></td>
-<td><p>Porównuje rozstrzygnięcie reguły w <code>Rejoltance.Kernel</code> z silnikiem referencyjnym <code>prototype/revibance/engine.js</code> (v11).</p></td>
+<td><p>Porównuje rozstrzygnięcie reguły w <code>Rejoltance.Kernel</code> z silnikiem referencyjnym <code>prototype/game/engine.js</code> (ADR-0013).</p></td>
 </tr>
 <tr>
 <td><p><strong><code>rj-pr-ready</code></strong></p></td>

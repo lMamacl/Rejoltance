@@ -1,0 +1,44 @@
+<ac:structured-macro ac:name="info"><ac:rich-text-body><p><strong>Synchronizacja 1:1 z repozytorium Git:</strong> <code>docs/01-dokumentacja-systemowa/07-decyzje-adr/0013-kanon-regul-rejoltance-prototype.md</code> (commit <code>28d2248</code>, data eksportu: <code>2026-11-21</code>)</p></ac:rich-text-body></ac:structured-macro>
+<blockquote><p><strong>Źródło prawdy:</strong> repozytorium (<code>docs/01-dokumentacja-systemowa/07-decyzje-adr/0013-kanon-regul-rejoltance-prototype.md</code>) · <strong>Kategoria dokumentacji:</strong> Decyzja architektoniczna (ADR) · <strong>Etap SDD:</strong> Specyfikacja</p></blockquote>
+<ul><li><strong>Status:</strong> zaakceptowana</li><li><strong>Data:</strong> 2026-11-21</li><li><strong>Autorzy:</strong> Gabriel Ostaszewski (z pomocą agenta AI); prototyp: PanCoto</li><li><strong>Akceptacja:</strong> 5 z 6 osób zespołu, rozmowa na sprincie 2026-11-21 (wymóg konstytucji przy zmianie art. I: co najmniej 2 osoby); zgłosił Gabriel Ostaszewski</li><li><strong>Powiązane:</strong> <strong>ADR-0005</strong> (<code>0005-kanon-regul-prototyp-js.md</code>) (zastępuje), <strong><code>04-rozbieznosci-prototypu.md</code></strong> (<code>../04-rozbieznosci-prototypu.md</code>), <code>.agents/rules/00-konstytucja.md</code> (art. I), <code>tools/content/extract_cards.py</code></li></ul>
+<h2>Kontekst i problem</h2>
+<p>ADR-0005 uznał za kanon zasad prototyp JS v11, czyli kopię repo <code>PanCoto/revibance</code> w katalogu <code>prototype/revibance</code>. W listopadzie 2026 zespół rozwijał grę w nowym repo <a href="https://github.com/PanCoto/rejoltance-prototype"><code>PanCoto/rejoltance-prototype</code></a>. Od 4.11 do 20.11 powstały tam 133 commity, wersja gry to 0.0.4 (pre-alpha). [V]</p>
+<p>Nowy prototyp ma inny zestaw kart: 130 kart kolekcjonerskich i 29 tokenów zamiast 69 i 9. Ma też 4 talie startowe zamiast 5. [V] Silnik jest przepisany (<code>game/engine.js</code>, ok. 3000 linii). Słownik DSL wzrósł o około 60 słów: 10 wyzwalaczy, 28 akcji, 9 celów, 9 słów kluczowych i 3 warunki. [V] Dochodzą: powtórki meczów (replay), tryb widza (spectate), tutorial, serwer matchmakingu (Cloudflare Workers) i narzędzia symulacji w <code>lab/</code>. [V]</p>
+<p>Zespół gra już w nowy prototyp. Kanon v11 przestał więc opisywać grę, którą znamy i testujemy. Ten sam powód stał za ADR-0005.</p>
+<h2>Rozważane opcje</h2>
+<table><thead><tr>
+<th><p>Opcja</p></th>
+<th><p>Zalety</p></th>
+<th><p>Wady</p></th>
+<th><p>Koszt / ryzyko</p></th>
+</tr></thead><tbody>
+<tr>
+<td><p>Zostawić v11 jako kanon</p></td>
+<td><p>zero zmian w dokumentacji</p></td>
+<td><p>kanon opisuje grę, w którą już nikt nie gra</p></td>
+<td><p>rosnący rozjazd specyfikacji z grą</p></td>
+</tr>
+<tr>
+<td><p>Nowy prototyp obok v11</p></td>
+<td><p>mało zmian teraz</p></td>
+<td><p>dwa prototypy i niejasne, który jest wzorcem</p></td>
+<td><p>decyzja tylko odłożona</p></td>
+</tr>
+<tr>
+<td><p><strong>Nowy prototyp zamiast v11, jako git subtree w <code>prototype/</code></strong></p></td>
+<td><p>jeden wzorzec; historia i autorstwo PanCoto zostają; łatwo dociągać zmiany</p></td>
+<td><p>repo rośnie o ok. 105 MB (audio); reguły R-nn i D-nn trzeba sprawdzić na nowo</p></td>
+<td><p>jednorazowy przegląd specyfikacji</p></td>
+</tr>
+</tbody></table>
+<h2>Decyzja</h2>
+<p>W kontekście gry rozwijanej w <code>PanCoto/rejoltance-prototype</code> wybieramy <strong>zachowanie <code>prototype/game/engine.js</code> oraz dane <code>prototype/game/cards.js</code> i <code>decks.js</code> jako kanon zasad</strong>. Zastępujemy w ten sposób prototyp v11, aby specyfikacja i Kernel goniły grę, w którą zespół naprawdę gra. Akceptujemy, że część reguł R-nn i pozycji D-nn spisanych dla v11 trzeba sprawdzić na nowym prototypie.</p>
+<p>Szczegóły:</p>
+<ul><li><code>prototype/</code> to <strong>git subtree</strong> repo <code>PanCoto/rejoltance-prototype</code> (gałąź <code>main</code>) z pełną historią. Prototyp dalej rozwija się w tamtym repo. Kopię w Rejoltance odświeżamy poleceniem <code>git subtree pull --prefix=prototype https://github.com/PanCoto/rejoltance-prototype.git main</code>. Plików w <code>prototype/</code> nie edytujemy bezpośrednio.</li><li>PR, który wnosi subtree, mergujemy <strong>merge commitem</strong>, nie squashem. Squash zgubiłby historię i metadane subtree, a kolejne <code>git subtree pull</code> kończyłyby się konfliktami.</li><li>Kanonem są karty z <code>cards.js</code> i talie z <code>decks.js</code>. Karty „Legacy” (<code>cards-legacy.js</code>, <code>decks-legacy.js</code>) to tryb dodatkowy w grze i nie są kanonem.</li><li><code>tools/content/extract_cards.py</code> czyta dane przez Node (pliki to literały obiektów JS, a nie JSON). <code>Vocabulary.cs</code> zawiera wszystkie słowa DSL używane przez nowe karty. Kernel obsłuży je dopiero wtedy, gdy powstaną reguły R-nn i testy.</li><li>Wyjątki z ADR-0005 dalej obowiązują: błąd prototypu trafia do <code>04-rozbieznosci-prototypu.md</code> i zespół rozstrzyga go, zanim stanie się regułą R-nn.</li></ul>
+<h2>Konsekwencje</h2>
+<h3>Pozytywne</h3>
+<ul><li>Jeden wzorzec gry zgodny z tym, w co gra zespół. GitHub Pages publikuje <code>prototype/game</code>.</li><li><code>cards.json</code> i <code>decks.json</code> odpowiadają aktualnym kartom, a CI wykrywa rozjazd (<code>extract_cards.py --check</code>).</li><li>Historia i autorstwo prac nad prototypem zostają w repo.</li></ul>
+<h3>Negatywne / ryzyka</h3>
+<ul><li>Reguły R-nn (<code>openspec/specs/</code>, <code>02-specyfikacja-regul-gry.md</code>, <code>03-indeks-regul-r-nn.md</code>) i rozbieżności D-01…D-20 spisano dla v11. Do czasu przeglądu traktujemy je jako „do sprawdzenia na nowym prototypie”.</li><li>Talie startowe mają nazwy z prototypu (<code>OG C.</code>, <code>OG P.</code>, <code>OG B.</code>, <code>OG. M</code>). Klient web i testy używają tych nazw.</li><li>Repo rośnie o ok. 105 MB (głównie muzyka i efekty dźwiękowe).</li></ul>
+<h3>Do zrobienia</h3>
+<ul><li>[ ] Przegląd reguł R-nn i pozycji D-nn na nowym prototypie (zadanie w Jirze).</li><li>[x] Po akceptacji tego ADR: status ADR-0005 → <code>superseded by ADR-0013</code>, status tego ADR → <code>accepted</code> (2026-11-21).</li></ul>

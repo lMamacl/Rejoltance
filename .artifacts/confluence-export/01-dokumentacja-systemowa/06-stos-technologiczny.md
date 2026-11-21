@@ -1,4 +1,4 @@
-<!-- CONFLUENCE 1:1 EXPORT | Source: docs/01-dokumentacja-systemowa/06-stos-technologiczny.md @ a2bf2a4 (2026-11-02) -->
+<!-- CONFLUENCE 1:1 EXPORT | Source: docs/01-dokumentacja-systemowa/06-stos-technologiczny.md @ 28d2248 (2026-11-21) -->
 # 1.6 Stos technologiczny i roadmapa technologiczna
 
 > **Źródło prawdy:** repozytorium (`docs/01-dokumentacja-systemowa/06-stos-technologiczny.md`) · **Kategoria dokumentacji:** Dokumentacja produktowa — systemowa (stos technologiczny i roadmapa IT) · **Etap SDD:** Planowanie · **Powiązane decyzje:** [ADR-0001](07-decyzje-adr/0001-stos-technologiczny.md), [ADR-0003](07-decyzje-adr/0003-openspec-i-konstytucja.md), [ADR-0007](07-decyzje-adr/0007-sqlite-potem-postgresql.md)
@@ -20,7 +20,7 @@ Skróty: SDD (Spec-Driven Development) to praca „najpierw specyfikacja, potem 
 | **Dostęp do danych (ORM)** | Entity Framework Core | `10.0.14` | Mapowanie obiektowo-relacyjne kont, talii i zapisów zakończonych meczów (`RejoltanceDb`). | [ADR-0007](07-decyzje-adr/0007-sqlite-potem-postgresql.md) |
 | **Baza danych (Sprinty 0–3)** | SQLite (`Microsoft.EntityFrameworkCore.Sqlite`) | `10.0.14` | Lokalna baza w pliku `.data/rejoltance.db`. Nie wymaga Dockera na laptopach zespołu. | [ADR-0007](07-decyzje-adr/0007-sqlite-potem-postgresql.md) |
 | **Baza danych (od Sprintu 4)** | PostgreSQL | `16+` | Docelowa baza dla wersji demo i produkcyjnej. Lokalnie działa jako kontener w Aspire. | [ADR-0007](07-decyzje-adr/0007-sqlite-potem-postgresql.md) |
-| **Orkiestracja deweloperska** | .NET Aspire (`Aspire.AppHost.Sdk`, `Aspire.Hosting.JavaScript`) | `13.6.4` | Uruchamia backend i klienta Vite jednym poleceniem. Ustawia zmienne środowiskowe, proxy i panel diagnostyczny. | [ADR-0001](07-decyzje-adr/0001-stos-technologiczny.md) |
+| **Orkiestracja deweloperska** | .NET Aspire (`Aspire.AppHost.Sdk`, `Aspire.Hosting.JavaScript`) | `13.6.5` | Uruchamia backend i klienta Vite jednym poleceniem. Ustawia zmienne środowiskowe, proxy i panel diagnostyczny. | [ADR-0001](07-decyzje-adr/0001-stos-technologiczny.md) |
 | **Telemetria i obserwowalność** | OpenTelemetry (.NET) | `1.17.0` | Zbiera logi strukturalne, metryki i ślady wykonania (*distributed tracing*) w `Rejoltance.ServiceDefaults`. | [ADR-0001](07-decyzje-adr/0001-stos-technologiczny.md) |
 
 ORM (Object-Relational Mapping) to warstwa, która zamienia obiekty C# na wiersze w bazie i odwrotnie. LTS (Long-Term Support) to wersja z wydłużonym wsparciem.
@@ -43,7 +43,7 @@ SPA (Single Page Application) to aplikacja webowa, która działa na jednej stro
 |---|---|---|---|
 | **Testy jednostkowe i integracyjne .NET** | xUnit + `Microsoft.AspNetCore.Mvc.Testing` | `2.9.3` / `10.0.14` | Testy reguł (`Rnn_...`), determinizmu i projekcji. Testy serwera w pamięci z prawdziwym klientem SignalR. |
 | **Testy granic architektury** | `NetArchTest.Rules` | `1.3.2` | Sprawdza, że moduły nie mają niedozwolonych zależności, a kontrakty nie zawierają logiki (`NFR-50`). |
-| **Testy dymne całej aplikacji** | `Aspire.Hosting.Testing` | `13.6.4` | Uruchamia cały graf zasobów Aspire. Sprawdza odpowiedź `/health` i proxy klienta (`NFR-60`). |
+| **Testy dymne całej aplikacji** | `Aspire.Hosting.Testing` | `13.6.5` | Uruchamia cały graf zasobów Aspire. Sprawdza odpowiedź `/health` i proxy klienta (`NFR-60`). |
 | **Analiza statyczna C#** | Roslyn Analyzers + `BannedApiAnalyzers` | `5.6.0` | Blokuje w `Rejoltance.Kernel` niedeterministyczne API (`System.Random`, `DateTime`, `File`) już przy kompilacji. |
 | **Testy jednostkowe i komponentów UI** | Vitest + React Testing Library + jsdom | `4.1.0` / `16.3.2` | Testy komponentów React, magazynu Zustand i zgodności próbki kontraktu JSON po stronie TypeScript. |
 | **Testy end-to-end (E2E)** | Playwright | *Planowane w S1 (`E6-S01`)* | Automatyczne scenariusze całej rozgrywki w Chromium, Firefox i WebKit (`NFR-10`). |

@@ -1,4 +1,4 @@
-<ac:structured-macro ac:name="info"><ac:rich-text-body><p><strong>Synchronizacja 1:1 z repozytorium Git:</strong> <code>docs/04-system-agentow-ai/04-warsztat-tworzenie-agentow-skilli-i-kart.md</code> (commit <code>a2bf2a4</code>, data eksportu: <code>2026-11-02</code>)</p></ac:rich-text-body></ac:structured-macro>
+<ac:structured-macro ac:name="info"><ac:rich-text-body><p><strong>Synchronizacja 1:1 z repozytorium Git:</strong> <code>docs/04-system-agentow-ai/04-warsztat-tworzenie-agentow-skilli-i-kart.md</code> (commit <code>28d2248</code>, data eksportu: <code>2026-11-21</code>)</p></ac:rich-text-body></ac:structured-macro>
 <blockquote><p><strong>Źródło prawdy:</strong> repozytorium (<code>docs/04-system-agentow-ai/04-warsztat-tworzenie-agentow-skilli-i-kart.md</code>) · <strong>Kategoria dokumentacji:</strong> Dokumentacja procesowa — podręcznik warsztatowy zespołu i AI · <strong>Etap SDD:</strong> cały cykl SDD</p></blockquote>
 <p>To praktyczny warsztat dla każdej osoby w zespole. Pokazuje krok po kroku, jak samodzielnie rozbudować system agentowy (<code>.agents/</code>), jak pisać dokumentację i przenosić ją do Confluence, jak zapisać decyzję architektoniczną (ADR, Architecture Decision Record) i jak dodać nową kartę do gry.</p>
 <hr />
@@ -128,12 +128,12 @@ description: "Reviews React components in src/web against UI architecture rules 
 <ol><li>Sprawdź najwyższy numer w <code>docs/01-dokumentacja-systemowa/07-decyzje-adr/</code> i utwórz nowy plik <code>NNNN-krotki-tytul.md</code> na bazie wzorca <strong><code>0000-szablon.md</code></strong> (<code>../01-dokumentacja-systemowa/07-decyzje-adr/0000-szablon.md</code>).</li><li>Ustaw początkowy status na <code>proposed</code>.</li><li>Opisz <strong>kontekst i problem</strong>, porównaj w tabeli co najmniej <strong>2–3 opcje</strong> (zalety, wady, koszt/ryzyko) i zapisz decyzję jako zdanie <strong>Y-statement</strong>: &gt; <em>„W kontekście <strong>X</strong>, mierząc się z <strong>Y</strong>, wybieramy <strong>Z</strong> zamiast <strong>A</strong>, aby osiągnąć <strong>B</strong>, akceptując <strong>C</strong>.”</em></li><li>Dopisz nowy dokument do tabeli w <code>07-decyzje-adr/README.md</code> i otwórz pull request. Gdy 2 osoby z zespołu zaakceptują decyzję, zmień status na <code>accepted</code>.</li></ol>
 <hr />
 <h2>Warsztat 5: Jak dodać lub zmodyfikować kartę w grze?</h2>
-<p>Karty w <strong>RE:JOLTANCE</strong> to same dane. Generujemy je z kanonicznego prototypu JS (<code>prototype/revibance/cards.js</code>) do pliku <code>src/Rejoltance.Content/Data/cards.json</code>. Możesz użyć skilla <code>/rj-add-card</code>.</p>
+<p>Karty w <strong>RE:JOLTANCE</strong> to same dane. Generujemy je z kanonicznego prototypu JS (<code>prototype/game/cards.js</code>) do pliku <code>src/Rejoltance.Content/Data/cards.json</code>. Możesz użyć skilla <code>/rj-add-card</code>.</p>
 <h3>Wariant A: karta używa istniejących słów kluczowych, wyzwalaczy i akcji DSL</h3>
 <p>DSL to nasz język opisu efektów kart.</p>
-<ol><li>Otwórz plik <code>prototype/revibance/cards.js</code> i dodaj albo zmień wpis w tablicy <code>CARDS</code>:</li></ol>
+<ol><li>Dodaj albo zmień wpis w tablicy <code>CARDS</code> w pliku <code>game/cards.js</code> repozytorium <code>PanCoto/rejoltance-prototype</code>. Katalog <code>prototype/</code> w Rejoltance to jego kopia (git subtree, ADR-0013), więc nie edytuj go bezpośrednio. Zmiany dociągasz poleceniem <code>git subtree pull --prefix=prototype https://github.com/PanCoto/rejoltance-prototype.git main</code>. Przykładowy wpis:</li></ol>
 <ac:structured-macro ac:name="code"><ac:parameter ac:name="language">javascript</ac:parameter><ac:plain-text-body><![CDATA[   {
-     "Id": 70,
+     "Id": 131,
      "Name": "Ember Hound",
      "Type": "Unit",
      "Subtypes": ["Animal"],
@@ -148,7 +148,7 @@ description: "Reviews React components in src/web against UI architecture rules 
 <ac:structured-macro ac:name="code"><ac:parameter ac:name="language">bash</ac:parameter><ac:plain-text-body><![CDATA[   python tools/content/extract_cards.py]]></ac:plain-text-body></ac:structured-macro>
 <ol><li>Uruchom testy walidatora katalogu kart. Na razie są w <code>Rejoltance.Kernel.Tests</code>, bo projekt <code>Rejoltance.Cards.Tests</code> jest dopiero planowany:</li></ol>
 <ac:structured-macro ac:name="code"><ac:parameter ac:name="language">bash</ac:parameter><ac:plain-text-body><![CDATA[   dotnet test tests/Rejoltance.Kernel.Tests --filter ContentTests]]></ac:plain-text-body></ac:structured-macro>
-<p>Jeśli dodajesz kartę ponad obecne 69 kart kolekcjonerskich i 9 tokenów, zmień oczekiwaną liczbę kart w teście <code>Catalog_contains_all_prototype_cards</code>.</p>
+<p>Jeśli dodajesz kartę ponad obecne 130 kart kolekcjonerskich i 29 tokenów, zmień oczekiwaną liczbę kart w teście <code>Catalog_contains_all_prototype_cards</code>.</p>
 <h3>Wariant B: karta wymaga nowego słowa kluczowego, wyzwalacza albo akcji w DSL</h3>
 <p>Gdy karta wprowadza mechanikę, której nie ma w klasie <code>src/Rejoltance.Content/Vocabulary.cs</code>:</p>
 <ol><li>Najpierw napisz specyfikację reguły <code>R-nn</code> w <code>openspec/specs/</code> (<strong>przewodnik OpenSpec</strong> (<code>03-jak-pisac-specyfikacje-openspec.md</code>)).</li><li>Dodaj nowe słowo do <code>Vocabulary.cs</code>, zaimplementuj jego obsługę w <code>Rejoltance.Kernel</code> i napisz test jednostkowy <code>Rnn_...</code>.</li><li>Dopiero na końcu dodaj kartę i wygeneruj <code>cards.json</code>.</li></ol>
