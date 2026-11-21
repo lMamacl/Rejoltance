@@ -1,4 +1,4 @@
-<!-- CONFLUENCE 1:1 EXPORT | Source: docs/01-dokumentacja-systemowa/08-mapa-kodu-i-modulow.md @ a2bf2a4 (2026-11-02) -->
+<!-- CONFLUENCE 1:1 EXPORT | Source: docs/01-dokumentacja-systemowa/08-mapa-kodu-i-modulow.md @ 28d2248 (2026-11-21) -->
 # 1.8 Mapa kodu źródłowego i modułów
 
 > **Źródło prawdy:** repozytorium (`docs/01-dokumentacja-systemowa/08-mapa-kodu-i-modulow.md`) · **Kategoria dokumentacji:** Dokumentacja produktowa — systemowa (dokumentacja kodu źródłowego) · **Etap SDD:** Realizacja
@@ -60,7 +60,7 @@ Tabela podpowiada, które pliki zmienić w typowych zadaniach. Ostatnia kolumna 
 
 | Co chcesz zrobić? | Które pliki zmienić? | Ryzyko | Zalecany skill agenta AI |
 |---|---|---|---|
-| **Dodać nową kartę lub zmienić statystyki istniejącej** (z istniejących słów DSL) | 1. Zmodyfikuj `prototype/revibance/cards.js`<br/>2. Uruchom `python tools/content/extract_cards.py`<br/>3. Uruchom testy `ContentTests` | Niski | [`rj-add-card`](../04-system-agentow-ai/02-katalog-rol-i-wbudowanych-skilli.md) |
+| **Dodać nową kartę lub zmienić statystyki istniejącej** (z istniejących słów DSL) | 1. Zmień `game/cards.js` w repo `PanCoto/rejoltance-prototype` (źródło prototypu)<br/>2. Dociągnij zmiany: `git subtree pull --prefix=prototype https://github.com/PanCoto/rejoltance-prototype.git main`<br/>3. Uruchom `python tools/content/extract_cards.py`<br/>4. Uruchom testy `ContentTests` | Niski | [`rj-add-card`](../04-system-agentow-ai/02-katalog-rol-i-wbudowanych-skilli.md) |
 | **Dodać do DSL nowe słowo kluczowe, wyzwalacz lub akcję** | 1. Dopisz regułę `R-nn` w `openspec/specs/`<br/>2. Dodaj słowo do `src/Rejoltance.Content/Vocabulary.cs`<br/>3. Zaimplementuj obsługę w `Rejoltance.Kernel`<br/>4. Napisz test `Rnn_...` w `Rejoltance.Kernel.Tests` | Średni | [`rj-add-rule-test`](../04-system-agentow-ai/02-katalog-rol-i-wbudowanych-skilli.md) |
 | **Zaimplementować lub zmienić regułę mechaniki gry (`R-nn`)** | 1. Napisz test jednostkowy `Rnn_...` w `tests/Rejoltance.Kernel.Tests/`<br/>2. Zaimplementuj logikę w `src/Rejoltance.Kernel/MatchEngine.cs` (albo w osobnej klasie pomocniczej w Kernelu)<br/>3. Zaktualizuj status w `03-indeks-regul-r-nn.md` | Średni | [`rj-add-rule-test`](../04-system-agentow-ai/02-katalog-rol-i-wbudowanych-skilli.md) |
 | **Zmienić strukturę `MatchView`, `Intent` lub `DomainEvent`** | 1. Zapisz decyzję w ADR (Architecture Decision Record, `07-decyzje-adr/`)<br/>2. Zmień rekord w `src/Rejoltance.Contracts/` oraz `Projection.cs`<br/>3. Zaktualizuj typ w `src/web/src/contracts/index.ts`<br/>4. Odśwież próbkę `UPDATE_CONTRACT_SAMPLES=1 dotnet test` — **wszystko w jednym PR!** | **Wysoki** *(zmiana zamrożonego kontraktu)* | [`rj-write-adr`](../04-system-agentow-ai/02-katalog-rol-i-wbudowanych-skilli.md) |

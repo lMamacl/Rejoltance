@@ -1,20 +1,20 @@
-<!-- CONFLUENCE 1:1 EXPORT | Source: docs/01-dokumentacja-systemowa/02-specyfikacja-regul-gry.md @ a2bf2a4 (2026-11-02) -->
+<!-- CONFLUENCE 1:1 EXPORT | Source: docs/01-dokumentacja-systemowa/02-specyfikacja-regul-gry.md @ 28d2248 (2026-11-21) -->
 # 1.2 Specyfikacja funkcjonalna zasad gry — RE:JOLTANCE (v2)
 
-> **Źródło prawdy:** repozytorium (`docs/01-dokumentacja-systemowa/02-specyfikacja-regul-gry.md`) · **Kategoria dokumentacji:** Dokumentacja produktowa — systemowa (wymagania funkcjonalne i reguły domenowe) · **Etap SDD:** Specyfikacja · **Kanon:** zachowanie prototypu `prototype/revibance` v11 ([ADR-0005](07-decyzje-adr/0005-kanon-regul-prototyp-js.md)).
+> **Źródło prawdy:** repozytorium (`docs/01-dokumentacja-systemowa/02-specyfikacja-regul-gry.md`) · **Kategoria dokumentacji:** Dokumentacja produktowa — systemowa (wymagania funkcjonalne i reguły domenowe) · **Etap SDD:** Specyfikacja · **Kanon:** zachowanie prototypu `prototype/game` v11 ([ADR-0005](07-decyzje-adr/0005-kanon-regul-prototyp-js.md)).
 
 Ten dokument wyjaśnia zwykłym językiem zasady gry RE:JOLTANCE. SDD (Spec-Driven Development) oznacza, że najpierw spisujemy zasady, a dopiero potem je programujemy. Formalne wymagania ze scenariuszami `GIVEN / WHEN / THEN` są w plikach `openspec/specs/*/spec.md`. Numery reguł `R‑nn` i powiązane testy zebraliśmy w dokumencie [1.3 Indeks reguł R‑nn](03-indeks-regul-r-nn.md).
 
 Miejsca sporne mają znacznik `[D‑nn]`. Szczegóły każdego z nich opisuje dokument [1.4 Analiza rozbieżności prototypu](04-rozbieznosci-prototypu.md).
 
-Najlepiej czytaj z otwartym prototypem: uruchom `npx serve prototype/revibance` i zagraj z botem.
+Najlepiej czytaj z otwartym prototypem: uruchom `npx serve prototype/game` i zagraj z botem.
 
 ## 1. O co chodzi
 
 Grają dwie osoby. Każda ma talię 30 kart i bohatera z **20 HP** (punktów zdrowia). Plansza ma **4 linie** (0–3). W każdej linii jest jeden slot na jednostkę po każdej stronie.
 Wygrywa ten, kto pierwszy zbije HP wrogiego bohatera do 0 (R-70). Gra nie ma limitu rund. Najpóźniej kończą ją obrażenia z pustej talii (R-14).
 
-**Karty:** 69 kolekcjonerskich (jednostki i akcje) oraz 9 tokenów, które tworzą efekty. Jednostka ma koszt, atak i HP. Akcja (czar) ma koszt i efekt.
+**Karty:** 130 kolekcjonerskich (jednostki i akcje) oraz 29 tokenów, które tworzą efekty. Jednostka ma koszt, atak i HP. Akcja (czar) ma koszt i efekt.
 **Podtypy** (Animal, Demon, Funko Pop, Human, Machine, Mercenary, Monster, Mystical, Token) działają jak plemiona w warunkach efektów.
 
 **Talia** (R-01): dokładnie 30 kart, maks. 3 kopie jednej karty, bez tokenów. Gra ma 5 talii startowych.

@@ -1,4 +1,4 @@
-<!-- CONFLUENCE 1:1 EXPORT | Source: docs/00-przewodnik-i-setup/07-plan-wdrozenia-i-migracji.md @ ff9d179 (2026-11-02) -->
+<!-- CONFLUENCE 1:1 EXPORT | Source: docs/00-przewodnik-i-setup/07-plan-wdrozenia-i-migracji.md @ 28d2248 (2026-11-21) -->
 # 0.7 Plan wdrożenia i migracji: Co zmienić i co podmienić względem dotychczasowego podejścia
 
 > **Źródło prawdy:** repozytorium (`docs/00-przewodnik-i-setup/07-plan-wdrozenia-i-migracji.md`) · **Kategoria dokumentacji:** dokumentacja procesowa — plan zmian i wdrożenia · **Etap SDD:** Fundamenty i organizacja projektu
@@ -153,7 +153,7 @@ Kolumna „Stary plik” podaje dawne nazwy ról. Aktualne nazwy są w kolumnie 
 - **Zaktualizowaliśmy 10 istniejących skilli `rj-*/SKILL.md`:** polskie opisy `description:`, polskie tytuły i nowe ścieżki do `docs/`.
 - **Dodaliśmy 3 nowe skille SDD/Confluence:**
   - `.agents/skills/rj-spec-guardian/SKILL.md` — sprawdza spójność w obie strony: `openspec/specs/` ↔ `03-indeks-regul-r-nn.md` ↔ `04-rozbieznosci-prototypu.md` ↔ `backlog.toml`.
-  - `.agents/skills/rj-oracle-diff/SKILL.md` — porównuje rozstrzyganie reguł w `Rejoltance.Kernel` z wyrocznią `prototype/revibance/engine.js`.
+  - `.agents/skills/rj-oracle-diff/SKILL.md` — porównuje rozstrzyganie reguł w `Rejoltance.Kernel` z wyrocznią `prototype/game/engine.js`.
   - `.agents/skills/rj-sync-confluence/SKILL.md` — waliduje drzewo `docs/` i eksportuje paczkę 1:1 do Confluence PB.
 - **Zaktualizowaliśmy skrypty w `tools/`:**
   - `tools/agents/sync_agents.py` — sprawdza pole `skills:` w każdym agencie (czy każdy przypisany skill istnieje w `.agents/skills/`) i obsługuje grupy narzędzi.

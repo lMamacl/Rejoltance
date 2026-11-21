@@ -1,4 +1,4 @@
-<!-- CONFLUENCE 1:1 EXPORT | Source: docs/01-dokumentacja-systemowa/05-sad-architektura-systemu.md @ a2bf2a4 (2026-11-02) -->
+<!-- CONFLUENCE 1:1 EXPORT | Source: docs/01-dokumentacja-systemowa/05-sad-architektura-systemu.md @ 28d2248 (2026-11-21) -->
 # 1.5 Dokument architektury systemu (SAD) — RE:JOLTANCE
 
 > **Źródło prawdy:** repozytorium (`docs/01-dokumentacja-systemowa/05-sad-architektura-systemu.md`) · **Kategoria dokumentacji:** Dokumentacja produktowa — systemowa (architektura systemu, SAD) · **Etap SDD:** Planowanie · **Struktura:** AltexSoft SAD + arc42 + model C4 · **Wersja:** 1.1 (2026-11-02)
@@ -40,7 +40,7 @@ Pełne drzewo wymagań jakościowych wg normy ISO/IEC 25010:2023 (`NFR-01..NFR-7
 
 System obsługuje cały cykl życia meczu karcianego 1 na 1 na czterech liniach:
 
-- ładuje i sprawdza katalog 78 kart (69 kolekcjonerskich + 9 tokenów) i 5 talii startowych z plików JSON wygenerowanych z prototypu,
+- ładuje i sprawdza katalog 159 kart (130 kolekcjonerskich + 29 tokenów) i 4 talie startowe z plików JSON wygenerowanych z prototypu,
 - zarządza sesjami meczowymi w pamięci serwera (piaskownica, gra z botem AI, pokoje 1v1 przez kod zaproszenia),
 - komunikuje się z klientem w obie strony w czasie rzeczywistym przez WebSocket (SignalR),
 - trwale przechowuje w relacyjnej bazie danych konta, własne talie i zapisy zakończonych meczów.
@@ -245,7 +245,7 @@ flowchart LR
 | **1. Lokalne środowisko deweloperskie** | `Rejoltance.AppHost` uruchamia natywnie serwer Kestrel i serwer deweloperski Vite z proxy `/api`. | Plik SQLite `.data/rejoltance.db` (Sprinty 0–3) albo lokalny kontener PostgreSQL zarządzany przez Aspire (od Sprintu 4). | Codzienne programowanie i ręczne testy nowych funkcji. |
 | **2. Środowisko CI (GitHub Actions)** | Maszyny `ubuntu-latest` uruchamiają 3 równoległe zadania: `.NET build & tests` (z testem integracyjnym `AppHostSmokeTests`), `Web lint, typecheck, tests, build` oraz `Specs, docs, agents, content`. | Baza w pamięci albo tymczasowy plik SQLite na czas testów. | Automatyczna bramka jakości dla każdego Pull Requesta i commita na `develop`/`main`. |
 | **3. Środowisko demonstracyjne (demo)** | Jeden obraz kontenera budowany przez .NET (`PublishWithContainerFiles`). Serwer ASP.NET Core serwuje API/SignalR i statyczne pliki klienta React z `wwwroot/`. | Zarządzana instancja lub kontener PostgreSQL 16+. | Testy użyteczności z Radą Graczy i prezentacje na *Sprint Review*. |
-| **4. Hosting prototypu referencyjnego** | Workflow `.github/workflows/prototype-pages.yml` publikuje katalog `prototype/revibance/` na **GitHub Pages**. | Brak (aplikacja działa tylko w przeglądarce). | Stały punkt odniesienia przy sprawdzaniu zasad gry v11. |
+| **4. Hosting prototypu referencyjnego** | Workflow `.github/workflows/prototype-pages.yml` publikuje katalog `prototype/game/` na **GitHub Pages**. | Brak (aplikacja działa tylko w przeglądarce). | Stały punkt odniesienia przy sprawdzaniu zasad gry v11. |
 
 ---
 

@@ -1,4 +1,4 @@
-<ac:structured-macro ac:name="info"><ac:rich-text-body><p><strong>Synchronizacja 1:1 z repozytorium Git:</strong> <code>docs/01-dokumentacja-systemowa/09-kontrakty-i-api.md</code> (commit <code>a2bf2a4</code>, data eksportu: <code>2026-11-02</code>)</p></ac:rich-text-body></ac:structured-macro>
+<ac:structured-macro ac:name="info"><ac:rich-text-body><p><strong>Synchronizacja 1:1 z repozytorium Git:</strong> <code>docs/01-dokumentacja-systemowa/09-kontrakty-i-api.md</code> (commit <code>28d2248</code>, data eksportu: <code>2026-11-21</code>)</p></ac:rich-text-body></ac:structured-macro>
 <blockquote><p><strong>Źródło prawdy:</strong> repozytorium (<code>docs/01-dokumentacja-systemowa/09-kontrakty-i-api.md</code>) · <strong>Kategoria dokumentacji:</strong> Dokumentacja produktowa — systemowa (dokumentacja API) · <strong>Etap SDD:</strong> Planowanie i realizacja · <strong>Powiązane decyzje:</strong> <strong>ADR-0006</strong> (<code>07-decyzje-adr/0006-serwer-autorytatywny-fog-of-war.md</code>), <strong>ADR-0010</strong> (<code>07-decyzje-adr/0010-kontrakt-csharp-ts-przez-probke.md</code>)</p></blockquote>
 <p>Ten dokument opisuje API (Application Programming Interface) serwera <code>Rejoltance.Server</code>. Znajdziesz tu:</p>
 <ul><li>endpointy HTTP REST,</li><li>metody i zdarzenia huba SignalR (<code>/api/hubs/match</code>), który działa przez WebSocket,</li><li>strukturę 5 zamrożonych kontraktów JSON (<code>src/Rejoltance.Contracts</code> ↔ <code>src/web/src/contracts</code>).</li></ul>
@@ -25,7 +25,7 @@
 <tr>
 <td><p><code>GET</code></p></td>
 <td><p><code>/api/cards</code></p></td>
-<td><p>Pełny katalog kart (69 kolekcjonerskich + 9 tokenów).</p></td>
+<td><p>Pełny katalog kart (130 kolekcjonerskich + 29 tokenów).</p></td>
 <td><p><code>CardDefinition[]</code> (schemat jak w <code>cards.json</code>)</p></td>
 <td><p>Zaimplementowane</p></td>
 </tr>

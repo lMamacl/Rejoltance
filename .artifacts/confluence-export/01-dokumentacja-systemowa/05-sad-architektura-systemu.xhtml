@@ -1,4 +1,4 @@
-<ac:structured-macro ac:name="info"><ac:rich-text-body><p><strong>Synchronizacja 1:1 z repozytorium Git:</strong> <code>docs/01-dokumentacja-systemowa/05-sad-architektura-systemu.md</code> (commit <code>a2bf2a4</code>, data eksportu: <code>2026-11-02</code>)</p></ac:rich-text-body></ac:structured-macro>
+<ac:structured-macro ac:name="info"><ac:rich-text-body><p><strong>Synchronizacja 1:1 z repozytorium Git:</strong> <code>docs/01-dokumentacja-systemowa/05-sad-architektura-systemu.md</code> (commit <code>28d2248</code>, data eksportu: <code>2026-11-21</code>)</p></ac:rich-text-body></ac:structured-macro>
 <blockquote><p><strong>Źródło prawdy:</strong> repozytorium (<code>docs/01-dokumentacja-systemowa/05-sad-architektura-systemu.md</code>) · <strong>Kategoria dokumentacji:</strong> Dokumentacja produktowa — systemowa (architektura systemu, SAD) · <strong>Etap SDD:</strong> Planowanie · <strong>Struktura:</strong> AltexSoft SAD + arc42 + model C4 · <strong>Wersja:</strong> 1.1 (2026-11-02)</p></blockquote>
 <p>Ten dokument to SAD (Software Architecture Document), czyli opis architektury systemu RE:JOLTANCE. Znajdziesz tu podział na kontenery i moduły, kontrakty komunikacyjne, model danych, strategie przekrojowe i sposób wdrożenia. Układ opiera się na wytycznych AltexSoft oraz na dwóch szablonach: arc42 (struktura dokumentu architektury) i C4 (model diagramów w czterech poziomach szczegółowości: kontekst, kontenery, komponenty, kod).</p>
 <p>SDD (Spec-Driven Development) to nasz sposób pracy: specyfikacja powstaje przed kodem. SAD należy do etapu <em>Planowanie</em>.</p>
@@ -45,7 +45,7 @@
 <h2>2. Podsumowanie wymagań i ograniczenia</h2>
 <h3>2.1 Zakres funkcjonalny z perspektywy architektury</h3>
 <p>System obsługuje cały cykl życia meczu karcianego 1 na 1 na czterech liniach:</p>
-<ul><li>ładuje i sprawdza katalog 78 kart (69 kolekcjonerskich + 9 tokenów) i 5 talii startowych z plików JSON wygenerowanych z prototypu,</li><li>zarządza sesjami meczowymi w pamięci serwera (piaskownica, gra z botem AI, pokoje 1v1 przez kod zaproszenia),</li><li>komunikuje się z klientem w obie strony w czasie rzeczywistym przez WebSocket (SignalR),</li><li>trwale przechowuje w relacyjnej bazie danych konta, własne talie i zapisy zakończonych meczów.</li></ul>
+<ul><li>ładuje i sprawdza katalog 159 kart (130 kolekcjonerskich + 29 tokenów) i 4 talie startowe z plików JSON wygenerowanych z prototypu,</li><li>zarządza sesjami meczowymi w pamięci serwera (piaskownica, gra z botem AI, pokoje 1v1 przez kod zaproszenia),</li><li>komunikuje się z klientem w obie strony w czasie rzeczywistym przez WebSocket (SignalR),</li><li>trwale przechowuje w relacyjnej bazie danych konta, własne talie i zapisy zakończonych meczów.</li></ul>
 <h3>2.2 Ograniczenia techniczne i organizacyjne</h3>
 <table><thead><tr>
 <th><p>Ograniczenie</p></th>
@@ -308,7 +308,7 @@
 </tr>
 <tr>
 <td><p><strong>4. Hosting prototypu referencyjnego</strong></p></td>
-<td><p>Workflow <code>.github/workflows/prototype-pages.yml</code> publikuje katalog <code>prototype/revibance/</code> na <strong>GitHub Pages</strong>.</p></td>
+<td><p>Workflow <code>.github/workflows/prototype-pages.yml</code> publikuje katalog <code>prototype/game/</code> na <strong>GitHub Pages</strong>.</p></td>
 <td><p>Brak (aplikacja działa tylko w przeglądarce).</p></td>
 <td><p>Stały punkt odniesienia przy sprawdzaniu zasad gry v11.</p></td>
 </tr>
