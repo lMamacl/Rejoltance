@@ -55,7 +55,7 @@ Każdy skrypt ma dwa tryby. Bez flagi generuje pliki. Z flagą `--check` tylko s
 
 Ta sama komenda ma inną składnię w różnych narzędziach AI:
 
-| Etap SDD | Claude Code / Gemini CLI | Antigravity / GitHub Copilot | OpenAI Codex |
+| Etap SDD | Claude Code | Antigravity | Codex |
 |---|---|---|---|
 | **1. Eksploracja problemu** | `/opsx:explore` | `/opsx-explore` | `$openspec-explore` |
 | **2. Propozycja zmiany w specyfikacji** | `/opsx:propose REJ-123 opis` | `/opsx-propose REJ-123 opis` | `$openspec-propose REJ-123 opis` |
@@ -68,18 +68,16 @@ Ta sama komenda ma inną składnię w różnych narzędziach AI:
 
 ## 5. Skille zespołu (`.agents/skills/`)
 
-Skill to opisana krok po kroku procedura, którą wykonuje agent albo człowiek. Kolumna „Agenci” pokazuje role, które mają dany skill w swojej konfiguracji (`.agents/agents/`).
+Skill to opisana krok po kroku procedura, którą wykonuje agent albo człowiek. Niezależną recenzję zmian robi rola `rj-qa-verifier`.
 
-| Skill (`/nazwa`) | Do czego służy | Agenci |
-|---|---|---|
-| `rj-start-feature` | Start pracy nad zadaniem z Jiry: gałąź i nowa zmiana OpenSpec. | `rj-orchestrator` |
-| `rj-add-rule-test` | Przeniesienie reguły gry z prototypu na wymaganie `R-nn` i test xUnit. | `rj-rules-engineer`, `rj-backend-engineer`, `rj-qa-verifier` |
-| `rj-add-card` | Dodanie lub zmiana karty w prototypie i ponowne wygenerowanie katalogu JSON. | `rj-card-author` |
-| `rj-write-adr` | Nowy zapis decyzji architektonicznej (ADR, Architecture Decision Record) według szablonu. | `rj-architect`, `rj-docs-writer` |
-| `rj-pr-ready` | Sprawdzenie buildu, testów, specyfikacji i opisu przed Pull Requestem (PR). | `rj-orchestrator`, `rj-qa-verifier` |
-| `rj-sync-confluence` | Walidacja struktury `docs/` i paczka stron do Confluence PB (Politechniki Białostockiej). | `rj-docs-writer`, `rj-scrum-jira` |
-| `rj-backlog-to-jira` | Aktualizacja `backlog.toml` i pliki CSV do importu w Jirze. | `rj-scrum-jira` |
-| `rj-daily-report` | Notatka ze spotkania Daily Scrum. | `rj-scrum-jira` |
-| `rj-sprint-report` | Raport z Sprint Review, Retrospektywy i analiza estymat. | `rj-scrum-jira` |
-| `rj-add-skill` | Nowy skill w `.agents/skills/` i synchronizacja adapterów. | `rj-orchestrator` |
-| `rj-add-agent` | Nowa rola agenta w `.agents/agents/` i synchronizacja adapterów. | `rj-orchestrator` |
+| Skill (`/nazwa`) | Do czego służy |
+|---|---|
+| `rj-start-feature` | Start pracy nad zadaniem z Jiry: gałąź i ewentualna zmiana OpenSpec. |
+| `rj-spec-guardian` | Spójność OpenSpec, indeksu R-nn, rozbieżności D-nn i backlogu. |
+| `rj-add-rule-test` | Przeniesienie reguły gry z prototypu na wymaganie `R-nn` i test. |
+| `rj-add-card` | Zmiana kart: dociągnięcie prototypu i ponowne wygenerowanie katalogu JSON. |
+| `rj-oracle-diff` | Porównanie silnika z prototypem JS. |
+| `rj-write-adr` | Nowy zapis decyzji architektonicznej (ADR, Architecture Decision Record) według szablonu. |
+| `rj-pr-ready` | Sprawdzenie buildu, testów, specyfikacji i opisu przed Pull Requestem (PR). |
+| `rj-sync-confluence` | Walidacja struktury `docs/` i paczka stron do Confluence PB (Politechniki Białostockiej). |
+| `rj-backlog-to-jira` | Aktualizacja `backlog.toml` i pliki CSV do importu w Jirze. |

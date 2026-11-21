@@ -9,5 +9,5 @@ W tym katalogu są szablony notatek ze spotkań Scrum i agendy spotkań organiza
 | Plik | Do czego służy | Skill agenta AI, który pomaga |
 |---|---|---|
 | [`spotkanie-startowe-agenda.md`](spotkanie-startowe-agenda.md) | Agenda pierwszego spotkania zespołu: podział epików E1–E6, rotacja roli PO (Product Ownera, właściciela produktu), decyzje otwarte #1–#10. | — |
-| [`szablon-daily.md`](szablon-daily.md) | Szablon notatki z codziennego spotkania *Daily Scrum*: postępy, plany, blokery, klucze Jira. | `rj-daily-report` |
-| [`szablon-review-retro.md`](szablon-review-retro.md) | Szablon podsumowania sprintu: przegląd sprintu (scenariusz pokazu, protokół odbioru z radą graczy), porównanie szacunków z czasem rzeczywistym, wykres spalania (*burndown*) i wnioski z retrospektywy. | `rj-sprint-report` |
+| [`szablon-daily.md`](szablon-daily.md) | Szablon notatki z codziennego spotkania *Daily Scrum*: postępy, plany, blokery, klucze Jira. | — |
+| [`szablon-review-retro.md`](szablon-review-retro.md) | Szablon podsumowania sprintu: przegląd sprintu (scenariusz pokazu, protokół odbioru z radą graczy), porównanie szacunków z czasem rzeczywistym, wykres spalania (*burndown*) i wnioski z retrospektywy. | — |

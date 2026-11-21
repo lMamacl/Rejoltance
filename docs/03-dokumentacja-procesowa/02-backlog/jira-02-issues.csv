@@ -50,9 +50,9 @@ Kryteria akceptacji:
 
 Fala: W0 (fundament) · Źródło: backlog.toml (E0-S11)",2,,Highest,rejoltance,w0,sprint-1,Process
 E0-S11-T1,E0-S11,Sub-task,E0-S11-T1 Sprint Planning + cel sprintu,,Część E0-S11 Ceremonie Scrum — Sprint 1.,,3600,Highest,rejoltance,w0,sprint-1,Process
-E0-S11-T2,E0-S11,Sub-task,E0-S11-T2 Raporty z daily (skill rj-daily-report),,Część E0-S11 Ceremonie Scrum — Sprint 1.,,3600,Highest,rejoltance,w0,sprint-1,Process
+E0-S11-T2,E0-S11,Sub-task,E0-S11-T2 Raporty z daily (szablon szablon-daily.md),,Część E0-S11 Ceremonie Scrum — Sprint 1.,,3600,Highest,rejoltance,w0,sprint-1,Process
 E0-S11-T3,E0-S11,Sub-task,E0-S11-T3 Sprint Review z graczami testowymi + protokół,,Część E0-S11 Ceremonie Scrum — Sprint 1.,,3600,Highest,rejoltance,w0,sprint-1,Process
-E0-S11-T4,E0-S11,Sub-task,"E0-S11-T4 Retrospektywa, estymata vs rzeczywistość, Burndown (skill rj-sprint-report)",,Część E0-S11 Ceremonie Scrum — Sprint 1.,,3600,Highest,rejoltance,w0,sprint-1,Process
+E0-S11-T4,E0-S11,Sub-task,"E0-S11-T4 Retrospektywa, estymata vs rzeczywistość, Burndown (szablon szablon-review-retro.md)",,Część E0-S11 Ceremonie Scrum — Sprint 1.,,3600,Highest,rejoltance,w0,sprint-1,Process
 E0-S12,,Story,E0-S12 Ceremonie Scrum — Sprint 2,E0 Fundamenty i proces,"Jako Product Owner Sprintu 2 chcę przeprowadzić planning, daily, review i retro, aby sprint był ocenialny (EU3–EU5).
 
 Kryteria akceptacji:

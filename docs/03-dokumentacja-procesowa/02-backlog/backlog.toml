@@ -194,13 +194,13 @@ wave = "W0"
 title = "Sprint Planning + cel sprintu"
 h = 1
 [[epic.story.task]]
-title = "Raporty z daily (skill rj-daily-report)"
+title = "Raporty z daily (szablon szablon-daily.md)"
 h = 1
 [[epic.story.task]]
 title = "Sprint Review z graczami testowymi + protokół"
 h = 1
 [[epic.story.task]]
-title = "Retrospektywa, estymata vs rzeczywistość, Burndown (skill rj-sprint-report)"
+title = "Retrospektywa, estymata vs rzeczywistość, Burndown (szablon szablon-review-retro.md)"
 h = 1
 
 [[epic.story]]

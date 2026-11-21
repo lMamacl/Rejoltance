@@ -55,7 +55,7 @@ SDD (Spec-Driven Development) to nasz sposób pracy: najpierw specyfikacja, pote
 
 ## 3. Przewodnik praktyczny: „Gdzie dodać nową funkcję?”
 
-Tabela podpowiada, które pliki zmienić w typowych zadaniach. Ostatnia kolumna wskazuje skill agenta AI, który prowadzi przez dane zadanie. Kartami zajmuje się agent `rj-card-author`, a regułami w Kernelu — `rj-rules-engineer`.
+Tabela podpowiada, które pliki zmienić w typowych zadaniach. Ostatnia kolumna wskazuje skill agenta AI, który prowadzi przez dane zadanie.
 
 | Co chcesz zrobić? | Które pliki zmienić? | Ryzyko | Zalecany skill agenta AI |
 |---|---|---|---|
