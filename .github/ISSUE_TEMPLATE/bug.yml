@@ -13,7 +13,7 @@ body:
       label: Kroki do odtworzenia
       description: Seed meczu i kolejne intencje, jeśli dotyczy gry (replay = seed + intents).
       placeholder: |
-        1. seed 42, talie MachineAggro vs TeaMaidCombo
+        1. seed 42, talie "OG. M" vs "OG C."
         2. ...
     validations:
       required: true

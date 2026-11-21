@@ -31,7 +31,7 @@ public sealed class ServerTests(ServerFactory factory) : IClassFixture<ServerFac
         await using var hub = factory.CreateHubConnection();
         await hub.StartAsync();
 
-        var view = await hub.InvokeAsync<MatchView>("StartSandbox", "MachineAggro", "TeaMaidCombo", 42UL);
+        var view = await hub.InvokeAsync<MatchView>("StartSandbox", "OG. M", "OG C.", 42UL);
         var after = await hub.InvokeAsync<MatchView>("SendIntent", view.MatchId, Wire(new MulliganIntent([])));
 
         Assert.Equal(4, view.You.Hand.Count);
@@ -44,7 +44,7 @@ public sealed class ServerTests(ServerFactory factory) : IClassFixture<ServerFac
     {
         await using var hub = factory.CreateHubConnection();
         await hub.StartAsync();
-        var view = await hub.InvokeAsync<MatchView>("StartSandbox", "MachineAggro", "TeaMaidCombo", 1UL);
+        var view = await hub.InvokeAsync<MatchView>("StartSandbox", "OG. M", "OG C.", 1UL);
 
         var ex = await Assert.ThrowsAsync<HubException>(() => hub.InvokeAsync<MatchView>("SendIntent", view.MatchId, Wire(new EndStepIntent())));
 
@@ -73,7 +73,7 @@ public sealed class ContractSampleTests
     {
         var catalog = CardCatalog.LoadEmbedded();
         var engine = new MatchEngine(catalog);
-        var deck = catalog.StarterDecks.Single(d => d.Name == "MachineAggro").Cards;
+        var deck = catalog.StarterDecks.Single(d => d.Name == "OG. M").Cards;
         var state = engine.NewMatch(new MatchSetup("sample", 2026, deck, deck)).State;
         var json = JsonSerializer.Serialize(new Projection(catalog, engine).ToView(state, 0), WireOptions).ReplaceLineEndings("\n") + "\n";
 

@@ -1,3 +1,4 @@
+using System.Text.Json;
 using Rejoltance.Content;
 
 namespace Rejoltance.Kernel.Tests;
@@ -9,8 +10,8 @@ public sealed class ContentTests
     {
         var cards = TestMatches.Catalog.All;
 
-        Assert.Equal(69, cards.Count(c => !c.IsToken));
-        Assert.Equal(9, cards.Count(c => c.IsToken));
+        Assert.Equal(130, cards.Count(c => !c.IsToken));
+        Assert.Equal(29, cards.Count(c => c.IsToken));
     }
 
     [Fact]
@@ -43,5 +44,24 @@ public sealed class ContentTests
 
         Assert.Contains(errors, e => e.Contains("4 copies"));
         Assert.Contains(errors, e => e.Contains("token"));
+    }
+
+    [Fact]
+    public void R68_dsl_reads_zone_lists_and_counted_amounts()
+    {
+        const string json = """
+            [{ "Id": 1001, "Name": "Probe", "Type": "Spell", "Cost": 1,
+               "Effects": [{ "Trigger": "OnPlayed", "Zone": ["Deck", "Hand"],
+                             "Actions": [{ "Type": "DealDamage", "Target": "EnemyHero", "Amount": { "Count": "Blood", "Max": 5 } },
+                                         { "Type": "Heal", "Target": "FriendlyHero", "Amount": 3 }] }] }]
+            """;
+
+        var card = JsonSerializer.Deserialize<List<CardDefinition>>(json)!.Single();
+        var effect = card.Effects.Single();
+
+        Assert.Empty(ContentValidator.ValidateCard(card));
+        Assert.Equal(["Deck", "Hand"], effect.Zone);
+        Assert.Equal(new DslNumber { Count = "Blood", Max = 5 }, effect.Actions[0].Amount);
+        Assert.Equal(3, effect.Actions[1].Amount!.Value);
     }
 }
