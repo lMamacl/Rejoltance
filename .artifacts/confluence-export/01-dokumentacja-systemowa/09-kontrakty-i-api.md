@@ -1,13 +1,13 @@
-<!-- CONFLUENCE 1:1 EXPORT | Source: docs/01-dokumentacja-systemowa/09-kontrakty-i-api.md @ 28d2248 (2026-11-21) -->
-# 1.9 Dokumentacja kontraktów komunikacyjnych i API (REST + SignalR)
+<!-- CONFLUENCE 1:1 EXPORT | Source: docs/01-dokumentacja-systemowa/09-kontrakty-i-api.md -->
+# 1.9 Dokumentacja kontraktów komunikacyjnych i API (REST + Socket.IO)
 
-> **Źródło prawdy:** repozytorium (`docs/01-dokumentacja-systemowa/09-kontrakty-i-api.md`) · **Kategoria dokumentacji:** Dokumentacja produktowa — systemowa (dokumentacja API) · **Etap SDD:** Planowanie i realizacja · **Powiązane decyzje:** [ADR-0006](07-decyzje-adr/0006-serwer-autorytatywny-fog-of-war.md), [ADR-0010](07-decyzje-adr/0010-kontrakt-csharp-ts-przez-probke.md)
+> **Źródło prawdy:** repozytorium (`docs/01-dokumentacja-systemowa/09-kontrakty-i-api.md`) · **Kategoria dokumentacji:** Dokumentacja produktowa — systemowa (dokumentacja API) · **Etap SDD:** Planowanie i realizacja · **Powiązane decyzje:** [ADR-0006](07-decyzje-adr/0006-serwer-autorytatywny-fog-of-war.md), [ADR-0015](07-decyzje-adr/0015-backend-node-typescript.md)
 
-Ten dokument opisuje API (Application Programming Interface) serwera `Rejoltance.Server`. Znajdziesz tu:
+Ten dokument opisuje API (Application Programming Interface) serwera `apps/server`. Znajdziesz tu:
 
 - endpointy HTTP REST,
-- metody i zdarzenia huba SignalR (`/api/hubs/match`), który działa przez WebSocket,
-- strukturę 5 zamrożonych kontraktów JSON (`src/Rejoltance.Contracts` ↔ `src/web/src/contracts`).
+- zdarzenia Socket.IO, przez które toczy się mecz (WebSocket),
+- strukturę 5 zamrożonych kontraktów JSON z pakietu `packages/contracts`.
 
 Skróty z metadanych: SDD (Spec-Driven Development) to praca „najpierw specyfikacja, potem kod”. ADR (Architecture Decision Record) to zapis jednej decyzji architektonicznej.
 
@@ -15,47 +15,48 @@ Skróty z metadanych: SDD (Spec-Driven Development) to praca „najpierw specyfi
 
 ## 1. Zasady serializacji i kontrola zgodności
 
-1. **Format danych.** Wszystkie komunikaty REST i SignalR są w formacie **JSON**.
-2. **Nazwy pól i wartości enum.** Nazwy właściwości i wartości typów wyliczeniowych (`enum`) zapisujemy w **camelCase** (np. `"phase": "mulligan"`, `"reason": "surrender"`).
-3. **Typy polimorficzne (`Intent` i `DomainEvent`).** Rodzaj rekordu wskazuje pole **`type`** (np. `{"type": "mulligan", "cardInstanceIds": [1, 3]}`).
-4. **Automatyczna kontrola kontraktu.** Wzorcowy przykład widoku meczu jest w pliku [`src/web/src/contracts/match-view.sample.json`](../../src/web/src/contracts/match-view.sample.json). Generuje go test C# `ContractSampleTests`. Kompilator TypeScript sprawdza go w teście `contracts.test.ts`. Każda zmiana kontraktu wymaga zmiany C# i TypeScript w jednym Pull Requeście (Konstytucja, Art. IV).
+1. **Format danych.** Wszystkie komunikaty REST i Socket.IO są w formacie **JSON**.
+2. **Nazwy pól i wartości.** Nazwy właściwości i wartości wyliczeniowe zapisujemy w **camelCase** (np. `"phase": "mulligan"`, `"reason": "surrender"`).
+3. **Typy z polem `type` (`Intent` i `DomainEvent`).** Rodzaj obiektu wskazuje pole **`type`** (np. `{"type": "mulligan", "cardInstanceIds": [1, 3]}`).
+4. **Jedno źródło typów.** Kontrakty są zdefiniowane raz w `packages/contracts` i importują je serwer, silnik i klient, więc rozjazd to błąd `tsc`. `Intent` ma schemat zod: serwer odrzuca każdą wiadomość, która mu nie odpowiada, zanim trafi do silnika. Wzorcowy widok meczu jest w [`packages/contracts/samples/match-view.sample.json`](../../packages/contracts/samples/match-view.sample.json); test silnika sprawdza, że projekcja daje dokładnie tę próbkę (Konstytucja, art. IV).
 
 ---
 
-## 2. Endpointy HTTP REST (`/api/*`)
+## 2. Endpointy HTTP REST
 
 | Metoda HTTP | Ścieżka | Do czego służy | Odpowiedź (200 OK) | Stan |
 |---|---|---|---|---|
-| `GET` | `/api/info` | Metadane serwera, wersja aplikacji i liczba trwających meczów w pamięci. | `{ "name": "Rejoltance.Server", "version": "...", "activeMatches": 0 }` | Zaimplementowane |
-| `GET` | `/api/cards` | Pełny katalog kart (130 kolekcjonerskich + 29 tokenów). | `CardDefinition[]` (schemat jak w `cards.json`) | Zaimplementowane |
-| `GET` | `/api/decks` | Lista 5 gotowych talii startowych. | `{ "name": string, "cards": number[] }[]` | Zaimplementowane |
-| `GET` | `/health` | Sprawdza gotowość usługi (*readiness probe*). Działa w środowisku deweloperskim i w kontenerze. | Tekst `Healthy` (kod `200`) lub `503 Service Unavailable` | Zaimplementowane |
-| `GET` | `/alive` | Sprawdza, czy proces żyje (*liveness probe*). | Tekst `Healthy` (kod `200`) | Zaimplementowane |
+| `GET` | `/health` | Sprawdza, czy serwer działa. | `{ "status": "ok" }` | Zaimplementowane |
+| `GET` | `/api/info` | Nazwa serwera i liczba trwających meczów w pamięci. | `{ "name": "Rejoltance", "activeMatches": 0 }` | Zaimplementowane |
+| `GET` | `/api/cards` | Publiczne dane kart (130 kolekcjonerskich + 29 tokenów), bez opisu efektów DSL. | `CardInfo[]`: `id`, `name`, `type`, `cost`, `attack`, `health`, `description`, `keywords` | Zaimplementowane |
+| `GET` | `/api/decks` | Lista 4 gotowych talii startowych. | `{ "name": string, "cards": number[] }[]` | Zaimplementowane |
 | `POST` | `/api/auth/register`<br/>`/api/auth/login` | Rejestracja i logowanie graczy. Ustawia ciasteczko sesyjne `HttpOnly`. | Profil zalogowanego użytkownika | Planowane w Sprincie 2 (`E6-S02`) |
 | `GET` / `POST` | `/api/decks/mine` | Odczyt i zapis własnych talii z kreatora *Deckbuilder*. | Lista talii użytkownika | Planowane w Semestrze 2 (`E6-S04`) |
 
 ---
 
-## 3. Hub SignalR (`/api/hubs/match`)
+## 3. Zdarzenia Socket.IO
 
-### 3.1 Metody, które klient wywołuje na serwerze (`Client → Server`)
+Typy zdarzeń są w `packages/contracts/src/protocol.ts`. Każde żądanie klienta dostaje odpowiedź przez potwierdzenie (*acknowledgement*): `{ "ok": true, "value": … }` albo `{ "ok": false, "error": "czytelny komunikat" }`. Przy błędzie stan meczu się nie zmienia.
 
-| Metoda | Parametry | Zwraca | Błędy (`HubException`) | Stan |
+### 3.1 Klient → serwer
+
+| Zdarzenie | Dane | Odpowiedź | Kiedy błąd | Stan |
 |---|---|---|---|---|
-| **`StartSandbox`** | `deckA: string`, `deckB: string`, `seed?: ulong` | `MatchView` (projekcja dla miejsca `0`) | Gdy podanej talii startowej nie ma w katalogu. | Zaimplementowane |
-| **`SendIntent`** | `matchId: string`, `intent: Intent` | `MatchView` (projekcja po wykonaniu ruchu) | Gdy mecz jest nieznany, gracz nie ma prawa do miejsca przy stole, ruch jest nielegalny albo reguła nie jest zaimplementowana. Komunikat jest czytelny, a stan meczu się nie zmienia. | Zaimplementowane |
-| **`CreateRoom`** | `deckName: string` | `{ roomCode: string, matchId: string }` | Gdy talia jest nieprawidłowa albo przekroczono limit pokojów. | Planowane (`E3-S01`) |
-| **`JoinRoom`** | `roomCode: string`, `deckName: string` | `MatchView` (projekcja dla miejsca `1`) | Gdy kod pokoju nie istnieje albo pokój jest pełny. | Planowane (`E3-S01`) |
+| **`startSandbox`** | `{ deckA: string, deckB: string, seed?: number }` | `MatchView` (projekcja dla miejsca `0`) | Talii startowej nie ma w katalogu. | Zaimplementowane |
+| **`sendIntent`** | `{ matchId: string, intent: Intent }` | `MatchView` po wykonaniu ruchu | Intencja nie pasuje do schematu, mecz jest nieznany, gracz nie ma prawa do miejsca, ruch jest nielegalny albo reguła nie jest zaimplementowana. | Zaimplementowane |
+| **`createRoom`** | `{ deckName: string }` | `{ roomCode: string, matchId: string }` | Talia jest nieprawidłowa albo przekroczono limit pokojów. | Planowane (`E3-S01`) |
+| **`joinRoom`** | `{ roomCode: string, deckName: string }` | `MatchView` (projekcja dla miejsca `1`) | Kod pokoju nie istnieje albo pokój jest pełny. | Planowane (`E3-S01`) |
 
-### 3.2 Zdarzenia, które serwer wysyła do klientów (`Server → Client`)
+### 3.2 Serwer → klient
 
-| Zdarzenie | Dane (*payload*) | Kiedy |
+| Zdarzenie | Dane | Kiedy |
 |---|---|---|
-| **`MatchUpdated`** | `view: MatchView`, `events: DomainEvent[]` | Po każdym poprawnie przetworzonym ruchu. Każdy gracz dostaje tylko swoją projekcję `MatchView` i przefiltrowaną listę `DomainEvent[]`, w której karty przeciwnika są ukryte. |
+| **`matchUpdated`** | `{ view: MatchView, events: DomainEvent[] }` | Po każdym poprawnie przetworzonym ruchu. Każdy gracz dostaje tylko swoją projekcję i przefiltrowaną listę zdarzeń, w której karty przeciwnika są ukryte. |
 
 ---
 
-## 4. Pięć zamrożonych kontraktów (`Rejoltance.Contracts`)
+## 4. Pięć zamrożonych kontraktów (`packages/contracts`)
 
 Fog of war to zasada, że gracz nie widzi ukrytych informacji przeciwnika: kart w ręce, kolejności talii ani ziarna losowości. Opisują ją reguły R-80…R-82.
 

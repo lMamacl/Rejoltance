@@ -1,4 +1,4 @@
-<!-- CONFLUENCE 1:1 EXPORT | Source: docs/05-szablony/szablon-ux-test-uzytecznosci.md @ a2bf2a4 (2026-11-02) -->
+<!-- CONFLUENCE 1:1 EXPORT | Source: docs/05-szablony/szablon-ux-test-uzytecznosci.md -->
 # 5.6 Szablon UX: Raport z testów użyteczności (Usability Testing Report)
 
 > **Źródło prawdy:** Confluence PB · **Kategoria AltexSoft:** Product: System Documentation — UX Design (Usability Testing Report) · **Etap SDD:** Weryfikacja (`Verify`) · **Wymogi uczelniane:** EU1, EU2 (`NFR-20`, `NFR-21`)

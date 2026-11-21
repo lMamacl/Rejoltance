@@ -1,4 +1,4 @@
-<!-- CONFLUENCE 1:1 EXPORT | Source: docs/03-dokumentacja-procesowa/02-backlog/instrukcja-importu-jira.md @ a2bf2a4 (2026-11-02) -->
+<!-- CONFLUENCE 1:1 EXPORT | Source: docs/03-dokumentacja-procesowa/02-backlog/instrukcja-importu-jira.md -->
 # Instrukcja importu Product Backlogu do systemu Jira PB
 
 > **Źródło prawdy:** repozytorium (`docs/03-dokumentacja-procesowa/02-backlog/instrukcja-importu-jira.md`) · **Kategoria AltexSoft:** Process Documentation — Tooling Guide · **Etap SDD:** dekompozycja zadań (`Tasks`)
@@ -21,7 +21,7 @@ Zanim zaimportujesz cały backlog, sprawdź konfigurację projektu na małym zes
 W głównym katalogu repozytorium uruchom:
 
 ```bash
-python tools/backlog/gen_jira_csv.py
+npm run backlog
 ```
 
 Skrypt sprawdzi pojemność sprintów i kryteria `GIVEN / WHEN / THEN`, a potem zapisze pliki `jira-01-epics.csv` i `jira-02-issues.csv` (kodowanie UTF-8, separator `,`). Pozycje, które mają już wpisany klucz (`jira = "REJ-..."`), skrypt pomija. Dzięki temu kolejne importy nie tworzą duplikatów.

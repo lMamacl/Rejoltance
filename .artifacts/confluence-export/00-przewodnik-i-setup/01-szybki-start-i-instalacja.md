@@ -1,4 +1,4 @@
-<!-- CONFLUENCE 1:1 EXPORT | Source: docs/00-przewodnik-i-setup/01-szybki-start-i-instalacja.md @ 59f39d9 (2026-11-21) -->
+<!-- CONFLUENCE 1:1 EXPORT | Source: docs/00-przewodnik-i-setup/01-szybki-start-i-instalacja.md -->
 # 0.1 Szybki start i instalacja środowiska deweloperskiego
 
 > **Źródło prawdy:** repozytorium (`docs/00-przewodnik-i-setup/01-szybki-start-i-instalacja.md`) · **Kategoria dokumentacji:** instrukcja konfiguracji środowiska · **Etap SDD:** Fundamenty

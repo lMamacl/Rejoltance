@@ -1,4 +1,4 @@
-<!-- CONFLUENCE 1:1 EXPORT | Source: docs/05-szablony/szablon-prd.md @ a2bf2a4 (2026-11-02) -->
+<!-- CONFLUENCE 1:1 EXPORT | Source: docs/05-szablony/szablon-prd.md -->
 # 5.2 Szablon: Dokument Wymagań Produktu (Product Requirements Document — PRD)
 
 > **Źródło prawdy:** `<Repozytorium / Confluence>` · **Kategoria AltexSoft:** Product: System Documentation — Product Requirements Document (PRD) · **Etap SDD:** Specyfikacja (`Specify`)

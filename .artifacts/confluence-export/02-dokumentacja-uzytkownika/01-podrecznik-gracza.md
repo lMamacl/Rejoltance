@@ -1,4 +1,4 @@
-<!-- CONFLUENCE 1:1 EXPORT | Source: docs/02-dokumentacja-uzytkownika/01-podrecznik-gracza.md @ a2bf2a4 (2026-11-02) -->
+<!-- CONFLUENCE 1:1 EXPORT | Source: docs/02-dokumentacja-uzytkownika/01-podrecznik-gracza.md -->
 # 2.1 Podręcznik gracza i przewodnik szybkiego startu — RE:JOLTANCE
 
 > **Źródło prawdy:** repozytorium (`docs/02-dokumentacja-uzytkownika/01-podrecznik-gracza.md`) · **Kategoria dokumentacji:** Dokumentacja produktowa — użytkownika (podręcznik użytkownika końcowego) · **Etap SDD:** Wydanie · **Wymóg uczelniany:** EU5 (efekt uczenia się)

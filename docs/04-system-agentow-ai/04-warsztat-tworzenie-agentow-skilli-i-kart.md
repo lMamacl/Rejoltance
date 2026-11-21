@@ -16,8 +16,8 @@ Skill to procedura krok po kroku w pliku `.agents/skills/rj-<nazwa>/SKILL.md`. D
 4. Wygeneruj adaptery i sprawdź konfigurację:
 
    ```bash
-   python tools/agents/sync_agents.py
-   python tools/agents/sync_agents.py --check
+   npm run agents
+   npm run agents:check
    ```
 
    Skrypt skopiuje skill do `.claude/skills/` i doda komendę `/rj-<nazwa>` dla Antigravity w `.agents/workflows/`.
@@ -38,7 +38,7 @@ Skill to procedura krok po kroku w pliku `.agents/skills/rj-<nazwa>/SKILL.md`. D
 
    ```bash
    npm run check
-   python tools/confluence/sync_confluence.py
+   npm run docs:check
    ```
 
    Bez flag skrypt tylko sprawdza drzewo `docs/` i linki (tak samo jak `--check`). Paczkę stron gotowych do wklejenia wygenerujesz flagą `--export`. Znajdziesz ją w katalogu `.artifacts/confluence-export/`.
@@ -46,8 +46,8 @@ Skill to procedura krok po kroku w pliku `.agents/skills/rj-<nazwa>/SKILL.md`. D
 5. **Opublikuj strony przez REST API (opcjonalnie).** Token PAT (Personal Access Token) z Confluence PB ustaw w zmiennej środowiskowej `CONFLUENCE_PERSONAL_TOKEN` albo w lokalnym pliku `.env` (git go ignoruje). Skrypt sam odczyta zmienną:
 
    ```bash
-   python tools/confluence/sync_confluence.py --publish --dry-run
-   python tools/confluence/sync_confluence.py --publish --url https://devtools.wi.pb.edu.pl/confluence
+   npm run docs:publish -- --dry-run
+   npm run docs:publish -- --url https://devtools.wi.pb.edu.pl/confluence
    ```
 
    Nie podawaj tokenu ani hasła w parametrach `--token` czy `--password`. Komenda z tokenem trafia do historii terminala i logów, a stamtąd łatwo do innych osób.
@@ -94,7 +94,7 @@ DSL to nasz język opisu efektów kart.
 2. Uruchom skrypt ekstrakcji danych:
 
    ```bash
-   python tools/content/extract_cards.py
+   npm run cards
    ```
 
 3. Uruchom testy walidatora katalogu kart. Na razie są w `Rejoltance.Kernel.Tests`, bo projekt `Rejoltance.Cards.Tests` jest dopiero planowany:

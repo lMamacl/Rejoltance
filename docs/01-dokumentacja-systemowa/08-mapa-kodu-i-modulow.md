@@ -49,7 +49,7 @@ Całe repozytorium to jeden projekt npm (*workspaces*) w TypeScript na Node.js 2
 | [`packages/engine/`](../../packages/engine/README.md) | Czysty, deterministyczny silnik reguł gry, projekcja *Fog of War* (R-80…R-82), generator losowy z ziarnem. | `src/engine.ts`, `src/state.ts`, `src/projection.ts`, `src/rng.ts` | Właściciel epiku E1 |
 | [`apps/server/`](../../apps/server/README.md) | Autorytatywny serwer: REST i Socket.IO, mecze w pamięci. | `src/app.ts`, `src/sessions.ts`, `src/main.ts` | Właściciele epików E3 i E6 |
 | [`apps/web/`](../../apps/web/README.md) | Klient React + TypeScript + Vite + Zustand. | `src/net/matchConnection.ts`, `src/state/matchStore.ts`, `src/components/` | Właściciel epiku E4 |
-| `tools/` | Skrypty repozytorium: `npm run dev`, `setup`, `doctor`, test granic modułów, generatory w Pythonie. | `dev.ts`, `setup.ts`, `doctor.ts`, `architecture.test.ts` | Cały zespół |
+| `tools/` | Skrypty repozytorium: `npm run dev`, `setup`, `doctor`, test granic modułów, generatory (karty, backlog, adaptery agentów, Confluence). | `dev.ts`, `setup.ts`, `doctor.ts`, `architecture.test.ts` | Cały zespół |
 
 Testy leżą przy kodzie: `packages/*/test`, `apps/server/test`, `apps/web/src/**/*.test.tsx`. Uruchamia je jedno `npm test`.
 
@@ -59,7 +59,7 @@ Testy leżą przy kodzie: `packages/*/test`, `apps/server/test`, `apps/web/src/*
 
 | Co chcesz zrobić? | Które pliki zmienić? | Ryzyko | Zalecany skill agenta AI |
 |---|---|---|---|
-| **Dodać nową kartę lub zmienić statystyki istniejącej** (z istniejących słów DSL) | 1. Zmień `game/cards.js` w repo `PanCoto/rejoltance-prototype` (źródło prototypu)<br/>2. Dociągnij zmiany: `git subtree pull --prefix=prototype https://github.com/PanCoto/rejoltance-prototype.git main`<br/>3. Uruchom `python tools/content/extract_cards.py`<br/>4. Uruchom `npm test` | Niski | [`rj-add-card`](../04-system-agentow-ai/02-katalog-rol-i-wbudowanych-skilli.md) |
+| **Dodać nową kartę lub zmienić statystyki istniejącej** (z istniejących słów DSL) | 1. Zmień `game/cards.js` w repo `PanCoto/rejoltance-prototype` (źródło prototypu)<br/>2. Dociągnij zmiany: `git subtree pull --prefix=prototype https://github.com/PanCoto/rejoltance-prototype.git main`<br/>3. Uruchom `npm run cards`<br/>4. Uruchom `npm test` | Niski | [`rj-add-card`](../04-system-agentow-ai/02-katalog-rol-i-wbudowanych-skilli.md) |
 | **Dodać do DSL nowe słowo kluczowe, wyzwalacz lub akcję** | 1. Dopisz regułę `R-nn` w `openspec/specs/`<br/>2. Dodaj słowo do `packages/content/src/vocabulary.ts`<br/>3. Zaimplementuj obsługę w `packages/engine`<br/>4. Napisz test `Rnn_...` w `packages/engine/test` | Średni | [`rj-add-rule-test`](../04-system-agentow-ai/02-katalog-rol-i-wbudowanych-skilli.md) |
 | **Zaimplementować lub zmienić regułę mechaniki gry (`R-nn`)** | 1. Napisz test `Rnn_...` w `packages/engine/test/`<br/>2. Zaimplementuj logikę w `packages/engine/src/engine.ts` (albo w osobnym pliku w silniku)<br/>3. Zaktualizuj status w `03-indeks-regul-r-nn.md` | Średni | [`rj-add-rule-test`](../04-system-agentow-ai/02-katalog-rol-i-wbudowanych-skilli.md) |
 | **Zmienić strukturę `MatchView`, `Intent` lub `DomainEvent`** | 1. Zapisz decyzję w ADR (`07-decyzje-adr/`)<br/>2. Zmień typ albo schemat w `packages/contracts/src/`<br/>3. Popraw miejsca, które wskaże `npm run typecheck` (silnik, serwer, klient)<br/>4. Odśwież próbkę: `UPDATE_CONTRACT_SAMPLES=1 npm test` — **wszystko w jednym PR!** | **Wysoki** *(zmiana zamrożonego kontraktu)* | [`rj-write-adr`](../04-system-agentow-ai/02-katalog-rol-i-wbudowanych-skilli.md) |

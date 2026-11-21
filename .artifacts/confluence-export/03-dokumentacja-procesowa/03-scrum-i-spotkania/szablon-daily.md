@@ -1,4 +1,4 @@
-<!-- CONFLUENCE 1:1 EXPORT | Source: docs/03-dokumentacja-procesowa/03-scrum-i-spotkania/szablon-daily.md @ a2bf2a4 (2026-11-02) -->
+<!-- CONFLUENCE 1:1 EXPORT | Source: docs/03-dokumentacja-procesowa/03-scrum-i-spotkania/szablon-daily.md -->
 # Notatka ze spotkania Daily Scrum — Sprint N — RRRR-MM-DD
 
 **Prowadzi (PO sprintu):** <imię> · **Forma:** Discord / Teams / na żywo · **Obecni:** <lista>

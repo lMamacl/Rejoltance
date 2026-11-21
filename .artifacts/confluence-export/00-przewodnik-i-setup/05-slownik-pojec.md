@@ -1,4 +1,4 @@
-<!-- CONFLUENCE 1:1 EXPORT | Source: docs/00-przewodnik-i-setup/05-slownik-pojec.md @ a2bf2a4 (2026-11-02) -->
+<!-- CONFLUENCE 1:1 EXPORT | Source: docs/00-przewodnik-i-setup/05-slownik-pojec.md -->
 # 0.5 Słownik pojęć domenowych, technicznych i procesowych
 
 > **Źródło prawdy:** repozytorium (`docs/00-przewodnik-i-setup/05-slownik-pojec.md`) · **Kategoria dokumentacji:** słownik pojęć systemowych i procesowych · **Etap SDD:** Fundamenty

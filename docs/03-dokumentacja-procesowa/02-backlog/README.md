@@ -9,14 +9,14 @@ Ten katalog zawiera rejestr produktu (*product backlog*): 7 epików (`E0–E6`),
 | Plik | Co zawiera | Czy edytować ręcznie? |
 |---|---|---|
 | [`backlog.toml`](backlog.toml) | **Źródło prawdy rejestru produktu:** sprinty, epiki, historyjki, kryteria akceptacji, szacunki w SP (story points) i godzinach oraz powiązane reguły `R-nn`. | **Tak** (ręcznie albo skillem `rj-backlog-to-jira`) |
-| [`BACKLOG.md`](BACKLOG.md) | Czytelne podsumowanie: pojemność sprintów, wykorzystanie godzin zespołu i historyjki w każdym epiku. | **Nie** (generuje go `gen_jira_csv.py`) |
-| [`jira-01-epics.csv`](jira-01-epics.csv) | Epiki do zaimportowania w Jirze PB w pierwszym kroku. | **Nie** (generuje go `gen_jira_csv.py`) |
-| [`jira-02-issues.csv`](jira-02-issues.csv) | Historyjki i podzadania do zaimportowania w drugim kroku. | **Nie** (generuje go `gen_jira_csv.py`) |
+| [`BACKLOG.md`](BACKLOG.md) | Czytelne podsumowanie: pojemność sprintów, wykorzystanie godzin zespołu i historyjki w każdym epiku. | **Nie** (generuje go `npm run backlog`) |
+| [`jira-01-epics.csv`](jira-01-epics.csv) | Epiki do zaimportowania w Jirze PB w pierwszym kroku. | **Nie** (generuje go `npm run backlog`) |
+| [`jira-02-issues.csv`](jira-02-issues.csv) | Historyjki i podzadania do zaimportowania w drugim kroku. | **Nie** (generuje go `npm run backlog`) |
 | [`instrukcja-importu-jira.md`](instrukcja-importu-jira.md) | Instrukcja krok po kroku: jak zaimportować pliki CSV do uczelnianej Jiry PB. | Instrukcja |
 | [`test-import/`](test-import/README.md) | 3 próbne zgłoszenia. Sprawdzisz na nich mapowanie pól w Jirze przed głównym importem. | Pliki testowe |
 
 Po każdej zmianie w `backlog.toml` uruchom:
 
 ```bash
-python tools/backlog/gen_jira_csv.py
+npm run backlog
 ```

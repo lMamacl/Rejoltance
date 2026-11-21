@@ -43,4 +43,4 @@ docker compose up --build
 - [ ] Wszystkie testy automatyczne (xUnit, Vitest, Playwright) i walidatory (`npm run check`) przechodzą w CI.
 - [ ] Gałąź `develop` scalono do `main` przez zatwierdzony pull request i nadano tag `sprint-N`.
 - [ ] Ukończone propozycje zmian są zarchiwizowane w `openspec/changes/archive/`.
-- [ ] Dokumentacja w repozytorium jest aktualna, a strony w Confluence PB są zsynchronizowane (`sync_confluence.py`).
+- [ ] Dokumentacja w repozytorium jest aktualna, a strony w Confluence PB są zsynchronizowane (`npm run docs:publish`).

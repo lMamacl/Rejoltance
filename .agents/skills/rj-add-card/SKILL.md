@@ -18,8 +18,8 @@ Uruchamiaj przy przenoszeniu karty z prototypu JS do silnika (np. kart z talii M
    - Dane kart zmieniamy w repo `PanCoto/rejoltance-prototype`, a nie w kopii `prototype/` (git subtree, ADR-0013). Po `git subtree pull --prefix=prototype https://github.com/PanCoto/rejoltance-prototype.git main` wygeneruj ponownie katalog kart:
 
      ```bash
-     python tools/content/extract_cards.py
-     python tools/content/extract_cards.py --check
+     npm run cards
+     npm run cards:check
      ```
 
 2. **Zweryfikuj słownik efektów DSL karty:**

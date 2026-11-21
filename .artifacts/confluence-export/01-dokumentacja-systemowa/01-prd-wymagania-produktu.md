@@ -1,4 +1,4 @@
-<!-- CONFLUENCE 1:1 EXPORT | Source: docs/01-dokumentacja-systemowa/01-prd-wymagania-produktu.md @ 28d2248 (2026-11-21) -->
+<!-- CONFLUENCE 1:1 EXPORT | Source: docs/01-dokumentacja-systemowa/01-prd-wymagania-produktu.md -->
 # 1.1 Wymagania produktu (PRD) — RE:JOLTANCE
 
 > **Źródło prawdy:** repozytorium (`docs/01-dokumentacja-systemowa/01-prd-wymagania-produktu.md`) · **Kategoria dokumentacji:** Dokumentacja produktowa — systemowa (wymagania produktu, PRD) · **Etap SDD:** Specyfikacja · **Wersja:** 1.0 (2026-11-02)

@@ -1,7 +1,7 @@
-<!-- CONFLUENCE 1:1 EXPORT | Source: docs/01-dokumentacja-systemowa/07-decyzje-adr/0001-stos-technologiczny.md @ a2bf2a4 (2026-11-02) -->
+<!-- CONFLUENCE 1:1 EXPORT | Source: docs/01-dokumentacja-systemowa/07-decyzje-adr/0001-stos-technologiczny.md -->
 # ADR-0001: Stos — .NET 10 + React/TypeScript + Aspire
 
-- **Status:** zatwierdzona (decyzja zespołu, 2026-10-27; formalna akceptacja 2 osób na spotkaniu startowym)
+- **Status:** zatwierdzona (decyzja zespołu, 2026-10-27; formalna akceptacja 2 osób na spotkaniu startowym); część backendowa (.NET, Aspire) zastąpiona przez [ADR-0015](0015-backend-node-typescript.md) (2026-11-21)
 - **Data:** 2026-10-27
 - **Powiązane:** ADR-0007, ADR-0010, [`03-dokumentacja-procesowa/04-badania-i-analizy/faza-1-porownanie.md`](../../03-dokumentacja-procesowa/04-badania-i-analizy/faza-1-porownanie.md)
 

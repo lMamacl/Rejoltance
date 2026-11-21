@@ -1,7 +1,7 @@
-<!-- CONFLUENCE 1:1 EXPORT | Source: docs/01-dokumentacja-systemowa/07-decyzje-adr/0009-kanon-agentow-i-adaptery.md @ a2bf2a4 (2026-11-02) -->
+<!-- CONFLUENCE 1:1 EXPORT | Source: docs/01-dokumentacja-systemowa/07-decyzje-adr/0009-kanon-agentow-i-adaptery.md -->
 # ADR-0009: Jeden kanon zasad agentów w `.agents/`, generowane adaptery
 
-- **Status:** zatwierdzona (2026-10-27, akceptacja Fazy 2)
+- **Status:** zatwierdzona (2026-10-27, akceptacja Fazy 2); zakres narzędzi i ról zmieniony przez [ADR-0014](0014-odchudzenie-systemu-agentow.md) (2026-11-21)
 - **Data:** 2026-10-27
 - **Powiązane:** `AGENTS.md`, `.agents/`, `tools/agents/sync_agents.py`
 

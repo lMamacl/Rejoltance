@@ -45,19 +45,6 @@ jobs:
         with:
           node-version: 24
           cache: npm
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.13"
       - run: npm ci
-      - name: OpenSpec validate
-        run: npm run spec:validate
-      - name: Markdown lint
-        run: npm run lint:md
-      - name: Agent adapters are in sync with .agents/
-        run: python tools/agents/sync_agents.py --check
-      - name: Card data matches the prototype
-        run: python tools/content/extract_cards.py --check
-      - name: Backlog is valid and Jira CSV up to date
-        run: python tools/backlog/gen_jira_csv.py --check
-      - name: Confluence 1:1 documentation tree and links are valid
-        run: python tools/confluence/sync_confluence.py --check
+      - name: OpenSpec, markdown, agent adapters, card data, backlog, Confluence tree
+        run: npm run check

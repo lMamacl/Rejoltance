@@ -28,7 +28,7 @@ Uruchamiaj po każdej edycji plików w `openspec/specs/`, `openspec/changes/`, `
 3. **Kontrola spójności z Product Backlogiem (`backlog.toml`):**
 
    ```bash
-   python tools/backlog/gen_jira_csv.py --check
+   npm run backlog:check
    ```
 
    Każde powiązanie reguły `R-nn` z historyjką `Ex-Syy` musi być identyczne w obu plikach.

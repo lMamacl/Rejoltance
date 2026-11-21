@@ -1,4 +1,4 @@
-<!-- CONFLUENCE 1:1 EXPORT | Source: docs/03-dokumentacja-procesowa/04-badania-i-analizy/faza-1-porownanie.md @ a2bf2a4 (2026-11-02) -->
+<!-- CONFLUENCE 1:1 EXPORT | Source: docs/03-dokumentacja-procesowa/04-badania-i-analizy/faza-1-porownanie.md -->
 # Faza 1 — porównanie narzędzi i rekomendacje
 
 **Data:** 2026-10-27 · **Autor:** agent (Claude Code) na zlecenie zespołu · **Status:** do akceptacji

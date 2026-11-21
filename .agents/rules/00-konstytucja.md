@@ -19,7 +19,7 @@ Zachowanie gry lub systemu najpierw zapisujemy w `openspec/specs/` (albo jako pr
 
 ## Artykuł III — Karty jako dane (`packages/content`)
 
-Definicje kart są w `packages/content/data/cards.json`. Plik generuje `tools/content/extract_cards.py` z prototypu, a sprawdza go walidator (`validateCard`). Nowa karta zbudowana z istniejących akcji efektów nie wymaga zmian w pętli silnika.
+Definicje kart są w `packages/content/data/cards.json`. Plik generuje `tools/content/extract-cards.ts` z prototypu, a sprawdza go walidator (`validateCard`). Nowa karta zbudowana z istniejących akcji efektów nie wymaga zmian w pętli silnika.
 
 ## Artykuł IV — Zamrożone kontrakty komunikacyjne (`packages/contracts`)
 
@@ -35,7 +35,7 @@ Każda zaimplementowana reguła `R-nn` ma test o nazwie zaczynającej się od `R
 
 ## Artykuł VII — Granice modułów wymuszane w CI
 
-ESLint (`eslint.config.js`) i test `tools/architecture.test.ts` blokują niedozwolone importy między pakietami: `web → contracts`, `server → engine → content → contracts`. W każdym Pull Requeście muszą przejść: `npm run verify` (lint, typecheck, testy, build), `npm run check` i `python tools/agents/sync_agents.py --check`.
+ESLint (`eslint.config.js`) i test `tools/architecture.test.ts` blokują niedozwolone importy między pakietami: `web → contracts`, `server → engine → content → contracts`. W każdym Pull Requeście muszą przejść: `npm run verify` (lint, typecheck, testy, build), `npm run check` i `npm run agents:check`.
 
 ## Artykuł VIII — Małe, śledzone przyrosty
 

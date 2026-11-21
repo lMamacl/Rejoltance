@@ -1,7 +1,7 @@
-<!-- CONFLUENCE 1:1 EXPORT | Source: docs/01-dokumentacja-systemowa/07-decyzje-adr/0010-kontrakt-csharp-ts-przez-probke.md @ a2bf2a4 (2026-11-02) -->
+<!-- CONFLUENCE 1:1 EXPORT | Source: docs/01-dokumentacja-systemowa/07-decyzje-adr/0010-kontrakt-csharp-ts-przez-probke.md -->
 # ADR-0010: Zgodność kontraktu C# ↔ TypeScript przez wspólną próbkę JSON
 
-- **Status:** proponowana (do akceptacji; rewizja po Sprincie 2)
+- **Status:** zastąpiona przez [ADR-0015](0015-backend-node-typescript.md) (2026-11-21): kontrakty są jednym pakietem TypeScript, a próbka JSON została jako test projekcji
 - **Data:** 2026-10-27
 - **Powiązane:** ADR-0001, `src/Rejoltance.Contracts`, `src/web/src/contracts`, `ContractSampleTests`
 

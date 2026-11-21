@@ -1,4 +1,4 @@
-<!-- CONFLUENCE 1:1 EXPORT | Source: docs/01-dokumentacja-systemowa/02-specyfikacja-regul-gry.md @ 28d2248 (2026-11-21) -->
+<!-- CONFLUENCE 1:1 EXPORT | Source: docs/01-dokumentacja-systemowa/02-specyfikacja-regul-gry.md -->
 # 1.2 Specyfikacja funkcjonalna zasad gry — RE:JOLTANCE (v2)
 
 > **Źródło prawdy:** repozytorium (`docs/01-dokumentacja-systemowa/02-specyfikacja-regul-gry.md`) · **Kategoria dokumentacji:** Dokumentacja produktowa — systemowa (wymagania funkcjonalne i reguły domenowe) · **Etap SDD:** Specyfikacja · **Kanon:** zachowanie prototypu `prototype/game` v11 ([ADR-0005](07-decyzje-adr/0005-kanon-regul-prototyp-js.md)).

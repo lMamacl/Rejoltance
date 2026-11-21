@@ -1,7 +1,7 @@
-<!-- CONFLUENCE 1:1 EXPORT | Source: docs/01-dokumentacja-systemowa/07-decyzje-adr/0006-serwer-autorytatywny-fog-of-war.md @ a2bf2a4 (2026-11-02) -->
+<!-- CONFLUENCE 1:1 EXPORT | Source: docs/01-dokumentacja-systemowa/07-decyzje-adr/0006-serwer-autorytatywny-fog-of-war.md -->
 # ADR-0006: Serwer autorytatywny, fog of war w projekcji
 
-- **Status:** zatwierdzona (2026-10-27)
+- **Status:** zatwierdzona (2026-10-27); implementacja w `apps/server` i `packages/engine/src/projection.ts` — [ADR-0015](0015-backend-node-typescript.md)
 - **Data:** 2026-10-27
 - **Powiązane:** reguły R-80…R-84, `Projection.cs`, `MatchHub.cs`
 

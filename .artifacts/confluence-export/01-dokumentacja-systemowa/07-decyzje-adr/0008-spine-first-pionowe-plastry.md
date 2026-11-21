@@ -1,4 +1,4 @@
-<!-- CONFLUENCE 1:1 EXPORT | Source: docs/01-dokumentacja-systemowa/07-decyzje-adr/0008-spine-first-pionowe-plastry.md @ a2bf2a4 (2026-11-02) -->
+<!-- CONFLUENCE 1:1 EXPORT | Source: docs/01-dokumentacja-systemowa/07-decyzje-adr/0008-spine-first-pionowe-plastry.md -->
 # ADR-0008: Najpierw kręgosłup (spine), potem pionowe plastry
 
 - **Status:** proponowana (do akceptacji na spotkaniu startowym)

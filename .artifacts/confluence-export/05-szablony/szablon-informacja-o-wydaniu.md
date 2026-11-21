@@ -1,4 +1,4 @@
-<!-- CONFLUENCE 1:1 EXPORT | Source: docs/05-szablony/szablon-informacja-o-wydaniu.md @ a2bf2a4 (2026-11-02) -->
+<!-- CONFLUENCE 1:1 EXPORT | Source: docs/05-szablony/szablon-informacja-o-wydaniu.md -->
 # 5.12 Szablon: Informacja o Wydaniu i Lista Kontrolna Wydania (Release Notes)
 
 > **Źródło prawdy:** Confluence PB / GitHub Releases · **Kategoria AltexSoft:** Process Documentation — Release Plan, Notes & Release Checklist · **Etap SDD:** Wydanie (`Release`) · **Wymóg uczelniany:** EU3
@@ -44,4 +44,4 @@ docker compose up --build
 - [ ] Wszystkie testy automatyczne (xUnit, Vitest, Playwright) i walidatory (`npm run check`) przechodzą w CI.
 - [ ] Gałąź `develop` scalono do `main` przez zatwierdzony pull request i nadano tag `sprint-N`.
 - [ ] Ukończone propozycje zmian są zarchiwizowane w `openspec/changes/archive/`.
-- [ ] Dokumentacja w repozytorium jest aktualna, a strony w Confluence PB są zsynchronizowane (`sync_confluence.py`).
+- [ ] Dokumentacja w repozytorium jest aktualna, a strony w Confluence PB są zsynchronizowane (`npm run docs:publish`).

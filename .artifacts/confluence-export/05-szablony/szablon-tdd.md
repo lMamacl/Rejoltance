@@ -1,4 +1,4 @@
-<!-- CONFLUENCE 1:1 EXPORT | Source: docs/05-szablony/szablon-tdd.md @ a2bf2a4 (2026-11-02) -->
+<!-- CONFLUENCE 1:1 EXPORT | Source: docs/05-szablony/szablon-tdd.md -->
 # 5.4 Szablon: Projekt Techniczny Funkcjonalności (Technical Design Document — TDD)
 
 > **Źródło prawdy:** Repozytorium (`openspec/changes/<id-zmiany>/design.md`) · **Kategoria AltexSoft:** Product: System Documentation — Technical Design Document (TDD) · **Etap SDD:** Plan / Zadania (`Plan` / `Tasks`)

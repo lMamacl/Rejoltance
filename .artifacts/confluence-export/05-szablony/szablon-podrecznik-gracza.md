@@ -1,4 +1,4 @@
-<!-- CONFLUENCE 1:1 EXPORT | Source: docs/05-szablony/szablon-podrecznik-gracza.md @ a2bf2a4 (2026-11-02) -->
+<!-- CONFLUENCE 1:1 EXPORT | Source: docs/05-szablony/szablon-podrecznik-gracza.md -->
 # 5.10 Szablon: Podręcznik Użytkownika Końcowego (End-User Documentation)
 
 > **Źródło prawdy:** Repozytorium / Confluence PB · **Kategoria AltexSoft:** Product: User Documentation — End-User Documentation · **Etap SDD:** Wydanie (`Release`)

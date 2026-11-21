@@ -1,4 +1,4 @@
-<!-- CONFLUENCE 1:1 EXPORT | Source: docs/README.md @ 59f39d9 (2026-11-21) -->
+<!-- CONFLUENCE 1:1 EXPORT | Source: docs/README.md -->
 # Dokumentacja projektu RE:JOLTANCE
 
 Witaj w dokumentacji projektu **RE:JOLTANCE**. To sieciowa, taktyczna gra karciana. Tworzymy ją na przedmiocie *Projekt zespołowy* na Wydziale Informatyki Politechniki Białostockiej (PB).
@@ -13,7 +13,7 @@ Katalog `docs/` opiera się na dwóch założeniach:
    - *dokumentacja procesowa*: Dokument Inicjujący Projekt (DIP), rejestr produktu w Jirze, ceremonie Scrum, spotkania i badania.
 2. **Spec-Driven Development (SDD) i praca z agentami AI.** W SDD najpierw piszemy specyfikację, a dopiero potem kod. Każdy dokument ma określone źródło prawdy i etap SDD. Opisuje też, jak ludzie i agenci AI dzielą się pracą.
 
-Katalogi w `docs/` odpowiadają 1:1 stronom w przestrzeni projektu w **Confluence PB**. Dzięki temu skrypt `python tools/confluence/sync_confluence.py` przenosi dokumentację z repozytorium do Confluence automatycznie.
+Katalogi w `docs/` odpowiadają 1:1 stronom w przestrzeni projektu w **Confluence PB**. Dzięki temu skrypt `npm run docs:check` przenosi dokumentację z repozytorium do Confluence automatycznie.
 
 ---
 

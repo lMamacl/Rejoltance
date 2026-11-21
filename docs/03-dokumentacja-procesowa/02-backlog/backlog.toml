@@ -1,6 +1,6 @@
 # Backlog Rejoltance — JEDYNE źródło prawdy dla Jiry.
-# Edytuj tutaj, potem: python tools/backlog/gen_jira_csv.py   (walidacja: --check)
-# Format: TOML (parser w bibliotece standardowej Pythona 3.11+). Instrukcja: docs/03-dokumentacja-procesowa/02-backlog/README.md
+# Edytuj tutaj, potem: npm run backlog   (walidacja: npm run backlog:check)
+# Format: TOML (czyta go tools/backlog/gen-jira-csv.ts). Instrukcja: docs/03-dokumentacja-procesowa/02-backlog/README.md
 #
 # Fale (linia cięcia): W0 fundament · W1 MVP gry (semestr 1) · W2 pełna gra (semestr 2) · W3 dodatki (jeśli starczy czasu)
 # Story bez [[...task]] ma pole estimate_h (szacunek do refinementu); taski max 4 h.

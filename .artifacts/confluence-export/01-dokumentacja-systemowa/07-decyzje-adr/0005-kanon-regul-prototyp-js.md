@@ -1,4 +1,4 @@
-<!-- CONFLUENCE 1:1 EXPORT | Source: docs/01-dokumentacja-systemowa/07-decyzje-adr/0005-kanon-regul-prototyp-js.md @ 28d2248 (2026-11-21) -->
+<!-- CONFLUENCE 1:1 EXPORT | Source: docs/01-dokumentacja-systemowa/07-decyzje-adr/0005-kanon-regul-prototyp-js.md -->
 # ADR-0005: Kanonem zasad jest prototyp JS v11
 
 - **Status:** zastąpiona przez [ADR-0013](0013-kanon-regul-rejoltance-prototype.md) (2026-11-21); wcześniej zatwierdzona 2026-10-27

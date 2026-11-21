@@ -22,10 +22,10 @@ Uruchamiaj po zakończeniu implementacji zadania, przed zgłoszeniem gotowości 
    ```bash
    npm run verify
    npm run check
-   python tools/agents/sync_agents.py --check
-   python tools/backlog/gen_jira_csv.py --check
-   python tools/content/extract_cards.py --check
-   python tools/confluence/sync_confluence.py --check
+   npm run agents:check
+   npm run backlog:check
+   npm run cards:check
+   npm run docs:check
    ```
 
 3. **Sprawdź kompletność *Definition of Done*:**

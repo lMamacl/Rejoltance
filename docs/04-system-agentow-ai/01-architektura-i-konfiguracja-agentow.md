@@ -16,7 +16,7 @@ flowchart TB
     A[".agents/agents/rj-qa-verifier.md<br/>rola recenzenta"]
     S[".agents/skills/*/SKILL.md<br/>skille rj-* i openspec-*"]
   end
-  Sync["python tools/agents/sync_agents.py"]
+  Sync["npm run agents"]
   subgraph Narzedzia["Narzędzia"]
     CL["Claude Code<br/>CLAUDE.md + .claude/agents + .claude/skills"]
     AG["Antigravity<br/>.agents/ + .agents/workflows"]

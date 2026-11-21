@@ -30,10 +30,6 @@ const git = version('git');
 if (git) ok(git);
 else fail('git not found -> winget install Git.Git');
 
-const python = version('python') ?? version('python3');
-if (python) ok(`${python} (repo tools in tools/*.py)`);
-else fail('Python 3.11+ not found (needed by tools/*.py) -> winget install Python.Python.3.13');
-
 const uv = version('uv');
 if (uv) ok(`${uv} (Jira/Confluence MCP server)`);
 else warn('uv not found — only needed for the optional Jira/Confluence MCP server -> winget install astral-sh.uv');
