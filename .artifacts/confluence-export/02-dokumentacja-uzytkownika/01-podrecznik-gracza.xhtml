@@ -3,7 +3,7 @@
 <p>Ten podręcznik jest dla graczy i członków Rady Graczy Testowych. W mniej niż 5 minut poznasz zasady gry RE:JOLTANCE, zaczniesz pojedynek w przeglądarce i poradzisz sobie z typowymi problemami. Wszystkie 55 reguł turniejowych opisuje dokument <strong>1.2 Specyfikacja funkcjonalna zasad gry</strong> (<code>../01-dokumentacja-systemowa/02-specyfikacja-regul-gry.md</code>).</p>
 <hr />
 <h2>1. Szybki start w 60 sekund</h2>
-<ol><li><strong>Otwórz grę w przeglądarce.</strong> Wejdź na adres serwera demonstracyjnego, który dostaniesz od zespołu. Jeśli grasz lokalnie, użyj adresu zasobu <code>web</code> z panelu .NET Aspire. Nie musisz niczego pobierać ani instalować.</li><li><strong>Wybierz tryb gry:</strong> - <strong>Trening, czyli piaskownica (<code>Start Sandbox</code>):</strong> od razu uruchamia pojedynek testowy z wybranymi taliami startowymi. - <strong>Gra ze znajomym (lobby 1v1):</strong> utwórz pokój, skopiuj kod pokoju albo link i wyślij go znajomemu. - <strong>Gra z botem AI:</strong> wybierz jedną z 5 talii startowych i zagraj z komputerem.</li><li><strong>Wymień karty startowe (mulligan).</strong> Na początku meczu dostajesz 4 karty. Kliknij te, które chcesz wymienić na inne z talii. Potem kliknij <strong>Zatwierdź Mulligan</strong>.</li><li><strong>Wybierz kolejność.</strong> Zdecyduj, czy chcesz zacząć pierwszą rundę jako pierwszy gracz (Gracz A), czy jako drugi (Gracz B).</li></ol>
+<ol><li><strong>Otwórz grę w przeglądarce.</strong> Wejdź na adres serwera demonstracyjnego, który dostaniesz od zespołu. Jeśli grasz lokalnie, uruchom <code>npm run dev</code> i otwórz adres, który poda Vite (zwykle <code>http://localhost:5173</code>).</li><li><strong>Wybierz tryb gry:</strong> - <strong>Trening, czyli piaskownica (<code>Start Sandbox</code>):</strong> od razu uruchamia pojedynek testowy z wybranymi taliami startowymi. - <strong>Gra ze znajomym (lobby 1v1):</strong> utwórz pokój, skopiuj kod pokoju albo link i wyślij go znajomemu. - <strong>Gra z botem AI:</strong> wybierz jedną z 5 talii startowych i zagraj z komputerem.</li><li><strong>Wymień karty startowe (mulligan).</strong> Na początku meczu dostajesz 4 karty. Kliknij te, które chcesz wymienić na inne z talii. Potem kliknij <strong>Zatwierdź Mulligan</strong>.</li><li><strong>Wybierz kolejność.</strong> Zdecyduj, czy chcesz zacząć pierwszą rundę jako pierwszy gracz (Gracz A), czy jako drugi (Gracz B).</li></ol>
 <hr />
 <h2>2. Zasady gry w pigułce</h2>
 <h3>2.1 Cel gry i plansza</h3>
@@ -140,7 +140,7 @@
 </tr>
 <tr>
 <td><p><strong>Gra straciła połączenie z serwerem w trakcie meczu</strong></p></td>
-<td><p>Odśwież stronę albo poczekaj, aż gra sama wznowi połączenie (SignalR). Serwer trzyma twój mecz przez <strong>60 sekund</strong> (reguła <code>R-73</code>). Po powrocie zobaczysz dokładnie tę samą planszę.</p></td>
+<td><p>Odśwież stronę albo poczekaj, aż gra sama wznowi połączenie. Serwer trzyma twój mecz przez <strong>60 sekund</strong> (reguła <code>R-73</code>). Po powrocie zobaczysz dokładnie tę samą planszę.</p></td>
 </tr>
 <tr>
 <td><p><strong>Gra prosi o obrócenie ekranu</strong></p></td>

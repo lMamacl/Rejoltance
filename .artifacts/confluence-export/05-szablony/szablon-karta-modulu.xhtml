@@ -9,7 +9,7 @@
 </tr></thead><tbody>
 <tr>
 <td><p><strong>Nazwa modułu / pakietu</strong></p></td>
-<td><p><code>&lt;np. Rejoltance.Kernel / src/web/src/components/Board&gt;</code></p></td>
+<td><p><code>&lt;np. packages/engine / apps/web/src/components/Board&gt;</code></p></td>
 </tr>
 <tr>
 <td><p><strong>Właściciel modułu (autor)</strong></p></td>
@@ -52,7 +52,7 @@
 <p><em>Diagram przepływu (Mermaid):</em></p>
 <ac:structured-macro ac:name="code"><ac:parameter ac:name="language">none</ac:parameter><ac:plain-text-body><![CDATA[flowchart LR
   Caller["<Moduł wywołujący>"] --> This["<Opisywany moduł>"]
-  This --> Contracts["Rejoltance.Contracts"]]]></ac:plain-text-body></ac:structured-macro>
+  This --> Contracts["packages/contracts"]]]></ac:plain-text-body></ac:structured-macro>
 <h2>4. Kluczowe decyzje implementacyjne i przypadki brzegowe</h2>
 <p><code>&lt;Dlaczego wybrane algorytmy lub struktury danych zostały zaimplementowane w ten sposób? Jak obsługiwane są sytuacje brzegowe (np. przepełnienie kolejki, remis HP, zerowe ziarno RNG)?&gt;</code></p>
 <h2>5. Pokrycie testami i komendy weryfikacji</h2>
@@ -62,8 +62,8 @@
 <th><p>Komenda uruchomienia</p></th>
 </tr></thead><tbody>
 <tr>
-<td><p><code>tests/&lt;Projekt&gt;/&lt;PlikTestu&gt;</code></p></td>
+<td><p><code>&lt;pakiet&gt;/test/&lt;plik&gt;.test.ts</code></p></td>
 <td><p><code>&lt;Lista reguł i przypadków brzegowych&gt;</code></p></td>
-<td><p><code>dotnet test --filter ...</code> / <code>npm test</code></p></td>
+<td><p><code>npx vitest run -t Rnn_</code> / <code>npm test</code></p></td>
 </tr>
 </tbody></table>

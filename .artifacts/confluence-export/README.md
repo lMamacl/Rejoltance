@@ -4,6 +4,8 @@
 Witaj w dokumentacji projektu **RE:JOLTANCE**. To sieciowa, taktyczna gra karciana. Tworzymy ją na przedmiocie *Projekt zespołowy* na Wydziale Informatyki Politechniki Białostockiej (PB).
 
 > **Repozytorium projektu:** [github.com/rejoltance/Rejoltance](https://github.com/rejoltance/Rejoltance) · to źródło prawdy dla kodu, specyfikacji i dokumentacji · bieżąca wersja jest na gałęzi `develop`
+>
+> **Nowa osoba w zespole?** Zacznij od [`START.md`](https://github.com/rejoltance/Rejoltance/blob/develop/START.md) — plan pierwszego dnia, od instalacji do pierwszego PR.
 
 Katalog `docs/` opiera się na dwóch założeniach:
 

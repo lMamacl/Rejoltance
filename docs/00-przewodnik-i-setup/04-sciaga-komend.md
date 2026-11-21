@@ -12,42 +12,40 @@ SDD (Spec-Driven Development) to nasza metoda pracy: najpierw specyfikacja, pote
 
 | Cel | Polecenie |
 |---|---|
-| Pierwsze przygotowanie repozytorium po sklonowaniu (Windows) | `powershell -ExecutionPolicy Bypass -File tools/setup.ps1 -TrustDevCert` |
-| Pierwsze przygotowanie repozytorium po sklonowaniu (macOS / Linux) | `bash tools/setup.sh` |
-| Diagnostyka środowiska (nic nie zmienia w systemie) | `powershell -ExecutionPolicy Bypass -File tools/doctor.ps1` |
-| Cała aplikacja (serwer + klient web + panel Aspire) | `dotnet run --project src/Rejoltance.AppHost` *(albo `aspire run`)* |
-| Sam serwer gry (ASP.NET Core + SignalR) | `dotnet run --project src/Rejoltance.Server` |
-| Sam klient webowy (w katalogu `src/web`) | `SERVER_HTTP=http://localhost:5000 npm run dev` |
+| Pierwsze przygotowanie repozytorium po sklonowaniu (każdy system) | `npm run setup` |
+| Diagnostyka środowiska (nic nie zmienia w systemie) | `npm run doctor` |
+| Gra lokalnie: serwer + klient, restart po zmianie kodu | `npm run dev` |
+| Sam serwer gry (Fastify + Socket.IO) | `npm start` |
 | Prototyp referencyjny JS w przeglądarce | `npx serve prototype/game` |
 
 ---
 
-## 2. Budowanie, testy i kontrole jakości (CI lokalnie)
+## 2. Testy i kontrole jakości (CI lokalnie)
 
 | Cel | Polecenie |
 |---|---|
-| Kompilacja całej solucji .NET | `dotnet build Rejoltance.slnx` |
-| Szybkie testy jednostkowe, architektoniczne i serwerowe (bez AppHost) | `dotnet test Rejoltance.slnx --filter "Category!=Integration"` |
-| Test jednej reguły gry (np. `R-14`) | `dotnet test Rejoltance.slnx --filter "FullyQualifiedName~R14"` |
-| Test dymny (smoke test) całej aplikacji z Aspire AppHost | `dotnet test tests/Rejoltance.AppHost.Tests` |
-| Sprawdzenie formatowania kodu C# | `dotnet format Rejoltance.slnx --verify-no-changes` |
-| Testy jednostkowe klienta React/TypeScript | `npm --prefix src/web test` |
-| Kontrola typów TypeScript, ESLint i build produkcyjny klienta | `npm --prefix src/web run typecheck && npm --prefix src/web run lint && npm --prefix src/web run build` |
-| Walidacja specyfikacji OpenSpec i lintera Markdown | `npm run check` |
-| Odświeżenie próbki kontraktu JSON po zmianie DTO (`MatchView`) | `UPDATE_CONTRACT_SAMPLES=1 dotnet test tests/Rejoltance.Server.Tests` |
+| Wszystko, co sprawdza CI dla kodu: lint, typecheck, testy, build | `npm run verify` |
+| Wszystkie testy (silnik, katalog kart, serwer, klient, narzędzia) | `npm test` |
+| Testy w trybie obserwowania zmian | `npm run test:watch` |
+| Test jednej reguły gry (np. `R-14`) | `npx vitest run -t R14_` |
+| ESLint z granicami modułów i determinizmem silnika | `npm run lint` |
+| Kontrola typów (całe repo) | `npm run typecheck` |
+| Odświeżenie próbki kontraktu po zmianie `MatchView` | `UPDATE_CONTRACT_SAMPLES=1 npm test` |
+| OpenSpec, markdownlint i wszystkie generatory w trybie `--check` | `npm run check` |
 
 ---
 
 ## 3. Skrypty narzędziowe (`tools/`)
 
-Każdy skrypt ma dwa tryby. Bez flagi generuje pliki. Z flagą `--check` tylko sprawdza, czy pliki są aktualne. Tego trybu używa CI.
+Każdy generator ma dwa tryby: `npm run <nazwa>` zapisuje pliki, a `npm run <nazwa>:check` tylko sprawdza, czy są aktualne (tak robi CI). Opis wszystkich skryptów: [`tools/README.md`](../../tools/README.md).
 
-| Cel | Generowanie plików | Sprawdzenie w CI (`--check`) |
+| Cel | Generowanie plików | Sprawdzenie |
 |---|---|---|
-| Synchronizacja agentów, reguł i skilli z `.agents/` do adapterów IDE | `npm run agents` | `npm run agents:check` |
-| Ekstrakcja kart i talii z prototypu JS do `cards.json` i `decks.json` | `npm run cards` | `npm run cards:check` |
-| Pliki importu CSV do Jiry i podsumowanie `BACKLOG.md` z `backlog.toml` | `npm run backlog` | `npm run backlog:check` |
-| Walidacja i eksport drzewa `docs/` do Confluence | `npm run docs:check` | `npm run docs:check` |
+| Adaptery agentów z `.agents/` (Claude Code, Antigravity) | `npm run agents` | `npm run agents:check` |
+| Karty i talie z prototypu JS do `packages/content/data` | `npm run cards` | `npm run cards:check` |
+| Pliki CSV do Jiry i `BACKLOG.md` z `backlog.toml` | `npm run backlog` | `npm run backlog:check` |
+| Paczka stron do Confluence (`.artifacts/confluence-export`) | `npm run docs:export` | `npm run docs:check` |
+| Publikacja w Confluence (token z `.env`) | `npm run docs:publish -- --changed-since develop --only-existing` | `npm run docs:publish -- --dry-run …` |
 
 ---
 

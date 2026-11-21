@@ -11,7 +11,7 @@ Każdy student opisuje w tej karcie swój moduł kodu. Zastąp pola w nawiasach 
 
 | Pole | Wartość |
 |---|---|
-| **Nazwa modułu / pakietu** | `<np. Rejoltance.Kernel / src/web/src/components/Board>` |
+| **Nazwa modułu / pakietu** | `<np. packages/engine / apps/web/src/components/Board>` |
 | **Właściciel modułu (autor)** | `<Imię i nazwisko studenta>` |
 | **Epik nadrzędny** | `<E1–E8>` |
 | **Ścieżka w repozytorium** | `src/<ścieżka>` |
@@ -39,7 +39,7 @@ Każdy student opisuje w tej karcie swój moduł kodu. Zastąp pola w nawiasach 
 ```mermaid
 flowchart LR
   Caller["<Moduł wywołujący>"] --> This["<Opisywany moduł>"]
-  This --> Contracts["Rejoltance.Contracts"]
+  This --> Contracts["packages/contracts"]
 ```
 
 ## 4. Kluczowe decyzje implementacyjne i przypadki brzegowe
@@ -50,4 +50,4 @@ flowchart LR
 
 | Projekt testowy / plik testu | Sprawdzane scenariusze (`R-nn`) | Komenda uruchomienia |
 |---|---|---|
-| `tests/<Projekt>/<PlikTestu>` | `<Lista reguł i przypadków brzegowych>` | `dotnet test --filter ...` / `npm test` |
+| `<pakiet>/test/<plik>.test.ts` | `<Lista reguł i przypadków brzegowych>` | `npx vitest run -t Rnn_` / `npm test` |

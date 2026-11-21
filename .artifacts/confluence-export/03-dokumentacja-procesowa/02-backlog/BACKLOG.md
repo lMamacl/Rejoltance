@@ -13,7 +13,7 @@ Pojemność: 6 os. × 5 h/tydz., bufor 10%. Godziny story = suma tasków albo `e
 | S1 | 2026-11-03 – 2026-11-16 | Dwie przeglądarki wchodzą do jednego pokoju i rozgrywają mulligan, wybór kolejności i start rundy. | 60 | 54 | 26 | 90% |
 | S2 | 2026-11-17 – 2026-11-30 | Gracze zagrywają jednostki w krokach rundy, serwer odrzuca nielegalne ruchy. | 60 | 57 | 26 | 95% |
 | S3 | 2026-12-01 – 2026-12-14 | Walka 4 linii rozstrzyga się do końca meczu; można zagrać z prostym botem. | 60 | 49 | 24 | 82% |
-| S4 | 2026-12-15 – 2027-01-11 | Słowa kluczowe walki działają; lobby z pokojami; baza PostgreSQL w Aspire. | 60 | 50 | 25 | 83% |
+| S4 | 2026-12-15 – 2027-01-11 | Słowa kluczowe walki działają; lobby z pokojami; baza PostgreSQL. | 60 | 50 | 25 | 83% |
 | S5 | 2027-01-12 – 2027-01-25 | Grywalne MVP z 12 kartami online i z botem, wdrożone pod publicznym adresem. | 60 | 54 | 26 | 90% |
 | S6 | semestr 2 | Semestr 2 — pierwszy sprint (pełna pula kart, mocniejszy bot, replay). | — | 90 | 40 | — |
 | S7 | semestr 2 | Semestr 2 — dodatki (obserwator, ranking, balans). | — | 48 | 21 | — |
@@ -38,7 +38,7 @@ Pojemność: 6 os. × 5 h/tydz., bufor 10%. Godziny story = suma tasków albo `e
 
 ## E1 Silnik reguł (Kernel)
 
-Deterministyczne reguły gry: runda, kroki, walka, słowa kluczowe, śmierć. src/Rejoltance.Kernel, reguły R-0x…R-5x, R-7x. Właściciel: do przydzielenia (#9).
+Deterministyczne reguły gry: runda, kroki, walka, słowa kluczowe, śmierć. packages/engine, reguły R-0x…R-5x, R-7x. Właściciel: do przydzielenia (#9).
 
 | Story | Tytuł | Sprint | Fala | SP | h | Reguły |
 |---|---|---|---|---|---|---|
@@ -53,7 +53,7 @@ Deterministyczne reguły gry: runda, kroki, walka, słowa kluczowe, śmierć. sr
 
 ## E2 Interpreter efektów kart (DSL)
 
-Karty jako dane: rejestr akcji, wyzwalacze, warunki, cele, koszt. src/Rejoltance.Content + handlery w Kernelu, reguły R-2x, R-6x. Właściciel: do przydzielenia (#9).
+Karty jako dane: rejestr akcji, wyzwalacze, warunki, cele, koszt. packages/content + handlery w silniku, reguły R-2x, R-6x. Właściciel: do przydzielenia (#9).
 
 | Story | Tytuł | Sprint | Fala | SP | h | Reguły |
 |---|---|---|---|---|---|---|
@@ -69,7 +69,7 @@ Karty jako dane: rejestr akcji, wyzwalacze, warunki, cele, koszt. src/Rejoltance
 
 ## E3 Serwer i sieć czasu rzeczywistego
 
-Pokoje PvP, SignalR, walidacja i autoryzacja, zdarzenia per gracz, reconnect, timer. src/Rejoltance.Server, reguły R-7x, R-8x. Właściciel: do przydzielenia (#9).
+Pokoje PvP, Socket.IO, walidacja i autoryzacja, zdarzenia per gracz, reconnect, timer. apps/server, reguły R-7x, R-8x. Właściciel: do przydzielenia (#9).
 
 | Story | Tytuł | Sprint | Fala | SP | h | Reguły |
 |---|---|---|---|---|---|---|
@@ -83,7 +83,7 @@ Pokoje PvP, SignalR, walidacja i autoryzacja, zdarzenia per gracz, reconnect, ti
 
 ## E4 Klient web
 
-React + TypeScript: plansza, ręka, prompty, lobby, animacje, dźwięk. src/web — renderuje MatchView, wysyła Intent. Właściciel: do przydzielenia (#9).
+React + TypeScript: plansza, ręka, prompty, lobby, animacje, dźwięk. apps/web — renderuje MatchView, wysyła Intent. Właściciel: do przydzielenia (#9).
 
 | Story | Tytuł | Sprint | Fala | SP | h | Reguły |
 |---|---|---|---|---|---|---|
@@ -117,7 +117,7 @@ CI/CD, testy E2E, konta, talie i deckbuilder, PostgreSQL, wdrożenie demo, dokum
 |---|---|---|---|---|---|---|
 | E6-S01 | CI na GitHubie i smoke test E2E | S1 | W0 | 3 | 7 | — |
 | E6-S02 | Konta graczy — backend | S2 | W1 | 3 | 8 | — |
-| E6-S03 | PostgreSQL w Aspire | S4 | W1 | 3 | 6 | — |
+| E6-S03 | PostgreSQL (kontener lokalny i na demo) | S4 | W1 | 3 | 6 | — |
 | E6-S09 | Ekran logowania i rejestracji | S3 | W1 | 2 | 4 | — |
 | E6-S04 | Własne talie i deckbuilder | S6 | W2 | 5 | 10 | R-01 |
 | E6-S05 | Wdrożenie demo pod publicznym adresem | S5 | W1 | 3 | 6 | — |

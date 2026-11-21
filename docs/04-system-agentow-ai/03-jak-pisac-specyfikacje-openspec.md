@@ -14,7 +14,7 @@ SP (story points) to punktowa wycena wielkości historyjki.
 |---|---|---|
 | **Historyjka (story) o rozmiarze ≥ 3 SP** | **Tak** | Zatwierdzona propozycja zmiany w `openspec/changes/rej-123-...` |
 | **Każda zmiana lub implementacja reguły gry (`R-nn`)** | **Tak** | Scenariusze `GIVEN / WHEN / THEN` w delcie specyfikacji i lista testów `Rnn_...` |
-| **Każda zmiana 5 kontraktów (`Rejoltance.Contracts`)** | **Tak, plus decyzja ADR** | Zmiana OpenSpec z plikiem `design.md` i ADR (Architecture Decision Record) zatwierdzony przez 2 osoby |
+| **Każda zmiana 5 kontraktów (`packages/contracts`)** | **Tak, plus decyzja ADR** | Zmiana OpenSpec z plikiem `design.md` i ADR (Architecture Decision Record) zatwierdzony przez 2 osoby |
 | **Drobna poprawka błędu, stylów CSS lub dokumentacji (< 3 SP)** | **Nie (ścieżka szybka)** | Krótki plan w 5 punktach, pokazany człowiekowi albo wpisany w opis PR (pull requesta) |
 
 ---
@@ -66,7 +66,7 @@ Przejrzyj wygenerowane pliki i sprawdź cztery rzeczy:
 
 1. Czy w `proposal.md` jest klucz Jira (`REJ-45`) i wyraźna sekcja **Poza zakresem (Out of Scope)**?
 2. Czy każde zmieniane lub dodawane wymaganie w `specs/<obszar>/spec.md` ma identyfikator `R-nn` i co najmniej jeden konkretny scenariusz `GIVEN / WHEN / THEN` z wartościami liczbowymi z prototypu?
-3. Czy w `tasks.md` każde zadanie ma szacunek **≤ 4 h** i podaje dokładną nazwę testu xUnit/Vitest (np. `R04_different_order_choices_respect_wants_first_preference`)?
+3. Czy w `tasks.md` każde zadanie ma szacunek **≤ 4 h** i podaje dokładną nazwę testu Vitest (np. `R04_different_order_choices_respect_wants_first_preference`)?
 4. Uruchom walidator CLI:
 
    ```bash

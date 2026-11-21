@@ -3,6 +3,8 @@
 
 > **Źródło prawdy:** repozytorium (`docs/00-przewodnik-i-setup/07-plan-wdrozenia-i-migracji.md`) · **Kategoria dokumentacji:** dokumentacja procesowa — plan zmian i wdrożenia · **Etap SDD:** Fundamenty i organizacja projektu
 
+**Dokument historyczny.** Opisuje przebudowę dokumentacji i agentów z listopada 2026 (stan przed ADR-0014 i ADR-0015). Ścieżki i polecenia w nim są nieaktualne — aktualny opis pracy jest w [`START.md`](https://github.com/rejoltance/Rejoltance/blob/develop/START.md) i [szybkim starcie](01-szybki-start-i-instalacja.md).
+
 Ten dokument opisuje, jak przenosimy **RE:JOLTANCE** ze starego układu na gałęzi `develop` do nowego standardu. Nowy standard ma trzy filary:
 
 - klasyfikację dokumentacji technicznej **AltexSoft**,

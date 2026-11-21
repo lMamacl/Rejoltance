@@ -9,28 +9,20 @@
 <th><p>Polecenie</p></th>
 </tr></thead><tbody>
 <tr>
-<td><p>Pierwsze przygotowanie repozytorium po sklonowaniu (Windows)</p></td>
-<td><p><code>powershell -ExecutionPolicy Bypass -File tools/setup.ps1 -TrustDevCert</code></p></td>
-</tr>
-<tr>
-<td><p>Pierwsze przygotowanie repozytorium po sklonowaniu (macOS / Linux)</p></td>
-<td><p><code>bash tools/setup.sh</code></p></td>
+<td><p>Pierwsze przygotowanie repozytorium po sklonowaniu (każdy system)</p></td>
+<td><p><code>npm run setup</code></p></td>
 </tr>
 <tr>
 <td><p>Diagnostyka środowiska (nic nie zmienia w systemie)</p></td>
-<td><p><code>powershell -ExecutionPolicy Bypass -File tools/doctor.ps1</code></p></td>
+<td><p><code>npm run doctor</code></p></td>
 </tr>
 <tr>
-<td><p>Cała aplikacja (serwer + klient web + panel Aspire)</p></td>
-<td><p><code>dotnet run --project src/Rejoltance.AppHost</code> <em>(albo <code>aspire run</code>)</em></p></td>
+<td><p>Gra lokalnie: serwer + klient, restart po zmianie kodu</p></td>
+<td><p><code>npm run dev</code></p></td>
 </tr>
 <tr>
-<td><p>Sam serwer gry (ASP.NET Core + SignalR)</p></td>
-<td><p><code>dotnet run --project src/Rejoltance.Server</code></p></td>
-</tr>
-<tr>
-<td><p>Sam klient webowy (w katalogu <code>src/web</code>)</p></td>
-<td><p><code>SERVER_HTTP=http://localhost:5000 npm run dev</code></p></td>
+<td><p>Sam serwer gry (Fastify + Socket.IO)</p></td>
+<td><p><code>npm start</code></p></td>
 </tr>
 <tr>
 <td><p>Prototyp referencyjny JS w przeglądarce</p></td>
@@ -38,75 +30,76 @@
 </tr>
 </tbody></table>
 <hr />
-<h2>2. Budowanie, testy i kontrole jakości (CI lokalnie)</h2>
+<h2>2. Testy i kontrole jakości (CI lokalnie)</h2>
 <table><thead><tr>
 <th><p>Cel</p></th>
 <th><p>Polecenie</p></th>
 </tr></thead><tbody>
 <tr>
-<td><p>Kompilacja całej solucji .NET</p></td>
-<td><p><code>dotnet build Rejoltance.slnx</code></p></td>
+<td><p>Wszystko, co sprawdza CI dla kodu: lint, typecheck, testy, build</p></td>
+<td><p><code>npm run verify</code></p></td>
 </tr>
 <tr>
-<td><p>Szybkie testy jednostkowe, architektoniczne i serwerowe (bez AppHost)</p></td>
-<td><p><code>dotnet test Rejoltance.slnx --filter &quot;Category!=Integration&quot;</code></p></td>
+<td><p>Wszystkie testy (silnik, katalog kart, serwer, klient, narzędzia)</p></td>
+<td><p><code>npm test</code></p></td>
+</tr>
+<tr>
+<td><p>Testy w trybie obserwowania zmian</p></td>
+<td><p><code>npm run test:watch</code></p></td>
 </tr>
 <tr>
 <td><p>Test jednej reguły gry (np. <code>R-14</code>)</p></td>
-<td><p><code>dotnet test Rejoltance.slnx --filter &quot;FullyQualifiedName~R14&quot;</code></p></td>
+<td><p><code>npx vitest run -t R14_</code></p></td>
 </tr>
 <tr>
-<td><p>Test dymny (smoke test) całej aplikacji z Aspire AppHost</p></td>
-<td><p><code>dotnet test tests/Rejoltance.AppHost.Tests</code></p></td>
+<td><p>ESLint z granicami modułów i determinizmem silnika</p></td>
+<td><p><code>npm run lint</code></p></td>
 </tr>
 <tr>
-<td><p>Sprawdzenie formatowania kodu C#</p></td>
-<td><p><code>dotnet format Rejoltance.slnx --verify-no-changes</code></p></td>
+<td><p>Kontrola typów (całe repo)</p></td>
+<td><p><code>npm run typecheck</code></p></td>
 </tr>
 <tr>
-<td><p>Testy jednostkowe klienta React/TypeScript</p></td>
-<td><p><code>npm --prefix src/web test</code></p></td>
+<td><p>Odświeżenie próbki kontraktu po zmianie <code>MatchView</code></p></td>
+<td><p><code>UPDATE_CONTRACT_SAMPLES=1 npm test</code></p></td>
 </tr>
 <tr>
-<td><p>Kontrola typów TypeScript, ESLint i build produkcyjny klienta</p></td>
-<td><p><code>npm --prefix src/web run typecheck &amp;&amp; npm --prefix src/web run lint &amp;&amp; npm --prefix src/web run build</code></p></td>
-</tr>
-<tr>
-<td><p>Walidacja specyfikacji OpenSpec i lintera Markdown</p></td>
+<td><p>OpenSpec, markdownlint i wszystkie generatory w trybie <code>--check</code></p></td>
 <td><p><code>npm run check</code></p></td>
-</tr>
-<tr>
-<td><p>Odświeżenie próbki kontraktu JSON po zmianie DTO (<code>MatchView</code>)</p></td>
-<td><p><code>UPDATE_CONTRACT_SAMPLES=1 dotnet test tests/Rejoltance.Server.Tests</code></p></td>
 </tr>
 </tbody></table>
 <hr />
 <h2>3. Skrypty narzędziowe (<code>tools/</code>)</h2>
-<p>Każdy skrypt ma dwa tryby. Bez flagi generuje pliki. Z flagą <code>--check</code> tylko sprawdza, czy pliki są aktualne. Tego trybu używa CI.</p>
+<p>Każdy generator ma dwa tryby: <code>npm run &lt;nazwa&gt;</code> zapisuje pliki, a <code>npm run &lt;nazwa&gt;:check</code> tylko sprawdza, czy są aktualne (tak robi CI). Opis wszystkich skryptów: <strong><code>tools/README.md</code></strong> (<code>../../tools/README.md</code>).</p>
 <table><thead><tr>
 <th><p>Cel</p></th>
 <th><p>Generowanie plików</p></th>
-<th><p>Sprawdzenie w CI (<code>--check</code>)</p></th>
+<th><p>Sprawdzenie</p></th>
 </tr></thead><tbody>
 <tr>
-<td><p>Synchronizacja agentów, reguł i skilli z <code>.agents/</code> do adapterów IDE</p></td>
+<td><p>Adaptery agentów z <code>.agents/</code> (Claude Code, Antigravity)</p></td>
 <td><p><code>npm run agents</code></p></td>
 <td><p><code>npm run agents:check</code></p></td>
 </tr>
 <tr>
-<td><p>Ekstrakcja kart i talii z prototypu JS do <code>cards.json</code> i <code>decks.json</code></p></td>
+<td><p>Karty i talie z prototypu JS do <code>packages/content/data</code></p></td>
 <td><p><code>npm run cards</code></p></td>
 <td><p><code>npm run cards:check</code></p></td>
 </tr>
 <tr>
-<td><p>Pliki importu CSV do Jiry i podsumowanie <code>BACKLOG.md</code> z <code>backlog.toml</code></p></td>
+<td><p>Pliki CSV do Jiry i <code>BACKLOG.md</code> z <code>backlog.toml</code></p></td>
 <td><p><code>npm run backlog</code></p></td>
 <td><p><code>npm run backlog:check</code></p></td>
 </tr>
 <tr>
-<td><p>Walidacja i eksport drzewa <code>docs/</code> do Confluence</p></td>
+<td><p>Paczka stron do Confluence (<code>.artifacts/confluence-export</code>)</p></td>
+<td><p><code>npm run docs:export</code></p></td>
 <td><p><code>npm run docs:check</code></p></td>
-<td><p><code>npm run docs:check</code></p></td>
+</tr>
+<tr>
+<td><p>Publikacja w Confluence (token z <code>.env</code>)</p></td>
+<td><p><code>npm run docs:publish -- --changed-since develop --only-existing</code></p></td>
+<td><p><code>npm run docs:publish -- --dry-run …</code></p></td>
 </tr>
 </tbody></table>
 <hr />

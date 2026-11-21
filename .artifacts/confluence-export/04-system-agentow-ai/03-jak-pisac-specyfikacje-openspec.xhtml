@@ -20,7 +20,7 @@
 <td><p>Scenariusze <code>GIVEN / WHEN / THEN</code> w delcie specyfikacji i lista testów <code>Rnn_...</code></p></td>
 </tr>
 <tr>
-<td><p><strong>Każda zmiana 5 kontraktów (<code>Rejoltance.Contracts</code>)</strong></p></td>
+<td><p><strong>Każda zmiana 5 kontraktów (<code>packages/contracts</code>)</strong></p></td>
 <td><p><strong>Tak, plus decyzja ADR</strong></p></td>
 <td><p>Zmiana OpenSpec z plikiem <code>design.md</code> i ADR (Architecture Decision Record) zatwierdzony przez 2 osoby</p></td>
 </tr>
@@ -62,7 +62,7 @@
 <p>Agent utworzy katalog <code>openspec/changes/rej-45-choose-order/</code> ze wszystkimi plikami zmiany.</p>
 <h3>Krok 2: Sprawdź treść i uruchom walidator</h3>
 <p>Przejrzyj wygenerowane pliki i sprawdź cztery rzeczy:</p>
-<ol><li>Czy w <code>proposal.md</code> jest klucz Jira (<code>REJ-45</code>) i wyraźna sekcja <strong>Poza zakresem (Out of Scope)</strong>?</li><li>Czy każde zmieniane lub dodawane wymaganie w <code>specs/&lt;obszar&gt;/spec.md</code> ma identyfikator <code>R-nn</code> i co najmniej jeden konkretny scenariusz <code>GIVEN / WHEN / THEN</code> z wartościami liczbowymi z prototypu?</li><li>Czy w <code>tasks.md</code> każde zadanie ma szacunek <strong>≤ 4 h</strong> i podaje dokładną nazwę testu xUnit/Vitest (np. <code>R04_different_order_choices_respect_wants_first_preference</code>)?</li><li>Uruchom walidator CLI:</li></ol>
+<ol><li>Czy w <code>proposal.md</code> jest klucz Jira (<code>REJ-45</code>) i wyraźna sekcja <strong>Poza zakresem (Out of Scope)</strong>?</li><li>Czy każde zmieniane lub dodawane wymaganie w <code>specs/&lt;obszar&gt;/spec.md</code> ma identyfikator <code>R-nn</code> i co najmniej jeden konkretny scenariusz <code>GIVEN / WHEN / THEN</code> z wartościami liczbowymi z prototypu?</li><li>Czy w <code>tasks.md</code> każde zadanie ma szacunek <strong>≤ 4 h</strong> i podaje dokładną nazwę testu Vitest (np. <code>R04_different_order_choices_respect_wants_first_preference</code>)?</li><li>Uruchom walidator CLI:</li></ol>
 <ac:structured-macro ac:name="code"><ac:parameter ac:name="language">bash</ac:parameter><ac:plain-text-body><![CDATA[   npx openspec validate rej-45-choose-order --strict]]></ac:plain-text-body></ac:structured-macro>
 <h3>Krok 3: Akceptacja człowieka (<em>human approval gate</em>)</h3>
 <p>Zapisz pliki propozycji w commicie na swojej gałęzi i pokaż je PO (Product Ownerowi) sprintu albo właścicielowi epiku. <strong>Kod piszemy dopiero po akceptacji specyfikacji.</strong> Dzięki temu nie piszemy kodu, który po code review trzeba by przepisać.</p>

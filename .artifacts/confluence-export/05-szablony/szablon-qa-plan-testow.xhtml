@@ -30,7 +30,7 @@
 </tbody></table>
 <hr />
 <h2>2. Zakres testów w sprincie</h2>
-<ul><li><strong>Co testujemy (In Scope):</strong> <code>&lt;Lista nowych i zmodyfikowanych funkcji w sprincie&gt;</code></li><li><strong>Czego nie testujemy w tym sprincie (Out of Scope):</strong> <code>&lt;Lista wraz z uzasadnieniem&gt;</code></li><li><strong>Kryteria wejścia (Entry Criteria):</strong> kod się buduje i przechodzi statyczną analizę typów (<code>dotnet build -warnaserror</code>, <code>npm run typecheck</code>).</li><li><strong>Kryteria wyjścia (Exit Criteria / Definition of Done):</strong> 100% testów automatycznych przechodzi w CI, 0 otwartych defektów o priorytecie <code>P0</code> i <code>P1</code>, lista kontrolna E2E jest wykonana.</li></ul>
+<ul><li><strong>Co testujemy (In Scope):</strong> <code>&lt;Lista nowych i zmodyfikowanych funkcji w sprincie&gt;</code></li><li><strong>Czego nie testujemy w tym sprincie (Out of Scope):</strong> <code>&lt;Lista wraz z uzasadnieniem&gt;</code></li><li><strong>Kryteria wejścia (Entry Criteria):</strong> kod się buduje i przechodzi statyczną analizę typów (<code>npm run lint</code>, <code>npm run typecheck</code>).</li><li><strong>Kryteria wyjścia (Exit Criteria / Definition of Done):</strong> 100% testów automatycznych przechodzi w CI, 0 otwartych defektów o priorytecie <code>P0</code> i <code>P1</code>, lista kontrolna E2E jest wykonana.</li></ul>
 <hr />
 <h2>3. Specyfikacja przypadków testowych (Test Case Specifications)</h2>
 <table><thead><tr>
@@ -47,11 +47,11 @@
 <td><p><code>TC-01</code></p></td>
 <td><p></p></td>
 <td><p></p></td>
-<td><p><code>Unit (xUnit)</code></p></td>
+<td><p><code>Unit (Vitest)</code></p></td>
 <td><p></p></td>
 <td><p></p></td>
 <td><p></p></td>
-<td><p><code>tests/...</code></p></td>
+<td><p><code>packages/.../test/...</code></p></td>
 </tr>
 <tr>
 <td><p><code>TC-02</code></p></td>

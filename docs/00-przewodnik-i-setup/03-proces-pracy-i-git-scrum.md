@@ -67,7 +67,7 @@ Używamy uproszczonego **GitFlow dopasowanego do sprintów Scrum**:
 - **Nazwa gałęzi** musi pasować do wyrażenia: `^(feature|fix|docs|chore|spike)/REJ-[0-9]+-[a-z0-9-]+$`
 - **Tytuł PR i wiadomości commitów** zaczynają się od klucza zadania z Jiry i dwukropka. Dalej jest opis po angielsku w trybie rozkazującym, np.:
   - `REJ-45: add turn order selection after mulligan`
-  - `REJ-12: update SAD deployment diagram for Aspire`
+  - `REJ-12: update SAD deployment diagram`
 
 ---
 
@@ -80,7 +80,7 @@ Agenci AI (Claude Code, Codex, Cursor, Antigravity) to dla nas wyspecjalizowani 
 | Dobra praktyka | Błąd |
 |---|---|
 | Dajesz agentowi konkretne zadanie i wskazujesz zaakceptowaną specyfikację: *„Zrealizuj zadanie REJ-45 zgodnie z `openspec/changes/rej-45-choose-order/tasks.md`, zaczynając od testu `R04_...`”*. | Wydajesz ogólne polecenie bez specyfikacji: *„Zaprogramuj walkę w grze”*. |
-| Wymagasz, żeby agent naprawdę uruchomił testy (`dotnet test`, `npm test`) i pokazał wynik w raporcie. | Wierzysz agentowi na słowo, gdy pisze *„kod powinien działać poprawnie”*. |
+| Wymagasz, żeby agent naprawdę uruchomił testy (`npm run verify`) i pokazał wynik w raporcie. | Wierzysz agentowi na słowo, gdy pisze *„kod powinien działać poprawnie”*. |
 | Czytasz zmiany (`git diff`) przed commitem i przed otwarciem PR. | Commitujesz wygenerowany kod bez czytania i nie umiesz go potem wyjaśnić na zajęciach. |
 | Przed prośbą o Code Review do kolegi uruchamiasz niezależnego agenta weryfikującego (`rj-qa-verifier`). | Prosisz tego samego agenta, żeby napisał kod i sam go zaakceptował. |
 
@@ -117,7 +117,7 @@ DoR (Definition of Ready) mówi, kiedy zadanie może wejść do sprintu. DoD (De
 ### DoD — kiedy zadanie jest ukończone?
 
 1. Kod jest na gałęzi nazwanej według wzorca `typ/REJ-123-opis`. Commity zawierają klucz Jiry.
-2. Nowe reguły gry i wymagania mają testy automatyczne (`Rnn_...` / `NFRnn_...`). Całe CI na GitHubie jest zielone (`dotnet test`, `npm test`, `npm run check`).
+2. Nowe reguły gry i wymagania mają testy automatyczne (`Rnn_...` / `NFRnn_...`). Całe CI na GitHubie jest zielone (`npm run verify`, `npm run check`).
 3. W zadaniach ≥ 3 SP zmiana w `openspec/` jest zwalidowana i po wdrożeniu zarchiwizowana.
 4. Co najmniej jedna inna osoba z zespołu sprawdziła i zaakceptowała PR. PR jest scalony do `develop` i zsynchronizowany z Bitbucket PB.
 5. Zaktualizowane są: dokumentacja modułu (`src/<moduł>/README.md`), indeks reguł (`03-indeks-regul-r-nn.md`) i odpowiednia strona w **Confluence PB**.

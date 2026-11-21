@@ -27,7 +27,7 @@ flowchart LR
   C["1. Konstytucja i Standardy<br/>(.agents/rules, 00-przewodnik)"] --> S["2. Specyfikacja Wymagań (Specify)<br/>(PRD, reguły R-nn, NFR, OpenSpec)"]
   S --> P["3. Projekt Architektury (Plan)<br/>(SAD, Stos, ADR, Kontrakty API, TDD)"]
   P --> T["4. Dekompozycja Zadań (Tasks)<br/>(Backlog TOML, Jira, tasks.md)"]
-  T --> I["5. Implementacja (Implement)<br/>(Kod C#/TS + Testy xUnit/Vitest)"]
+  T --> I["5. Implementacja (Implement)<br/>(Kod TypeScript + testy Vitest)"]
   I --> V["6. Weryfikacja Jakości (Verify)<br/>(Strategia, Plany i Raporty QA)"]
   V --> R["7. Wydanie i Użytkownik (Release)<br/>(Podręcznik gracza, Wdrożenie, Release Notes)"]
   R -. "Feedback od Rady Graczy (Sprint Review)" .-> S
@@ -82,7 +82,7 @@ Tabela pokazuje, gdzie w naszej strukturze znajduje się każdy typ z sekcji *"T
 | **Product: System** | Technical Design Document (TDD) | Szablon TDD + pliki `openspec/changes/*/design.md` | [`05-szablony/szablon-tdd.md`](../05-szablony/szablon-tdd.md) oraz `openspec/changes/<id>/design.md` | `Plan` / `Tasks` |
 | **Product: System** | Source Code Documentation | Mapa modułów + karty `src/*/README.md` + szablon | [`01-dokumentacja-systemowa/08-mapa-kodu-i-modulow.md`](../01-dokumentacja-systemowa/08-mapa-kodu-i-modulow.md), `src/*/README.md` (+ szablon [`05-szablony/szablon-karta-modulu.md`](../05-szablony/szablon-karta-modulu.md)) | `Implement` |
 | **Product: System** | Quality Assurance (QA): Test Strategy, Test Plan, Test Cases, Checklists | Pełna strategia testów + szablony planu i raportu QA | [`01-dokumentacja-systemowa/11-strategia-testow-qa.md`](../01-dokumentacja-systemowa/11-strategia-testow-qa.md) + szablony [`szablon-qa-plan-testow.md`](../05-szablony/szablon-qa-plan-testow.md), [`szablon-qa-raport-i-checklista.md`](../05-szablony/szablon-qa-raport-i-checklista.md) | `Verify` |
-| **Product: System** | API Documentation | Pełna specyfikacja kontraktów REST i SignalR | [`01-dokumentacja-systemowa/09-kontrakty-i-api.md`](../01-dokumentacja-systemowa/09-kontrakty-i-api.md) | `Plan` / `Implement` |
+| **Product: System** | API Documentation | Pełna specyfikacja kontraktów REST i Socket.IO | [`01-dokumentacja-systemowa/09-kontrakty-i-api.md`](../01-dokumentacja-systemowa/09-kontrakty-i-api.md) | `Plan` / `Implement` |
 | **Product: User** | End-User Documentation (Quick Start, Manual, Troubleshooting, FAQ) | Podręcznik gracza + szablon | [`02-dokumentacja-uzytkownika/01-podrecznik-gracza.md`](../02-dokumentacja-uzytkownika/01-podrecznik-gracza.md) (+ szablon [`05-szablony/szablon-podrecznik-gracza.md`](../05-szablony/szablon-podrecznik-gracza.md)) | `Release` |
 | **Product: User** | System Administrator Documentation (Installation, Config, Security, Backup) | Instrukcja wdrożenia i utrzymania + szablon | [`02-dokumentacja-uzytkownika/02-instrukcja-wdrozenia-i-utrzymania.md`](../02-dokumentacja-uzytkownika/02-instrukcja-wdrozenia-i-utrzymania.md) (+ szablon [`05-szablony/szablon-instrukcja-wdrozenia-admin.md`](../05-szablony/szablon-instrukcja-wdrozenia-admin.md)) | `Release` |
 | **Process** | Agile Product Roadmaps (Strategic, Technology, Release Plan) | Opisane w PRD, stosie technologicznym i backlogu | [`01-prd-wymagania-produktu.md`](../01-dokumentacja-systemowa/01-prd-wymagania-produktu.md) §2, [`06-stos-technologiczny.md`](../01-dokumentacja-systemowa/06-stos-technologiczny.md) §3, [`03-dokumentacja-procesowa/02-backlog/BACKLOG.md`](../03-dokumentacja-procesowa/02-backlog/BACKLOG.md) | `Constitution` / `Plan` |
@@ -118,7 +118,7 @@ RE:JOLTANCE — Strona Główna Przestrzeni (docs/README.md)
 │   ├── 1.6 Stos technologiczny i roadmapa IT (06-stos-technologiczny.md)               [★ DOKUMENT STOSU TECHNOLOGICZNEGO]
 │   ├── 1.7 Decyzje architektoniczne — ADR (07-decyzje-adr/README.md + ADR 0001..0011)
 │   ├── 1.8 Mapa kodu źródłowego i modułów (08-mapa-kodu-i-modulow.md + src/*/README.md)
-│   ├── 1.9 Dokumentacja kontraktów i API REST/SignalR (09-kontrakty-i-api.md)
+│   ├── 1.9 Dokumentacja kontraktów i API REST/Socket.IO (09-kontrakty-i-api.md)
 │   ├── 1.10 Projekt UX, przepływy i przewodnik stylu (10-ux-design-i-przeplywy.md)
 │   └── 1.11 Strategia zapewnienia jakości i testów QA (11-strategia-testow-qa.md)
 │

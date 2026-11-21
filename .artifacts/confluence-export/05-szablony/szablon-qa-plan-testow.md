@@ -23,7 +23,7 @@ Wypełnij plan na początku sprintu i zastąp pola w nawiasach `<...>`. QA to qu
 
 - **Co testujemy (In Scope):** `<Lista nowych i zmodyfikowanych funkcji w sprincie>`
 - **Czego nie testujemy w tym sprincie (Out of Scope):** `<Lista wraz z uzasadnieniem>`
-- **Kryteria wejścia (Entry Criteria):** kod się buduje i przechodzi statyczną analizę typów (`dotnet build -warnaserror`, `npm run typecheck`).
+- **Kryteria wejścia (Entry Criteria):** kod się buduje i przechodzi statyczną analizę typów (`npm run lint`, `npm run typecheck`).
 - **Kryteria wyjścia (Exit Criteria / Definition of Done):** 100% testów automatycznych przechodzi w CI, 0 otwartych defektów o priorytecie `P0` i `P1`, lista kontrolna E2E jest wykonana.
 
 ---
@@ -32,6 +32,6 @@ Wypełnij plan na początku sprintu i zastąp pola w nawiasach `<...>`. QA to qu
 
 | ID testu | Tytuł przypadku testowego | Powiązane wymaganie (`R-nn` / `NFR-nn` / `REJ-...`) | Poziom testu (`Unit / Integration / E2E`) | Warunki wstępne (`GIVEN`) | Kroki testowe (`WHEN`) | Oczekiwany wynik (`THEN`) | Automatyzacja (plik testu) |
 |---|---|---|---|---|---|---|---|
-| `TC-01` | | | `Unit (xUnit)` | | | | `tests/...` |
+| `TC-01` | | | `Unit (Vitest)` | | | | `packages/.../test/...` |
 | `TC-02` | | | `Integration` | | | | `tests/...` |
 | `TC-03` | | | `E2E (Playwright)` | | | | `tests/e2e/...` |

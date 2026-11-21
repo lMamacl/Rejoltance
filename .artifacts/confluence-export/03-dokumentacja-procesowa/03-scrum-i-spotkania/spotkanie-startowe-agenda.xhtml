@@ -4,7 +4,7 @@
 <p><strong>Cel:</strong> po spotkaniu każda osoba w zespole wie, jak działa gra, jak zbudowane są repozytorium i dokumentacja SDD (Spec-Driven Development) oraz jak pracujemy z Jirą, Confluence i agentami AI. Wspólnie zamykamy też decyzje otwarte, które blokują Sprint 1. PO to Product Owner (właściciel produktu) danego sprintu.</p>
 <hr />
 <h2>Przed spotkaniem (15 min przygotowania na własną rękę)</h2>
-<ol><li>Zagraj jedną partię z botem w prototypie (<code>npx serve prototype/game</code> albo przez GitHub Pages).</li><li>Przeczytaj <strong><code>README.md</code></strong> (<code>../../../README.md</code>), <strong><code>01-prd-wymagania-produktu.md</code></strong> (<code>../../01-dokumentacja-systemowa/01-prd-wymagania-produktu.md</code>) oraz <strong><code>02-specyfikacja-regul-gry.md</code></strong> (<code>../../01-dokumentacja-systemowa/02-specyfikacja-regul-gry.md</code>) §1–6.</li><li>Uruchom skrypt <code>tools/setup.ps1</code>. Jeśli coś nie działa, zanotuj problem razem z wynikiem <code>tools/doctor.ps1</code>.</li></ol>
+<ol><li>Zagraj jedną partię z botem w prototypie (<code>npx serve prototype/game</code> albo przez GitHub Pages).</li><li>Przeczytaj <strong><code>README.md</code></strong> (<code>../../../README.md</code>), <strong><code>01-prd-wymagania-produktu.md</code></strong> (<code>../../01-dokumentacja-systemowa/01-prd-wymagania-produktu.md</code>) oraz <strong><code>02-specyfikacja-regul-gry.md</code></strong> (<code>../../01-dokumentacja-systemowa/02-specyfikacja-regul-gry.md</code>) §1–6.</li><li>Uruchom <code>npm run setup</code>. Jeśli coś nie działa, zanotuj problem razem z wynikiem <code>npm run doctor</code>.</li></ol>
 <hr />
 <h2>Plan spotkania (90 min)</h2>
 <table><thead><tr>
@@ -37,7 +37,7 @@
 </tr>
 <tr>
 <td><p>0:30–0:45</p></td>
-<td><p><strong>Architektura i repozytorium:</strong> warstwy, 5 kontraktów, serwer autorytatywny, pokaz <code>dotnet run --project src/Rejoltance.AppHost</code></p></td>
+<td><p><strong>Architektura i repozytorium:</strong> warstwy, 5 kontraktów, serwer autorytatywny, pokaz <code>npm run dev</code></p></td>
 <td><p>architekt</p></td>
 <td><p><strong><code>05-sad-architektura-systemu.md</code></strong> (<code>../../01-dokumentacja-systemowa/05-sad-architektura-systemu.md</code>), <strong><code>08-mapa-kodu-i-modulow.md</code></strong> (<code>../../01-dokumentacja-systemowa/08-mapa-kodu-i-modulow.md</code>)</p></td>
 <td><p>zrozumienie granic modułów</p></td>
@@ -138,7 +138,7 @@
 <th><p>Klucz Story</p></th>
 </tr></thead><tbody>
 <tr>
-<td><p>Uruchomienie środowiska (<code>tools/setup.ps1</code>) na każdym laptopie</p></td>
+<td><p>Uruchomienie środowiska (<code>npm run setup</code>) na każdym laptopie</p></td>
 <td><p>Wszyscy</p></td>
 <td><p><code>E0-S01</code></p></td>
 </tr>

@@ -11,11 +11,11 @@ Wypełnij raport na koniec sprintu, przed Sprint Review. Zastąp pola w nawiasac
 
 | Metryka jakości | Wynik w Sprincie `N` | Wartość docelowa (bramka jakości) | Status |
 |---|---|---|---|
-| **Testy jednostkowe C# (`Rejoltance.Kernel.Tests` + planowany `Rejoltance.Cards.Tests`)** | `<Przeszło / Razem>` | 100% zielone | `✅ / ❌` |
-| **Testy integracyjne (`Rejoltance.Server.Tests`)** | `<Przeszło / Razem>` | 100% zielone | `✅ / ❌` |
+| **Testy jednostkowe silnika i kart (`packages/engine/test`, `packages/content/test`)** | `<Przeszło / Razem>` | 100% zielone | `✅ / ❌` |
+| **Testy integracyjne serwera (`apps/server/test`)** | `<Przeszło / Razem>` | 100% zielone | `✅ / ❌` |
 | **Testy jednostkowe UI (`Vitest`)** | `<Przeszło / Razem>` | 100% zielone | `✅ / ❌` |
 | **Testy E2E (`Playwright`)** | `<Przeszło / Razem>` | 100% zielone | `✅ / ❌` |
-| **Pokrycie kodu w `Rejoltance.Kernel` (line coverage)** | `<X %>` | `≥ 90%` (`NFR-41`) | `✅ / ❌` |
+| **Pokrycie kodu w `packages/engine` (line coverage)** | `<X %>` | `≥ 90%` (`NFR-41`) | `✅ / ❌` |
 | **Czas rozstrzygnięcia akcji w `Kernel` (p99)** | `<X ms>` | `≤ 5 ms` (`NFR-01`) | `✅ / ❌` |
 | **Link do przebiegu GitHub Actions CI** | `<URL do zielonego przebiegu CI>` | Zielony status | `✅ / ❌` |
 

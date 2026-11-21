@@ -1,6 +1,6 @@
 <ac:structured-macro ac:name="info"><ac:rich-text-body><p><strong>Synchronizacja 1:1 z repozytorium Git:</strong> <code>docs/01-dokumentacja-systemowa/10-ux-design-i-przeplywy.md</code></p></ac:rich-text-body></ac:structured-macro>
 <blockquote><p><strong>Źródło prawdy:</strong> repozytorium (<code>docs/01-dokumentacja-systemowa/10-ux-design-i-przeplywy.md</code>) · <strong>Kategoria dokumentacji:</strong> Dokumentacja produktowa — systemowa (projekt UX i przewodnik stylu) · <strong>Etap SDD:</strong> Planowanie</p></blockquote>
-<p>Ten dokument opisuje UX (User Experience, czyli doświadczenie użytkownika) klienta webowego RE:JOLTANCE (<code>src/web</code>). Znajdziesz tu:</p>
+<p>Ten dokument opisuje UX (User Experience, czyli doświadczenie użytkownika) klienta webowego RE:JOLTANCE (<code>apps/web</code>). Znajdziesz tu:</p>
 <ul><li>architekturę informacji i mapę ekranów,</li><li>szkielet układu planszy (<em>wireframe</em>),</li><li>najważniejsze przepływy użytkownika (<em>user flows</em>),</li><li>przewodnik stylu wizualnego (<em>UI style guide</em>).</li></ul>
 <p>Wzorem interakcji, grafiki i dźwięku jest działający prototyp w katalogu <strong><code>prototype/game/</code></strong> (<code>../../prototype/README.md</code>). SDD (Spec-Driven Development) to nasz sposób pracy: najpierw specyfikacja, potem kod.</p>
 <p>Szablony do opisu badań z użytkownikami są w katalogu <strong><code>05-szablony/</code></strong> (<code>../05-szablony/README.md</code>):</p>
@@ -29,7 +29,7 @@
 <table><thead><tr>
 <th><p>Ekran / widok</p></th>
 <th><p>Odpowiednik w prototypie (<code>index.html</code>)</p></th>
-<th><p>Stan w kliencie React (<code>src/web</code>)</p></th>
+<th><p>Stan w kliencie React (<code>apps/web</code>)</p></th>
 <th><p>Zadanie (Jira / backlog)</p></th>
 </tr></thead><tbody>
 <tr>
@@ -59,7 +59,7 @@
 <tr>
 <td><p><strong>Plansza meczowa (4 linie, HP, Blood, ręka)</strong></p></td>
 <td><p><code>#game</code></p></td>
-<td><p>Szkielet zaimplementowany w <code>src/web</code></p></td>
+<td><p>Szkielet zaimplementowany w <code>apps/web</code></p></td>
 <td><p><code>E4-S01</code>, <code>E4-S02</code></p></td>
 </tr>
 <tr>
@@ -126,7 +126,7 @@
   autonumber
   actor A as Gracz A (Twórca pokoju)
   actor B as Gracz B (Zaproszony kolega)
-  participant UI as Klient Webowy (src/web)
+  participant UI as Klient Webowy (apps/web)
   participant S as Serwer (MatchHub)
 
   A->>UI: Wybiera „Graj z kolegą” i talię startową

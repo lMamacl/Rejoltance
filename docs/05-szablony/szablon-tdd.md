@@ -13,7 +13,7 @@ W klasyfikacji AltexSoft TDD (Technical Design Document) łączy architekturę w
 | **Zadanie Jira** | `REJ-123` |
 | **Identyfikator zmiany OpenSpec** | `openspec/changes/rej-123-<krotki-opis>/` |
 | **Powiązane reguły i wymagania** | `R-nn`, `NFR-nn` |
-| **Moduły, których dotyczy zmiana** | `<np. Rejoltance.Kernel, Rejoltance.Contracts, src/web>` |
+| **Moduły, których dotyczy zmiana** | `<np. packages/engine, packages/contracts, apps/web>` |
 | **Autor projektu** | `<Imię i nazwisko>` |
 
 ---
@@ -27,7 +27,7 @@ W klasyfikacji AltexSoft TDD (Technical Design Document) łączy architekturę w
 
 - **Nowe lub zmienione klasy / rekordy / komponenty:**
   - `src/<Moduł>/<Plik>.cs`: `<Opis odpowiedzialności, sygnatury metod publicznych, niezmienniki>`
-- **Wpływ na 5 zamrożonych kontraktów (`Rejoltance.Contracts` ↔ `src/web/src/contracts`):**
+- **Wpływ na 5 zamrożonych kontraktów (`packages/contracts`):**
   - `<Brak zmian / Wymagana zmiana kontraktu opisana w ADR-NNNN>`
 
 ## 3. Algorytm i przepływ danych (Algorithms & Data Flow)
@@ -54,4 +54,4 @@ W klasyfikacji AltexSoft TDD (Technical Design Document) łączy architekturę w
 
 | Nazwa testu jednostkowego / integracyjnego | Projekt testowy | Scenariusz (`GIVEN / WHEN / THEN`) |
 |---|---|---|
-| `Rnn_<opis_zachowania>` | `Rejoltance.Kernel.Tests` | `GIVEN ... WHEN ... THEN ...` |
+| `Rnn_<opis_zachowania>` | `packages/engine/test` | `GIVEN ... WHEN ... THEN ...` |

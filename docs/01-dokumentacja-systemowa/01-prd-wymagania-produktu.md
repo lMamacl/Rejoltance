@@ -18,10 +18,10 @@ Pracujemy w Scrumie jako 6-osobowy zespół studencki. Zgodnie z sylabusem (EU1)
 | **Product Owner (rotacyjnie, co sprint)** | Wyznaczony członek zespołu (harmonogram w DIP §6) | Priorytety *Product Backlogu*, prowadzenie ceremonii (*Planning*, *Daily*, *Review*, *Retro*), wykres spalania (*Burndown Chart*), kontakt z Radą Graczy. | EU3, EU4, EU5 |
 | **Właściciel epiku E1 (silnik reguł — Kernel)** | Członek zespołu #1 *(do wpisania po zatwierdzeniu #9)* | Wymagania i implementacja deterministycznego silnika reguł (`R-01..R-54`, `R-70..R-72`), projekcja widoku, testy jednostkowe reguł. | EU1, EU2, EU5, EU6 |
 | **Właściciel epiku E2 (karty i DSL efektów)** | Członek zespołu #2 *(do wpisania po zatwierdzeniu #9)* | Katalog kart i talii (`cards.json`), walidator słownika DSL, obsługa efektów i wyzwalaczy kart (`R-60..R-69`). | EU1, EU2, EU5, EU6 |
-| **Właściciel epiku E3 (serwer i sieć SignalR)** | Członek zespołu #3 *(do wpisania po zatwierdzeniu #9)* | Autorytatywny serwer meczu (`MatchHub`, `MatchSessionManager`), pokoje PvP, rozłączenia i powroty do meczu (`R-73`, `R-80..R-84`). | EU1, EU2, EU5, EU6 |
-| **Właściciel epiku E4 (klient webowy i UX)** | Członek zespołu #4 *(do wpisania po zatwierdzeniu #9)* | Interfejs w React + TypeScript (`src/web`), plansza 4 linii, interakcje (`PendingInteraction`), animacje, podręcznik gracza. | EU1, EU2, EU5, EU6 |
+| **Właściciel epiku E3 (serwer i sieć czasu rzeczywistego)** | Członek zespołu #3 *(do wpisania po zatwierdzeniu #9)* | Autorytatywny serwer meczu (`apps/server`, `MatchSessionManager`), pokoje PvP, rozłączenia i powroty do meczu (`R-73`, `R-80..R-84`). | EU1, EU2, EU5, EU6 |
+| **Właściciel epiku E4 (klient webowy i UX)** | Członek zespołu #4 *(do wpisania po zatwierdzeniu #9)* | Interfejs w React + TypeScript (`apps/web`), plansza 4 linii, interakcje (`PendingInteraction`), animacje, podręcznik gracza. | EU1, EU2, EU5, EU6 |
 | **Właściciel epiku E5 (bot AI i symulator)** | Członek zespołu #5 *(do wpisania po zatwierdzeniu #9)* | Wyrocznia referencyjna (testy różnicowe względem prototypu JS), heurystyczny bot AI do gry solo, symulator partii bot-vs-bot. | EU1, EU2, EU5, EU6 |
-| **Właściciel epiku E6 (platforma, dane i jakość)** | Członek zespołu #6 *(do wpisania po zatwierdzeniu #9)* | Orkiestracja Aspire, konta graczy, kreator talii (*Deckbuilder*), migracja SQLite → PostgreSQL, CI/CD, testy E2E w Playwright, wersja demo. | EU1, EU2, EU5, EU6 |
+| **Właściciel epiku E6 (platforma, dane i jakość)** | Członek zespołu #6 *(do wpisania po zatwierdzeniu #9)* | Uruchamianie i wdrożenie, konta graczy, kreator talii (*Deckbuilder*), migracja SQLite → PostgreSQL, CI/CD, testy E2E w Playwright, wersja demo. | EU1, EU2, EU5, EU6 |
 | **Rada Graczy Testowych (użytkownicy końcowi)** | 3 graczy spoza zespołu | Walidacja wymagań, testy użyteczności, odbiór przyrostów na *Sprint Review*. | Walidacja EU1 i EU2 |
 
 DSL (Domain-Specific Language) to nasz mały język do opisu efektów kart w danych JSON. CI/CD to automatyczne budowanie, testowanie i wdrażanie. E2E (end-to-end) to testy całej aplikacji z perspektywy użytkownika.
@@ -44,13 +44,13 @@ RE:JOLTANCE to autorska gra karciana dla dwóch osób typu *lane battler*. Gracz
 
 ### 2.2 Cel główny produktu i miary sukcesu
 
-Budujemy webową wersję gry RE:JOLTANCE z autorytatywnym serwerem w .NET 10 i klientem w React + TypeScript. Gra ma być bezpieczna, deterministyczna i przetestowana. Gracz otwiera link w przeglądarce i od razu gra 1v1 albo trenuje z botem AI. Nie musi niczego instalować.
+Budujemy webową wersję gry RE:JOLTANCE z autorytatywnym serwerem i klientem w TypeScript (Node.js + React). Gra ma być bezpieczna, deterministyczna i przetestowana. Gracz otwiera link w przeglądarce i od razu gra 1v1 albo trenuje z botem AI. Nie musi niczego instalować.
 
 | Wymiar celu | Miara sukcesu (KPI / kryterium odbioru) | Kiedy sprawdzamy |
 |---|---|---|
 | **Dostępność bez instalacji (Zero-Install)** | Nowy gracz z Rady Graczy uruchamia mecz z botem lub z drugim graczem przez link i kończy pierwszą partię w **≤ 15 minut** bez naszej pomocy (NFR-20). | Sprint Review S3 i S5 |
-| **Uczciwość i bezpieczeństwo (Server Authority)** | **0% wycieku ukrytych informacji** w pakietach SignalR. Klient dostaje tylko projekcję `MatchView`, bez ręki i kolejności talii przeciwnika (R-80, R-81, NFR-41). | Każdy sprint (testy `ProjectionTests`) |
-| **Poprawność i determinizm reguł** | **100% zaimplementowanych reguł (`R-nn`)** ma testy jednostkowe xUnit. Ten sam `seed` i ta sama lista intencji zawsze dają ten sam stan końcowy meczu (R-83, NFR-51). | Każdy PR w GitHub Actions CI |
+| **Uczciwość i bezpieczeństwo (Server Authority)** | **0% wycieku ukrytych informacji** w wiadomościach Socket.IO. Klient dostaje tylko projekcję `MatchView`, bez ręki i kolejności talii przeciwnika (R-80, R-81, NFR-41). | Każdy sprint (testy `ProjectionTests`) |
+| **Poprawność i determinizm reguł** | **100% zaimplementowanych reguł (`R-nn`)** ma testy jednostkowe (Vitest). Ten sam `seed` i ta sama lista intencji zawsze dają ten sam stan końcowy meczu (R-83, NFR-51). | Każdy PR w GitHub Actions CI |
 | **Wydajność w czasie rzeczywistym** | Serwer przetwarza intencję i rozsyła `MatchUpdated` w czasie **p95 ≤ 200 ms** przy 50 równoległych meczach (NFR-01). | Sprint Review S4 i S5 |
 
 KPI (Key Performance Indicator) to mierzalny wskaźnik sukcesu. NFR (Non-Functional Requirement) to wymaganie niefunkcjonalne, np. wydajność albo bezpieczeństwo. p95 oznacza, że 95% pomiarów mieści się w limicie.
@@ -88,12 +88,12 @@ Pełny rejestr historyjek i podzadań jest w pliku [`03-dokumentacja-procesowa/0
 
 | ID | Nazwa epiku | Moduł w kodzie | Liczba story (S1 / S2) | Główny cel |
 |---|---|---|---|---|
-| **E0** | Fundamenty i środowisko SDD | Repo, `tools/`, `docs/` | 4 story (Sprint 0) | Działający szkielet Aspire, CI/CD, uzgodnienie rozbieżności reguł z Radą Graczy, import backlogu do Jiry. |
-| **E1** | Silnik reguł gry (Kernel) | `src/Rejoltance.Kernel` | 8 story | Deterministyczny przebieg rundy, zagrywanie jednostek, walka na 4 liniach, słowa kluczowe, koniec meczu. |
-| **E2** | Katalog kart i interpreter efektów (DSL) | `src/Rejoltance.Content`, `Kernel` | 8 story | Walidacja danych 78 kart, wyzwalacze (`OnPlayed`, `OnDeath`, `OnSacrificed`), wybór celów, akcje kart. |
-| **E3** | Autorytatywny serwer i sieć czasu rzeczywistego | `src/Rejoltance.Server` | 6 story | Pokoje 1v1 przez SignalR, projekcja `MatchView` (*Fog of War*), zegar tury, rozłączenie i powrót gracza. |
-| **E4** | Klient webowy i doświadczenie gracza (UI/UX) | `src/web` | 7 story | Plansza 4 linii, wachlarz ręki, podświetlanie `legalActions`, okna `PendingInteraction`, dziennik meczu, dźwięki, animacje. |
-| **E5** | Bot AI, wyrocznia testowa i symulator | `src/Rejoltance.Sim` *(planowany)* | 5 story | Wyrocznia porównująca Kernel C# z prototypem JS, bot AI grający przez kontrakt `Intent`, symulator bot-vs-bot. |
+| **E0** | Fundamenty i środowisko SDD | Repo, `tools/`, `docs/` | 4 story (Sprint 0) | Działający szkielet aplikacji, CI/CD, uzgodnienie rozbieżności reguł z Radą Graczy, import backlogu do Jiry. |
+| **E1** | Silnik reguł gry | `packages/engine` | 8 story | Deterministyczny przebieg rundy, zagrywanie jednostek, walka na 4 liniach, słowa kluczowe, koniec meczu. |
+| **E2** | Katalog kart i interpreter efektów (DSL) | `packages/content`, `packages/engine` | 8 story | Walidacja danych 159 kart, wyzwalacze (`OnPlayed`, `OnDeath`, `OnSacrificed`), wybór celów, akcje kart. |
+| **E3** | Autorytatywny serwer i sieć czasu rzeczywistego | `apps/server` | 6 story | Pokoje 1v1 przez Socket.IO, projekcja `MatchView` (*Fog of War*), zegar tury, rozłączenie i powrót gracza. |
+| **E4** | Klient webowy i doświadczenie gracza (UI/UX) | `apps/web` | 7 story | Plansza 4 linii, wachlarz ręki, podświetlanie `legalActions`, okna `PendingInteraction`, dziennik meczu, dźwięki, animacje. |
+| **E5** | Bot AI, wyrocznia testowa i symulator | bot i symulator *(planowane)* | 5 story | Wyrocznia porównująca silnik z prototypem JS, bot AI grający przez kontrakt `Intent`, symulator bot-vs-bot. |
 | **E6** | Platforma, trwałość danych, QA i wdrożenie | `Server`, `AppHost`, `tests/` | 9 story | Testy E2E w Playwright, konta graczy (Identity), *Deckbuilder*, migracja na PostgreSQL, kontenery, demo, replay. |
 
 ### Przykładowe historyjki z kryteriami akceptacji (`GIVEN / WHEN / THEN`)
@@ -138,7 +138,7 @@ Mamy **55 reguł domenowych**. Każda jest formalnie zapisana w pliku `openspec/
 1. **Piaskownica i trening z botem (`StartSandbox` / `StartBotMatch`).** Gracz od razu uruchamia mecz testowy albo pojedynek z botem AI. Wybiera jedną z 5 gotowych talii startowych.
 2. **Lobby i prywatne pokoje 1v1 (`CreateRoom` / `JoinRoom`).** Gracz tworzy pokój z krótkim kodem i linkiem zapraszającym. System łączy dwóch graczy w parę.
 3. **Odporność na chwilową utratę połączenia (`Reconnect`).** Serwer trzyma sesję meczu przez 60 sekund od zerwania połączenia WebSocket. Po powrocie gracz dostaje pełny widok `MatchView`.
-4. **Konta użytkowników i logowanie (od Sprintu 2).** Rejestracja i logowanie działają na bezpiecznych ciasteczkach `HttpOnly` (ASP.NET Core Identity). Można też zagrać szybko jako gość.
+4. **Konta użytkowników i logowanie (od Sprintu 2).** Rejestracja i logowanie działają na bezpiecznych ciasteczkach `HttpOnly` (hasła przechowywane jako skrót). Można też zagrać szybko jako gość.
 5. **Kreator talii (*Deckbuilder*, fala W2).** Gracz tworzy, sprawdza (30 kart, maks. 3 kopie, bez tokenów) i zapisuje własne talie na swoim koncie.
 6. **Historia meczów i deterministyczny replay (fala W2).** Baza danych przechowuje ziarno losowości (`Seed`) i uporządkowaną listę intencji (`Intent[]`). Z tych danych odtwarzamy przebieg zakończonego meczu.
 
@@ -151,11 +151,11 @@ Pełna specyfikacja 18 wymagań niefunkcjonalnych (NFR) ze scenariuszami testowy
 | Charakterystyka wg ISO/IEC 25010 | ID wymagania | Wymóg mierzalny (metryka i próg) |
 |---|---|---|
 | **Wydajność (*Performance*)** | `NFR-01`, `NFR-02` | Obsługa ruchu na serwerze **p95 ≤ 200 ms** przy 50 równoległych meczach. Paczka startowa JS **≤ 500 kB (gzip)**, czas do interaktywności **≤ 3 s**. |
-| **Kompatybilność (*Compatibility*)** | `NFR-10`, `NFR-11` | Działa w 2 ostatnich wersjach Chrome, Edge, Firefox i Safari (od `1280×720`). Build zatrzymuje się, gdy kontrakt C# ↔ TS się nie zgadza. |
+| **Kompatybilność (*Compatibility*)** | `NFR-10`, `NFR-11` | Działa w 2 ostatnich wersjach Chrome, Edge, Firefox i Safari (od `1280×720`). Build zatrzymuje się, gdy kontrakt serwer ↔ klient się nie zgadza. |
 | **Użyteczność i dostępność (*Usability*)** | `NFR-20..NFR-22` | Nowy gracz kończy pierwszy mecz w **≤ 15 min** bez pomocy. UI podświetla tylko legalne ruchy z `legalActions`. Obsługa z klawiatury i kontrast tekstu **WCAG 2.1 AA (≥ 4.5:1)**. |
 | **Niezawodność (*Reliability*)** | `NFR-30`, `NFR-31` | Instancja demo dostępna **≥ 99%** czasu w tygodniu przed *Sprint Review*. Błąd w jednym meczu nie wpływa na inne mecze. Powrót po rozłączeniu w ciągu **60 s** opisuje reguła `R-73`. |
 | **Bezpieczeństwo (*Security*)** | `NFR-40..NFR-42` | Żadna karta przeciwnika nie wycieka w danych sieciowych. Serwer sprawdza miejsce przy stole (`Seat`) i limituje żądania (≤ 10 intencji/s). Brak sekretów w repozytorium. |
-| **Utrzymywalność (*Maintainability*)** | `NFR-50..NFR-52` | Testy `NetArchTest` pilnują jednokierunkowych granic modułów. Pokrycie kodu `Rejoltance.Kernel` testami **≥ 80%**. Zero ostrzeżeń kompilatora w CI (`TreatWarningsAsErrors`). |
+| **Utrzymywalność (*Maintainability*)** | `NFR-50..NFR-52` | ESLint i test architektury pilnują jednokierunkowych granic modułów. Pokrycie kodu silnika testami **≥ 80%**. Zero ostrzeżeń kompilatora w CI (`TreatWarningsAsErrors`). |
 | **Przenośność (*Portability*)** | `NFR-60`, `NFR-61` | Całe środowisko lokalne startuje jednym poleceniem, bez Dockera (Sprinty 0–3). Wersja demo/produkcyjna działa w jednym kontenerze OCI. |
 | **Bezpieczeństwo użytkownika (*Safety*)** | `NFR-70` | Żadne efekty świetlne nie migają częściej niż 3 razy na sekundę. Gra respektuje systemowe ustawienie `prefers-reduced-motion`. |
 
@@ -175,4 +175,4 @@ Mapę ekranów, układ planszy (*wireframe*), przepływy użytkownika i przewodn
 2. **Mikropłatności, sklep z paczkami kart i waluty premium.** Wszystkie karty są odblokowane dla każdego gracza w kreatorze talii.
 3. **Architektura wieloserwerowa (klastry Kubernetes, szyna komunikatów Redis/RabbitMQ) w Semestrze 1.** Zgodnie z Konstytucją (Art. VIII) budujemy modularny monolit. Aktywne mecze żyją w pamięci jednego procesu serwera.
 4. **Czat tekstowy i głosowy w grze.** Gracze rozmawiają przez zewnętrzne komunikatory (np. Discord). Dzięki temu nie musimy budować moderacji treści.
-5. **Tryby dla więcej niż 2 graczy (2v2, Free-for-All).** Silnik reguł `Rejoltance.Kernel` jest zaprojektowany pod pojedynek 1 na 1.
+5. **Tryby dla więcej niż 2 graczy (2v2, Free-for-All).** Silnik reguł (`packages/engine`) jest zaprojektowany pod pojedynek 1 na 1.
