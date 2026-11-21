@@ -38,7 +38,7 @@ Serwer MUST przyjmować od klienta tylko intencje (`Intent`), MUST sprawdzić, �
 
 ### Requirement: R-83 Determinizm i replay
 
-Kernel MUST być deterministyczny: ten sam seed i ta sama uporządkowana lista intencji SHALL dać identyczny stan i zdarzenia. Kernel MUST NOT używać zegara, `System.Random`, sieci ani plików.
+Silnik (`packages/engine`) MUST być deterministyczny: ten sam seed i ta sama uporządkowana lista intencji SHALL dać identyczny stan i zdarzenia. Silnik MUST NOT używać zegara, `Math.random`, sieci ani plików.
 
 #### Scenario: Powtórka meczu
 

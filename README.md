@@ -1,6 +1,6 @@
 # RE:JOLTANCE
 
-**Sieciowa taktyczna gra karciana (*lane battler*) z autorytatywnym serwerem .NET 10, klientem React/TypeScript i procesem Spec-Driven Development (SDD).**
+**Sieciowa taktyczna gra karciana (*lane battler*) z autorytatywnym serwerem Node.js/TypeScript, klientem React/TypeScript i procesem Spec-Driven Development (SDD).**
 
 Projekt zespołowy (6 osób, 2 semestry) realizowany na Wydziale Informatyki Politechniki Białostockiej.
 
@@ -8,17 +8,17 @@ Projekt zespołowy (6 osób, 2 semestry) realizowany na Wydziale Informatyki Pol
 
 ## Szybki start (3 komendy)
 
-Wymagania wstępne: **.NET 10 SDK**, **Node.js 24 LTS**, **Python 3.11+**, **Git**.
+Wymagania wstępne: **Node.js 24**, **Python 3.11+** (skrypty w `tools/`), **Git**.
 
 ```powershell
-# 1. Jednorazowa konfiguracja środowiska (instalacja zależności, OpenSpec, adapterów agentów AI)
-pwsh tools/setup.ps1
+# 1. Jednorazowa konfiguracja: sprawdzenie narzędzi, instalacja zależności, plik .env, testy
+npm run setup
 
-# 2. Uruchomienie pełnego systemu (serwer gry ASP.NET Core + klient webowy Vite przez .NET Aspire)
-dotnet run --project src/Rejoltance.AppHost
+# 2. Uruchomienie gry: serwer (Fastify + Socket.IO) i klient (Vite) razem
+npm run dev
 
-# 3. Uruchomienie wszystkich testów, walidacji specyfikacji OpenSpec i strażników jakości
-dotnet test
+# 3. Pełne sprawdzenie przed PR: lint, typecheck, testy, build + OpenSpec i dokumentacja
+npm run verify
 npm run check
 ```
 
@@ -48,14 +48,13 @@ Rejoltance/
 ├── docs/                       ← Dokumentacja techniczna i procesowa (układ 1:1 z Confluence PB)
 ├── openspec/                   ← Spec-Driven Development: żywe specyfikacje (specs/) i propozycje zmian (changes/)
 ├── .agents/                    ← Kanon systemu agentów AI (rules/, agents/, skills/) + adaptery IDE
-├── src/
-│   ├── Rejoltance.Contracts/   ← 5 zamrożonych kontraktów DTO (Intent, LegalAction, PendingInteraction, MatchView, DomainEvent)
-│   ├── Rejoltance.Content/     ← Katalog 130 kart + 29 tokenów z cards.json i walidator schematu
-│   ├── Rejoltance.Kernel/      ← Czysty, deterministyczny silnik reguł gry w C# (zero I/O, SeededRng)
-│   ├── Rejoltance.Server/      ← Autorytatywny serwer ASP.NET Core + SignalR (/api/hubs/match) + projekcja Fog of War
-│   ├── Rejoltance.AppHost/     ← Orkiestrator deweloperski .NET Aspire
-│   └── web/                    ← Klient przeglądarkowy React 19 + TypeScript 5 + Vite
-├── tests/                      ← Testy jednostkowe, integracyjne, kontraktowe, architektoniczne i E2E (Playwright)
+├── packages/
+│   ├── contracts/              ← 5 zamrożonych kontraktów (Intent, LegalAction, PendingInteraction, MatchView, DomainEvent) + protokół Socket.IO
+│   ├── content/                ← Katalog 130 kart + 29 tokenów (data/cards.json), słownik DSL i walidator
+│   └── engine/                 ← Czysty, deterministyczny silnik reguł gry w TypeScript (zero I/O, RNG z ziarnem)
+├── apps/
+│   ├── server/                 ← Autorytatywny serwer Node.js: Fastify (REST) + Socket.IO, projekcja Fog of War
+│   └── web/                    ← Klient przeglądarkowy React 19 + TypeScript + Vite
 ├── prototype/                  ← Prototyp JS (git subtree z PanCoto/rejoltance-prototype): game/, lab/, tools/
 │   └── game/                   ← Gra referencyjna (wyrocznia zachowania reguł gry, ADR-0013)
 └── tools/                      ← Skrypty automatyzacji: agents/, backlog/, content/, confluence/
@@ -67,10 +66,9 @@ Rejoltance/
 
 | Komenda | Co weryfikuje? |
 |---|---|
-| `dotnet build -warnaserror` | Kompilacja wszystkich projektów C# z zerową tolerancją ostrzeżeń |
-| `dotnet test` | Testy reguł (`Rnn_`), architektury, kontraktów JSON i integracji serwera |
+| `npm run verify` | Lint (z granicami modułów i determinizmem silnika), typecheck, testy (`Rnn_`, serwer przez Socket.IO, klient) i build klienta |
 | `npm run check` | Walidacja `openspec validate --all --strict` oraz linter dokumentacji `markdownlint-cli2` |
 | `python tools/agents/sync_agents.py --check` | Spójność reguł, roli recenzenta, skilli i adapterów Claude Code |
 | `python tools/backlog/gen_jira_csv.py --check` | Dwukierunkowa spójność `backlog.toml`, `BACKLOG.md`, plików CSV Jiry i `03-indeks-regul-r-nn.md` |
-| `python tools/content/extract_cards.py --check` | Zgodność katalogu `cards.json` z referencyjnym prototypem JS (`prototype/game`) |
+| `python tools/content/extract_cards.py --check` | Zgodność katalogu `packages/content/data/cards.json` z referencyjnym prototypem JS (`prototype/game`) |
 | `python tools/confluence/sync_confluence.py --check` | Gotowość drzewa `docs/` do eksportu 1:1 do przestrzeni Confluence PB |

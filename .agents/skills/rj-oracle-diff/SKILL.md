@@ -1,13 +1,13 @@
 ---
 name: rj-oracle-diff
-description: "Porównuje rozstrzyganie reguł gry w Rejoltance.Kernel z referencyjnym prototypem JavaScript (prototype/game/engine.js), aby potwierdzić zgodność zachowania lub udokumentować rozbieżności D-nn."
+description: "Porównuje rozstrzyganie reguł gry w silniku (packages/engine) z referencyjnym prototypem JavaScript (prototype/game/engine.js), aby potwierdzić zgodność zachowania lub udokumentować rozbieżności D-nn."
 ---
 
 # Umiejętność: Porównanie z wyrocznią prototypu JS (`rj-oracle-diff`)
 
 ## Kiedy używać tej procedury?
 
-Uruchamiaj, gdy chcesz upewnić się, że implementacja reguły lub karty w `Rejoltance.Kernel` zachowuje się identycznie jak referencyjny prototyp `prototype/game/engine.js` (kanon wg `ADR-0013`), lub gdy diagnozujesz rozbieżność w testach różnicowych (Epik E5).
+Uruchamiaj, gdy chcesz upewnić się, że implementacja reguły lub karty w `packages/engine` zachowuje się identycznie jak referencyjny prototyp `prototype/game/engine.js` (kanon wg `ADR-0013`), lub gdy diagnozujesz rozbieżność w testach różnicowych (Epik E5).
 
 ---
 
@@ -20,9 +20,9 @@ Uruchamiaj, gdy chcesz upewnić się, że implementacja reguły lub karty w `Rej
 
 2. **Sprawdź rejestr znanych rozbieżności (`04-rozbieznosci-prototypu.md`):**
    - Zanim uznasz zachowanie prototypu JS za bezbłędne, sprawdź w `docs/01-dokumentacja-systemowa/04-rozbieznosci-prototypu.md`, czy dany fragment nie został już oznaczony jako błąd prototypu (`D-01..D-20`).
-   - Jeśli istnieje zatwierdzona decyzja w `04-rozbieznosci-prototypu.md`, wiążąca dla silnika C# jest **decyzja zespołu i specyfikacja OpenSpec**, a nie błąd prototypu.
+   - Jeśli istnieje zatwierdzona decyzja w `04-rozbieznosci-prototypu.md`, wiążąca dla silnika jest **decyzja zespołu i specyfikacja OpenSpec**, a nie błąd prototypu.
 
-3. **Porównaj krok po kroku logikę C# i JS:**
+3. **Porównaj krok po kroku logikę silnika i prototypu** (oba są w JS/TS, więc można też uruchomić ten sam scenariusz w obu i porównać wynik):
    - Kolejność wykonywania wyzwalaczy i rozstrzygania linii `0..3`.
    - Modyfikatory obrażeń (`Armored`, `Marked`, `SplashDamage`, `Breakthrough`).
    - Moment sprawdzania śmierci jednostek i kolejki `deathQueue` (`R-53`).

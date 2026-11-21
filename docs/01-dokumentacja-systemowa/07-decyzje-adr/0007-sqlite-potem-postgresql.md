@@ -1,6 +1,6 @@
 # ADR-0007: SQLite na start, PostgreSQL od Sprintu 4
 
-- **Status:** zatwierdzona (2026-10-27)
+- **Status:** zatwierdzona (2026-10-27); po [ADR-0015](0015-backend-node-typescript.md) baza dochodzi w Node.js razem z pierwszą funkcją, która jej potrzebuje
 - **Data:** 2026-10-27
 - **Powiązane:** `RejoltanceDb.cs`, `AppHost.cs`, E6-S04, pytanie otwarte #10
 

@@ -1,6 +1,6 @@
 # ADR-0004: Silnik reguł pisany od nowa, czysty i deterministyczny
 
-- **Status:** zatwierdzona (2026-10-27)
+- **Status:** zatwierdzona (2026-10-27); silnik przeniesiony do TypeScript (`packages/engine`) — [ADR-0015](0015-backend-node-typescript.md)
 - **Data:** 2026-10-27
 - **Powiązane:** ADR-0005, `src/Rejoltance.Kernel`, reguły R-83, R-84
 

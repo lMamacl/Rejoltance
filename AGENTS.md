@@ -13,11 +13,11 @@ Ten plik jest odczytywany automatycznie przez narzędzia AI, z których korzysta
 
 | Warstwa | Katalog | Kluczowe niezmienniki architektoniczne |
 |---|---|---|
-| **Kontrakty (DTO)** | `src/Rejoltance.Contracts` ↔ `src/web/src/contracts` | 5 zamrożonych typów (`Intent`, `LegalAction`, `PendingInteraction`, `MatchView`, `DomainEvent`). Zmiana wymaga **ADR** i aktualizacji testów próbek JSON (`ContractSampleTests`). |
-| **Katalog kart** | `src/Rejoltance.Content` | Dane 130 kart i 29 tokenów w `cards.json` generowane z `prototype/game/cards.js` (`tools/content/extract_cards.py`). Brak logiki gry. |
-| **Silnik reguł (Kernel)** | `src/Rejoltance.Kernel` | Czysty C# (`.NET 10`), zero I/O, zero zegara systemowego, zero `System.Random`. Wyłącznie deterministyczny `SeededRng`. |
-| **Serwer autorytatywny** | `src/Rejoltance.Server` | ASP.NET Core + SignalR (`/api/hubs/match`). Waliduje intencje przez `Kernel.LegalActions` i rozsyła spersonalizowany `MatchView` (*Fog of War* — `R-80…R-82`). |
-| **Klient webowy** | `src/web` | React 19 + TypeScript 5 + Vite. Renderuje wyłącznie `MatchView` i wysyła `Intent`. Nie liczy obrażeń ani reguł gry. |
+| **Kontrakty** | `packages/contracts` | 5 zamrożonych typów (`Intent`, `LegalAction`, `PendingInteraction`, `MatchView`, `DomainEvent`) i protokół Socket.IO, wspólne dla serwera i klienta. `Intent` ma schemat zod. Zmiana wymaga **ADR** i odświeżenia próbki `samples/match-view.sample.json`. |
+| **Katalog kart** | `packages/content` | Dane 130 kart i 29 tokenów w `data/cards.json` generowane z `prototype/game/cards.js` (`tools/content/extract_cards.py`), słownik DSL i walidator. Brak logiki gry. |
+| **Silnik reguł** | `packages/engine` | Czysty TypeScript: zero I/O, zegara i `Math.random()` (pilnuje ESLint). Losowość tylko przez deterministyczny RNG (`rng.ts`). |
+| **Serwer autorytatywny** | `apps/server` | Node.js 24 + Fastify (REST) + Socket.IO. Sprawdza intencje schematem zod i `engine.legalActions`, rozsyła `MatchView` każdemu graczowi osobno (*Fog of War* — `R-80…R-82`). |
+| **Klient webowy** | `apps/web` | React 19 + TypeScript + Vite. Renderuje wyłącznie `MatchView` i wysyła `Intent`. Importuje tylko `@rejoltance/contracts`. |
 | **Specyfikacje SDD** | `openspec/specs/` | Żywe specyfikacje 55 reguł domenowych `R-nn` oraz 18 wymagań jakościowych `NFR-nn`. |
 | **Dokumentacja 1:1 Confluence** | `docs/` | Zorganizowana wg taksonomii AltexSoft i cyklu SDD (`00-przewodnik-i-setup` .. `05-szablony`). |
 
@@ -28,7 +28,7 @@ Ten plik jest odczytywany automatycznie przez narzędzia AI, z których korzysta
 1. **Konstytucja i reguły strażnicze:** [`.agents/rules/00-konstytucja.md`](.agents/rules/00-konstytucja.md) oraz właściwa reguła tematyczna z `.agents/rules/10..70-*.md`.
 2. **Wymagania i architektura (AltexSoft Core):** [`PRD`](docs/01-dokumentacja-systemowa/01-prd-wymagania-produktu.md), [`SAD`](docs/01-dokumentacja-systemowa/05-sad-architektura-systemu.md) oraz [`Mapa kodu`](docs/01-dokumentacja-systemowa/08-mapa-kodu-i-modulow.md).
 3. **Specyfikacja domeny zadania:** `openspec/specs/<domena>/spec.md` oraz [`Indeks reguł R-nn`](docs/01-dokumentacja-systemowa/03-indeks-regul-r-nn.md).
-4. **Kod docelowego modułu i jego `README.md`:** `src/<moduł>/README.md`.
+4. **Kod docelowego modułu i jego `README.md`:** `packages/<pakiet>/README.md` albo `apps/<aplikacja>/README.md`.
 
 > **Zasada ochrony okna kontekstowego:** Nie wczytuj naraz całego pliku `prototype/game/engine.js` (~3000 linii) ani pełnego `cards.json`. Wyszukuj konkretne funkcje przez `grep` lub korzystaj z wyekstrahowanych reguł w `openspec/specs/`.
 
@@ -44,9 +44,8 @@ Ten plik jest odczytywany automatycznie przez narzędzia AI, z których korzysta
 4. **Weryfikacja przed commitem:**
 
 ```bash
-dotnet build -warnaserror
-dotnet test
-npm run check
+npm run verify     # lint (z granicami modułów), typecheck, testy, build
+npm run check      # OpenSpec + markdownlint
 python tools/agents/sync_agents.py --check
 python tools/backlog/gen_jira_csv.py --check
 ```
@@ -66,6 +65,6 @@ Korzystamy z **Claude Code** oraz narzędzi, które czytają ten plik i `.agents
 
 ## 5. Granice autonomii agenta AI
 
-- **Zawsze pytaj człowieka przed:** zmianą 5 zamrożonych kontraktów, modyfikacją reguły ze statusem `❓` w [`04-rozbieznosci-prototypu.md`](docs/01-dokumentacja-systemowa/04-rozbieznosci-prototypu.md), dodaniem nowej zależności NuGet/npm, usunięciem testu lub operacją `git push` / `git reset`.
+- **Zawsze pytaj człowieka przed:** zmianą 5 zamrożonych kontraktów, modyfikacją reguły ze statusem `❓` w [`04-rozbieznosci-prototypu.md`](docs/01-dokumentacja-systemowa/04-rozbieznosci-prototypu.md), dodaniem nowej zależności npm, usunięciem testu lub operacją `git push` / `git reset`.
 - **Nigdy (konstytucja, art. X):** nie merguj PR, nie pushuj do `main` ani `develop`, nie twórz tagów i wydań, nie czytaj ani nie przesyłaj sekretów (tokeny, hasła, `.env`). Merge robi człowiek.
 - **Nigdy nie zgaduj po cichu:** jeśli wymaganie jest niejednoznaczne, wskaż brak i zaproponuj warianty wraz z ich konsekwencjami.

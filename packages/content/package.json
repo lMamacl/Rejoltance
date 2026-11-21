@@ -1,0 +1,11 @@
+{
+  "name": "@rejoltance/content",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Card catalogue as data: cards.json and decks.json generated from prototype/game (tools/content/extract_cards.py), DSL vocabulary and validator.",
+  "exports": {
+    ".": "./src/index.ts",
+    "./data/*": "./data/*"
+  }
+}

@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Interpreter efektów kart (DSL): wyzwalacz → strefa → warunek → akcje. Dane: `src/Rejoltance.Content/Data/cards.json`, słownik: `Vocabulary.cs`, kanon zachowania: `engine.js` (`fire`, `cond`, `tg`, `act`).
+Interpreter efektów kart (DSL): wyzwalacz → strefa → warunek → akcje. Dane: `packages/content/data/cards.json`, słownik: `packages/content/src/vocabulary.ts`, kanon zachowania: `engine.js` (`fire`, `cond`, `tg`, `act`).
 
 ## Requirements
 

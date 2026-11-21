@@ -1,39 +1,38 @@
 ---
 trigger: model_decision
-description: "Standardy kodu C# (.NET 10) i TypeScript (strict), zasada głośnej porażki (fail loud), nazwy testów Rnn_ i obowiązkowe sprawdzenie przed końcem zadania."
+description: "Standardy kodu TypeScript (strict, Node 24), zasada głośnej porażki (fail loud), nazwy testów Rnn_ i obowiązkowe sprawdzenie przed końcem zadania."
 ---
 
-# 40. Standardy kodu, determinizm i testy automatyczne
+# 40. Standardy kodu, determinizm i testy
 
 > Pełna strategia jakości: [`docs/01-dokumentacja-systemowa/11-strategia-testow-qa.md`](../../docs/01-dokumentacja-systemowa/11-strategia-testow-qa.md).
 
-## 1. Konwencje języka C# (`.NET 10`) i TypeScript (`strict`)
+## 1. TypeScript
 
-- **Język identyfikatorów w kodzie:** angielski (`PascalCase` dla typów i metod w C#, `camelCase` dla pól JSON i kodu TS). Komentarze wyjaśniające zawiłości domenowe pisz po polsku z odwołaniem do numeru reguły (np. `// R-42: rozstrzyganie linii 0..3`).
-- **Niemutowalność i bezpieczeństwo typów:** w `Contracts` i `Kernel` używaj niemutowalnych typów `record` / `readonly record struct`. Włączone są `<Nullable>enable</Nullable>`, `<TreatWarningsAsErrors>true</TreatWarningsAsErrors>` oraz `strict: true` w `tsconfig.json` (zakaz typu `any`).
-- **Zasada Fail Loud:** nie połykaj wyjątków pustym blokiem `catch {}` i nie maskuj brakujących danych domyślnym `null`. Nieznany kod efektu karty w `Content`/`Kernel` musi natychmiast rzucić czytelny wyjątek z identyfikatorem karty i nazwą akcji (`R-60`).
+- **Identyfikatory po angielsku**, `camelCase` dla zmiennych i pól, `PascalCase` dla typów. Komentarze o regułach gry odwołują się do numeru reguły (np. `// R-42: rozstrzyganie linii 0..3`).
+- **`strict: true`**, zero `any`. Node uruchamia pliki `.ts` bez kompilacji, więc dozwolona jest tylko składnia usuwalna (`erasableSyntaxOnly`: bez `enum` i `namespace`), a importy względne mają rozszerzenie `.ts`.
+- **Niemutowalny stan:** silnik zwraca nowy stan zamiast zmieniać stary (`readonly`, kopie przez `{ ...obiekt }`).
+- **Fail loud:** bez pustych `catch {}` i bez cichych wartości domyślnych. Nieznane słowo DSL odrzuca walidator, a niezaimplementowana reguła rzuca `NotImplementedError` z nazwą intencji (`R-68`).
 
-## 2. Konwencja nazewnictwa i struktury testów reguł (`R-nn`)
+## 2. Testy reguł (`R-nn`)
 
-Każda reguła z [`03-indeks-regul-r-nn.md`](../../docs/01-dokumentacja-systemowa/03-indeks-regul-r-nn.md) musi posiadać test jednostkowy nazwany według wzorca:
+Testy piszemy w Vitest. Każda reguła z [`03-indeks-regul-r-nn.md`](../../docs/01-dokumentacja-systemowa/03-indeks-regul-r-nn.md) ma test, którego nazwa zaczyna się od numeru reguły:
 
-```csharp
-[Fact]
-public void R43_Mutual_strike_kills_both_units_when_damage_meets_hp()
-{
-    // GIVEN (stan początkowy meczu / linii i ustalone ziarno SeededRng)
-    // WHEN  (wykonanie Kernel.Apply lub kroku walki)
-    // THEN  (asercje na nowym MatchState oraz wyemitowanych DomainEvent[])
-}
+```ts
+it('R43_mutual_strike_kills_both_units_when_damage_meets_hp', () => {
+  // GIVEN stan meczu i ustalone ziarno RNG
+  // WHEN  engine.reduce(state, seat, intent)
+  // THEN  asercje na nowym stanie i na zdarzeniach DomainEvent[]
+});
 ```
 
-- Po dodaniu testu zaktualizuj kolumnę *Test* oraz status reguły (`📋 → ✅`) w [`docs/01-dokumentacja-systemowa/03-indeks-regul-r-nn.md`](../../docs/01-dokumentacja-systemowa/03-indeks-regul-r-nn.md).
-- Testy w `Rejoltance.Kernel.Tests` nie mogą używać opóźnień czasowych (`Task.Delay` / `Thread.Sleep`) ani zewnętrznych zasobów.
+- Testy silnika: `packages/engine/test`, testy katalogu kart: `packages/content/test`, serwera: `apps/server/test`, klienta: `apps/web/src/**/*.test.tsx`.
+- Po dodaniu testu zaktualizuj status reguły (`📋 → ✅`) w indeksie R-nn.
+- Testy silnika nie używają opóźnień, sieci ani plików.
 
-## 3. Obowiązkowa weryfikacja przed zakończeniem pracy
+## 3. Weryfikacja przed zakończeniem pracy
 
-Przed zgłoszeniem gotowości zadania zawsze uruchom i potwierdź zielony wynik:
+Przed zgłoszeniem gotowości uruchom i potwierdź zielony wynik:
 
-- `dotnet build -warnaserror` oraz `dotnet test` (gdy zmieniano kod C#),
-- `npm --prefix src/web run typecheck && npm --prefix src/web test && npm --prefix src/web run build` (gdy zmieniano kod `src/web`),
-- `npm run check` (gdy zmieniano `openspec/` lub pliki `.md`).
+- `npm run verify` — lint (z granicami modułów), typecheck, wszystkie testy, build klienta;
+- `npm run check` — gdy zmieniano `openspec/` lub pliki `.md`.

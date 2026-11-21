@@ -1,11 +1,3 @@
-# .NET
-bin/
-obj/
-*.user
-*.suo
-.vs/
-TestResults/
-*.trx
 coverage*/
 
 # Node
@@ -21,7 +13,6 @@ dist/
 *.db
 *.db-shm
 *.db-wal
-appsettings.*.local.json
 
 # Editors / OS
 .idea/
@@ -31,5 +22,5 @@ Thumbs.db
 # Agent tools (machine-local state)
 .claude/settings.local.json
 
-# Local SQLite data created by the AppHost
+# Local SQLite data created by the server
 .data/

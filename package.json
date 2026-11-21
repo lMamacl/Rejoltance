@@ -1,18 +1,42 @@
 {
-  "name": "rejoltance-tooling",
+  "name": "rejoltance",
   "private": true,
-  "description": "Repository tooling only (specs, docs lint). The web client has its own package in src/web.",
+  "type": "module",
+  "description": "RE:JOLTANCE \u2014 online lane card game. npm workspaces: packages/* (contracts, content, engine) and apps/* (server, web).",
   "engines": {
-    "node": ">=22.13.0"
+    "node": ">=24"
   },
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
   "scripts": {
+    "dev": "node tools/dev.ts",
+    "setup": "node tools/setup.ts",
+    "doctor": "node tools/doctor.ts",
+    "start": "npm run start -w @rejoltance/server",
+    "build": "npm run build -w @rejoltance/web",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "eslint .",
+    "typecheck": "tsc -p tsconfig.json && tsc -b apps/web",
+    "verify": "npm run lint && npm run typecheck && npm test && npm run build",
     "spec:validate": "openspec validate --all --strict",
     "spec:list": "openspec list",
     "lint:md": "markdownlint-cli2",
     "check": "npm run spec:validate && npm run lint:md"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "@fission-ai/openspec": "1.15.0",
-    "markdownlint-cli2": "^0.20.0"
+    "@types/node": "^24.19.2",
+    "eslint": "^10.15.0",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "eslint-plugin-react-refresh": "^0.5.8",
+    "globals": "^17.14.0",
+    "markdownlint-cli2": "^0.20.0",
+    "typescript": "~5.9.3",
+    "typescript-eslint": "^8.73.0",
+    "vitest": "^4.1.12"
   }
 }

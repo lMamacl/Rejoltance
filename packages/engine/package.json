@@ -1,0 +1,14 @@
+{
+  "name": "@rejoltance/engine",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Pure, deterministic rules engine: reduce(state, seat, intent) -> (state, events). No I/O, clock or Math.random.",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@rejoltance/contracts": "*",
+    "@rejoltance/content": "*"
+  }
+}

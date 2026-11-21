@@ -11,7 +11,7 @@ Propozycja zmiany w katalogu `openspec/changes/<id-zmiany>/` (`proposal.md`, `sp
 
 - zadanie ma szacunek **≥ 3 Story Points** (lub obejmuje więcej niż jeden moduł architektoniczny);
 - zmiana dodaje nową regułę domenową `R-nn`, nowe słowo kluczowe lub zmienia istniejące zachowanie w `openspec/specs/`;
-- zmiana dotyka któregokolwiek z 5 zamrożonych kontraktów w `Rejoltance.Contracts` (wymagany także nowy **ADR**).
+- zmiana dotyka któregokolwiek z 5 zamrożonych kontraktów w `packages/contracts` (wymagany także nowy **ADR**).
 
 Dla małych zadań (**< 3 SP**), poprawek błędów i podzadań technicznych, których zachowanie jest już jednoznacznie opisane w `openspec/specs/`, wystarczy krótki plan wykonawczy (lista modyfikowanych plików i testów) przedstawiony przed edycją kodu.
 
@@ -25,8 +25,8 @@ Dla małych zadań (**< 3 SP**), poprawek błędów i podzadań technicznych, kt
 
 Zawsze zapytaj użytkownika o zgodę przed wykonaniem którejkolwiek z poniższych operacji:
 
-1. Zmiana publicznego kontraktu w `src/Rejoltance.Contracts` lub `src/web/src/contracts`.
-2. Dodanie nowej zewnętrznej paczki NuGet lub npm.
-3. Zmiana konfiguracji potoków CI/CD w `.github/workflows/` lub plików bazowych solucji (`Directory.Build.props`).
+1. Zmiana publicznego kontraktu w `packages/contracts`.
+2. Dodanie nowej zewnętrznej paczki npm.
+3. Zmiana konfiguracji potoków CI/CD w `.github/workflows/` lub plików bazowych konfiguracji (`package.json`, `tsconfig.json`, `eslint.config.js`).
 4. Usunięcie lub osłabienie istniejącego testu automatycznego.
 5. Wykonanie operacji `git push`, `git reset`, `git rebase` lub usunięcie plików poza zakresem zadania.

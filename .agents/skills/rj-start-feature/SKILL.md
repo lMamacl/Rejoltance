@@ -30,9 +30,9 @@ Uruchamiaj na samym początku pracy nad każdym zadaniem z Jiry (`REJ-123`), zan
    git checkout -b <typ>/REJ-<numer>-<krotki-opis-kebab-case>
    ```
 
-   Dozwolone prefiksy `<typ>`: `feat`, `fix`, `docs`, `test`, `refactor`, `chore`, `ci`.
+   Dozwolone prefiksy `<typ>`: `feature`, `fix`, `docs`, `chore`, `spike` (sprawdza je CI w `pr-conventions.yml`).
 
 4. **Sprawdź bramkę OpenSpec (`Plan`):**
-   - Jeśli zadanie ma szacunek **≥ 3 SP**, wprowadza nową regułę `R-nn` lub modyfikuje kontrakty w `Rejoltance.Contracts`:
+   - Jeśli zadanie ma szacunek **≥ 3 SP**, wprowadza nową regułę `R-nn` lub modyfikuje kontrakty w `packages/contracts`:
      utwórz propozycję zmiany w `openspec/changes/rej-<numer>-<opis>/` (`/opsx:propose`) i poczekaj na akceptację człowieka.
    - Jeśli zadanie ma **< 3 SP** i jego specyfikacja już istnieje w `openspec/specs/`: wypisz krótki plan (dotknięte pliki + nazwy testów `Rnn_`) i przejdź do implementacji.

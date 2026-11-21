@@ -21,7 +21,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 GAME = ROOT / "prototype" / "game"
 SOURCES = [GAME / "cards.js", GAME / "decks.js"]
-TARGET_DIR = ROOT / "src" / "Rejoltance.Content" / "Data"
+TARGET_DIR = ROOT / "packages" / "content" / "data"
 
 # Runs the two data files in one script context (top-level `const` stays visible) and prints JSON.
 NODE_SCRIPT = r"""
