@@ -36,3 +36,5 @@ Kolumna „Decyzja” pokazuje stan: `?` oznacza, że czekamy na decyzję zespo�
 | D-18 | R | Mulligan w starym C# | — | (C#: maks. 3 karty) | zostawić JS (dowolna liczba) | R-03 | ? |
 | D-19 | B | Opis karty Regifter | README: „tylko ty dobierasz 2” | dane: poświęcona → ty 2, wróg 1 | dane są kanonem; poprawić opis | — | ? |
 | D-20 | I | Bot widzi efekty z ręki przeciwnika | projekcja bota zawiera prawdziwą rękę przeciwnika | — | bot gra tylko na `MatchView` (fog of war) | R-80 | do zrobienia (E5) |
+| D-21 | R | Dobranie przy pełnej ręce | `prototype/game` (`RULES.fullHandRework`, `draw`): dobranie jest **anulowane**, karta zostaje w talii | v11 i obecny silnik: karta **spala się** na stos odrzuconych | do decyzji przy przeglądzie reguł na nowym prototypie | R-13 | ? |
+| D-22 | R | Ręka startowa | `prototype/game` (`FAIR_HAND`, `fairOpen`): 3 losowe karty + gwarantowana karta o koszcie ≤ 1, jeśli żadnej takiej nie ma, inaczej czwarta losowa | v11 i obecny silnik: 4 losowe karty | do decyzji przy przeglądzie reguł na nowym prototypie | R-02 | ? |

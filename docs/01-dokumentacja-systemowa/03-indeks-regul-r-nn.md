@@ -27,18 +27,18 @@ Legenda statusu: ✅ zaimplementowane i przetestowane · 🟡 częściowo · ⏳
 | ID | Reguła | Źródło `engine.js` | Test | Story | Status |
 |---|---|---|---|---|---|
 | R-01 | Legalna talia: 30 kart, ≤ 3 kopie, bez tokenów | `ui.js` deck builder | `content.test.ts: R01_*` | E6-S04 | ✅ walidacja |
-| R-02 | Stan początkowy: 20 HP, 4 karty, bez wyzwalaczy | `newGame` | `setup-rules.test.ts: R02_*` | — | ✅ |
+| R-02 | Stan początkowy: 20 HP, 4 karty, bez wyzwalaczy | `newGame` | `setup-rules.test.ts: R02_*` | — | ✅ ❓ D-22 |
 | R-03 | Mulligan: dowolna liczba, zamienniki z góry, odrzucone wracają, tasowanie | `mulligan` | `setup-rules.test.ts: R03_*` | — | ✅ ❓ D-02 |
-| R-04 | Wybór kolejności; remis wyboru → losowanie z seeda | `decideStart` | — | E1-S01 | ⏳ |
+| R-04 | Wybór kolejności; remis wyboru → losowanie z seeda | `decideStart` | `round-start.test.ts: R04_*` | E1-S01 | ✅ |
 
 ## R-1x Przebieg rundy — `openspec/specs/round-flow`
 
 | ID | Reguła | Źródło | Test | Story | Status |
 |---|---|---|---|---|---|
-| R-10 | Max Blood = min(10, runda), odnawiane; dobranie od rundy 2 | `startRound` | `setup-rules.test.ts: R10_*` | E1-S01 | 🟡 formuła |
-| R-11 | Rozpoczynający naprzemiennie | `startRound` | — | E1-S01 | ⏳ |
+| R-10 | Max Blood = min(10, runda), odnawiane; dobranie od rundy 2 | `startRound` | `setup-rules.test.ts: R10_*`, `round-start.test.ts: R10_*` | E1-S01 | ✅ |
+| R-11 | Rozpoczynający naprzemiennie | `startRound` | `round-start.test.ts: R11_*` | E1-S01 | ✅ |
 | R-12 | Kroki: jednostki (A) → mieszany (B) → akcje (A) → walka | `setStep`, `nextStep` | — | E1-S02 | ⏳ |
-| R-13 | Ręka ≤ 8; nadmiar na stos odrzuconych; wyzwalacze dobrania | `draw` | `setup-rules.test.ts: R13_*` | E2-S04 | 🟡 bez wyzwalaczy |
+| R-13 | Ręka ≤ 8; nadmiar na stos odrzuconych; wyzwalacze dobrania | `draw` | `setup-rules.test.ts: R13_*` | E2-S04 | 🟡 bez wyzwalaczy ❓ D-21 |
 | R-14 | Pusta talia: fatigue 1, 2, 3…; bez tasowania odrzuconych | `draw` | `setup-rules.test.ts: R14_*` | — | ✅ |
 | R-15 | Koniec rundy: Burning `max(0, 1 − pancerz)`, śmierć, zwycięstwo | `endRound` | — | E1-S04 | ⏳ ❓ D-08 |
 

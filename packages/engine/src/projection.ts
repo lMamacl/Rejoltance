@@ -45,7 +45,10 @@ export const toViewerEvents = (events: readonly DomainEvent[], seat: number): Do
   events.map((e) => (e.type === 'cardDrawn' && e.seat !== seat ? { ...e, instanceId: 0, cardId: 0 } : e));
 
 function pending(state: MatchState, seat: number): PendingInteraction | null {
-  return state.phase === 'mulligan' && !playerOf(state, seat).mulliganDone ? { id: `mulligan-${seat}`, kind: 'mulligan', seat, options: [] } : null;
+  const player = playerOf(state, seat);
+  if (state.phase === 'mulligan' && !player.mulliganDone) return { id: `mulligan-${seat}`, kind: 'mulligan', seat, options: [] };
+  if (state.phase === 'chooseOrder' && player.wantsFirst === null) return { id: `chooseOrder-${seat}`, kind: 'chooseOrder', seat, options: ['first', 'second'] };
+  return null;
 }
 
 const lanes = (player: PlayerState): (UnitView | null)[] =>

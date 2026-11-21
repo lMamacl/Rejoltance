@@ -23,7 +23,7 @@ Gdy zespół podejmie decyzję na spotkaniu, wpisz ją w kolumnie „Podjęta de
 | **#3** | Proces / Jira | Jak mapujemy uczelniany przepływ pracy (`Open → In Progress → Resolved → Closed`) na kolumny tablicy Scrum? | Product Owner S1 | `03-proces-pracy-i-git-scrum.md`, `01-dip-dokument-inicjujacy.md` §8 | *Do ustalenia przy konfiguracji tablicy* |
 | **#4** | Proces / Git | Czy prowadzący akceptuje Code Review na GitHubie? Zadania w Jirze miałyby linki do PR, a kod kopiowałby się automatycznie (mirror) do Bitbucket PB. | Prowadzący zajęcia | `0002-github-i-mirror-bitbucket.md`, konfiguracja sekretów `BITBUCKET_TOKEN` | *Do potwierdzenia z prowadzącym* |
 | **#5** | Produkt / MVP | Które 12 kart wchodzi do zawężonej talii MVP (Minimum Viable Product) na pierwszy kamień milowy w Semestrze 1? | Zespół + Rada Graczy | Zadanie `E2-S05`, `01-prd-wymagania-produktu.md` §4 | *Do wyboru w Sprincie 0* |
-| **#6** | Produkt / reguły | Jak rozstrzygamy 20 znalezionych rozbieżności prototypu JS (`D-01..D-20`)? Chodzi m.in. o remis bohaterów, Flying a jednostki naziemne i Breakthrough. | Zespół + autorzy gry | `04-rozbieznosci-prototypu.md`, `openspec/specs/*`, testy w `packages/engine/test` | *Zadanie `E0-S04` w Sprincie 0* |
+| **#6** | Produkt / reguły | Jak rozstrzygamy 22 znalezione rozbieżności prototypu JS (`D-01..D-22`)? Chodzi m.in. o remis bohaterów, Flying a jednostki naziemne i Breakthrough. | Zespół + autorzy gry | `04-rozbieznosci-prototypu.md`, `openspec/specs/*`, testy w `packages/engine/test` | *Zadanie `E0-S04` w Sprincie 0* |
 | **#7** | Produkt / EU1 | Kto wchodzi w skład 3-osobowej Rady Graczy Testowych? To przedstawiciele użytkowników spoza zespołu. | Product Owner S0 | `01-dip-dokument-inicjujacy.md` §2.1, `01-prd-wymagania-produktu.md` §3, zadanie `E0-S03` | *Do wpisania w Sprincie 0* |
 | **#8** | Techniczne | Gdzie hostujemy publiczną wersję demonstracyjną na Sprint Review? Opcje: Azure for Students, Railway, serwer wydziałowy. | Właściciel epiku E6 | `05-sad-architektura-systemu.md` §7, zadanie `E6-S05` | *Do wyboru przed Sprintem 3* |
 | **#9** | Organizacja | Kto jest właścicielem którego epiku (`E1–E6`)? Od tego zależy indywidualne zaliczenie efektu EU1 oraz dokumentacja EU5/EU6. | Zespół (6 osób) | `01-dip-dokument-inicjujacy.md`, `01-prd-wymagania-produktu.md`, `backlog.toml`, `.github/CODEOWNERS` | *Do przydzielenia na spotkaniu startowym* |
@@ -56,7 +56,7 @@ Przyjęliśmy te założenia przy projektowaniu architektury i planowaniu backlo
 
 | Kod | Założenie | Jak sprawdzamy | Plan awaryjny (gdy założenie okaże się błędne) |
 |---|---|---|---|
-| **Z-20** | Kanonem reguł gry jest prototyp JavaScript `prototype/game` (`PanCoto/rejoltance-prototype`, od 21.11.2026 — ADR-0013; wcześniej v11 z 27.10.2026). Wyjątkiem są opisane błędy implementacji (`D-01..D-20`). | Warsztat z autorami gry w Sprincie 0 (`E0-S04`). | Aktualizujemy specyfikację w `openspec/specs/` i indeks `03-indeks-regul-r-nn.md`. |
+| **Z-20** | Kanonem reguł gry jest prototyp JavaScript `prototype/game` (`PanCoto/rejoltance-prototype`, od 21.11.2026 — ADR-0013; wcześniej v11 z 27.10.2026). Wyjątkiem są opisane błędy implementacji (`D-01..D-22`). | Warsztat z autorami gry w Sprincie 0 (`E0-S04`). | Aktualizujemy specyfikację w `openspec/specs/` i indeks `03-indeks-regul-r-nn.md`. |
 | **Z-21** | Grafiki (`img/*.webp`), dźwięki (`sfx/*.wav`, `audio/music.mp3`) i czcionki z prototypu możemy legalnie trzymać w repozytorium. | Potwierdzili to autorzy prototypu z zespołu (27.10.2026). | — |
 
 ---

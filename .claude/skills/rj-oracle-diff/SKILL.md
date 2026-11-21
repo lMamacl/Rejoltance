@@ -21,7 +21,7 @@ Uruchamiaj, gdy chcesz upewnić się, że implementacja reguły lub karty w `pac
    - Odczytaj tylko docelowy przedział linii (np. 60–100 linii wokół znalezionego miejsca).
 
 2. **Sprawdź rejestr znanych rozbieżności (`04-rozbieznosci-prototypu.md`):**
-   - Zanim uznasz zachowanie prototypu JS za bezbłędne, sprawdź w `docs/01-dokumentacja-systemowa/04-rozbieznosci-prototypu.md`, czy dany fragment nie został już oznaczony jako błąd prototypu (`D-01..D-20`).
+   - Zanim uznasz zachowanie prototypu JS za bezbłędne, sprawdź w `docs/01-dokumentacja-systemowa/04-rozbieznosci-prototypu.md`, czy dany fragment nie został już oznaczony jako błąd prototypu (`D-01..D-22`).
    - Jeśli istnieje zatwierdzona decyzja w `04-rozbieznosci-prototypu.md`, wiążąca dla silnika jest **decyzja zespołu i specyfikacja OpenSpec**, a nie błąd prototypu.
 
 3. **Porównaj krok po kroku logikę silnika i prototypu** (oba są w JS/TS, więc można też uruchomić ten sam scenariusz w obu i porównać wynik):

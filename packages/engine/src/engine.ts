@@ -1,7 +1,7 @@
 import type { DomainEvent, Intent, LegalAction } from '@rejoltance/contracts';
 import { validateDeck, type CardCatalog } from '@rejoltance/content';
-import { seedRng, shuffle } from './rng.ts';
-import { GameRules, newPlayer, playerOf, withPlayer, type MatchState } from './state.ts';
+import { nextInt, seedRng, shuffle } from './rng.ts';
+import { GameRules, maxBloodForRound, newPlayer, playerOf, startingSeat, withPlayer, type MatchState } from './state.ts';
 
 export interface MatchSetup {
   readonly matchId: string;
@@ -61,6 +61,7 @@ export function createEngine(catalog: CardCatalog): MatchEngine {
         round: 0,
         phase: 'mulligan',
         activeSeat: null,
+        firstSeat: null,
         nextInstanceId: 1,
         result: null,
       };
@@ -84,6 +85,7 @@ export function createEngine(catalog: CardCatalog): MatchEngine {
         case 'surrender':
           return { state: finish(state, 1 - seat, 'surrender', events), events };
         case 'chooseOrder':
+          return { state: chooseOrder(state, seat, intent.wantsFirst, events), events };
         case 'playCard':
         case 'endStep':
         case 'answerPending':
@@ -99,6 +101,7 @@ export function createEngine(catalog: CardCatalog): MatchEngine {
       if (state.result !== null) return [];
       const actions: LegalAction[] = [];
       if (state.phase === 'mulligan' && !playerOf(state, seat).mulliganDone) actions.push({ kind: 'mulligan', cardInstanceId: null, lanes: null });
+      if (state.phase === 'chooseOrder' && playerOf(state, seat).wantsFirst === null) actions.push({ kind: 'chooseOrder', cardInstanceId: null, lanes: null });
       actions.push({ kind: 'surrender', cardInstanceId: null, lanes: null });
       return actions;
     },
@@ -129,6 +132,49 @@ function mulligan(state: MatchState, seat: number, cardInstanceIds: readonly num
 
   if (state.players.every((p) => p.mulliganDone)) state = { ...state, phase: 'chooseOrder' };
   return state;
+}
+
+/**
+ * R-04: after the mulligan each player declares whether they want to go first. Different answers are respected;
+ * the same answer from both is settled by the match RNG (repeatable for the same seed). Then round 1 starts.
+ * Prototype: engine.js `decideStart`.
+ */
+function chooseOrder(state: MatchState, seat: number, wantsFirst: boolean, events: DomainEvent[]): MatchState {
+  const player = playerOf(state, seat);
+  if (state.phase !== 'chooseOrder' || player.wantsFirst !== null) throw new IllegalIntentError('Choosing the order is not available now.');
+  state = withPlayer(state, seat, { ...player, wantsFirst });
+
+  const [a, b] = state.players;
+  if (a.wantsFirst === null || b.wantsFirst === null) return state;
+
+  let firstSeat: number;
+  let rng = state.rng;
+  if (a.wantsFirst !== b.wantsFirst) firstSeat = a.wantsFirst ? 0 : 1;
+  else [firstSeat, rng] = nextInt(rng, 2);
+
+  return startRound({ ...state, rng, firstSeat }, events);
+}
+
+/**
+ * R-10, R-11: a new round. The round number grows by 1, max Blood is min(10, round) and Blood refills to it
+ * (unspent Blood does not carry over); from round 2 each player draws a card (seat 0 first, as in the prototype).
+ * The starting player alternates; the round opens with the starting player's unit step (R-12).
+ * Prototype: engine.js `startRound`.
+ */
+export function startRound(state: MatchState, events: DomainEvent[]): MatchState {
+  if (state.firstSeat === null) throw new IllegalIntentError('The starting player has not been decided yet.');
+  const round = state.round + 1;
+  const maxBlood = maxBloodForRound(round);
+  for (const seat of [0, 1]) state = withPlayer(state, seat, { ...playerOf(state, seat), maxBlood, blood: maxBlood });
+  state = { ...state, round };
+
+  if (round > 1) {
+    for (const seat of [0, 1]) {
+      state = draw(state, seat, events);
+      if (state.result !== null) return state;
+    }
+  }
+  return { ...state, phase: 'unitStep', activeSeat: startingSeat(state.firstSeat!, round) };
 }
 
 /** R-14: empty deck → fatigue damage 1, 2, 3… (no reshuffle). R-13: full hand (8) → the drawn card goes to the discard pile. */

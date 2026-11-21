@@ -112,7 +112,7 @@ RE:JOLTANCE — Strona Główna Przestrzeni (docs/README.md)
 │   ├── 1.1 Wymagania Produktu — PRD (01-prd-wymagania-produktu.md)                      [★ GŁÓWNY DOKUMENT ANALITYCZNY]
 │   ├── 1.2 Specyfikacja funkcjonalna zasad gry (02-specyfikacja-regul-gry.md)
 │   ├── 1.3 Indeks reguł R-nn i śledzalność testów (03-indeks-regul-r-nn.md)
-│   ├── 1.4 Analiza rozbieżności prototypu D-01..D-20 (04-rozbieznosci-prototypu.md)
+│   ├── 1.4 Analiza rozbieżności prototypu D-01..D-22 (04-rozbieznosci-prototypu.md)
 │   ├── 1.5 Dokument Architektury Systemu — SAD (05-sad-architektura-systemu.md)        [★ GŁÓWNY DOKUMENT ARCHITEKTURY]
 │   ├── 1.6 Stos technologiczny i roadmapa IT (06-stos-technologiczny.md)               [★ DOKUMENT STOSU TECHNOLOGICZNEGO]
 │   ├── 1.7 Decyzje architektoniczne — ADR (07-decyzje-adr/README.md + ADR 0001..0011)
