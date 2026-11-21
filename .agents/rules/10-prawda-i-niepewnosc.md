@@ -1,18 +1,18 @@
 ---
 trigger: always_on
-description: "Kolejność źródeł prawdy (OpenSpec, prototyp JS v11, indeks R-nn), zakaz zgadywania przez AI i postępowanie przy rozbieżnościach D-01..D-20."
+description: "Kolejność źródeł prawdy (OpenSpec, prototyp JS `prototype/game`, indeks R-nn), zakaz zgadywania przez AI i postępowanie przy rozbieżnościach D-01..D-20."
 ---
 
 # 10. Prawda, hierarchia źródeł i postępowanie z niepewnością
 
-## 1. Hierarchia źródeł prawdy dla zasad gry (ADR-0005)
+## 1. Hierarchia źródeł prawdy dla zasad gry (ADR-0005, ADR-0013)
 
 W przypadku pozornej sprzeczności pomiędzy dokumentami obowiązuje następująca kolejność pierwszeństwa:
 
 1. **Rozstrzygnięta decyzja zespołu** wpisana w [`docs/01-dokumentacja-systemowa/04-rozbieznosci-prototypu.md`](../../docs/01-dokumentacja-systemowa/04-rozbieznosci-prototypu.md) (`D-01..D-20`) oraz zatwierdzona specyfikacja w `openspec/specs/<domena>/spec.md`.
-2. **Zachowanie referencyjnego prototypu JS v11** (`prototype/revibance/engine.js` oraz `prototype/revibance/cards.js`).
+2. **Zachowanie referencyjnego prototypu JS** (`prototype/game/engine.js` oraz `prototype/game/cards.js`).
 3. **Indeks i specyfikacja reguł:** [`03-indeks-regul-r-nn.md`](../../docs/01-dokumentacja-systemowa/03-indeks-regul-r-nn.md) oraz [`02-specyfikacja-regul-gry.md`](../../docs/01-dokumentacja-systemowa/02-specyfikacja-regul-gry.md).
-4. **Archiwalne materiały źródłowe** w `docs/99-archiwum-zrodel/` (wyłącznie poglądowe — nie nadpisują kanonu v11).
+4. **Archiwalne materiały źródłowe** w `docs/99-archiwum-zrodel/` (wyłącznie poglądowe — nie nadpisują kanonu).
 
 ## 2. Zakaz cichego zgadywania przez agenta AI
 

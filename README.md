@@ -50,13 +50,14 @@ Rejoltance/
 ├── .agents/                    ← Kanon systemu agentów AI (rules/, agents/, skills/) + adaptery IDE
 ├── src/
 │   ├── Rejoltance.Contracts/   ← 5 zamrożonych kontraktów DTO (Intent, LegalAction, PendingInteraction, MatchView, DomainEvent)
-│   ├── Rejoltance.Content/     ← Katalog 69 kart z cards.json i walidator schematu
+│   ├── Rejoltance.Content/     ← Katalog 130 kart + 29 tokenów z cards.json i walidator schematu
 │   ├── Rejoltance.Kernel/      ← Czysty, deterministyczny silnik reguł gry w C# (zero I/O, SeededRng)
 │   ├── Rejoltance.Server/      ← Autorytatywny serwer ASP.NET Core + SignalR (/api/hubs/match) + projekcja Fog of War
 │   ├── Rejoltance.AppHost/     ← Orkiestrator deweloperski .NET Aspire
 │   └── web/                    ← Klient przeglądarkowy React 19 + TypeScript 5 + Vite
 ├── tests/                      ← Testy jednostkowe, integracyjne, kontraktowe, architektoniczne i E2E (Playwright)
-├── prototype/revibance/        ← Referencyjny prototyp JS v11 (wyrocznia zachowania reguł gry)
+├── prototype/                  ← Prototyp JS (git subtree z PanCoto/rejoltance-prototype): game/, lab/, tools/
+│   └── game/                   ← Gra referencyjna (wyrocznia zachowania reguł gry, ADR-0013)
 └── tools/                      ← Skrypty automatyzacji: agents/, backlog/, content/, confluence/
 ```
 
@@ -71,5 +72,5 @@ Rejoltance/
 | `npm run check` | Walidacja `openspec validate --all --strict` oraz linter dokumentacji `markdownlint-cli2` |
 | `python tools/agents/sync_agents.py --check` | Spójność definicji 10 agentów, 10 skilli, 8 reguł i adapterów narzędzi AI |
 | `python tools/backlog/gen_jira_csv.py --check` | Dwukierunkowa spójność `backlog.toml`, `BACKLOG.md`, plików CSV Jiry i `03-indeks-regul-r-nn.md` |
-| `python tools/content/extract_cards.py --check` | Zgodność katalogu `cards.json` z referencyjnym prototypem JS v11 |
+| `python tools/content/extract_cards.py --check` | Zgodność katalogu `cards.json` z referencyjnym prototypem JS (`prototype/game`) |
 | `python tools/confluence/sync_confluence.py --check` | Gotowość drzewa `docs/` do eksportu 1:1 do przestrzeni Confluence PB |

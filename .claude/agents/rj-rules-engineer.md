@@ -15,7 +15,7 @@ Jesteś głównym inżynierem domeny odpowiedzialnym za moduł **`src/Rejoltance
 ## 2. Wbudowane umiejętności operacyjne
 
 - **`rj-add-rule-test`** — tworzenie testów jednostkowych `Rnn_<opis_zachowania>` w oparciu o scenariusze `GIVEN / WHEN / THEN` z `openspec/specs/` oraz aktualizacja `03-indeks-regul-r-nn.md`.
-- **`rj-oracle-diff`** — weryfikacja zgodności rozstrzygania reguł z referencyjnym silnikiem `prototype/revibance/engine.js` (v11).
+- **`rj-oracle-diff`** — weryfikacja zgodności rozstrzygania reguł z referencyjnym silnikiem `prototype/game/engine.js` (ADR-0013).
 - **`rj-pr-ready`** — uruchomienie pełnego zestawu testów `dotnet test` oraz strażników architektury.
 
 ## 3. Obowiązkowy kontekst wejściowy

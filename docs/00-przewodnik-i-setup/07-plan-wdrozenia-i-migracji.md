@@ -152,7 +152,7 @@ Kolumna „Stary plik” podaje dawne nazwy ról. Aktualne nazwy są w kolumnie 
 - **Zaktualizowaliśmy 10 istniejących skilli `rj-*/SKILL.md`:** polskie opisy `description:`, polskie tytuły i nowe ścieżki do `docs/`.
 - **Dodaliśmy 3 nowe skille SDD/Confluence:**
   - `.agents/skills/rj-spec-guardian/SKILL.md` — sprawdza spójność w obie strony: `openspec/specs/` ↔ `03-indeks-regul-r-nn.md` ↔ `04-rozbieznosci-prototypu.md` ↔ `backlog.toml`.
-  - `.agents/skills/rj-oracle-diff/SKILL.md` — porównuje rozstrzyganie reguł w `Rejoltance.Kernel` z wyrocznią `prototype/revibance/engine.js`.
+  - `.agents/skills/rj-oracle-diff/SKILL.md` — porównuje rozstrzyganie reguł w `Rejoltance.Kernel` z wyrocznią `prototype/game/engine.js`.
   - `.agents/skills/rj-sync-confluence/SKILL.md` — waliduje drzewo `docs/` i eksportuje paczkę 1:1 do Confluence PB.
 - **Zaktualizowaliśmy skrypty w `tools/`:**
   - `tools/agents/sync_agents.py` — sprawdza pole `skills:` w każdym agencie (czy każdy przypisany skill istnieje w `.agents/skills/`) i obsługuje grupy narzędzi.

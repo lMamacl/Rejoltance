@@ -33,9 +33,9 @@ public static class ContentValidator
                 yield return $"{at}: unknown trigger '{effect.Trigger}'";
             }
 
-            if (effect.Zone is not null && !Vocabulary.Zones.Contains(effect.Zone))
+            foreach (var zone in effect.Zone.Where(z => !Vocabulary.Zones.Contains(z)))
             {
-                yield return $"{at}: unknown zone '{effect.Zone}'";
+                yield return $"{at}: unknown zone '{zone}'";
             }
 
             if (effect.Condition is not null)

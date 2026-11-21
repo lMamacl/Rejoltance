@@ -164,17 +164,17 @@ Decyzję ADR piszemy zawsze, gdy wybieramy technologię, zmieniamy jeden z 5 zam
 
 ## Warsztat 5: Jak dodać lub zmodyfikować kartę w grze?
 
-Karty w **RE:JOLTANCE** to same dane. Generujemy je z kanonicznego prototypu JS (`prototype/revibance/cards.js`) do pliku `src/Rejoltance.Content/Data/cards.json`. Możesz użyć skilla `/rj-add-card`.
+Karty w **RE:JOLTANCE** to same dane. Generujemy je z kanonicznego prototypu JS (`prototype/game/cards.js`) do pliku `src/Rejoltance.Content/Data/cards.json`. Możesz użyć skilla `/rj-add-card`.
 
 ### Wariant A: karta używa istniejących słów kluczowych, wyzwalaczy i akcji DSL
 
 DSL to nasz język opisu efektów kart.
 
-1. Otwórz plik `prototype/revibance/cards.js` i dodaj albo zmień wpis w tablicy `CARDS`:
+1. Dodaj albo zmień wpis w tablicy `CARDS` w pliku `game/cards.js` repozytorium `PanCoto/rejoltance-prototype`. Katalog `prototype/` w Rejoltance to jego kopia (git subtree, ADR-0013), więc nie edytuj go bezpośrednio. Zmiany dociągasz poleceniem `git subtree pull --prefix=prototype https://github.com/PanCoto/rejoltance-prototype.git main`. Przykładowy wpis:
 
    ```javascript
    {
-     "Id": 70,
+     "Id": 131,
      "Name": "Ember Hound",
      "Type": "Unit",
      "Subtypes": ["Animal"],
@@ -199,7 +199,7 @@ DSL to nasz język opisu efektów kart.
    dotnet test tests/Rejoltance.Kernel.Tests --filter ContentTests
    ```
 
-   Jeśli dodajesz kartę ponad obecne 69 kart kolekcjonerskich i 9 tokenów, zmień oczekiwaną liczbę kart w teście `Catalog_contains_all_prototype_cards`.
+   Jeśli dodajesz kartę ponad obecne 130 kart kolekcjonerskich i 29 tokenów, zmień oczekiwaną liczbę kart w teście `Catalog_contains_all_prototype_cards`.
 
 ### Wariant B: karta wymaga nowego słowa kluczowego, wyzwalacza albo akcji w DSL
 

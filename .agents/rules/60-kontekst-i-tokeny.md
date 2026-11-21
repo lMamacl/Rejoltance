@@ -11,8 +11,8 @@ W repozytorium znajdują się duże pliki referencyjne i wygenerowane, których 
 
 | Plik / Katalog | Rozmiar | Jak z nim pracować efektywnie? |
 |---|---|---|
-| `prototype/revibance/engine.js` | ~3 500 linii | Wyszukuj konkretne funkcje przez `grep` (np. `resolveCombat`, `applyDamage`) i czytaj tylko docelowy wycinek linii (`offset` + `limit`). |
-| `prototype/revibance/cards.js` / `src/Rejoltance.Content/cards.json` | 69 kart (~2 000 linii) | Wyszukuj pojedynczą kartę po jej `id` lub nazwie (`grep -n '"id": 14'`). |
+| `prototype/game/engine.js` | ~3 000 linii | Wyszukuj konkretne funkcje przez `grep` (np. `resolveCombat`, `applyDamage`) i czytaj tylko docelowy wycinek linii (`offset` + `limit`). |
+| `prototype/game/cards.js` / `src/Rejoltance.Content/cards.json` | 130 kart + 29 tokenów (~2 400 linii JS, ~3 800 linii JSON) | Wyszukuj pojedynczą kartę po jej `id` lub nazwie (`grep -n '"id": 14'`). |
 | `docs/03-dokumentacja-procesowa/02-backlog/jira-*.csv` | Wygenerowane CSV | Nigdy nie czytaj plików `.csv` — czytaj i edytuj wyłącznie źródłowy `backlog.toml`. |
 | `docs/99-archiwum-zrodel/` | Archiwalne notatki | Czytaj wyłącznie wtedy, gdy użytkownik wprost poprosi o porównanie z historycznym źródłem. |
 
@@ -21,7 +21,7 @@ W repozytorium znajdują się duże pliki referencyjne i wygenerowane, których 
 1. Przeczytaj właściwą domenę w `openspec/specs/<domena>/spec.md` (zwięzłe, ustrukturyzowane wymagania `GIVEN/WHEN/THEN`).
 2. Sprawdź wiersz danej reguły w [`docs/01-dokumentacja-systemowa/03-indeks-regul-r-nn.md`](../../docs/01-dokumentacja-systemowa/03-indeks-regul-r-nn.md).
 3. Przeczytaj `README.md` docelowego modułu (`src/<moduł>/README.md`) oraz pliki bezpośrednio powiązane z zadaniem.
-4. Do `prototype/revibance/engine.js` sięgaj tylko po to, aby zweryfikować szczegół algorytmu we wskazanym zakresie linii.
+4. Do `prototype/game/engine.js` sięgaj tylko po to, aby zweryfikować szczegół algorytmu we wskazanym zakresie linii.
 
 ## 3. Styl komunikacji z człowiekiem
 

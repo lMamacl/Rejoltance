@@ -88,7 +88,7 @@ public sealed class MatchEngine(ICardCatalog catalog)
     }
 
     /// <summary>
-    /// R-03 (prototype v11, engine.js mulligan): draw replacements first, then put the returned cards back and shuffle the deck.
+    /// R-03 (prototype v11 behaviour, engine.js mulligan; re-check against prototype/game, ADR-0013): draw replacements first, then put the returned cards back and shuffle the deck.
     /// Note: RE_JOLTANCE.md says "bottom of deck, no shuffle" — tracked in docs/02-rules/ROZBIEZNOSCI.md.
     /// </summary>
     private MatchState Mulligan(MatchState state, int seat, MulliganIntent intent, List<DomainEvent> events)

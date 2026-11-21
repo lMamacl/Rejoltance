@@ -554,11 +554,11 @@ estimate_h = 8
 
 [[epic.story]]
 id = "E2-S09"
-title = "Wszystkie 69 kart"
+title = "Wszystkie 130 kart"
 as_a = "gracz"
 i_want = "grać każdą kartą z prototypu"
 so_that = "gra miała pełną głębię"
-acceptance = ["GIVEN każda z 69 kart WHEN ją zagram THEN zachowanie zgadza się z wyrocznią prototypu (E5-S02)"]
+acceptance = ["GIVEN każda ze 130 kart WHEN ją zagram THEN zachowanie zgadza się z wyrocznią prototypu (E5-S02)"]
 sp = 8
 sprint = "S7"
 wave = "W2"
@@ -707,7 +707,7 @@ sprint = "S1"
 wave = "W1"
 rules = ["R-80"]
 [[epic.story.task]]
-title = "Komponenty Board / Lane / Slot (CSS grid, referencja: prototype/revibance/style.css)"
+title = "Komponenty Board / Lane / Slot (CSS grid, referencja: prototype/game/style.css)"
 h = 3
 [[epic.story.task]]
 title = "Komponent Card + wachlarz ręki + rewersy przeciwnika"

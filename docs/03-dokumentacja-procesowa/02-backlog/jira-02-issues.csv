@@ -220,10 +220,10 @@ Kryteria akceptacji:
 
 Reguły: R-64, R-69 (docs/01-dokumentacja-systemowa/03-indeks-regul-r-nn.md)
 Fala: W2 (pełna gra (semestr 2)) · Źródło: backlog.toml (E2-S08)",3,28800,Medium,rejoltance,w2,semestr-2,Content
-E2-S09,,Story,E2-S09 Wszystkie 69 kart,E2 Interpreter efektów kart (DSL),"Jako gracz chcę grać każdą kartą z prototypu, aby gra miała pełną głębię.
+E2-S09,,Story,E2-S09 Wszystkie 130 kart,E2 Interpreter efektów kart (DSL),"Jako gracz chcę grać każdą kartą z prototypu, aby gra miała pełną głębię.
 
 Kryteria akceptacji:
-- GIVEN każda z 69 kart WHEN ją zagram THEN zachowanie zgadza się z wyrocznią prototypu (E5-S02)
+- GIVEN każda ze 130 kart WHEN ją zagram THEN zachowanie zgadza się z wyrocznią prototypu (E5-S02)
 
 Fala: W2 (pełna gra (semestr 2)) · Źródło: backlog.toml (E2-S09)",8,72000,Medium,rejoltance,w2,semestr-2,Content
 E3-S01,,Story,E3-S01 Pokój PvP na kod / link,E3 Serwer i sieć czasu rzeczywistego,"Jako gracz chcę utworzyć pokój i wysłać koledze kod, aby zagrać z nim w dwóch przeglądarkach.
@@ -290,7 +290,7 @@ Kryteria akceptacji:
 
 Reguły: R-80 (docs/01-dokumentacja-systemowa/03-indeks-regul-r-nn.md)
 Fala: W1 (MVP (semestr 1)) · Źródło: backlog.toml (E4-S01)",5,,High,rejoltance,w1,sprint-1,Web
-E4-S01-T1,E4-S01,Sub-task,"E4-S01-T1 Komponenty Board / Lane / Slot (CSS grid, referencja: prototype/revibance/style.css)",,Część E4-S01 Plansza 4 linie i wachlarz ręki.,,10800,High,rejoltance,w1,sprint-1,Web
+E4-S01-T1,E4-S01,Sub-task,"E4-S01-T1 Komponenty Board / Lane / Slot (CSS grid, referencja: prototype/game/style.css)",,Część E4-S01 Plansza 4 linie i wachlarz ręki.,,10800,High,rejoltance,w1,sprint-1,Web
 E4-S01-T2,E4-S01,Sub-task,E4-S01-T2 Komponent Card + wachlarz ręki + rewersy przeciwnika,,Część E4-S01 Plansza 4 linie i wachlarz ręki.,,10800,High,rejoltance,w1,sprint-1,Web
 E4-S01-T3,E4-S01,Sub-task,"E4-S01-T3 HeroBar: HP, kropelki Blood, faza i runda",,Część E4-S01 Plansza 4 linie i wachlarz ręki.,,3600,High,rejoltance,w1,sprint-1,Web
 E4-S01-T4,E4-S01,Sub-task,E4-S01-T4 Testy komponentów na match-view.sample.json,,Część E4-S01 Plansza 4 linie i wachlarz ręki.,,7200,High,rejoltance,w1,sprint-1,Web

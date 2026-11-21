@@ -3,7 +3,7 @@ import './App.css';
 import { useMatchStore } from './state/matchStore';
 import { Board } from './components/Board';
 
-const DECKS = ['MachineAggro', 'TeaMaidCombo', 'CollectorSpam', 'TheRitual', 'RaceAggro'];
+const DECKS = ['OG C.', 'OG P.', 'OG B.', 'OG. M'];
 
 export default function App() {
   const { view, error, busy, loadCards, startSandbox, send } = useMatchStore();

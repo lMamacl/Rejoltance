@@ -1,12 +1,12 @@
 name: Prototype on GitHub Pages
 
-# Publishes prototype/revibance (static JS game) so everyone can play the reference rules in a browser.
+# Publishes prototype/game (static JS game) so everyone can play the reference rules in a browser.
 # One-time: Settings → Pages → Source: "GitHub Actions". Works on public repos (or private on paid plans).
 
 on:
   push:
     branches: [main]
-    paths: ["prototype/revibance/**"]
+    paths: ["prototype/game/**"]
   workflow_dispatch:
 
 permissions:
@@ -29,6 +29,6 @@ jobs:
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: prototype/revibance
+          path: prototype/game
       - id: deployment
         uses: actions/deploy-pages@v4
