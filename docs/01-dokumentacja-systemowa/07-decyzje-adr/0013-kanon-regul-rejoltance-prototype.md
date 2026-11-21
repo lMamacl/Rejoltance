@@ -2,10 +2,10 @@
 
 > **Źródło prawdy:** repozytorium (`docs/01-dokumentacja-systemowa/07-decyzje-adr/0013-kanon-regul-rejoltance-prototype.md`) · **Kategoria dokumentacji:** Decyzja architektoniczna (ADR) · **Etap SDD:** Specyfikacja
 
-- **Status:** proponowana
+- **Status:** zaakceptowana
 - **Data:** 2026-11-21
 - **Autorzy:** Gabriel Ostaszewski (z pomocą agenta AI); prototyp: PanCoto
-- **Akceptacja:** 2 osoby z zespołu w PR (wymóg konstytucji: zmiana art. I)
+- **Akceptacja:** 5 z 6 osób zespołu, rozmowa na sprincie 2026-11-21 (wymóg konstytucji przy zmianie art. I: co najmniej 2 osoby); zgłosił Gabriel Ostaszewski
 - **Powiązane:** [ADR-0005](0005-kanon-regul-prototyp-js.md) (zastępuje), [`04-rozbieznosci-prototypu.md`](../04-rozbieznosci-prototypu.md), `.agents/rules/00-konstytucja.md` (art. I), `tools/content/extract_cards.py`
 
 ## Kontekst i problem
@@ -53,4 +53,4 @@ Szczegóły:
 ### Do zrobienia
 
 - [ ] Przegląd reguł R-nn i pozycji D-nn na nowym prototypie (zadanie w Jirze).
-- [ ] Po akceptacji tego ADR: status ADR-0005 → `superseded by ADR-0013`, status tego ADR → `accepted`.
+- [x] Po akceptacji tego ADR: status ADR-0005 → `superseded by ADR-0013`, status tego ADR → `accepted` (2026-11-21).
