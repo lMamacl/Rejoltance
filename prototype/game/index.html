@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<meta name="theme-color" content="#000000"><meta name="apple-mobile-web-app-capable" content="yes">
+<title>RE:Joltance</title>
+<link rel="stylesheet" href="style.css?v=20261218">
+</head><body>
+<div id="stage">
+ <div class="scr" id="menu">
+  <div class="mlogo"><h1>RE<span>:</span>Joltance</h1><small id="mver"></small></div>
+  <button id="mwatch" title="Hide the menu and watch the bots play (Esc to return)">Watch bots</button>
+  <nav id="mnav">
+   <button data-sec="0">Play offline</button><button data-sec="1">Play online</button><button data-sec="2">Collection</button><button data-sec="3">Settings</button><button data-sec="4">Social</button><button data-sec="5">Extras</button><button data-sec="6">Updates</button>
+  </nav>
+  <div id="mpanel">
+   <div class="msec" data-sec="0">
+    <button class="mc " id="ttut"><span class="mci"><svg viewBox="0 0 16 16" shape-rendering="crispEdges"><path fill="currentColor" d="M2 2h12v10H2zM4 13h8v2H4z"/><path fill="#050505" d="M4 4h8v1H4zM4 6h8v1H4zM4 8h5v1H4z"/></svg></span><span class="mcl">Tutorial</span></button>
+    <button class="mc " id="tbot"><span class="mci"><svg viewBox="0 0 16 16" shape-rendering="crispEdges"><path fill="currentColor" d="M7 0h2v2H7zM3 2h10v8H3zM1 4h2v4H1zM13 4h2v4h-2zM4 11h8v4H4z"/><path fill="#050505" d="M5 5h2v2H5zM9 5h2v2H9zM5 8h6v1H5z"/></svg></span><span class="mcl">Play with the bot</span></button>
+    <button class="mc " id="tmirror"><span class="mci"><svg viewBox="0 0 16 16" shape-rendering="crispEdges"><path fill="currentColor" d="M1 3h5v10H1zM10 3h5v10h-5z"/><path fill="#c4161c" d="M7 2h2v12H7z"/><path fill="#050505" d="M2 5h3v2H2zM11 5h3v2h-3zM2 9h3v1H2zM11 9h3v1h-3z"/></svg></span><span class="mcl">Mirror Match UP</span></button>
+    <button class="mc " id="tendless"><span class="mci"><svg viewBox="0 0 16 16" shape-rendering="crispEdges"><path fill="currentColor" d="M2 5h4v2H4v2h2v2H2zM10 5h4v2h-2v2h2v2h-4z"/><path fill="#c4161c" d="M6 7h4v2H6z"/></svg></span><span class="mcl">Endless Mode</span></button>
+   </div>
+   <div class="msec" data-sec="1">
+    <button class="mc " id="rkopen"><span class="mci"><svg viewBox="0 0 16 16" shape-rendering="crispEdges"><path fill="currentColor" d="M3 1h10v5h-1v2h-1v1H9v2h3v3H4v-3h3V9H5V8H4V6H3z"/><path fill="#c4161c" d="M0 2h3v3H1v2h2v1H1V6H0zM13 2h3v4h-1v2h-2V7h2V5h-2z"/><path fill="#050505" d="M6 3h4v2H6z"/></svg></span><span class="mcl">Ranked</span></button>
+    <button class="mc" id="tquick"><span class="mci"><svg viewBox="0 0 16 16" shape-rendering="crispEdges"><path fill="currentColor" d="M9 0h3L8 6h5L5 16l2-7H3z"/></svg></span><span class="mcl">Quick Match</span></button>
+    <button class="mc" id="tfriend"><span class="mci"><svg viewBox="0 0 16 16" shape-rendering="crispEdges"><path fill="currentColor" d="M2 2h4v4H2zM1 6h6v4H1zM1 10h2v4H1zM5 10h2v4H5zM10 2h4v4h-4zM9 6h6v4H9zM9 10h2v4H9zM13 10h2v4h-2z"/><path fill="#c4161c" d="M7 7h2v2H7z"/></svg></span><span class="mcl">Play with a friend</span></button>
+    <button class="mc" id="tmirroron"><span class="mci"><svg viewBox="0 0 16 16" shape-rendering="crispEdges"><path fill="currentColor" d="M1 3h5v10H1zM10 3h5v10h-5z"/><path fill="#c4161c" d="M7 2h2v12H7z"/><path fill="#050505" d="M2 5h3v2H2zM11 5h3v2h-3zM2 9h3v1H2zM11 9h3v1h-3z"/></svg></span><span class="mcl">Mirror Match UP</span></button>
+   </div>
+   <div class="msec" data-sec="2">
+    <button class="mc " id="bopen"><span class="mci"><svg viewBox="0 0 16 16" shape-rendering="crispEdges"><path fill="currentColor" d="M1 4h8v10H1zM7 2h8v10H7z"/><path fill="#050505" d="M8 3h6v8H8z"/><path fill="#c4161c" d="M9 5h4v2H9zM9 8h3v1H9z"/></svg></span><span class="mcl">Card Collection</span></button>
+    <button class="mc " id="bdecks"><span class="mci"><svg viewBox="0 0 16 16" shape-rendering="crispEdges"><path fill="currentColor" d="M1 5h10v10H1zM3 3h10v10H3zM5 1h10v10H5z"/><path fill="#050505" d="M6 2h8v8H6z"/><path fill="#c4161c" d="M8 4h4v2H8z"/></svg></span><span class="mcl">Decks</span></button>
+   </div>
+   <div class="msec" data-sec="3">
+    <button class="mc" id="sopen"><span class="mci"><svg viewBox="0 0 16 16" shape-rendering="crispEdges"><path fill="currentColor" d="M7 0h2v2.2l1.7.7 1.6-1.5 1.4 1.4-1.5 1.6.7 1.7H15v2h-2.2l-.7 1.7 1.5 1.6-1.4 1.4-1.6-1.5-1.7.7V16H7v-2.2l-1.7-.7-1.6 1.5-1.4-1.4 1.5-1.6-.7-1.7H1V7h2.2l.7-1.7-1.5-1.6 1.4-1.4 1.6 1.5 1.7-.7z"/><circle cx="8" cy="8" r="2.4" fill="#000"/></svg></span><span class="mcl">Settings</span></button>
+   </div>
+   <div class="msec" data-sec="4">
+    <button class="mc" id="pchip"><span class="mci"><span class="av" id="pchipav"></span><b id="pchipn"></b><small id="pchips"></small></span><span class="mcl">Profile</span></button>
+    <button class="mc" id="fdopen"><span class="mci"><svg viewBox="0 0 16 16" shape-rendering="crispEdges"><path fill="currentColor" d="M2 2h4v4H2zM1 6h6v4H1zM1 10h2v4H1zM5 10h2v4H5zM10 2h4v4h-4zM9 6h6v4H9zM9 10h2v4H9zM13 10h2v4h-2z"/></svg></span><span class="mcl">Friends <b id="fdcnt"></b></span></button>
+   </div>
+   <div class="msec" data-sec="5">
+    <button class="mc" id="achopen"><span class="mci"><svg viewBox="0 0 16 16" shape-rendering="crispEdges"><path fill="currentColor" d="M3 1h10v5h-1v2h-1v1H9v2h3v3H4v-3h3V9H5V8H4V6H3z"/></svg></span><span class="mcl">Achievements <b id="achcnt"></b></span></button>
+    <button class="mc" id="ropen"><span class="mci"><svg viewBox="0 0 16 16" shape-rendering="crispEdges"><path fill="currentColor" d="M1 2h14v12H1z"/><path fill="#050505" d="M6 4h2v8H6zM8 5h2v6H8zM10 6h1v4h-1z"/></svg></span><span class="mcl">Replays <b id="rplcnt"></b></span></button>
+   <button class="mc" id="legacyopen"><span class="mci"><svg viewBox="0 0 16 16" shape-rendering="crispEdges"><path fill="currentColor" d="M2 2h12v12H2z"/><path fill="#050505" d="M4 4h8v1H4zM4 7h8v1H4zM4 10h5v1H4z"/><path fill="#c4161c" d="M10 10h2v2h-2z"/></svg></span><span class="mcl" id="legacylbl">Legacy</span></button>
+</div>
+   <div class="msec" data-sec="6">
+    <button class="mc" id="clopen"><span class="mci"><svg viewBox="0 0 16 16" shape-rendering="crispEdges"><path fill="currentColor" d="M2 1h12v14H2z"/><path fill="#050505" d="M4 3h8v2H4zM4 7h8v1H4zM4 10h8v1H4zM4 12h5v1H4z"/></svg></span><span class="mcl">Patch Notes</span></button>
+    <button class="mc" id="balopen"><span class="mci"><svg viewBox="0 0 16 16" shape-rendering="crispEdges"><path fill="currentColor" d="M2 3h12v2H2zM7 3h2v10H7zM4 13h8v2H4zM1 6h4v1H1zM11 6h4v1h-4zM1 7h1v2H1zM4 7h1v2H4zM11 7h1v2h-1zM14 7h1v2h-1zM1 9h4v1H1zM11 9h4v1h-4z"/></svg></span><span class="mcl">Balance Changes</span></button>
+   </div>
+  </div>
+ </div>
+ <div class="scr" id="bld">
+  <div id="bhead">
+   <button id="bback" class="ghost">&lsaquo; Back</button>
+   <h2 id="btitle">Card Collection</h2>
+   <div id="btabs"><button data-tab="cards">Cards</button><button data-tab="decks">Decks</button></div>
+  </div>
+  <div class="bpane" id="pcards"><div class="bfilt" id="fcards"></div><div class="bgrid" id="gcards"></div></div>
+  <div class="bpane" id="pdecks">
+   <div id="dtop"><div id="dsum"></div><button id="dimp" class="ghost">Import code</button><button id="dnew" class="pri">+ New deck</button></div>
+   <div id="dgrid"></div>
+  </div>
+  <div class="bpane" id="pedit">
+   <div id="eside">
+    <div id="eh"><div id="eicon"><img id="eimg" alt="" draggable="false"><i id="eq">?</i></div>
+     <div id="enm"><input id="bn" placeholder="Deck name" maxlength="24" autocomplete="off" spellcheck="false">
+      <div id="est"><b id="bc">0/30</b><span id="bstat"></span></div></div></div>
+    <button id="bdef" type="button" title="The default deck is pre-selected when you start a game"></button>
+    <div id="ecurve"></div>
+    <div id="bd"></div>
+    <div id="bi"></div>
+    <div id="ebtn"><button id="bsave" class="pri">Save deck</button><button id="bexp">Export</button><button id="bimp">Import</button><button id="bclr">Clear</button></div>
+   </div>
+   <div id="emain"><div class="bfilt" id="fedit"></div><div class="bgrid" id="gedit"></div></div>
+  </div>
+  <div id="btoast"></div>
+  <div id="bmodal"><div class="mbox"><h3 id="mtitle"></h3><p id="mtext"></p><img id="mimg" alt="" hidden><textarea id="mta" spellcheck="false" autocomplete="off"></textarea><div id="mbtns"></div></div></div>
+ </div>
+ <div class="scr" id="game">
+  <div id="hdr"><button id="sur">Surrender</button><div id="phase"></div>
+   <button class="mini" id="spw" style="display:none"></button><button class="mini" id="hs" title="Log (L)">Log</button><button class="mini" id="mu" title="Settings"><svg viewBox="0 0 16 16" shape-rendering="crispEdges"><path fill="currentColor" d="M7 0h2v2.2l1.7.7 1.6-1.5 1.4 1.4-1.5 1.6.7 1.7H15v2h-2.2l-.7 1.7 1.5 1.6-1.4 1.4-1.6-1.5-1.7.7V16H7v-2.2l-1.7-.7-1.6 1.5-1.4-1.4 1.5-1.6-.7-1.7H1V7h2.2l.7-1.7-1.5-1.6 1.4-1.4 1.6 1.5 1.7-.7z"/><circle cx="8" cy="8" r="2.4" fill="#000"/></svg></button><div id="round"></div></div>
+  <div id="strip"></div>
+  <i class="vl" style="left:383px"></i><i class="vl" style="left:658px"></i><i class="vl" style="left:676px"></i><i class="vl" style="left:948px"></i><i class="vl" style="left:966px"></i><i class="vl" style="left:1238px"></i><i class="vl" style="left:1260px"></i><i class="vl" style="left:1533px"></i>
+  <div id="pile"></div><div class="cnt" id="pc"></div>
+  <div id="deckb"></div><div class="cnt" id="dc"></div>
+  <div id="board"><div id="castlbl"></div></div><div id="fx"></div>
+  <div class="hero" id="ehero"><canvas class="ring" width="60" height="60"></canvas><div class="hpn" id="ehp"></div></div>
+  <div class="nbar" id="enb"></div><div class="dots" id="edots"></div><div class="cn" id="ecn"></div>
+  <button id="end">End Turn</button>
+  <div class="hero" id="phero"><canvas class="ring" width="60" height="60"></canvas><div class="hpn" id="php"></div></div>
+  <div class="nbar" id="pnb"></div><div class="dots" id="pdots"></div><div class="cn" id="pcn"></div>
+  <div id="arc"></div><div id="hand"></div>
+  <div id="msg"></div><div id="endl"></div><div id="bpop"></div>
+ </div>
+ <div id="zoom"></div><div id="apop"></div>
+ <div id="chpop"><em class="av" id="chav"></em><div class="ct"><b id="chname"></b><small>challenges you to a friendly match</small></div><button id="chyes" class="pri">Accept</button><button id="chno" class="chn">Decline</button></div>
+<div class="ovl bk" id="tutmenu"><div class="panel"><h2>Tutorial</h2><div class="sub">Learn the game in about 5 minutes</div>
+  <div class="btns"><button class="opt" id="tutgo"><b>Start tutorial</b><small>A short guided match that explains every basic rule</small></button></div>
+  <p class="tutp">Quick reference: each round the starting player plays Units, then the other player plays Units and Actions, then the starter plays Actions. After that all four lanes fight. Click a card in your hand, then a glowing lane or target.</p>
+  <div class="btns"><button id="tutback">Back</button></div></div></div>
+<div class="ovl bk" id="frmenu"><div class="panel"><h2>Play with a friend</h2><div class="sub">1 vs 1 online - no account needed</div>
+  <div class="btns"><button class="opt" id="mquick"><b>Quick Match</b><small>Find a random opponent automatically</small></button><button class="opt" id="mhost"><b>Host Online</b><small>Create a room and share the code</small></button><button class="opt" id="mjoin"><b>Join Online</b><small>Enter your friend's room code</small></button><button class="opt" id="mspec"><b>Watch a Game</b><small>Spectate a room - no limit on viewers</small></button></div>
+  <div class="btns"><button id="frback">Back</button></div></div></div>
+ <div class="ovl bk" id="mirmenu"><div class="panel"><h2>Mirror Match UP</h2><div class="sub">Both players get the same random deck in the same draw order - the better player wins.</div>
+  <div class="btns"><button class="opt" id="mirbot"><b>Play vs Bot</b><small>Bot uses the same deck</small></button><button class="opt" id="mirhost"><b>Host Online</b><small>Create a room and share the code</small></button><button class="opt" id="mirjoin"><b>Join Online</b><small>Enter your friend's room code</small></button></div>
+  <div class="btns"><button id="mirback">Back</button></div></div></div>
+ <div class="ovl bk" id="botmenu"><div class="panel wide"><h2 id="bott">Play with the bot</h2><div class="sub" id="botdiff"></div><div id="ebest"></div>
+  <select id="d0" hidden></select><select id="d1" hidden></select>
+  <div class="pkcols">
+   <section class="pkcol"><div class="pkh"><label>Your deck</label><span class="pkcur" id="pkn0"></span></div><div class="pkx" id="pk0"></div></section>
+   <section class="pkcol"><div class="pkh"><label id="botlbl">Bot's deck</label><span class="pkcur" id="pkn1"></span></div><div class="pkx" id="pk1"></div></section>
+  </div>
+  <div class="pkhint">Use Preview to see every card in a deck. Set a default deck to have it pre-selected everywhere.</div>
+  <div class="btns"><button id="go">Start</button><button id="botback">Back</button></div></div></div>
+ <div class="ovl bk" id="achmenu"><div class="panel wide"><h2>Achievements</h2><div class="sub" id="achsum"></div><div id="achbar"><i></i></div><div id="achlist"></div><div class="btns"><button id="achback">Back</button></div></div></div>
+ <div class="ovl bk" id="rplmenu"><div class="panel wide rplp"><h2>Replays</h2><div class="sub" id="rplsub"></div>
+  <div id="rplbar0"><button type="button" id="rplimp">Import file</button><input type="file" id="rplfile" accept=".rjreplay,application/json" hidden></div>
+  <div id="rpllist"></div>
+  <div class="btns"><button id="rplback">Back</button></div></div></div>
+ <div class="ovl bk" id="rkmenu"><div class="panel wide rkp"><h2>Ranked</h2>
+  <div class="rkgrid">
+   <aside class="rkl">
+    <div id="rkme"></div>
+    <div class="rkact"><button id="rkplay" class="rkgo">Play Ranked</button><button id="rkprof" class="rksec">My profile</button></div>
+    <div class="sub rkst" id="rksub"></div>
+   </aside>
+   <section class="rkdeck"><div class="pkh"><label>Your deck</label><span class="pkcur" id="pknr"></span></div><div class="pkx" id="pkr"></div>
+    <div class="pkhint">Preview shows every card. You pick your final deck again on the match screen.</div></section>
+   <section class="rklb"><h4>Leaderboard</h4><div class="rkhd"><i>#</i><span></span><b>Player</b><u>Lvl</u><span>Rating</span><small>W-L</small></div><div id="rklist"></div></section>
+  </div>
+  <div class="btns"><button id="rkback">Back</button></div></div></div>
+ <div class="ovl bk" id="acctmenu"><div class="panel prof"><h2 id="pft">Profile</h2><div class="sub" id="pfsub"></div>
+  <div class="pfbody">
+   <div class="pfl"><button id="pfav" class="pfav" title="Change profile picture"></button><button id="pfchg">Change picture</button>
+    <div id="pftier"></div>
+    <div class="pfnm"><label for="pfname">Display name</label><input type="text" id="pfname" maxlength="16" placeholder="Playerzacy" autocomplete="off" spellcheck="false"><button id="pfsave">Save</button></div></div>
+   <div class="pfr">
+    <div id="pfrate"></div>
+    <div id="pfstats"></div>
+    <div id="pfform"></div>
+    <div id="pfhist"></div>
+    <div id="pfdcrow"><label>Discord</label><span id="pfdc"></span><span class="rkbt"><button id="pfdclink">Link Discord</button><button id="pfdclogin">Log in with Discord</button></span></div></div>
+  </div>
+  <div id="pfmsg"></div>
+  <div class="btns"><button id="pffr" hidden></button><button id="pfwatch" hidden>Watch game</button><button id="pflogout" hidden>Log out</button><button id="pfdel">Delete account</button><button id="pfback">Back</button></div></div></div>
+ <div class="ovl bk" id="fdmenu"><div class="panel prof"><h2>Friends</h2><div class="sub" id="fdsub"></div>
+  <div class="fdsearch"><input type="text" id="fdq" placeholder="Find a player by name..." maxlength="16" autocomplete="off" spellcheck="false"><button id="fdgo">Search</button></div>
+  <div id="fdres"></div><div id="fdlist"></div>
+  <div class="btns"><button id="fdback">Back</button></div></div></div>
+ <div class="ovl bk" id="avpick"><div class="panel wide"><h2>Profile picture</h2><div class="sub">Pick any card - it is shown next to your name on the leaderboard</div>
+  <input type="text" id="avq" placeholder="Search cards..." autocomplete="off" spellcheck="false"><div id="avgrid"></div>
+  <div class="btns"><button id="avclear">Use initial instead</button><button id="avback">Back</button></div></div></div>
+ <div class="ovl bk" id="clmenu"><div class="panel wide clp"><h2 id="cltitle">Changelog</h2><div class="sub" id="clsub"></div>
+  <div id="clbar"><button type="button" id="clexp">Expand all</button><button type="button" id="clcol">Collapse all</button></div>
+  <div id="cllist"></div>
+  <div class="btns"><button id="clback">Back</button></div></div></div>
+ <div class="ovl bk" id="setmenu"><div class="panel"><h2>Settings</h2>
+  <div class="stabs"><button type="button" class="on" data-st="gen">General</button><button type="button" data-st="rpl">Replays</button></div>
+  <div id="setbody">
+  <div class="stab" id="set-gen">
+   <div class="srow chk"><label for="rndprem">Random includes Premade decks</label><input type="checkbox" id="rndprem" checked title="When on, the Random button can pick premade decks too. When off, it only picks your own decks (premade ones are used only if you have none)."></div>
+   <div class="srow chk"><label for="hideprem">Hide premade decks in my deck lists</label><input type="checkbox" id="hideprem" title="Premade decks are hidden from the deck pickers as long as you have at least one deck of your own. The bot's deck list is not affected."></div>
+   <div class="srow chk" id="max2row" style="display:none"><label for="max2">Max 2 copies per card (Legacy)</label><input type="checkbox" id="max2" title="Legacy version only: player-built decks may contain at most 2 copies of the same card. Premade decks are exempt. Decks over the limit stay in your list but cannot be played until you edit them. Online, both players must have this on or off. The page reloads when you change it."></div>
+   <div class="srow chk"><label for="hotnum">Show card numbers (hotkeys 1-8)</label><input type="checkbox" id="hotnum" title="Shows a small number above each card in your hand. Press that number on the keyboard to select the card."></div>
+   <div class="srow chk"><label for="spfr">Let friends watch my games</label><input type="checkbox" id="spfr" checked title="When on, friends who open your profile or the Friends list can watch your room games and friend challenges live. Ranked and Quick Match games can never be watched. Needs the online server."></div>
+   <div class="srow"><label>Sound effects</label><input type="range" id="sfxv" min="0" max="100" step="5"><b id="sfxn"></b></div>
+   <div class="srow"><label>Music</label><input type="range" id="musv" min="0" max="100" step="5"><b id="musn"></b></div>
+  </div>
+  <div class="stab" id="set-rpl" hidden>
+   <div class="srow chk"><label for="rpon">Record replays</label><input type="checkbox" id="rpon" title="When off, finished games are not saved as replays."></div>
+   <div class="srow rpopt"><label for="rpkeep">Replays to keep</label><select id="rpkeep" title="How many of the latest replays are stored in this browser. Replays you marked as Kept do not count and are never removed automatically."><option value="5">Last 5 games</option><option value="10">Last 10 games</option><option value="20">Last 20 games</option><option value="30">Last 30 games</option><option value="50">Last 50 games</option></select></div>
+   <div class="ssub rpopt">Record games:</div>
+   <div class="srow chk rpopt"><label for="rpm_bot">Against the bot</label><input type="checkbox" id="rpm_bot" title="Play with the bot (Endless Mode and the Tutorial are never recorded)."></div>
+   <div class="srow chk rpopt"><label for="rpm_mirror">Mirror Match</label><input type="checkbox" id="rpm_mirror" title="Offline and online Mirror Match games."></div>
+   <div class="srow chk rpopt"><label for="rpm_ranked">Ranked games</label><input type="checkbox" id="rpm_ranked"></div>
+   <div class="srow chk rpopt"><label for="rpm_quick">Quick Match games</label><input type="checkbox" id="rpm_quick"></div>
+   <div class="srow chk rpopt"><label for="rpm_friend">Friend and room games</label><input type="checkbox" id="rpm_friend"></div>
+   <div class="srow"><label>Stored replays</label><span id="rpinfo"></span><button type="button" id="rpclear" title="Deletes every replay that is not marked as Kept">Delete unkept</button></div>
+   <div class="snote">Replays are stored in this browser only. If its storage fills up, the oldest replays are removed earlier than the limit above. Lowering the limit removes the oldest replays that are not marked as Kept.</div>
+  </div>
+  </div>
+  <div class="btns"><button id="setclose">Close</button></div></div></div>
+ <div class="ovl bk" id="lobby"><div id="lload"><span id="lloadt"></span><i></i><i></i><i></i></div><div class="panel"><h2 id="lt"></h2><div id="lcode"></div>
+  <div id="lmatch"><div class="lmvs"><div class="lmp"><em class="av" id="lmav0"></em><b id="lmn0"></b><small id="lmr0"></small></div><div class="lmx">VS</div><div class="lmp"><em class="av" id="lmav1"></em><b id="lmn1"></b><small id="lmr1"></small></div></div>
+   <div class="lmh">Choose your deck - it locks when you press Ready</div></div>
+  <input id="lin" maxlength="5" placeholder="ROOM CODE" autocomplete="off" spellcheck="false">
+  <div id="ldrow"><div class="pkh"><label>Your deck</label><span class="pkcur" id="pknl"></span></div><div class="pkx" id="pkl"></div></div><div id="ls"></div>
+  <div id="lbar"><i id="lbari"></i></div>
+  <div style="display:flex;gap:30px"><button id="lready">Ready</button><button id="lgo">Join</button><button id="lcopy">Copy invite link</button><button id="lcancel">Cancel</button></div></div></div>
+ <div class="ovl" id="mul"><h2 id="mt">Mulligan - click cards to replace</h2><div id="mh"></div><button id="mok">Confirm</button><div id="mpr" style="display:none;gap:40px"><button id="mfirst">Go first</button><button id="msecond">Go second</button></div></div>
+ <div class="ovl" id="hist"></div>
+ <div class="ovl" id="modal"><h2>Surrender?</h2><div style="display:flex;gap:30px"><button id="myes">Yes</button><button id="mno">No</button></div></div>
+ <div class="ovl" id="ov"><div id="ovt"></div><div id="ovdk"></div><div id="ovmm"></div><div style="display:flex;gap:30px"><button id="ovr">Rematch</button><button id="ovd">Change deck</button><button id="ovb">Menu</button></div></div>
+ <div class="ovl bk" id="dkpick"><div class="panel wide"><h2>Choose your deck</h2><div class="sub">Used for the next game</div>
+  <div class="pkx" id="pk2"></div>
+  <div class="btns"><button id="dkok">Use this deck</button><button id="dkcancel">Back</button></div></div></div>
+ <div class="ovl bk" id="dkprev"><div class="panel">
+  <div id="dkpvhd"><div class="dkpvti"><h2 id="dkpvt"></h2><div class="sub" id="dkpvs"></div></div>
+   <div class="btns"><button id="dkpvedit" class="pri">Edit</button><button id="dkpvsave">Save PNG</button><button id="dkpvcopy">Copy image</button><button id="dkpvx">Close</button></div></div>
+  <div id="dkpvbox"><div id="dkpvld">Drawing the deck...</div><img id="dkpvimg" alt="" hidden></div>
+  <div id="dkpvmsg"></div></div></div>
+</div>
+<div id="rot">Please rotate your device to landscape (this game is designed for a wide screen).</div>
+<audio id="au" loop></audio>
+<script src="cards.js?v=20261223"></script><script src="decks.js?v=20261117"></script><script src="live-config.js"></script><script src="cards-live.js"></script><script src="cards-legacy.js?v=20261220"></script><script src="decks-legacy.js?v=20261119"></script><script src="img-index.js"></script><script src="img-index-legacy.js"></script><script src="engine.js?v=20261223"></script><script src="bot.js?v=20261223"></script><script src="sfx.js?v=20261124"></script><script src="music.js?v=20261124"></script><script src="share.js"></script><script src="ui.js?v=20261223"></script><script src="peerjs.min.js"></script><script src="net-config.js"></script><script src="turn-secret.js" onerror="void 0"></script><script src="net.js?v=20261223"></script><script src="changelog.js?v=20261222"></script><script src="menu.js?v=20261218"></script><script src="tutorial-data.js?v=20261201"></script><script src="tutorial.js?v=20261201"></script><script src="menumusic.js?v=20261127"></script><script src="mm.js?v=20261222"></script><script src="ach.js"></script><script src="replay.js?v=20261221"></script><script src="spectate.js?v=20261222"></script>
+</body></html>
