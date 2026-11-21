@@ -32,7 +32,7 @@ Ci agenci przyjmują zadania i prowadzą dwa pierwsze etapy SDD: **`Specify`** (
 | Rola agenta | Za co odpowiada | Narzędzia | Wbudowane skille (`skills`) |
 |---|---|---|---|
 | **`rj-orchestrator`**<br/>*(koordynator SDD)* | Przyjmuje zadanie z kluczem Jira (`REJ-123`), sprawdza bramki OpenSpec, dzieli pracę na podzadania `≤ 4 h`, przekazuje kroki specjalistom i na końcu wymaga niezależnej weryfikacji. | Odczyt, wyszukiwanie, uruchamianie komend, delegowanie (`agent`). **Nie edytuje kodu.** | `rj-start-feature`, `rj-spec-guardian`, `rj-pr-ready`, `rj-add-agent`, `rj-add-skill` |
-| **`rj-spec-analyst`**<br/>*(analityk wymagań PRD i OpenSpec)* | Zamienia potrzeby użytkownika i zachowanie prototypu JS v11 na scenariusze `GIVEN/WHEN/THEN` w `openspec/specs/`. Utrzymuje `03-indeks-regul-r-nn.md` i `04-rozbieznosci-prototypu.md`. | Odczyt, edycja specyfikacji i dokumentów wymagań, uruchamianie walidatorów. | `rj-spec-guardian`, `rj-start-feature`, `rj-oracle-diff` |
+| **`rj-spec-analyst`**<br/>*(analityk wymagań PRD i OpenSpec)* | Zamienia potrzeby użytkownika i zachowanie prototypu JS na scenariusze `GIVEN/WHEN/THEN` w `openspec/specs/`. Utrzymuje `03-indeks-regul-r-nn.md` i `04-rozbieznosci-prototypu.md`. | Odczyt, edycja specyfikacji i dokumentów wymagań, uruchamianie walidatorów. | `rj-spec-guardian`, `rj-start-feature`, `rj-oracle-diff` |
 | **`rj-architect`**<br/>*(architekt systemu i kontraktów)* | Pilnuje granic 5 modułów i chroni 5 zamrożonych kontraktów w `Rejoltance.Contracts`. Pisze projekty techniczne (`design.md`, TDD, czyli Technical Design Document) i przygotowuje decyzje `ADR-NNNN`. | Odczyt, edycja projektów technicznych i ADR, uruchamianie testów architektury i kontraktów. | `rj-write-adr`, `rj-spec-guardian`, `rj-pr-ready` |
 
 ---
@@ -84,7 +84,7 @@ Ci agenci prowadzą etapy **`Verify`** i **`Release`**, pomagają zarządzać Pr
 | **`rj-write-adr`** | `Plan` | Tworzy nowy rekord decyzji architektonicznej `ADR-NNNN` w `07-decyzje-adr/` według szablonu i aktualizuje rejestr ADR. |
 | **`rj-add-rule-test`** | `Tasks` / `Implement` | Zamienia regułę `R-nn` w deterministyczny test xUnit `Rnn_<zachowanie>` i aktualizuje macierz śledzenia. |
 | **`rj-add-card`** | `Implement` | Przenosi lub dodaje kartę z prototypu JS do `cards.json`, sprawdza handlery efektów DSL i dodaje test karty (docelowo w planowanym projekcie `Rejoltance.Cards.Tests`). |
-| **`rj-oracle-diff`** | `Implement` / `Verify` | Porównuje rozstrzygnięcie reguły w `Rejoltance.Kernel` z silnikiem referencyjnym `prototype/revibance/engine.js` (v11). |
+| **`rj-oracle-diff`** | `Implement` / `Verify` | Porównuje rozstrzygnięcie reguły w `Rejoltance.Kernel` z silnikiem referencyjnym `prototype/game/engine.js` (ADR-0013). |
 | **`rj-pr-ready`** | `Verify` | Lista kontrolna przed otwarciem PR (pull requesta): `dotnet build -warnaserror`, `dotnet test`, testy web, `npm run check`, walidatory w Pythonie i szkic opisu PR. |
 | **`rj-backlog-to-jira`** | `Tasks` | Edytuje `backlog.toml`, sprawdza limit podzadań `≤ 4 h` (EU4) i generuje `BACKLOG.md` oraz pliki CSV do importu w Jirze PB. |
 | **`rj-daily-report`** | `Scrum` | Składa raport *Daily Scrum* z aktualizacji 6 osób według szablonu, gotowy do wklejenia w Confluence PB. |

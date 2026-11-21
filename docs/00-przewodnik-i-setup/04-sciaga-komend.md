@@ -18,7 +18,7 @@ SDD (Spec-Driven Development) to nasza metoda pracy: najpierw specyfikacja, pote
 | Cała aplikacja (serwer + klient web + panel Aspire) | `dotnet run --project src/Rejoltance.AppHost` *(albo `aspire run`)* |
 | Sam serwer gry (ASP.NET Core + SignalR) | `dotnet run --project src/Rejoltance.Server` |
 | Sam klient webowy (w katalogu `src/web`) | `SERVER_HTTP=http://localhost:5000 npm run dev` |
-| Prototyp referencyjny JS w przeglądarce | `npx serve prototype/revibance` |
+| Prototyp referencyjny JS w przeglądarce | `npx serve prototype/game` |
 
 ---
 

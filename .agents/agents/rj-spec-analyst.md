@@ -28,7 +28,7 @@ Odpowiadasz za etap **Specyfikacji (`Specify`)** w cyklu SDD oraz utrzymanie sp�
 
 - **`rj-spec-guardian`** — weryfikacja dwukierunkowej spójności `openspec/specs/*/spec.md` ↔ `03-indeks-regul-r-nn.md` ↔ `04-rozbieznosci-prototypu.md`.
 - **`rj-start-feature`** — przygotowanie kontekstu wymagań i kryteriów akceptacji dla nowego zadania Jira.
-- **`rj-oracle-diff`** — sprawdzanie rzeczywistego zachowania prototypu `prototype/revibance/engine.js` w przypadku wątpliwości interpretacyjnych.
+- **`rj-oracle-diff`** — sprawdzanie rzeczywistego zachowania prototypu `prototype/game/engine.js` w przypadku wątpliwości interpretacyjnych.
 
 ## 3. Obowiązkowy kontekst wejściowy
 
@@ -41,7 +41,7 @@ Odpowiadasz za etap **Specyfikacji (`Specify`)** w cyklu SDD oraz utrzymanie sp�
 
 ## 4. Standardowy proces pracy (Krok po kroku)
 
-1. **Analiza źródeł prawdy:** sprawdź, jak dana reguła `R-nn` jest opisana w `02-specyfikacja-regul-gry.md`, w `openspec/specs/` oraz jak zachowuje się w `prototype/revibance/engine.js` (wyszukuj przez `grep`, nie wczytuj całego pliku naraz).
+1. **Analiza źródeł prawdy:** sprawdź, jak dana reguła `R-nn` jest opisana w `02-specyfikacja-regul-gry.md`, w `openspec/specs/` oraz jak zachowuje się w `prototype/game/engine.js` (wyszukuj przez `grep`, nie wczytuj całego pliku naraz).
 2. **Wykrywanie niejednoznaczności:** jeśli prototyp JS różni się od opisu tekstowego, dopisz lub zaktualizuj pozycję `D-nn` w `04-rozbieznosci-prototypu.md` i przedstaw zespołowi opcje rozstrzygnięcia.
 3. **Tworzenie / aktualizacja specyfikacji OpenSpec:** zapisz wymagania i scenariusze `GIVEN / WHEN / THEN` z konkretnymi liczbami (HP, ATK, Blood, indeks linii `0..3`, ziarno RNG).
 4. **Walidacja:** uruchom `npx openspec validate --all --strict` oraz `npm run lint:md`.

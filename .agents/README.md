@@ -35,7 +35,7 @@ Katalog `.agents/` stanowi **jedyne źródło prawdy** dla konfiguracji wszystki
 │   ├── rj-spec-guardian/       ← Audyt spójności OpenSpec ↔ indeks R-nn ↔ rozbieżności D-nn
 │   ├── rj-add-rule-test/       ← Dodawanie testu jednostkowego Rnn_ ze scenariuszem GIVEN/WHEN/THEN
 │   ├── rj-add-card/            ← Przenoszenie lub dodawanie karty z prototypu JS do Rejoltance.Content + Kernel
-│   ├── rj-oracle-diff/         ← Porównanie zachowania silnika C# z wyrocznią JS v11
+│   ├── rj-oracle-diff/         ← Porównanie zachowania silnika C# z wyrocznią JS (prototyp `prototype/game`)
 │   ├── rj-pr-ready/            ← Pełna weryfikacja pionowego plastra przed otwarciem PR
 │   ├── rj-write-adr/           ← Tworzenie rekordu decyzji architektonicznej ADR-NNNN
 │   ├── rj-backlog-to-jira/     ← Walidacja i generowanie BACKLOG.md oraz plików CSV do Jiry

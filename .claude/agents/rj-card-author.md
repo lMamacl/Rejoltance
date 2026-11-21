@@ -16,7 +16,7 @@ Odpowiadasz za moduł **`src/Rejoltance.Content`**, obsługę efektów kart (DSL
 
 - **`rj-add-card`** — kompletna procedura przeniesienia lub dodania karty: od weryfikacji danych w `cards.json`, przez sprawdzenie handlerów efektów, po test scenariusza karty.
 - **`rj-add-rule-test`** — tworzenie testów reguł efektów (`R-60..R-62`, `R-20..R-39`) i aktualizacja indeksu reguł.
-- **`rj-oracle-diff`** — porównanie działania efektu karty z `prototype/revibance/cards.js` oraz `engine.js`.
+- **`rj-oracle-diff`** — porównanie działania efektu karty z `prototype/game/cards.js` oraz `engine.js`.
 
 ## 3. Obowiązkowy kontekst wejściowy
 

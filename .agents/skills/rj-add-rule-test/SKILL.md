@@ -16,7 +16,7 @@ Uruchamiaj podczas implementacji lub weryfikacji każdej reguły domenowej `R-nn
 1. **Odczytaj specyfikację reguły `R-nn`:**
    - Znajdź wiersz `R-nn` w `docs/01-dokumentacja-systemowa/03-indeks-regul-r-nn.md`.
    - Przeczytaj pełny opis w `docs/01-dokumentacja-systemowa/02-specyfikacja-regul-gry.md` oraz scenariusze `GIVEN / WHEN / THEN` we właściwym pliku `openspec/specs/<domena>/spec.md`.
-   - W razie potrzeby sprawdź odpowiedni fragment w `prototype/revibance/engine.js` (używając `grep`, bez wczytywania całego pliku).
+   - W razie potrzeby sprawdź odpowiedni fragment w `prototype/game/engine.js` (używając `grep`, bez wczytywania całego pliku).
 
 2. **Napisz deterministyczny test jednostkowy xUnit:**
    - Umieść test w `tests/Rejoltance.Kernel.Tests` (mechanika rdzenia) lub, gdy powstanie, w planowanym `tests/Rejoltance.Cards.Tests` (efekty kart).

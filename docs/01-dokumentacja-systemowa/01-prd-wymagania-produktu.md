@@ -35,7 +35,7 @@ DSL (Domain-Specific Language) to nasz mały język do opisu efektów kart w dan
 RE:JOLTANCE to autorska gra karciana dla dwóch osób typu *lane battler*. Gracze walczą na 4 liniach, korzystają z odnawialnego zasobu *Blood*, mają talie po 30 kart, a bohater ma 20 punktów zdrowia. Przed naszym projektem powstały dwa prototypy:
 
 1. **Wersja desktopowa (C# / Godot).** Trzeba ją było zainstalować lokalnie. Nie miała gry przez internet.
-2. **Prototyp przeglądarkowy w czystym JavaScripcie (`prototype/revibance`, v11).** Ma pełny zestaw 69 kart kolekcjonerskich i 9 tokenów i działa w przeglądarce. Komunikacja sieciowa działa jednak Peer-to-Peer (PeerJS), bez serwera. Z tego wynikają problemy:
+2. **Prototyp przeglądarkowy w czystym JavaScripcie (`prototype/game`, repo `PanCoto/rejoltance-prototype`).** Ma 130 kart kolekcjonerskich i 29 tokenów i działa w przeglądarce. Komunikacja sieciowa działa jednak Peer-to-Peer (PeerJS), bez serwera. Z tego wynikają problemy:
    - klient gościa widział identyfikatory, które zdradzały rękę i kolejność talii hosta (brak *Fog of War*, czyli ukrywania informacji przed przeciwnikiem),
    - serwer nie sprawdzał celów, więc klient mógł zmienić komunikat i poświęcić jednostkę przeciwnika,
    - kod był podatny na XSS (`innerHTML`),
@@ -62,7 +62,7 @@ Mamy ograniczony czas: 6 osób × 5 h tygodniowo. Żeby na pewno dowieźć dzia�
 ```mermaid
 flowchart LR
   W0["Fala W0 (Sprint 0)<br/>Fundamenty i Kręgosłup<br/>Kontrakty, Setup, Mulligan, CI, SDD"] --> W1["Fala W1 (Sprinty 1–5, Semestr 1)<br/>MVP Grywalny Mecz<br/>Pełna runda, walka 4 linii, 12+ kart,<br/>pokoje 1v1, prosty bot, konta"]
-  W1 --> W2["Fala W2 (Semestr 2 — rdzeń)<br/>Pełna Gra<br/>Wszystkie 69 kart + 9 tokenów,<br/>Deckbuilder 30 kart, PostgreSQL, Replay"]
+  W1 --> W2["Fala W2 (Semestr 2 — rdzeń)<br/>Pełna Gra<br/>Wszystkie 130 kart + 29 tokenów,<br/>Deckbuilder 30 kart, PostgreSQL, Replay"]
   W2 --> W3["Fala W3 (Semestr 2 — dodatki)<br/>Rozszerzenia Opcjonalne<br/>Panel admina, statystyki balansu,<br/>zaawansowany bot beam-search"]
 ```
 
@@ -163,7 +163,7 @@ Pełna specyfikacja 18 wymagań niefunkcjonalnych (NFR) ze scenariuszami testowy
 
 ## 7. Interakcja użytkownika i projekt interfejsu
 
-Mapę ekranów, układ planszy (*wireframe*), przepływy użytkownika i przewodnik stylu (*UI Style Guide*) opisuje dokument [1.10 Projekt UX, przepływy i przewodnik stylu](10-ux-design-i-przeplywy.md). Działającym wzorem interakcji, grafiki i dźwięku jest prototyp w katalogu [`prototype/revibance/`](../../prototype/README.md).
+Mapę ekranów, układ planszy (*wireframe*), przepływy użytkownika i przewodnik stylu (*UI Style Guide*) opisuje dokument [1.10 Projekt UX, przepływy i przewodnik stylu](10-ux-design-i-przeplywy.md). Działającym wzorem interakcji, grafiki i dźwięku jest prototyp w katalogu [`prototype/game/`](../../prototype/README.md).
 
 ---
 

@@ -64,7 +64,7 @@ Karty jako dane: rejestr akcji, wyzwalacze, warunki, cele, koszt. src/Rejoltance
 | E2-S06 | Koszt i efekty działające z ręki | S6 | W2 | 3 | 8 | R-23, R-24 |
 | E2-S07 | Efekty pasywne w danych (bez hardcodu id) | S6 | W2 | 3 | 6 | R-67 |
 | E2-S08 | Akcje planszy: MakeAUnit, MoveRight, DestroyUnit, Transform | S6 | W2 | 3 | 8 | R-64, R-69 |
-| E2-S09 | Wszystkie 69 kart | S7 | W2 | 8 | 20 | — |
+| E2-S09 | Wszystkie 130 kart | S7 | W2 | 8 | 20 | — |
 
 ## E3 Serwer i sieć czasu rzeczywistego
 

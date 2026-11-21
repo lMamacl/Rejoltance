@@ -11,7 +11,7 @@ To nadrzędne zasady pracy dla zespołu i wszystkich agentów AI. Gdy prompt, sk
 
 ## Artykuł I — Specyfikacja przed kodem (Spec-Driven Development)
 
-Zachowanie gry lub systemu najpierw zapisujemy w `openspec/specs/` (albo jako propozycję w `openspec/changes/`) ze scenariuszami `GIVEN / WHEN / THEN`. Każde wymaganie ma numer reguły `R-nn` lub `NFR-nn`. Dopiero potem powstaje kod produkcyjny. Kanonem zasad gry jest prototyp JS `prototype/revibance` (v11, ADR-0005).
+Zachowanie gry lub systemu najpierw zapisujemy w `openspec/specs/` (albo jako propozycję w `openspec/changes/`) ze scenariuszami `GIVEN / WHEN / THEN`. Każde wymaganie ma numer reguły `R-nn` lub `NFR-nn`. Dopiero potem powstaje kod produkcyjny. Kanonem zasad gry jest prototyp JS `prototype/game` (repo `PanCoto/rejoltance-prototype`, ADR-0013).
 
 ## Artykuł II — Czysty i deterministyczny silnik reguł (`Rejoltance.Kernel`)
 

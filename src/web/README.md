@@ -14,6 +14,6 @@
 **Komendy:** `npm run dev` (zwykle uruchamia go Aspire), `npm test`, `npm run lint`, `npm run typecheck`, `npm run build`.
 Bez Aspire: `SERVER_HTTP=http://localhost:5000 npm run dev`.
 
-**Referencja wizualna:** `prototype/revibance` (wachlarz ręki, glosariusz, animacje).
+**Referencja wizualna:** `prototype/game` (wachlarz ręki, glosariusz, animacje).
 
 **Właściciel:** epik E4 (do przydzielenia).

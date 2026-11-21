@@ -14,7 +14,7 @@ Pełnisz rolę niezależnego strażnika jakości na etapie **Weryfikacji (`Verif
 ## 2. Wbudowane umiejętności operacyjne
 
 - **`rj-pr-ready`** — wykonanie pełnej listy kontrolnej *Definition of Done* (kompilacja, testy C#/TS, kontrakty, architektura, OpenSpec, markdownlint).
-- **`rj-oracle-diff`** — porównanie zachowania implementacji C# z wyrocznią `prototype/revibance/engine.js`.
+- **`rj-oracle-diff`** — porównanie zachowania implementacji C# z wyrocznią `prototype/game/engine.js`.
 - **`rj-add-rule-test`** — analiza brakujących przypadków brzegowych dla reguł `R-nn` i przygotowanie specyfikacji brakujących testów.
 - **`rj-spec-guardian`** — audyt spójności macierzy śledzenia `03-indeks-regul-r-nn.md` z rzeczywistymi testami w `tests/`.
 
